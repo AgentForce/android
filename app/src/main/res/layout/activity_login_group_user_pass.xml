@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:gravity="center_horizontal|center_vertical"
+    android:orientation="vertical">
+
+    <!--<android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColorHint="@android:color/darker_gray">
+        <EditText
+            android:id="@+id/txt_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:hint="@string/activity_login_email"
+            android:background="@drawable/cus_border_edittext"
+            android:padding="10dp"
+            android:textColor="@android:color/black"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:textColorHint="@android:color/darker_gray">
+        <EditText
+            android:id="@+id/txt_user_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="textPassword"
+            android:background="@drawable/cus_border_edittext"
+            android:padding="10dp"
+            android:hint="@string/activity_login_pass"
+            android:textColor="@android:color/black"/>
+    </android.support.design.widget.TextInputLayout>-->
+
+
+    <EditText
+        android:id="@+id/edt_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cus_border_edittext"
+        android:hint="@string/activity_login_email"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@android:color/black" />
+
+
+    <EditText
+        android:id="@+id/edt_user_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cus_border_edittext"
+        android:hint="@string/activity_login_pass"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@android:color/black" />
+
+
+    <TextView
+        android:id="@+id/txt_forget_pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="@string/activity_login_forget_pass"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/cus_button_events"
+        android:text="@string/activity_login_button"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+</LinearLayout>
