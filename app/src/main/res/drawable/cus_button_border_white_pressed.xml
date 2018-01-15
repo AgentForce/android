@@ -8,22 +8,17 @@
     <item>
         <layer-list>
             <item>
-                <!--<shape>
-                    <corners android:radius="10dp" />
-                    <solid android:color="@android:color/transparent" />
-                </shape>-->
                 <shape>
-                    <gradient android:angle="270"
-                        android:endColor="@color/colorSecond"
-                        android:startColor="@color/colorSecond2" />
                     <corners android:radius="10dp" />
+                    <stroke android:width="2px" android:color="@android:color/white" />
+                    <solid android:color="@android:color/transparent" />
                 </shape>
             </item>
             <item android:bottom="2dp" android:right="1dp">
                 <shape>
                     <gradient android:angle="270"
-                        android:endColor="@color/colorSecond"
-                        android:startColor="@color/colorSecond2" />
+                        android:endColor="@color/colorSecond2"
+                        android:startColor="@color/colorSecond" />
                     <corners android:radius="10dp" />
                 </shape>
             </item>

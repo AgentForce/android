@@ -6,6 +6,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -18,7 +19,7 @@ import manulife.manulifesop.util.SOPSharedPreferences;
 public class FirstActivity extends BaseActivity<FirstPresenter> implements FirstContract.View {
 
     @BindView(R.id.layout_welcome)
-    LinearLayout layoutWelcome;
+    RelativeLayout layoutWelcome;
     @BindView(R.id.btn_agree)
     Button btnAgree;
 

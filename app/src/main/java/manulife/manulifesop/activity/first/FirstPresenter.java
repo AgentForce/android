@@ -42,7 +42,7 @@ public class FirstPresenter extends BasePresenter<FirstContract.View> implements
 
     @Override
     public void clickAgreeButton() {
-        SOPSharedPreferences.getInstance(mContext).saveFirstUsing();
+        //SOPSharedPreferences.getInstance(mContext).saveFirstUsing();
         mPresenterView.showLogin();
     }
 
