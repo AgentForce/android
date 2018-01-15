@@ -21,7 +21,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class ProjectApplication extends MultiDexApplication {
 
     private static ProjectApplication instance = null;
-    private static Context context;
+    //private static Context context;
     private static final Object instanceLock = new Object();
 
     public void setInstance(ProjectApplication application) {
@@ -34,9 +34,9 @@ public class ProjectApplication extends MultiDexApplication {
         return instance;
     }
 
-    public static Context getAppContext() {
+    /*public static Context getAppContext() {
         return ProjectApplication.context;
-    }
+    }*/
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -47,7 +47,7 @@ public class ProjectApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        ProjectApplication.context = getApplicationContext();
+        //ProjectApplication.context = getApplicationContext();
         //Fabric.with(this, new Crashlytics());
         //FirebaseAnalytics.getInstance(this);
         setInstance(this);

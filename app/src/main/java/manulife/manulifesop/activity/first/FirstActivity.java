@@ -26,7 +26,7 @@ public class FirstActivity extends BaseActivity<FirstPresenter> implements First
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
-        mActionListener = new FirstPresenter(this);
+        mActionListener = new FirstPresenter(this,this);
     }
 
     @Override

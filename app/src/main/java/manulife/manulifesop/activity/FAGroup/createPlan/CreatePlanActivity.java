@@ -30,7 +30,7 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
-        mActionListener = new CreatePlanPresenter(this);
+        mActionListener = new CreatePlanPresenter(this,this);
         setupSupportForApp();
         initViewPager();
     }

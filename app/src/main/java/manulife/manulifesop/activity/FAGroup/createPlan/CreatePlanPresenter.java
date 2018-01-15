@@ -1,5 +1,6 @@
 package manulife.manulifesop.activity.FAGroup.createPlan;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
@@ -25,8 +26,11 @@ import static java.lang.Thread.sleep;
 
 public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> implements CreatePlanContract.Action {
 
-    public CreatePlanPresenter(CreatePlanContract.View presenterView) {
+    private Context mContext;
+
+    public CreatePlanPresenter(CreatePlanContract.View presenterView, Context context) {
         super(presenterView);
+        this.mContext = context;
     }
 
 }

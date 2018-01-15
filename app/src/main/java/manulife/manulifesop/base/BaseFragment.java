@@ -68,7 +68,7 @@ public abstract class BaseFragment<T extends BaseActivity, P extends BasePresent
     }
 
     public void showInform(String title, String message, String text_button, int msgType, CallBackInformDialog callback) {
-        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(ProjectApplication.getAppContext(),msgType);
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(mActivity,msgType);
         sweetAlertDialog.setTitleText(title);
         sweetAlertDialog.setContentText(message);
         sweetAlertDialog.setConfirmText(text_button);
@@ -84,7 +84,7 @@ public abstract class BaseFragment<T extends BaseActivity, P extends BasePresent
     }
 
     public void showConfirm(String title, String message, String text_pos, String text_neg, int msgType, CallBackConfirmDialog callback) {
-        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(ProjectApplication.getAppContext(),msgType);
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(mActivity,msgType);
         sweetAlertDialog.setTitleText(title);
         sweetAlertDialog.setContentText(message);
         sweetAlertDialog.setConfirmText(text_pos);

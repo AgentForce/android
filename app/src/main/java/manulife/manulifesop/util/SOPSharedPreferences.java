@@ -22,9 +22,9 @@ public class SOPSharedPreferences {
         mPreferences = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
     }
 
-    public static SOPSharedPreferences getInstance() {
+    public static SOPSharedPreferences getInstance(Context context) {
         if (mSOPSharedPreferences == null) {
-            mSOPSharedPreferences = new SOPSharedPreferences(ProjectApplication.getAppContext());
+            mSOPSharedPreferences = new SOPSharedPreferences(context);
         }
         return mSOPSharedPreferences;
     }

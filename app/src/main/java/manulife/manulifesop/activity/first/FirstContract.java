@@ -1,5 +1,7 @@
 package manulife.manulifesop.activity.first;
 
+import android.content.Context;
+
 import manulife.manulifesop.base.BaseMVPView;
 
 /**

@@ -2,6 +2,7 @@ package manulife.manulifesop.base;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -163,8 +164,8 @@ public class BaseActivity<P extends BasePresenter> extends AppCompatActivity imp
     }
 
     @Override
-    public void showInform(String title, String message, String text_button, int msgType, CallBackInformDialog callback) {
-        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(ProjectApplication.getAppContext(),msgType);
+    public void showInform(String title, String message, String text_button, int msgType,CallBackInformDialog callback) {
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this,msgType);
         sweetAlertDialog.setTitleText(title);
         sweetAlertDialog.setContentText(message);
         sweetAlertDialog.setConfirmText(text_button);
@@ -181,7 +182,7 @@ public class BaseActivity<P extends BasePresenter> extends AppCompatActivity imp
 
     @Override
     public void showConfirm(String title, String message, String text_pos, String text_neg, int msgType, CallBackConfirmDialog callback) {
-        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(ProjectApplication.getAppContext(),msgType);
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this,msgType);
         sweetAlertDialog.setTitleText(title);
         sweetAlertDialog.setContentText(message);
         sweetAlertDialog.setConfirmText(text_pos);

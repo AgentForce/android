@@ -1,5 +1,6 @@
 package manulife.manulifesop.activity.first;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
@@ -25,8 +26,10 @@ import static java.lang.Thread.sleep;
 
 public class FirstPresenter extends BasePresenter<FirstContract.View> implements FirstContract.Action {
 
-    public FirstPresenter(FirstContract.View presenterView) {
+    private Context mContext;
+    public FirstPresenter(FirstContract.View presenterView,Context context) {
         super(presenterView);
+        this.mContext = context;
     }
 
 
@@ -39,12 +42,12 @@ public class FirstPresenter extends BasePresenter<FirstContract.View> implements
 
     @Override
     public void clickAgreeButton() {
-        SOPSharedPreferences.getInstance().saveFirstUsing();
+        SOPSharedPreferences.getInstance(mContext).saveFirstUsing();
         mPresenterView.showLogin();
     }
 
     public void checkFirstUserLoading() {
-        if(!SOPSharedPreferences.getInstance().isFirstUsing())
+        if(!SOPSharedPreferences.getInstance(mContext).isFirstUsing())
         {
             mPresenterView.showWelcome();
         }else
