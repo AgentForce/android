@@ -9,13 +9,13 @@
     <!--activity_login-->
     <string name="activity_login_title">Đăng nhập tài khoản</string>
     <string name="activity_login_hello">Chào bạn</string>
-    <string name="activity_login_email">Email của bạn</string>
-    <string name="activity_login_pass">Mật khẩu của bạn</string>
+    <string name="activity_login_email">Nhập mã đại lý</string>
+    <string name="activity_login_pass">Nhập mật khẩu</string>
     <string name="activity_login_forget_pass">Quên mật khẩu?</string>
-    <string name="activity_login_button">Tiếp tục</string>
+    <string name="activity_login_button">Đăng nhập</string>
 
     <string name="activity_login_welcome_title">Bắt đầu lập kế hoạch kinh doanh</string>
-    <string name="activity_login_welcome_content">Lập kết hoạch kinh doanh để quản lý &amp; vào theo dõi công việc của bạn</string>
+    <string name="activity_login_welcome_content">Lập kết hoạch kinh doanh để quản lý &amp; và theo dõi công việc của bạn</string>
 
     <!--activity_create_plan-->
     <string name="activity_create_plan_title_actionbar">Thiết lập kết hoạch kinh doanh</string>
