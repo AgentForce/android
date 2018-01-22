@@ -29,7 +29,7 @@
         <activity
             android:name=".activity.Login.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.FAGroup.createPlan.CreatePlanActivity"
             android:screenOrientation="portrait"

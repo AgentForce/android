@@ -30,6 +30,7 @@
             android:paddingLeft="45dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
+            android:textCursorDrawable="@drawable/color_cursor"
             android:textColor="@android:color/black" />
     </RelativeLayout>
 
@@ -51,7 +52,7 @@
             android:id="@+id/edt_user_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:textCursorDrawable="@drawable/color_cursor"
             android:background="@drawable/cus_border_edittext"
             android:hint="@string/activity_login_pass"
             android:inputType="textPassword"
