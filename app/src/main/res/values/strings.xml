@@ -18,5 +18,8 @@
     <string name="activity_login_welcome_content">Lập kết hoạch kinh doanh để quản lý &amp; và theo dõi công việc của bạn</string>
 
     <!--activity_create_plan-->
-    <string name="activity_create_plan_title_actionbar">Thiết lập kết hoạch kinh doanh</string>
+    <string name="activity_create_plan_title_actionbar">Thiết lập kế hoạch kinh doanh</string>
+
+    <!--activity_main_fa-->
+    <string name="activity_main_fa_dashboard">Trang chủ</string>
 </resources>

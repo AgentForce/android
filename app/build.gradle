@@ -49,4 +49,5 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     implementation project(':indicator')
+    implementation project(':bottom-navigation')
 }

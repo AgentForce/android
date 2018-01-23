@@ -1,0 +1,56 @@
+package manulife.manulifesop.activity.FAGroup.main;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import butterknife.BindView;
+import manulife.manulifesop.R;
+import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanPresenter;
+import manulife.manulifesop.base.BaseActivity;
+
+/**
+ * Created by Chick on 1/23/2018.
+ */
+
+public class MainFAActivity extends BaseActivity<MainFAPresenter> implements MainFAContract.View {
+
+    @BindView(R.id.txt_actionbar_title)
+    TextView txtActionbarTitle;
+    @BindView(R.id.status_bar)
+    View viewStatusBar;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_fa);
+        mActionListener = new MainFAPresenter(this,this);
+        setupSupportForApp();
+    }
+
+    private void setupSupportForApp()
+    {
+        txtActionbarTitle.setText(getResources().getString(R.string.activity_main_fa_dashboard));
+
+        int statusBarHeight = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+        }
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewStatusBar.getLayoutParams();
+        params.height = statusBarHeight;
+        viewStatusBar.setLayoutParams(params);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_notify, menu);
+        return true;
+    }
+}

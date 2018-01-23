@@ -1,4 +1,4 @@
-package manulife.manulifesop.activity.Login;
+package manulife.manulifesop.activity.login;
 
 import android.content.Context;
 import android.widget.EditText;

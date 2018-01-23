@@ -1,9 +1,9 @@
-package manulife.manulifesop.activity.Login;
+package manulife.manulifesop.activity.login;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -28,6 +28,9 @@ import manulife.manulifesop.base.BaseActivity;
 
 public class LoginActivity extends BaseActivity<LoginPresent>
         implements LoginContract.View{
+
+    @BindView(R.id.status_bar)
+    View viewStatusBar;
 
     @BindView(R.id.layout_root)
     LinearLayout layoutRoot;
@@ -58,6 +61,20 @@ public class LoginActivity extends BaseActivity<LoginPresent>
         setContentView(R.layout.activity_login);
         mActionListener = new LoginPresent(this,this);
         hideKeyboardOutside(layoutRoot,this);
+
+        setupSupportForApp();
+    }
+
+    private void setupSupportForApp()
+    {
+        int statusBarHeight = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+        }
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewStatusBar.getLayoutParams();
+        params.height = statusBarHeight;
+        viewStatusBar.setLayoutParams(params);
     }
 
     @OnClick({R.id.btn_start,R.id.btn_login})

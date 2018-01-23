@@ -5,15 +5,13 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.Login.LoginActivity;
+import manulife.manulifesop.activity.login.LoginActivity;
 import manulife.manulifesop.base.BaseActivity;
-import manulife.manulifesop.util.SOPSharedPreferences;
 
 
 public class FirstActivity extends BaseActivity<FirstPresenter> implements FirstContract.View {
