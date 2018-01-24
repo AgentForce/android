@@ -4,7 +4,8 @@
     package="manulife.manulifesop">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:name=".ProjectApplication"
@@ -20,11 +21,11 @@
             android:name=".activity.first.FirstActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeTranslucent">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.login.LoginActivity"
@@ -38,11 +39,11 @@
             android:name=".activity.FAGroup.main.MainFAActivity"
             android:screenOrientation="portrait"
             android:label="@string/activity_main_fa_dashboard">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
     </application>
 

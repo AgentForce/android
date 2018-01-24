@@ -9,7 +9,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/bottom-navigation" />
             <option value="$PROJECT_DIR$/indicator" />
             <option value="$PROJECT_DIR$/sweet-alert-dialog" />
           </set>

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_main"
-        android:icon="@drawable/home_icon"
-        android:title="test" />
+        android:id="@+id/menu_home"
+        android:icon="@drawable/ic_home"
+        android:title="Trang chủ" />
     <item
-        android:id="@+id/menu_2"
-        android:icon="@drawable/home_icon"
-        android:title="test" />
+        android:id="@+id/menu_customer"
+        android:icon="@drawable/ic_customer"
+        android:title="Khách hàng" />
     <item
-        android:id="@+id/menu_3"
-        android:icon="@drawable/home_icon"
-        android:title="test" />
+        android:id="@+id/menu_calendar"
+        android:icon="@drawable/ic_calendar"
+        android:title="Hoạt động" />
     <item
-        android:id="@+id/menu_4"
-        android:icon="@drawable/home_icon"
-        android:title="test" />
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="Cá nhân" />
 
 
 </menu>

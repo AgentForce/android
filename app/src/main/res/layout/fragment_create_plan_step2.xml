@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="step1" />
+        android:text="step2" />
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -54,27 +54,5 @@
             android:button="@null"
             android:text="Unidentify" />
     </RadioGroup>
-
-
-    <!--demo tab menu-->
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:tabMode="scrollable"
-        app:tabGravity="fill"
-        app:tabBackground="@drawable/cus_tablayout_background"
-        app:tabSelectedTextColor="@android:color/white"
-        app:tabTextColor="@color/gray_btn_bg_color"
-        app:tabMinWidth="110dp"
-        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-        app:tabIndicatorHeight="0dp"/>
-
-    <manulife.manulifesop.element.CustomViewPager
-        android:id="@+id/view_pager_step1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
 
 </LinearLayout>

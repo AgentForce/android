@@ -8,6 +8,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 
 import butterknife.BindView;
 import manulife.manulifesop.R;
@@ -24,6 +28,9 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
     TextView txtActionbarTitle;
     @BindView(R.id.status_bar)
     View viewStatusBar;
+    @BindView(R.id.bottom_navigation)
+    AHBottomNavigation bottomNavigation;
+    AHBottomNavigationAdapter mNavigationAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +38,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         setContentView(R.layout.activity_main_fa);
         mActionListener = new MainFAPresenter(this,this);
         setupSupportForApp();
+        setupMenuBot();
     }
 
     private void setupSupportForApp()
@@ -45,6 +53,45 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewStatusBar.getLayoutParams();
         params.height = statusBarHeight;
         viewStatusBar.setLayoutParams(params);
+    }
+
+    private void setupMenuBot()
+    {
+        int[] tabColors = getApplicationContext().getResources().getIntArray(R.array.tab_colors);
+        mNavigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bot);
+        mNavigationAdapter.setupWithBottomNavigation(bottomNavigation, tabColors);
+        bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+        bottomNavigation.setAccentColor(getResources().getColor(R.color.colorPrimary));
+        bottomNavigation.setInactiveColor(getResources().getColor(R.color.botMenuDisable));
+        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+            @Override
+            public boolean onTabSelected(int position, boolean wasSelected) {
+                switch (position)
+                {
+                    case 0:
+                    {
+                        Toast.makeText(MainFAActivity.this, "position 0", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case 1:
+                    {
+                        Toast.makeText(MainFAActivity.this, "position 1", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case 2:
+                    {
+                        Toast.makeText(MainFAActivity.this, "position 2", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case 3:
+                    {
+                        Toast.makeText(MainFAActivity.this, "position 3", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
     }
 
     @Override

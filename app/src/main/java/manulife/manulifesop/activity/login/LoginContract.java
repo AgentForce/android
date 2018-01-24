@@ -17,5 +17,6 @@ public interface LoginContract {
 
     interface Action {
         void loginApp(EditText user, EditText pass);
+        void checkPermissionGranted();
     }
 }

@@ -31,4 +31,10 @@ public class CustomViewPagerAdapter extends FragmentPagerAdapter {
         return mListFragments.size();
     }
 
+    //title for tablayout
+    @Override
+    public CharSequence getPageTitle(int position) {
+        // Generate title based on item position
+        return "Tháng " + (position+1);
+    }
 }
