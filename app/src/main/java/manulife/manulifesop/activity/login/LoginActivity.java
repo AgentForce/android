@@ -2,6 +2,7 @@ package manulife.manulifesop.activity.login;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,6 +28,7 @@ import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
+import manulife.manulifesop.util.DeviceInfo;
 
 
 /**
@@ -79,13 +81,16 @@ public class LoginActivity extends BaseActivity<LoginPresent>
             case 2: {
 
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    /*new DeviceInfo(FirstActivity.this);
-                    new TestInternet().execute(5000);*/
-                    Toast.makeText(this, "Da cap quyen", Toast.LENGTH_SHORT).show();
+                    mActionListener.getDeviceInfo(this);
+                    Toast.makeText(this, "Da cap quyen " + DeviceInfo.DEVICEIMEI, Toast.LENGTH_SHORT).show();
                 } else {
                     showInform("Thông báo", "Không đủ quyền để chạy chương trình", "OK", SweetAlertDialog.ERROR_TYPE, new CallBackInformDialog() {
                         @Override
                         public void DiaglogPositive() {
+                            Intent startMain = new Intent(Intent.ACTION_MAIN);
+                            startMain.addCategory(Intent.CATEGORY_HOME);
+                            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(startMain);
                             System.exit(1);
                         }
                     });

@@ -1,6 +1,7 @@
 package manulife.manulifesop.activity.login;
 
 
+import android.content.Context;
 import android.widget.EditText;
 
 import manulife.manulifesop.base.BaseMVPView;
@@ -18,5 +19,6 @@ public interface LoginContract {
     interface Action {
         void loginApp(EditText user, EditText pass);
         void checkPermissionGranted();
+        void getDeviceInfo(Context context);
     }
 }

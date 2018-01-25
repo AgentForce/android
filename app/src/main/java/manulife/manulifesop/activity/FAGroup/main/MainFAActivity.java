@@ -30,6 +30,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
     View viewStatusBar;
     @BindView(R.id.bottom_navigation)
     AHBottomNavigation bottomNavigation;
+
     AHBottomNavigationAdapter mNavigationAdapter;
 
     @Override

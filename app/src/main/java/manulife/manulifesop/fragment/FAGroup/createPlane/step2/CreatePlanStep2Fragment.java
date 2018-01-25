@@ -2,11 +2,17 @@ package manulife.manulifesop.fragment.FAGroup.createPlane.step2;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
 import butterknife.BindView;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
 import manulife.manulifesop.base.BaseFragment;
+import manulife.manulifesop.element.callbackInterface.SmsListener;
+import manulife.manulifesop.service.SmsReceiver;
 
 
 /**
@@ -36,6 +42,33 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity,Cre
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        SmsReceiver.bindListener(new SmsListener() {
+            @Override
+            public void messageReceived(String messageText) {
+
+                //From the received text string you may do string operations to get the required OTP
+                //It depends on your SMS format
+                showMessage("Thong bao",messageText, SweetAlertDialog.SUCCESS_TYPE);
+                Log.d("test",messageText+"_______________________________________");
+                System.out.println(messageText+"_______________________________________");
+
+                //Toast.makeText(getContext(),"Message: "+messageText,Toast.LENGTH_LONG).show();
+
+                // If your OTP is six digits number, you may use the below code
+
+                /*Pattern pattern = Pattern.compile(OTP_REGEX);
+                Matcher matcher = pattern.matcher(messageText);
+                String otp;
+                while (matcher.find())
+                {
+                    otp = matcher.group();
+                }
+
+                Toast.makeText(MainActivity.this,"OTP: "+ otp ,Toast.LENGTH_LONG).show();*/
+
+            }
+        });
     }
 
     /*@OnClick(R.id.btn_loading)

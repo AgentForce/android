@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
+import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
 
 /**
@@ -51,7 +52,8 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     public void checkPermissionGranted() {
         if(isPermissionGranted())
         {
-            Toast.makeText(mContest, "Da cap quyen truoc", Toast.LENGTH_SHORT).show();
+            getDeviceInfo(mContest);
+            Toast.makeText(mContest, "Da cap quyen truoc " + DeviceInfo.DEVICEIMEI, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -62,6 +64,18 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
             if(mContest.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
             {
                 temp.add(Manifest.permission.READ_PHONE_STATE);
+            }
+            if(mContest.checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED)
+            {
+                temp.add(Manifest.permission.RECEIVE_SMS);
+            }
+            if(mContest.checkSelfPermission(Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED)
+            {
+                temp.add(Manifest.permission.READ_SMS);
+            }
+            if(mContest.checkSelfPermission(Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED)
+            {
+                temp.add(Manifest.permission.SEND_SMS);
             }
 
             if (temp.size() > 0) {
@@ -74,5 +88,10 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
             }
         }
         return true;
+    }
+
+    @Override
+    public void getDeviceInfo(Context context) {
+        new DeviceInfo(context);
     }
 }
