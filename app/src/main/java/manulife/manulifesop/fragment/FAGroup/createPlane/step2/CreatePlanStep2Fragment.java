@@ -1,18 +1,31 @@
 package manulife.manulifesop.fragment.FAGroup.createPlane.step2;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
+import manulife.manulifesop.adapter.PasswordAdapter;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.SmsListener;
 import manulife.manulifesop.service.SmsReceiver;
+import manulife.manulifesop.util.Utils;
 
 
 /**
@@ -21,6 +34,13 @@ import manulife.manulifesop.service.SmsReceiver;
 
 public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity,CreatePlanStep2Present> implements CreatePlanStep2Contract.View {
 
+    @BindView(R.id.list_pass)
+    RecyclerView listPass;
+    @BindView(R.id.txt_pass)
+    TextView txtPass;
+
+    List<Boolean> mDataList;
+    PasswordAdapter mAdapter;
 
     public static CreatePlanStep2Fragment newInstance() {
         Bundle args = new Bundle();
@@ -42,6 +62,8 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity,Cre
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        initPasswordView();
 
         SmsReceiver.bindListener(new SmsListener() {
             @Override
@@ -71,6 +93,57 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity,Cre
         });
     }
 
+    public void initPasswordView()
+    {
+        //init list password
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        listPass.setLayoutManager(layoutManager);
+
+        mDataList = new ArrayList<>();
+        mDataList.add(false);
+        mDataList.add(false);
+        mDataList.add(false);
+        mDataList.add(false);
+        mDataList.add(false);
+        mDataList.add(false);
+
+        mAdapter = new PasswordAdapter(getContext(),mDataList);
+        listPass.setAdapter(mAdapter);
+
+        //add listener txt_pass
+        txtPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String tmpText = editable.toString();
+
+                for(int i=1;i<=mDataList.size();i++)
+                {
+                    if(i <= tmpText.length()) {
+                        mDataList.set(i-1, true);
+                    }else
+                    {
+                        mDataList.set(i-1,false);
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+                if(tmpText.length()>=6)
+                {
+                    Toast.makeText(mActivity, tmpText, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
     /*@OnClick(R.id.btn_loading)
     public void onClick(View view)
     {

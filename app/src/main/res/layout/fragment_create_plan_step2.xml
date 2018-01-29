@@ -59,32 +59,51 @@
     <RelativeLayout
         android:layout_width="40dp"
         android:layout_height="45dp">
+
         <LinearLayout
             android:layout_width="40dp"
             android:layout_height="45dp"
             android:background="@drawable/ic_green_oval" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="99"
-            android:textStyle="bold"
-            android:textSize="14sp"
             android:textColor="@android:color/white"
-            android:layout_centerInParent="true"/>
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"
             android:alpha="0"
-            android:cursorVisible="false"/>
+            android:background="@android:color/darker_gray"
+            android:cursorVisible="false" />
     </RelativeLayout>
 
-    <EditText
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:alpha="255"
-        android:maxLength="6"
-        android:cursorVisible="false"/>
+        android:background="@drawable/cus_border_edittext">
+
+        <EditText
+            android:id="@+id/txt_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            android:cursorVisible="false"
+            android:maxLength="6" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal" />
+    </RelativeLayout>
 
 </LinearLayout>
