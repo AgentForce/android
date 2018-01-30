@@ -13,7 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiService {
 
-    public static final String BASE_URL = "http://api.eprocon.us";
+    //public static final String BASE_URL = "http://api.eprocon.us";
+    public static final String BASE_URL = "http://13.250.129.169:3000/api/";
 
     private static Retrofit retrofit = null;
 

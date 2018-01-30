@@ -19,6 +19,26 @@
             android:layout_marginLeft="10dp"
             android:src="@drawable/agent_icon" />
 
+        <TextView
+            android:id="@+id/txt_temp_84"
+            android:layout_marginLeft="45dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="+84"/>
+
+        <View
+            android:layout_toRightOf="@+id/txt_temp_84"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/edt_user_name"
+            android:layout_alignBottom="@+id/edt_user_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/black"/>
+
+
         <EditText
             android:id="@+id/edt_user_name"
             android:layout_width="match_parent"
@@ -27,11 +47,12 @@
             android:hint="@string/activity_login_email"
             android:maxLines="1"
             android:paddingBottom="10dp"
-            android:paddingLeft="45dp"
+            android:paddingLeft="85dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:textCursorDrawable="@drawable/color_cursor"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:inputType="phone"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -55,13 +76,13 @@
             android:textCursorDrawable="@drawable/color_cursor"
             android:background="@drawable/cus_border_edittext"
             android:hint="@string/activity_login_pass"
-            android:inputType="textPassword"
+            android:inputType="numberPassword"
             android:maxLines="1"
             android:paddingBottom="10dp"
             android:paddingLeft="45dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"/>
     </RelativeLayout>
 
 

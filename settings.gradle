@@ -1,1 +1,1 @@
-include ':app', ':sweet-alert-dialog', ':indicator', ':bottom-navigation'
+include ':app', ':sweet-alert-dialog', ':indicator'

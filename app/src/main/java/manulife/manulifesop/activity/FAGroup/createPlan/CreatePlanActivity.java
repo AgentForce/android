@@ -1,17 +1,9 @@
 package manulife.manulifesop.activity.FAGroup.createPlan;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,7 +15,7 @@ import manulife.manulifesop.R;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
-import manulife.manulifesop.fragment.FAGroup.createPlane.CreatePlanStep1Fragment;
+import manulife.manulifesop.fragment.FAGroup.createPlane.step1.CreatePlanStep1Fragment;
 
 
 public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implements CreatePlanContract.View {

@@ -1,10 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
     <TextView
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="step1" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/cus_radio_group_background"
+        android:weightSum="90">
+
+        <RadioButton
+            android:id="@+id/rb1"
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:layout_height="40dp"
+            android:checked="true"
+            android:gravity="center_horizontal|center_vertical"
+            android:background="@drawable/cus_radio_background"
+            android:textColor="@drawable/cus_radio_background"
+            android:button="@null"
+            android:text="Female" />
+
+        <RadioButton
+            android:id="@+id/rb2"
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:layout_height="40dp"
+            android:checked="false"
+            android:gravity="center_horizontal|center_vertical"
+            android:background="@drawable/cus_radio_background"
+            android:textColor="@drawable/cus_radio_background"
+            android:button="@null"
+            android:text="Male" />
+        <RadioButton
+            android:id="@+id/rb3"
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:layout_height="40dp"
+            android:checked="false"
+            android:gravity="center_horizontal|center_vertical"
+            android:background="@drawable/cus_radio_background"
+            android:textColor="@drawable/cus_radio_background"
+            android:button="@null"
+            android:text="Unidentify" />
+    </RadioGroup>
+
+
+    <!--demo tab menu-->
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:tabMode="scrollable"
+        app:tabGravity="fill"
+        app:tabBackground="@drawable/cus_tablayout_background"
+        app:tabSelectedTextColor="@android:color/white"
+        app:tabTextColor="@color/gray_btn_bg_color"
+        app:tabMinWidth="110dp"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        app:tabIndicatorHeight="0dp"/>
+
+    <manulife.manulifesop.element.CustomViewPager
+        android:id="@+id/view_pager_step1"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="step1"/>
+        />
+
+
 </LinearLayout>
