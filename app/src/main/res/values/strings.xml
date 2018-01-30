@@ -14,6 +14,12 @@
     <string name="activity_login_forget_pass">Quên mật khẩu?</string>
     <string name="activity_login_button">Đăng nhập</string>
 
+    <string name="activity_login_agency_actionbar">Mã đại lý của bạn</string>
+    <string name="activity_login_agency_title">Nhập mã đại lý</string>
+    <string name="activity_login_phone_actionbar">Số điện thoại của bạn</string>
+    <string name="activity_login_phone_title">Nhập số điện thoại của bạn</string>
+
+
     <string name="activity_login_welcome_title">Bắt đầu lập kế hoạch kinh doanh</string>
     <string name="activity_login_welcome_content">Lập kết hoạch kinh doanh để quản lý &amp; và theo dõi công việc của bạn</string>
 

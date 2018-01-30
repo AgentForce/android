@@ -224,14 +224,16 @@ public class BaseActivity<P extends BasePresenter> extends AppCompatActivity imp
     }
 
     @Override
-    public void finishLoading(String message, boolean isSuccess) {
+    public void finishLoading(String message, boolean isSuccess, boolean autoClose) {
         pDialog.setCanceledOnTouchOutside(true);
         pDialog.setTitleText(message);
+        pDialog.setConfirmText("OK");
         if(isSuccess) {
             pDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
         }else
         {
             pDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
         }
+        if(autoClose) pDialog.dismissWithAnimation();
     }
 }

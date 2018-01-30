@@ -42,7 +42,7 @@ public class FirstPresenter extends BasePresenter<FirstContract.View> implements
 
     @Override
     public void clickAgreeButton() {
-        //SOPSharedPreferences.getInstance(mContext).saveFirstUsing();
+        SOPSharedPreferences.getInstance(mContext).saveFirstUsing();
         mPresenterView.showLogin();
     }
 
@@ -66,7 +66,8 @@ public class FirstPresenter extends BasePresenter<FirstContract.View> implements
                 public void run() {
                     int TIMEOUT_VALUE = params[0];
                     try {
-                        URL testUrl = new URL(ApiService.BASE_URL);
+                        //URL testUrl = new URL(ApiService.BASE_URL);
+                        URL testUrl = new URL("https://www.google.com.vn");
 
                         URLConnection testConnection = testUrl.openConnection();
                         testConnection.setConnectTimeout(TIMEOUT_VALUE);

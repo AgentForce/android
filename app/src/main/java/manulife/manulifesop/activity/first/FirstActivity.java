@@ -12,7 +12,6 @@ import butterknife.OnClick;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.login.LoginActivity;
 import manulife.manulifesop.base.BaseActivity;
-import manulife.manulifesop.util.Utils;
 
 
 public class FirstActivity extends BaseActivity<FirstPresenter> implements FirstContract.View {
