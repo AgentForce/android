@@ -40,6 +40,8 @@
 
     <!--activity_create_plan-->
     <string name="activity_create_plan_title_actionbar">Thiết lập kế hoạch kinh doanh</string>
+    <string name="activity_create_plan_title_step1">Vui lòng nhập ngày bắt đầu</string>
+    <string name="activity_create_plan_note_step1">Kế hoạch kinh doanh sẽ tính 1 năm từ lúc bạn nhập thời gian bắt đầu</string>
 
     <!--activity_main_fa-->
     <string name="activity_main_fa_dashboard">Trang chủ</string>

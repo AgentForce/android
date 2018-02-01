@@ -28,6 +28,9 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     @BindView(R.id.status_bar)
     View viewStatusBar;
 
+    @BindView(R.id.layout_root)
+    View layoutRoot;
+
 
 
     private List<BaseFragment> mListFragment;
@@ -37,13 +40,14 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
+        hideKeyboardOutside(layoutRoot,this);
         mActionListener = new CreatePlanPresenter(this,this);
         setupSupportForApp();
         initViewPager();
     }
 
     private void setupSupportForApp() {
-        txtActionbarTitle.setText(getResources().getString(R.string.activity_main_fa_dashboard));
+        txtActionbarTitle.setText(getResources().getString(R.string.activity_create_plan_title_actionbar));
 
         int statusBarHeight = 0;
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");

@@ -24,8 +24,8 @@ import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Fr
 
 public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity,CreatePlanStep1Present> implements CreatePlanStep1Contract.View {
 
-    @BindView(R.id.view_pager_step1)
-    CustomViewPager viewPager;
+    /*@BindView(R.id.view_pager_step1)
+    CustomViewPager viewPager;*/
 
     public static CreatePlanStep1Fragment newInstance() {
         Bundle args = new Bundle();
@@ -47,17 +47,17 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity,Cre
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initTabMenu(view);
+        //initTabMenu(view);
     }
 
-    private void initTabMenu(View view)
+    /*private void initTabMenu(View view)
     {
         viewPager.setSwipe(false);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        /*for(int i=1;i<=12; i++)
+        *//*for(int i=1;i<=12; i++)
         {
             tabLayout.addTab(tabLayout.newTab().setText("Tháng " + i));
-        }*/
+        }*//*
 
         List<BaseFragment> mListFragment = new ArrayList<>();
         mListFragment.add(CreatePlanStep2Fragment.newInstance());
@@ -77,7 +77,7 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity,Cre
             p.setMargins(10, 0, 10, 0);
             tab.requestLayout();
         }
-    }
+    }*/
 
     /*@OnClick(R.id.btn_loading)
     public void onClick(View view)

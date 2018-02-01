@@ -1,80 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:focusableInTouchMode="true">
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/txt_step1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="step1" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/cus_text_step"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="Bước 1"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
-    <RadioGroup
+    <TextView
+        android:id="@+id/txt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_below="@+id/txt_step1"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:text="@string/activity_create_plan_title_step1"
+        android:textSize="@dimen/welcome_activity_note"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/layout_start_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_title"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/cus_radio_group_background"
-        android:weightSum="90">
+        android:layout_marginTop="10dp"
+        android:background="@drawable/cus_border_edittext">
 
-        <RadioButton
-            android:id="@+id/rb1"
-            android:layout_width="0dp"
-            android:layout_weight="30"
-            android:layout_height="40dp"
-            android:checked="true"
-            android:gravity="center_horizontal|center_vertical"
-            android:background="@drawable/cus_radio_background"
-            android:textColor="@drawable/cus_radio_background"
-            android:button="@null"
-            android:text="Female" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Bắt đầu" />
 
-        <RadioButton
-            android:id="@+id/rb2"
-            android:layout_width="0dp"
-            android:layout_weight="30"
-            android:layout_height="40dp"
-            android:checked="false"
-            android:gravity="center_horizontal|center_vertical"
-            android:background="@drawable/cus_radio_background"
-            android:textColor="@drawable/cus_radio_background"
-            android:button="@null"
-            android:text="Male" />
-        <RadioButton
-            android:id="@+id/rb3"
-            android:layout_width="0dp"
-            android:layout_weight="30"
-            android:layout_height="40dp"
-            android:checked="false"
-            android:gravity="center_horizontal|center_vertical"
-            android:background="@drawable/cus_radio_background"
-            android:textColor="@drawable/cus_radio_background"
-            android:button="@null"
-            android:text="Unidentify" />
-    </RadioGroup>
+        <EditText
+            android:id="@+id/edt_start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cus_border_edittext"
+            android:hint="DD/MM/YYYY"
+            android:inputType="date"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="25dp" />
+    </RelativeLayout>
 
-
-    <!--demo tab menu-->
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabs"
+    <RelativeLayout
+        android:id="@+id/layout_end_date"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:tabMode="scrollable"
-        app:tabGravity="fill"
-        app:tabBackground="@drawable/cus_tablayout_background"
-        app:tabSelectedTextColor="@android:color/white"
-        app:tabTextColor="@color/gray_btn_bg_color"
-        app:tabMinWidth="110dp"
-        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-        app:tabIndicatorHeight="0dp"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_start_date"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/cus_border_edittext">
 
-    <manulife.manulifesop.element.CustomViewPager
-        android:id="@+id/view_pager_step1"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Kết thúc" />
+
+        <EditText
+            android:id="@+id/edt_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cus_border_edittext"
+            android:hint="DD/MM/YYYY"
+            android:inputType="date"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="25dp" />
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:layout_below="@+id/layout_end_date"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="@string/activity_create_plan_note_step1"
+            android:textSize="@dimen/welcome_activity_content" />
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_note"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/cus_button_events"
+            android:text="Tiếp tục"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>
