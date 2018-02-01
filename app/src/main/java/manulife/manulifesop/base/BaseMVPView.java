@@ -17,5 +17,6 @@ public interface BaseMVPView {
     void showConfirm(String title, String message, String text_pos, String text_neg, int msgType,CallBackConfirmDialog callback);
     void backToPrevious(Bundle bundle);
     void showLoading(String message);
-    void finishLoading(String message, boolean isSuccess, boolean autoClose);
+    void finishLoading(String message, boolean isSuccess);
+    void finishLoading();
 }

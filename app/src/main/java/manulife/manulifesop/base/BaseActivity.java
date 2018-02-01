@@ -224,7 +224,7 @@ public class BaseActivity<P extends BasePresenter> extends AppCompatActivity imp
     }
 
     @Override
-    public void finishLoading(String message, boolean isSuccess, boolean autoClose) {
+    public void finishLoading(String message, boolean isSuccess) {
         pDialog.setCanceledOnTouchOutside(true);
         pDialog.setTitleText(message);
         pDialog.setConfirmText("OK");
@@ -234,6 +234,10 @@ public class BaseActivity<P extends BasePresenter> extends AppCompatActivity imp
         {
             pDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
         }
-        if(autoClose) pDialog.dismissWithAnimation();
+    }
+
+    @Override
+    public void finishLoading() {
+        pDialog.dismissWithAnimation();
     }
 }

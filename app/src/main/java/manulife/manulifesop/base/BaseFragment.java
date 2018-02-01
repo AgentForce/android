@@ -123,7 +123,7 @@ public abstract class BaseFragment<T extends BaseActivity, P extends BasePresent
         pDialog.show();
     }
 
-    public void finishLoading(String message, boolean isSuccess, boolean autoClose) {
+    public void finishLoading(String message, boolean isSuccess) {
         pDialog.setCanceledOnTouchOutside(true);
         pDialog.setTitleText(message);
         pDialog.setConfirmText("OK");
@@ -133,6 +133,9 @@ public abstract class BaseFragment<T extends BaseActivity, P extends BasePresent
         {
             pDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
         }
-        if(autoClose) pDialog.dismissWithAnimation();
+    }
+
+    public void finishLoading() {
+        pDialog.dismissWithAnimation();
     }
 }

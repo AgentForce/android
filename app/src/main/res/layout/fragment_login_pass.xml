@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
+        android:layout_below="@+id/txt_hello"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -17,43 +20,31 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txt_user_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/activity_login_agency_title"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="50dp">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/agent_icon" />
+                android:layout_marginTop="50dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/cus_border_edittext">
 
                 <EditText
-                    android:id="@+id/edt_agency_name"
+                    android:id="@+id/edt_pass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/cus_border_edittext"
-                    android:hint="@string/activity_login_email"
-                    android:inputType="phone"
-                    android:maxLines="1"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="40dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
-                    android:textColor="@android:color/black"
-                    android:textCursorDrawable="@drawable/color_cursor" />
+                    android:cursorVisible="false"
+                    android:alpha="0"
+                    android:inputType="numberDecimal"
+                    android:maxLength="6"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list_pass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -63,14 +54,25 @@
             android:layout_weight="50"
             android:gravity="center_vertical">
 
+            <TextView
+                android:id="@+id/txt_forget_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/activity_login_forget_pass"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
             <Button
-                android:id="@+id/btn_next"
+                android:id="@+id/btn_login"
+                android:layout_below="@id/txt_forget_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/cus_button_events"
-                android:text="Tiếp tục"
+                android:text="Đăng nhập"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
         </RelativeLayout>

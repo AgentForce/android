@@ -8,16 +8,31 @@
 
     <!--activity_login-->
     <string name="activity_login_title">Đăng nhập tài khoản</string>
-    <string name="activity_login_hello">Chào bạn</string>
+    <string name="activity_login_hello">Vui lòng nhập mật khẩu</string>
     <string name="activity_login_email">Nhập mã đại lý</string>
     <string name="activity_login_pass">Nhập mật khẩu</string>
     <string name="activity_login_forget_pass">Quên mật khẩu?</string>
     <string name="activity_login_button">Đăng nhập</string>
 
-    <string name="activity_login_agency_actionbar">Mã đại lý của bạn</string>
     <string name="activity_login_agency_title">Nhập mã đại lý</string>
-    <string name="activity_login_phone_actionbar">Số điện thoại của bạn</string>
     <string name="activity_login_phone_title">Nhập số điện thoại của bạn</string>
+    <string name="activity_login_phone_hint">Số điện thoại</string>
+    <string name="activity_login_create_pass_title">Tạo mật khẩu mới</string>
+    <string name="activity_login_create_confirm_pass_title">Nhập lại mật khẩu</string>
+
+
+    <string name="activity_login_otp_hint">Nhập mã xác thực</string>
+    <string name="activity_login_otp_title">Tài khoản của bạn chưa được xác minh. Vui lòng nhấn vào nút <b>nhận mã kích hoạt</b> để nhận mã xác thực qua số điện thoại </string>
+    <string name="activity_login_otp_resent">Gửi lại mã xác thực</string>
+
+    <string-array name="loin_actionbar_array">
+        <item>Mã đại lý của bạn</item>
+        <item>Số điện thoại của bạn</item>
+        <item>Đăng nhập tài khoản</item>
+        <item>Xác thực số điện thoại</item>
+        <item>Tạo mật khẩu</item>
+        <item>Tạo mật khẩu</item>
+    </string-array>
 
 
     <string name="activity_login_welcome_title">Bắt đầu lập kế hoạch kinh doanh</string>

@@ -3,9 +3,11 @@ package manulife.manulifesop.activity.FAGroup.main;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +19,7 @@ import butterknife.BindView;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanPresenter;
 import manulife.manulifesop.base.BaseActivity;
+import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
 
 /**
  * Created by Chick on 1/23/2018.
@@ -31,6 +34,9 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
     @BindView(R.id.bottom_navigation)
     AHBottomNavigation bottomNavigation;
 
+    @BindView(R.id.frame_container)
+    FrameLayout frameLayout;
+
     AHBottomNavigationAdapter mNavigationAdapter;
 
     @Override
@@ -40,6 +46,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         mActionListener = new MainFAPresenter(this,this);
         setupSupportForApp();
         setupMenuBot();
+        mActionListener.checkIsGetCampaign();
     }
 
     private void setupSupportForApp()
@@ -64,6 +71,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         bottomNavigation.setAccentColor(getResources().getColor(R.color.colorPrimary));
         bottomNavigation.setInactiveColor(getResources().getColor(R.color.botMenuDisable));
+
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
@@ -100,5 +108,14 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_notify, menu);
         return true;
+    }
+
+    @Override
+    public void showFragmentConfirmCreatePlan() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        ft.replace(R.id.frame_container, ConfirmCreatePlanFragment.newInstance());
+        ft.commit();
     }
 }

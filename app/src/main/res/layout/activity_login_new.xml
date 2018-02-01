@@ -1,24 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/layout_root">
-    <include
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        layout="@layout/actionbar_custom"/>
+    android:orientation="vertical">
 
-    <!--<FrameLayout
-        android:id="@+id/frame_container"
+    <include
+        android:id="@+id/layout_top_actionbar"
+        layout="@layout/actionbar_custom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>-->
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/layout_login_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <View
+            android:id="@+id/status_bar"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@drawable/statusbar_header_bg" />
+        <!--layout top-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:background="@drawable/login_header_bg" />
+
+                <TextView
+                    android:id="@+id/txt_actionbar_title_2"
+                    style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="Đăng nhập tài khoản"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/img_user_avatar"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_avatar"
+                app:riv_corner_radius="45dp"
+                app:riv_mutate_background="true" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_hello"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_top"
+            android:gravity="center_horizontal"
+            android:text="@string/activity_login_hello"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
 
     <manulife.manulifesop.element.CustomViewPager
         android:id="@+id/view_pager_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        />
+        android:fitsSystemWindows="true"/>
+
 
 </LinearLayout>

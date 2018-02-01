@@ -18,4 +18,9 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
         this.mContext = context;
     }
 
+    @Override
+    public void checkIsGetCampaign() {
+        //if is not campaign
+        mPresenterView.showFragmentConfirmCreatePlan();
+    }
 }
