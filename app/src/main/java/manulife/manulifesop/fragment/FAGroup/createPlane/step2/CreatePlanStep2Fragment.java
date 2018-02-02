@@ -76,55 +76,6 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
         initEventsSeekBar();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    private void changeIncomeSeedBar(float min, float max, float current) {
-        seekBarIncome.getBuilder()
-                .setMax(max)
-                .setProgress(current)
-                .setMin(min)
-                .apply();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(valueChangeSeekBar data) {
-        txtIncomeMin.setText((int)data.getMin()+"tr");
-        txtIncomeMax.setText((int)data.getMax()+"tr");
-        changeIncomeSeedBar(data.getMin(), data.getMax(), data.getCurrent());
-    }
-
-    private class valueChangeSeekBar {
-        private float min, max, current;
-
-        public valueChangeSeekBar(float min, float max, float current) {
-            this.min = min;
-            this.max = max;
-            this.current = current;
-        }
-
-        public float getMin() {
-            return min;
-        }
-
-        public float getMax() {
-            return max;
-        }
-
-        public float getCurrent() {
-            return current;
-        }
-    }
-
     private void initEventsSeekBar() {
         seekBarIncome.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
             @Override
@@ -132,7 +83,12 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
                 float min = seekBar.getMin();
                 float max = seekBar.getMax();
                 if (progress == max) {
-                    EventBus.getDefault().post(new valueChangeSeekBar(min, max + 100, max));
+
+                    txtIncomeMin.setText((int)min+"tr");
+                    txtIncomeMax.setText((int)(max+100)+"tr");
+                    seekBarIncome.setMax(max+100);
+                    seekBarIncome.setMin(min);
+                    seekBarIncome.setProgress(max);
                 }
             }
 
