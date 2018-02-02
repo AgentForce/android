@@ -11,13 +11,21 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.warkiz.widget.IndicatorSeekBar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
@@ -32,15 +40,18 @@ import manulife.manulifesop.util.Utils;
  * Created by Chick on 10/27/2017.
  */
 
-public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity,CreatePlanStep2Present> implements CreatePlanStep2Contract.View {
+public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, CreatePlanStep2Present> implements CreatePlanStep2Contract.View {
 
-    @BindView(R.id.list_pass)
-    RecyclerView listPass;
-    @BindView(R.id.txt_pass)
-    TextView txtPass;
+    @BindView(R.id.btn_next)
+    Button btnNext;
 
-    List<Boolean> mDataList;
-    PasswordAdapter mAdapter;
+    @BindView(R.id.sb_income)
+    IndicatorSeekBar seekBarIncome;
+    @BindView(R.id.txt_income_min)
+    TextView txtIncomeMin;
+    @BindView(R.id.txt_income_max)
+    TextView txtIncomeMax;
+
 
     public static CreatePlanStep2Fragment newInstance() {
         Bundle args = new Bundle();
@@ -62,10 +73,98 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity,Cre
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initEventsSeekBar();
+    }
 
-        initPasswordView();
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
-        SmsReceiver.bindListener(new SmsListener() {
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    private void changeIncomeSeedBar(float min, float max, float current) {
+        seekBarIncome.getBuilder()
+                .setMax(max)
+                .setProgress(current)
+                .setMin(min)
+                .apply();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(valueChangeSeekBar data) {
+        txtIncomeMin.setText((int)data.getMin()+"tr");
+        txtIncomeMax.setText((int)data.getMax()+"tr");
+        changeIncomeSeedBar(data.getMin(), data.getMax(), data.getCurrent());
+    }
+
+    private class valueChangeSeekBar {
+        private float min, max, current;
+
+        public valueChangeSeekBar(float min, float max, float current) {
+            this.min = min;
+            this.max = max;
+            this.current = current;
+        }
+
+        public float getMin() {
+            return min;
+        }
+
+        public float getMax() {
+            return max;
+        }
+
+        public float getCurrent() {
+            return current;
+        }
+    }
+
+    private void initEventsSeekBar() {
+        seekBarIncome.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
+                float min = seekBar.getMin();
+                float max = seekBar.getMax();
+                if (progress == max) {
+                    EventBus.getDefault().post(new valueChangeSeekBar(min, max + 100, max));
+                }
+            }
+
+            @Override
+            public void onSectionChanged(IndicatorSeekBar seekBar, int thumbPosOnTick, String textBelowTick, boolean fromUserTouch) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(IndicatorSeekBar seekBar, int thumbPosOnTick) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+
+            }
+        });
+    }
+
+    @OnClick(R.id.btn_next)
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.btn_next: {
+                mActivity.showNextFragment();
+                break;
+            }
+        }
+    }
+
+    /*SmsReceiver.bindListener(new SmsListener() {
             @Override
             public void messageReceived(String messageText) {
 
@@ -79,7 +178,7 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity,Cre
 
                 // If your OTP is six digits number, you may use the below code
 
-                /*Pattern pattern = Pattern.compile(OTP_REGEX);
+                *//*Pattern pattern = Pattern.compile(OTP_REGEX);
                 Matcher matcher = pattern.matcher(messageText);
                 String otp;
                 while (matcher.find())
@@ -87,77 +186,8 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity,Cre
                     otp = matcher.group();
                 }
 
-                Toast.makeText(MainActivity.this,"OTP: "+ otp ,Toast.LENGTH_LONG).show();*/
+                Toast.makeText(MainActivity.this,"OTP: "+ otp ,Toast.LENGTH_LONG).show();*//*
 
             }
-        });
-    }
-
-    public void initPasswordView()
-    {
-        //init list password
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        listPass.setLayoutManager(layoutManager);
-
-        mDataList = new ArrayList<>();
-        mDataList.add(false);
-        mDataList.add(false);
-        mDataList.add(false);
-        mDataList.add(false);
-        mDataList.add(false);
-        mDataList.add(false);
-
-        mAdapter = new PasswordAdapter(getContext(),mDataList);
-        listPass.setAdapter(mAdapter);
-
-        //add listener txt_pass
-        txtPass.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String tmpText = editable.toString();
-
-                for(int i=1;i<=mDataList.size();i++)
-                {
-                    if(i <= tmpText.length()) {
-                        mDataList.set(i-1, true);
-                    }else
-                    {
-                        mDataList.set(i-1,false);
-                    }
-                }
-                mAdapter.notifyDataSetChanged();
-                if(tmpText.length()>=6)
-                {
-                    Toast.makeText(mActivity, tmpText, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-    }
-    /*@OnClick(R.id.btn_loading)
-    public void onClick(View view)
-    {
-        int id = view.getId();
-        switch (id)
-        {
-            case R.id.btn_loading:
-            {
-                //mActivity.showLoading("fragment job 1 call method in activity");
-                //mActivity.finishLoading("load finish",true);
-                //mActivity.viewFinishLoading();
-                mActivity.goNextScreen(MainActivity.class);
-                break;
-            }
-        }
-    }*/
+        });*/
 }

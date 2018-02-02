@@ -5,12 +5,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
+import butterknife.OnClick;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
@@ -26,6 +28,9 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity,Cre
 
     /*@BindView(R.id.view_pager_step1)
     CustomViewPager viewPager;*/
+
+    @BindView(R.id.btn_next)
+    Button btnNext;
 
     public static CreatePlanStep1Fragment newInstance() {
         Bundle args = new Bundle();
@@ -79,21 +84,18 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity,Cre
         }
     }*/
 
-    /*@OnClick(R.id.btn_loading)
+    @OnClick(R.id.btn_next)
     public void onClick(View view)
     {
         int id = view.getId();
         switch (id)
         {
-            case R.id.btn_loading:
+            case R.id.btn_next:
             {
-                //mActivity.showLoading("fragment job 1 call method in activity");
-                //mActivity.finishLoading("load finish",true);
-                //mActivity.viewFinishLoading();
-                mActivity.goNextScreen(MainActivity.class);
+                mActivity.showNextFragment();
                 break;
             }
         }
-    }*/
+    }
 
 }

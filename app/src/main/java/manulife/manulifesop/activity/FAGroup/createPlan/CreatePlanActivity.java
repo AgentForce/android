@@ -3,24 +3,35 @@ package manulife.manulifesop.activity.FAGroup.createPlan;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import chick.indicator.CircleIndicatorPager;
 import manulife.manulifesop.R;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step1.CreatePlanStep1Fragment;
+import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Fragment;
+import manulife.manulifesop.fragment.FAGroup.createPlane.step3.CreatePlanStep3Fragment;
 
 
 public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implements CreatePlanContract.View {
     @BindView(R.id.txt_actionbar_title)
     TextView txtActionbarTitle;
+    @BindView(R.id.layout_btn_back)
+    LinearLayout layoutBackButton;
+    @BindView(R.id.actionbar_custom_all)
+    RelativeLayout actionBarAll;
+
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     @BindView(R.id.circle_indicator_pager)
@@ -48,6 +59,7 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
 
     private void setupSupportForApp() {
         txtActionbarTitle.setText(getResources().getString(R.string.activity_create_plan_title_actionbar));
+        layoutBackButton.setVisibility(View.VISIBLE);
 
         int statusBarHeight = 0;
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -63,8 +75,8 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     {
         mListFragment = new ArrayList<>();
         mListFragment.add(CreatePlanStep1Fragment.newInstance());
-        mListFragment.add(CreatePlanStep1Fragment.newInstance());
-        mListFragment.add(CreatePlanStep1Fragment.newInstance());
+        mListFragment.add(CreatePlanStep2Fragment.newInstance());
+        mListFragment.add(CreatePlanStep3Fragment.newInstance());
 
         mAdapter = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment);
         if (viewPager != null) {
@@ -73,5 +85,21 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
         if (indicator != null) {
             indicator.setViewPager(viewPager);
         }
+    }
+
+    @OnClick({R.id.layout_btn_back})
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.layout_btn_back: {
+                backToPrevious(new Bundle());
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void showNextFragment() {
+        viewPager.setCurrentItem(viewPager.getCurrentItem()+1,true);
     }
 }

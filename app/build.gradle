@@ -50,4 +50,7 @@ dependencies {
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     implementation project(':indicator')
     compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
+    compile 'com.github.warkiz.widget:indicatorseekbar:1.2.5'
+
+    compile 'org.greenrobot:eventbus:3.1.1'
 }

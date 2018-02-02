@@ -31,6 +31,9 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
     TextView txtActionbarTitle;
     @BindView(R.id.status_bar)
     View viewStatusBar;
+    @BindView(R.id.layout_btn_back)
+    LinearLayout layoutBackButton;
+
     @BindView(R.id.bottom_navigation)
     AHBottomNavigation bottomNavigation;
 
@@ -52,6 +55,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
     private void setupSupportForApp()
     {
         txtActionbarTitle.setText(getResources().getString(R.string.activity_main_fa_dashboard));
+        layoutBackButton.setVisibility(View.GONE);
 
         int statusBarHeight = 0;
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");

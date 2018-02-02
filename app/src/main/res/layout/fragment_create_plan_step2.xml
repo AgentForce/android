@@ -1,109 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="step2" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/cus_radio_group_background"
-        android:orientation="horizontal"
-        android:weightSum="90">
-
-        <RadioButton
-            android:id="@+id/rb1"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="30"
-            android:background="@drawable/cus_radio_background"
-            android:button="@null"
-            android:checked="true"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="Female"
-            android:textColor="@drawable/cus_radio_background" />
-
-        <RadioButton
-            android:id="@+id/rb2"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="30"
-            android:background="@drawable/cus_radio_background"
-            android:button="@null"
-            android:checked="false"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="Male"
-            android:textColor="@drawable/cus_radio_background" />
-
-        <RadioButton
-            android:id="@+id/rb3"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="30"
-            android:background="@drawable/cus_radio_background"
-            android:button="@null"
-            android:checked="false"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="Unidentify"
-            android:textColor="@drawable/cus_radio_background" />
-    </RadioGroup>
-
-    <RelativeLayout
-        android:layout_width="40dp"
-        android:layout_height="45dp">
-
-        <LinearLayout
-            android:layout_width="40dp"
-            android:layout_height="45dp"
-            android:background="@drawable/ic_green_oval" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="99"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/cus_text_step"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:text="Bước 2"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0"
-            android:background="@android:color/darker_gray"
-            android:cursorVisible="false" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/cus_border_edittext">
-
-        <EditText
-            android:id="@+id/txt_pass"
+        <TextView
+            android:id="@+id/txt_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alpha="0"
-            android:cursorVisible="false"
-            android:maxLength="6" />
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/activity_create_plan_title_step2"
+            android:textSize="@dimen/welcome_activity_note"
+            android:textStyle="bold" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/list_pass"
-            android:layout_width="wrap_content"
+        <!--mức hoa hồng-->
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal" />
-    </RelativeLayout>
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/activity_create_plan_title_seekbar1_step2" />
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/gray_seedbar_background"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <com.warkiz.widget.IndicatorSeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isb_indicator_color="@android:color/transparent"
+                app:isb_indicator_custom_top_content_layout="@layout/custom_seekbar_top_precent_rect"
+                app:isb_indicator_stay="true"
+                app:isb_indicator_text_size="16sp"
+                app:isb_max="50"
+                app:isb_min="10"
+                app:isb_progress="30"
+                app:isb_seek_bar_type="continuous"
+                app:isb_show_indicator="true"
+                app:isb_text_color="@color/colorSecond"
+                app:isb_thumb_color="@color/colorSecond"
+                app:isb_tick_num="9"
+                app:isb_track_background_bar_color="@color/colorSecond"
+                app:isb_track_background_bar_size="5dp"
+                app:isb_track_progress_bar_color="@color/colorSecond"
+                app:isb_track_progress_bar_size="5dp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10%"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="50%"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <!--mức hoa hồng end-->
+
+        <!--hợp đồng-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/activity_create_plan_title_seekbar2_step2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/gray_seedbar_background"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <com.warkiz.widget.IndicatorSeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isb_indicator_color="@android:color/transparent"
+                app:isb_indicator_custom_top_content_layout="@layout/custom_seekbar_top_money_rect"
+                app:isb_indicator_stay="true"
+                app:isb_indicator_text_size="16sp"
+                app:isb_max="50"
+                app:isb_min="5"
+                app:isb_progress="28"
+                app:isb_seek_bar_type="continuous"
+                app:isb_show_indicator="true"
+                app:isb_text_color="@color/colorSecond"
+                app:isb_thumb_color="@color/colorSecond"
+                app:isb_tick_num="9"
+                app:isb_track_background_bar_color="@color/colorSecond"
+                app:isb_track_background_bar_size="5dp"
+                app:isb_track_progress_bar_color="@color/colorSecond"
+                app:isb_track_progress_bar_size="5dp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5tr"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="50tr"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <!--hợp đồng end-->
+
+        <!--thu nhập-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/activity_create_plan_title_seekbar3_step2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/gray_seedbar_background"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/sb_income"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isb_indicator_color="@android:color/transparent"
+                app:isb_indicator_custom_top_content_layout="@layout/custom_seekbar_top_money_rect"
+                app:isb_indicator_stay="true"
+                app:isb_indicator_text_size="16sp"
+                app:isb_max="100"
+                app:isb_min="10"
+                app:isb_progress="55"
+                app:isb_seek_bar_type="continuous"
+                app:isb_show_indicator="true"
+                app:isb_text_color="@color/colorSecond"
+                app:isb_thumb_color="@color/colorSecond"
+                app:isb_tick_num="9"
+                app:isb_track_background_bar_color="@color/colorSecond"
+                app:isb_track_background_bar_size="5dp"
+                app:isb_track_progress_bar_color="@color/colorSecond"
+                app:isb_track_progress_bar_size="5dp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/txt_income_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10tr"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_income_max"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="100tr"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <!--thu nhập end-->
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_note"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/cus_button_events"
+            android:text="Tiếp tục"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
