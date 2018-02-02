@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 public class CheckUser {
     @SerializedName("statusCode")
     @Expose
-    public Integer errorCode;
+    public Integer statusCode;
 
     @SerializedName("msgcode")
     @Expose
@@ -27,7 +27,7 @@ public class CheckUser {
     public class Data {
         @SerializedName("status")
         @Expose
-        public Boolean status;
+        public Integer status;
     }
 
 

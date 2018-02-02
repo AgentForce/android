@@ -37,8 +37,7 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
 
     @Override
     public void checkPermissionGranted() {
-        if(isPermissionGranted())
-        {
+        if (isPermissionGranted()) {
             getDeviceInfo(mContest);
         }
     }
@@ -47,8 +46,7 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
         if (Build.VERSION.SDK_INT >= 23) {
             ArrayList<String> temp = new ArrayList<>();
             //READ_PHONE_STATE
-            if(mContest.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
-            {
+            if (mContest.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                 temp.add(Manifest.permission.READ_PHONE_STATE);
             }
 
@@ -72,29 +70,41 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     @Override
     public void checkUserIsActive(String agencyID, String phone) {
 
-        /*String checksum = Utils.getSignature(phone+agencyID);
+        String checksum = Utils.getSignature(phone + agencyID);
 
         getCompositeDisposable().add(ApiService.getServer().checkUser(
-                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum, phone,agencyID
-                ).subscribeOn(Schedulers.computation())
+                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum, phone, agencyID
+        ).subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse, this::handleError));*/
+                .subscribe(this::handleResponse, this::handleError));
 
         //truong hop nguoi dung chua active
-        mPresenterView.finishLoading();
-        mPresenterView.showFragmentOTPInput();
+        //mPresenterView.finishLoading();
+        //mPresenterView.showFragmentOTPInput();
         //mPresenterView.finishLoading();
         //mPresenterView.showFragmentPassInput();
 
     }
 
     private void handleError(Throwable throwable) {
-        mPresenterView.finishLoading(throwable.getMessage(),false);
+        mPresenterView.finishLoading(throwable.getMessage(), false);
     }
 
     private void handleResponse(CheckUser checkUser) {
-        mPresenterView.finishLoading(checkUser.msg,true);
+        if (checkUser.statusCode == 200)//thành công
+        {
+            mPresenterView.finishLoading();
+            if (checkUser.data.status == 1)//user chưa active
+            {
+                mPresenterView.showFragmentOTPInput();
+            } else {
+                mPresenterView.showFragmentPassInput();
+            }
+        } else {
+            mPresenterView.finishLoading(checkUser.msg, false);
+        }
+
     }
 
     @Override
@@ -104,9 +114,9 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     }
 
     @Override
-    public void createPass(String user,String pass) {
+    public void createPass(String user, String pass) {
         //goi login
-        login(user,pass);
+        login(user, pass);
     }
 
     @Override
@@ -118,8 +128,7 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
         checkCampaign();
     }
 
-    private void checkCampaign()
-    {
+    private void checkCampaign() {
         mPresenterView.finishLoading();
         //go to main if campaign is created
         //mPresenterView.showMainFAActvity();
