@@ -58,7 +58,8 @@ public class PhoneFragment extends BaseFragment<LoginActivity, PhonePresent> imp
         switch (id) {
             case R.id.btn_next: {
                 if (edtPhone.getText().toString().length() > 0) {
-                    mActivity.showCheckingUser(edtPhone.getText().toString());
+                    String phone = "84" + edtPhone.getText().toString().substring(1);
+                    mActivity.showCheckingUser(phone);
                 } else {
                     mActivity.showMessage("Thông báo", "Chưa nhập số điện thoại!", SweetAlertDialog.WARNING_TYPE);
                 }

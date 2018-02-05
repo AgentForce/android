@@ -94,13 +94,22 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     private void handleResponse(CheckUser checkUser) {
         if (checkUser.statusCode == 200)//thành công
         {
-            mPresenterView.finishLoading();
-            if (checkUser.data.status == 1)//user chưa active
-            {
-                mPresenterView.showFragmentOTPInput();
-            } else {
-                mPresenterView.showFragmentPassInput();
+            switch (checkUser.data.status){
+                case 1: {//user chưa active
+                    mPresenterView.finishLoading();
+                    mPresenterView.showFragmentOTPInput();
+                    break;
+                }
+                case 5:{//user đã active
+                    mPresenterView.finishLoading();
+                    mPresenterView.showFragmentPassInput();
+                    break;
+                }
+                default:{
+                    mPresenterView.finishLoading(checkUser.msg,false);
+                }
             }
+
         } else {
             mPresenterView.finishLoading(checkUser.msg, false);
         }
