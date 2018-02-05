@@ -1,11 +1,13 @@
 package manulife.manulifesop.fragment.login.confirmPassInput;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -19,6 +21,7 @@ import manulife.manulifesop.R;
 import manulife.manulifesop.activity.login.LoginActivity;
 import manulife.manulifesop.adapter.PasswordAdapter;
 import manulife.manulifesop.base.BaseFragment;
+import manulife.manulifesop.element.RecyclerItemClickListener;
 
 
 /**
@@ -77,6 +80,20 @@ public class ConfirmPassFragment extends BaseFragment<LoginActivity, ConfirmPass
 
         mAdapter = new PasswordAdapter(getContext(), mDataList);
         listPass.setAdapter(mAdapter);
+
+        //list pass listener
+        listPass.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), listPass, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(edtPass, InputMethodManager.SHOW_IMPLICIT);
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+        }));
 
         //add listener txt_pass
         edtPass.addTextChangedListener(new TextWatcher() {
