@@ -92,7 +92,7 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity,Cre
         {
             case R.id.btn_next:
             {
-                mActivity.showNextFragment();
+                mActivity.showNextFragment(0);
                 break;
             }
         }

@@ -52,6 +52,7 @@
             android:paddingTop="5dp">
 
             <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/sb_profit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isb_indicator_color="@android:color/transparent"
@@ -116,6 +117,7 @@
             android:paddingTop="5dp">
 
             <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/sb_contract_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isb_indicator_color="@android:color/transparent"

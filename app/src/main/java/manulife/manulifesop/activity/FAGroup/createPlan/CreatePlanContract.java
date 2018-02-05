@@ -9,7 +9,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface CreatePlanContract {
     interface View extends BaseMVPView
     {
-        void showNextFragment();
+        void showNextFragment(int contractNum);
     }
     interface Action{
 

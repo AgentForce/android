@@ -3,6 +3,9 @@ package manulife.manulifesop.fragment.FAGroup.createPlane.step3;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,6 +27,20 @@ public class CreatePlanStep3Fragment extends BaseFragment<CreatePlanActivity,Cre
     @BindView(R.id.btn_agree)
     Button btnAgree;
 
+    @BindView(R.id.txt_contract_num)
+    TextView txtContractNum;
+    @BindView(R.id.txt_meet_num)
+    TextView txtMeetNum;
+    @BindView(R.id.txt_appointment_num)
+    TextView txtAppointmentNum;
+    @BindView(R.id.txt_cus_num)
+    TextView txtCusNum;
+
+    @BindView(R.id.rb_month_year)
+    RadioGroup rbMonthYear;
+
+
+
     public static CreatePlanStep3Fragment newInstance() {
         Bundle args = new Bundle();
         CreatePlanStep3Fragment fragment = new CreatePlanStep3Fragment();
@@ -44,8 +61,24 @@ public class CreatePlanStep3Fragment extends BaseFragment<CreatePlanActivity,Cre
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
     }
+
+    /*@Override
+    public void onResume() {
+        int contractNum = mActivity.getContractNum();
+        if(rbMonthYear.getCheckedRadioButtonId() == R.id.rbn_month)
+        {
+            txtContractNum.setText(contractNum+"");
+            txtMeetNum.setText((contractNum*3)+"");
+            txtAppointmentNum.setText((contractNum*5)+"");
+            txtCusNum.setText((contractNum*10)+"");
+        }else
+        {
+            Toast.makeText(mActivity, "load via year", Toast.LENGTH_SHORT).show();
+        }
+
+        super.onResume();
+    }*/
 
     @OnClick(R.id.btn_agree)
     public void onClick(View view)

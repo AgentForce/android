@@ -47,6 +47,12 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
 
     @BindView(R.id.sb_income)
     IndicatorSeekBar seekBarIncome;
+    @BindView(R.id.sb_profit)
+    IndicatorSeekBar seekProfit;
+    @BindView(R.id.sb_contract_price)
+    IndicatorSeekBar seekContractPrice;
+
+
     @BindView(R.id.txt_income_min)
     TextView txtIncomeMin;
     @BindView(R.id.txt_income_max)
@@ -114,7 +120,10 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
         int id = view.getId();
         switch (id) {
             case R.id.btn_next: {
-                mActivity.showNextFragment();
+                //get contract num
+                float contractNumFloat = (float) (seekBarIncome.getProgress()*100) / (float)seekProfit.getProgress() / (float)seekContractPrice.getProgress();
+                int contractNum = Math.round(contractNumFloat);
+                mActivity.showNextFragment(contractNum);
                 break;
             }
         }

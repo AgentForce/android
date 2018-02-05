@@ -42,6 +42,8 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     @BindView(R.id.layout_root)
     View layoutRoot;
 
+    private int mContractNum;
+
 
 
     private List<BaseFragment> mListFragment;
@@ -98,8 +100,14 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
         }
     }
 
+    public int getContractNum()
+    {
+        return this.mContractNum;
+    }
+
     @Override
-    public void showNextFragment() {
+    public void showNextFragment(int contractNum) {
+        this.mContractNum = contractNum;
         viewPager.setCurrentItem(viewPager.getCurrentItem()+1,true);
     }
 }

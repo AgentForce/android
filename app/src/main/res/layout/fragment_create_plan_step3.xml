@@ -34,6 +34,7 @@
             android:textStyle="bold" />
 
         <RadioGroup
+            android:id="@+id/rb_month_year"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -203,7 +204,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tư vấn "
+                android:text="Ký hợp đồng "
                 android:textSize="@dimen/welcome_activity_note" />
 
             <TextView
