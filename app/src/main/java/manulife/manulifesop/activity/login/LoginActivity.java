@@ -223,19 +223,6 @@ public class LoginActivity extends BaseActivity<LoginPresent>
     }
 
     @Override
-    public void showCheckingUser(String phone) {
-        this.mPhone = phone;
-        showLoading("Kiểm tra trạng thái user!");
-        mActionListener.checkUserIsActive(mAgencyID, phone);
-    }
-
-    @Override
-    public void showCheckOTP(String otp) {
-        showLoading("Kiểm tra mã xác thực!");
-        mActionListener.checkOTP(otp,mAgencyID,mPhone);
-    }
-
-    @Override
     public void showCreatePass(String pass) {
         showLoading("Thiết lập mật khẩu!");
         mActionListener.createPass(mAgencyID,pass);
@@ -319,6 +306,10 @@ public class LoginActivity extends BaseActivity<LoginPresent>
         }
     }
 
+    public void setPhoneInputed(String phone)
+    {
+        this.mPhone = phone;
+    }
     public String getPhoneInputed()
     {
         return mPhone;
@@ -327,6 +318,10 @@ public class LoginActivity extends BaseActivity<LoginPresent>
     public String getCreatePass()
     {
         return mCreatePass;
+    }
+    public String getmAgencyID()
+    {
+        return mAgencyID;
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

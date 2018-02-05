@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by trinm on 12/01/2018.
  */
 
-public class LoginData {
+public class InputLoginData {
     @SerializedName("UserName")
     @Expose
     private String userName;

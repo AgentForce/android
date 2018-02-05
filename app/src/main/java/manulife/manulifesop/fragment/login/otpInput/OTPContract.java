@@ -10,10 +10,12 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface OTPContract {
 
     interface View extends BaseMVPView {
-
+        void disableRequestButton(boolean isDisable);
+        void showFragmentCreatePass();
     }
 
     interface Action {
-
+        void requestOTP(String user, String phone);
+        void verifyOTP(String user,String phone,String otp);
     }
 }

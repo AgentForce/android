@@ -68,61 +68,6 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     }
 
     @Override
-    public void checkUserIsActive(String agencyID, String phone) {
-
-        String checksum = Utils.getSignature(phone + agencyID);
-
-        getCompositeDisposable().add(ApiService.getServer().checkUser(
-                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum, phone, agencyID
-        ).subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse, this::handleError));
-
-        //truong hop nguoi dung chua active
-        //mPresenterView.finishLoading();
-        //mPresenterView.showFragmentOTPInput();
-        //mPresenterView.finishLoading();
-        //mPresenterView.showFragmentPassInput();
-
-    }
-
-    private void handleError(Throwable throwable) {
-        mPresenterView.finishLoading(throwable.getMessage(), false);
-    }
-
-    private void handleResponse(CheckUser checkUser) {
-        if (checkUser.statusCode == 200)//thành công
-        {
-            switch (checkUser.data.status){
-                case 1: {//user chưa active
-                    mPresenterView.finishLoading();
-                    mPresenterView.showFragmentOTPInput();
-                    break;
-                }
-                case 5:{//user đã active
-                    mPresenterView.finishLoading();
-                    mPresenterView.showFragmentPassInput();
-                    break;
-                }
-                default:{
-                    mPresenterView.finishLoading(checkUser.msg,false);
-                }
-            }
-
-        } else {
-            mPresenterView.finishLoading(checkUser.msg, false);
-        }
-
-    }
-
-    @Override
-    public void checkOTP(String otp, String user, String phone) {
-        mPresenterView.finishLoading();
-        mPresenterView.showFragmentCreatePass();
-    }
-
-    @Override
     public void createPass(String user, String pass) {
         //goi login
         login(user, pass);

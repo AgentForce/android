@@ -51,6 +51,15 @@ public class PhoneFragment extends BaseFragment<LoginActivity, PhonePresent> imp
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void showFragmentOTPInput() {
+        mActivity.showFragmentOTPInput();
+    }
+
+    @Override
+    public void showFragmentPassInput() {
+        mActivity.showFragmentPassInput();
+    }
 
     @OnClick(R.id.btn_next)
     public void onClick(View view) {
@@ -58,8 +67,9 @@ public class PhoneFragment extends BaseFragment<LoginActivity, PhonePresent> imp
         switch (id) {
             case R.id.btn_next: {
                 if (edtPhone.getText().toString().length() > 0) {
+                    mActivity.setPhoneInputed(edtPhone.getText().toString());
                     String phone = "84" + edtPhone.getText().toString().substring(1);
-                    mActivity.showCheckingUser(phone);
+                    mActionListener.checkUser(mActivity.getmAgencyID(),phone);
                 } else {
                     mActivity.showMessage("Thông báo", "Chưa nhập số điện thoại!", SweetAlertDialog.WARNING_TYPE);
                 }

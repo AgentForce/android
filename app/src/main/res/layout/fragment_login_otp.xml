@@ -93,6 +93,8 @@
                 android:gravity="center_horizontal"
                 android:text="@string/activity_login_otp_resent"
                 android:textSize="16sp"
+                android:clickable="true"
+                android:textColor="@drawable/text_color"
                 android:textStyle="bold" />
 
             <Button

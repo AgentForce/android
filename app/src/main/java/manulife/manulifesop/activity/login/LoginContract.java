@@ -20,8 +20,6 @@ public interface LoginContract {
         void showFragmentCreatePass();
         void showFragmentConfirmPass(String createPass);
 
-        void showCheckingUser(String phone);
-        void showCheckOTP(String otp);
         void showCreatePass(String pass);
         void showLogin(String pass);
         void showMainFAActvity();
@@ -29,8 +27,7 @@ public interface LoginContract {
     }
 
     interface Action {
-        void checkUserIsActive(String agencyID, String phone);
-        void checkOTP(String otp,String user,String phone);
+
         void createPass(String user, String pass);
         void login(String userName, String pass);
 

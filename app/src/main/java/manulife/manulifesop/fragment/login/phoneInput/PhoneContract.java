@@ -10,10 +10,11 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface PhoneContract {
 
     interface View extends BaseMVPView {
-
+        void showFragmentOTPInput();
+        void showFragmentPassInput();
     }
 
     interface Action {
-
+        void checkUser(String user,String phone);
     }
 }

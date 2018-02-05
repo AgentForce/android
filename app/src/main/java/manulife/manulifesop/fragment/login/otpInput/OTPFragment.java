@@ -58,7 +58,7 @@ public class OTPFragment extends BaseFragment<LoginActivity, OTPPresent> impleme
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new OTPPresent(this);
+        mActionListener = new OTPPresent(this,getContext());
     }
 
     @Override
@@ -66,6 +66,7 @@ public class OTPFragment extends BaseFragment<LoginActivity, OTPPresent> impleme
         super.onViewCreated(view, savedInstanceState);
 
         showHideViewWhenSoftKeyActive();
+        disableRequestButton(false);
     }
 
     @Override
@@ -106,19 +107,50 @@ public class OTPFragment extends BaseFragment<LoginActivity, OTPPresent> impleme
         });
     }
 
-    @OnClick(R.id.btn_next)
+    @Override
+    public void disableRequestButton(boolean isDisable) {
+        if(isDisable)
+        {
+            //disable button request otp
+            btnRequestOTP.setAlpha(0.5f);
+            btnRequestOTP.setClickable(false);
+
+            //enable resent opt
+            txtResentOTP.setAlpha(1f);
+            txtResentOTP.setClickable(true);
+        }else{
+            //enable button request otp
+            btnRequestOTP.setAlpha(1f);
+            btnRequestOTP.setClickable(true);
+
+            //disable resent opt
+            txtResentOTP.setAlpha(0.3f);
+            txtResentOTP.setClickable(false);
+        }
+    }
+
+    @Override
+    public void showFragmentCreatePass() {
+        mActivity.showFragmentCreatePass();
+    }
+
+    @OnClick({R.id.btn_next,R.id.btn_request_otp,R.id.txt_resent_otp})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.btn_next: {
                 if (edtOTP.getText().toString().length() > 0) {
-                    //mActivity.showFragmentPhoneInput(edtAgencyName.getText().toString());
-                    //mActivity.showCheckingUser(edtPhone.getText().toString());
-                    mActivity.showCheckOTP(edtOTP.getText().toString());
+                    mActionListener.verifyOTP(mActivity.getmAgencyID(),mActivity.getPhoneInputed(),edtOTP.getText().toString());
 
                 } else {
                     mActivity.showMessage("Thông báo", "Chưa nhập mã xác thực!", SweetAlertDialog.WARNING_TYPE);
                 }
+                break;
+            }
+            case R.id.txt_resent_otp:
+            case R.id.btn_request_otp:{
+                //call api request otp
+                mActionListener.requestOTP(mActivity.getmAgencyID(),mActivity.getPhoneInputed());
                 break;
             }
         }
