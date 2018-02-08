@@ -2,6 +2,7 @@ package manulife.manulifesop.activity.FAGroup.main;
 
 import android.content.Context;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanContract;
 import manulife.manulifesop.base.BasePresenter;
 
@@ -19,8 +20,12 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
     }
 
     @Override
-    public void checkIsGetCampaign() {
-        //if is not campaign
-        mPresenterView.showFragmentConfirmCreatePlan();
+    public void checkIsGetCampaign(boolean isGetCampaign) {
+        if (isGetCampaign) {
+            mPresenterView.showMessage("Thông báo","Load dashboard", SweetAlertDialog.SUCCESS_TYPE);
+        } else {
+            //if is not campaign
+            mPresenterView.showFragmentConfirmCreatePlan();
+        }
     }
 }

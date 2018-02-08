@@ -43,7 +43,8 @@
     <string name="activity_create_plan_title_step1">Vui lòng nhập ngày bắt đầu</string>
     <string name="activity_create_plan_note_step1">Kế hoạch kinh doanh sẽ tính 1 năm từ lúc bạn nhập thời gian bắt đầu</string>
     <string name="activity_create_plan_title_step2">Thu nhập mong muốn</string>
-    <string name="activity_create_plan_title_step3">Kết quả dự kiến</string>
+    <string name="activity_create_plan_title_step3">Kết quả 1/2: Khách hàng dự kiến</string>
+    <string name="activity_create_plan_title_step4">Kết quả 2/2: Thu nhập đạt được</string>
     <string name="activity_create_plan_title_seekbar1_step2">Mức hoa hồng</string>
     <string name="activity_create_plan_title_seekbar2_step2">Trung bình hợp đồng (Triệu đồng)</string>
     <string name="activity_create_plan_title_seekbar3_step2">Thu nhập mong muốn hàng tháng (Triệu đồng)</string>

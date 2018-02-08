@@ -8,112 +8,108 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class LoginResult {
-    @SerializedName("Result")
+
+    @SerializedName("status")
     @Expose
-    private Result result;
+    private Integer status;
+    @SerializedName("data")
+    @Expose
+    private Data data;
+    @SerializedName("msgCode")
+    @Expose
+    private String msgCode;
+    @SerializedName("msg")
+    @Expose
+    private String msg;
 
-    public Result getResult() {
-        return result;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setResult(Result result) {
-        this.result = result;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public class Result {
+    public Data getData() {
+        return data;
+    }
 
-        @SerializedName("ErrorCode")
+    public void setData(Data data) {
+        this.data = data;
+    }
+
+    public String getMsgCode() {
+        return msgCode;
+    }
+
+    public void setMsgCode(String msgCode) {
+        this.msgCode = msgCode;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public class Data {
+
+        @SerializedName("access_token")
         @Expose
-        private Integer errorCode;
-        @SerializedName("ErrorDescription")
+        private String accessToken;
+        @SerializedName("token_type")
         @Expose
-        private String errorDescription;
-        @SerializedName("Data")
+        private String tokenType;
+        @SerializedName("expires_in")
         @Expose
-        private Data data;
+        private Integer expiresIn;
+        @SerializedName("refresh_token")
+        @Expose
+        private String refreshToken;
+        @SerializedName("scope")
+        @Expose
+        private String scope;
 
-        public Integer getErrorCode() {
-            return errorCode;
+        public String getAccessToken() {
+            return accessToken;
         }
 
-        public void setErrorCode(Integer errorCode) {
-            this.errorCode = errorCode;
+        public void setAccessToken(String accessToken) {
+            this.accessToken = accessToken;
         }
 
-        public String getErrorDescription() {
-            return errorDescription;
+        public String getTokenType() {
+            return tokenType;
         }
 
-        public void setErrorDescription(String errorDescription) {
-            this.errorDescription = errorDescription;
+        public void setTokenType(String tokenType) {
+            this.tokenType = tokenType;
         }
 
-        public Data getData() {
-            return data;
+        public Integer getExpiresIn() {
+            return expiresIn;
         }
 
-        public void setData(Data data) {
-            this.data = data;
+        public void setExpiresIn(Integer expiresIn) {
+            this.expiresIn = expiresIn;
         }
 
-        public class Data {
+        public String getRefreshToken() {
+            return refreshToken;
+        }
 
-            @SerializedName("staff_id")
-            @Expose
-            private String staffId;
-            @SerializedName("full_name")
-            @Expose
-            private String fullName;
-            @SerializedName("email")
-            @Expose
-            private String email;
-            @SerializedName("avatar")
-            @Expose
-            private String avatar;
-            @SerializedName("allow_create_project")
-            @Expose
-            private Integer allowCreateProject;
+        public void setRefreshToken(String refreshToken) {
+            this.refreshToken = refreshToken;
+        }
 
-            public String getStaffId() {
-                return staffId;
-            }
+        public String getScope() {
+            return scope;
+        }
 
-            public void setStaffId(String staffId) {
-                this.staffId = staffId;
-            }
-
-            public String getFullName() {
-                return fullName;
-            }
-
-            public void setFullName(String fullName) {
-                this.fullName = fullName;
-            }
-
-            public String getEmail() {
-                return email;
-            }
-
-            public void setEmail(String email) {
-                this.email = email;
-            }
-
-            public String getAvatar() {
-                return avatar;
-            }
-
-            public void setAvatar(String avatar) {
-                this.avatar = avatar;
-            }
-
-            public Integer getAllowCreateProject() {
-                return allowCreateProject;
-            }
-
-            public void setAllowCreateProject(Integer allowCreateProject) {
-                this.allowCreateProject = allowCreateProject;
-            }
-
+        public void setScope(String scope) {
+            this.scope = scope;
         }
 
     }

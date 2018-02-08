@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +20,11 @@ import manulife.manulifesop.R;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
+import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step1.CreatePlanStep1Fragment;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Fragment;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step3.CreatePlanStep3Fragment;
+import manulife.manulifesop.fragment.FAGroup.createPlane.step4.CreatePlanStep4Fragment;
 
 
 public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implements CreatePlanContract.View {
@@ -33,7 +36,7 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     RelativeLayout actionBarAll;
 
     @BindView(R.id.view_pager)
-    ViewPager viewPager;
+    CustomViewPager viewPager;
     @BindView(R.id.circle_indicator_pager)
     CircleIndicatorPager indicator;
     @BindView(R.id.status_bar)
@@ -42,8 +45,7 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     @BindView(R.id.layout_root)
     View layoutRoot;
 
-    private int mContractNum;
-
+    private int mContractNum = 0;
 
 
     private List<BaseFragment> mListFragment;
@@ -53,8 +55,8 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
-        hideKeyboardOutside(layoutRoot,this);
-        mActionListener = new CreatePlanPresenter(this,this);
+        hideKeyboardOutside(layoutRoot, this);
+        mActionListener = new CreatePlanPresenter(this, this);
         setupSupportForApp();
         initViewPager();
     }
@@ -73,12 +75,15 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
         viewStatusBar.setLayoutParams(params);
 
     }
-    private void initViewPager()
-    {
+
+    private void initViewPager() {
+        viewPager.setSwipe(false);
+
         mListFragment = new ArrayList<>();
         mListFragment.add(CreatePlanStep1Fragment.newInstance());
         mListFragment.add(CreatePlanStep2Fragment.newInstance());
         mListFragment.add(CreatePlanStep3Fragment.newInstance());
+        mListFragment.add(CreatePlanStep4Fragment.newInstance());
 
         mAdapter = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment);
         if (viewPager != null) {
@@ -87,6 +92,24 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
         if (indicator != null) {
             indicator.setViewPager(viewPager);
         }
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 2)
+                    ((CreatePlanStep3Fragment) mAdapter.getItem(position)).updateDate(mContractNum);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @OnClick({R.id.layout_btn_back})
@@ -94,20 +117,33 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
         int id = view.getId();
         switch (id) {
             case R.id.layout_btn_back: {
-                backToPrevious(new Bundle());
+                //backToPrevious(new Bundle());
+                processBackPressed();
                 break;
             }
         }
     }
 
-    public int getContractNum()
-    {
-        return this.mContractNum;
+    private void processBackPressed() {
+        if (viewPager.getCurrentItem() > 0) {
+            int backPosition = viewPager.getCurrentItem() - 1;
+            viewPager.setCurrentItem(backPosition, true);
+        } else {
+            backToPrevious(new Bundle());
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        processBackPressed();
     }
 
     @Override
     public void showNextFragment(int contractNum) {
-        this.mContractNum = contractNum;
-        viewPager.setCurrentItem(viewPager.getCurrentItem()+1,true);
+        if (contractNum > 0) {
+            this.mContractNum = contractNum;
+        }
+        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
     }
 }

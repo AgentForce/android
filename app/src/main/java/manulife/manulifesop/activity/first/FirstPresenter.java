@@ -1,7 +1,12 @@
 package manulife.manulifesop.activity.first;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +15,7 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.api.ApiService;
@@ -126,5 +132,32 @@ public class FirstPresenter extends BasePresenter<FirstContract.View> implements
                 checkFirstUserLoading();
             }
         }
+    }
+
+    @Override
+    public void checkPermissionGranted() {
+        if (isPermissionGranted()) {
+            clickAgreeButton();
+        }
+    }
+
+    public boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            ArrayList<String> temp = new ArrayList<>();
+            //READ_PHONE_STATE
+            if (mContext.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                temp.add(Manifest.permission.READ_PHONE_STATE);
+            }
+
+            if (temp.size() > 0) {
+                String permissions[] = new String[temp.size()];
+                for (int i = 0; i < temp.size(); i++) {
+                    permissions[i] = temp.get(i);
+                }
+                ActivityCompat.requestPermissions((Activity) mContext, permissions, 2);
+                return false;
+            }
+        }
+        return true;
     }
 }

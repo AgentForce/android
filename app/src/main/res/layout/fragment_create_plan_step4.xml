@@ -18,7 +18,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="5dp"
-            android:text="Bước 3"
+            android:text="Bước 4"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
@@ -28,51 +28,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:text="@string/activity_create_plan_title_step3"
+            android:text="@string/activity_create_plan_title_step4"
             android:textSize="@dimen/welcome_activity_note"
             android:textStyle="bold" />
-
-        <RadioGroup
-            android:id="@+id/rb_month_year"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/cus_radio_group_background"
-            android:orientation="horizontal"
-            android:weightSum="60">
-
-            <RadioButton
-                android:id="@+id/rbn_month"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="30"
-                android:background="@drawable/cus_radio_background"
-                android:button="@null"
-                android:checked="true"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="Theo tháng"
-                android:textColor="@drawable/cus_radio_background" />
-
-            <RadioButton
-                android:id="@+id/rbn_year"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="30"
-                android:background="@drawable/cus_radio_background"
-                android:button="@null"
-                android:checked="false"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="Theo năm"
-                android:textColor="@drawable/cus_radio_background" />
-        </RadioGroup>
     </LinearLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_next"
+        android:layout_above="@+id/layout_bot"
         android:layout_below="@+id/layout_top"
         android:orientation="vertical">
 
@@ -85,28 +50,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Liên hệ "
+                    android:text="Thu nhập hàng tháng"
                     android:textSize="@dimen/welcome_activity_note" />
 
                 <TextView
-                    android:id="@+id/txt_cus_num"
+                    android:id="@+id/txt_month_income"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="60"
-                    android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" khách hàng"
+                    android:text="30,000,000"
                     android:textSize="@dimen/welcome_activity_note"
                     android:textStyle="bold" />
 
@@ -116,7 +73,7 @@
                 android:layout_width="100dp"
                 android:layout_height="1dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@android:color/darker_gray" />
             <!--liên hệ end-->
 
@@ -124,28 +81,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hẹn gặp "
+                    android:text="Thưởng đại lý mới"
                     android:textSize="@dimen/welcome_activity_note" />
 
                 <TextView
-                    android:id="@+id/txt_appointment_num"
+                    android:id="@+id/txt_bonus_new_agency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="30"
-                    android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" khách hàng"
+                    android:text="20,000,000"
                     android:textSize="@dimen/welcome_activity_note"
                     android:textStyle="bold" />
 
@@ -155,36 +105,27 @@
                 android:layout_width="100dp"
                 android:layout_height="1dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@android:color/darker_gray" />
-            <!--hẹn gặp end-->
 
-            <!--tư vấn-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tư vấn "
+                    android:text="Thưởng sản xuất tháng"
                     android:textSize="@dimen/welcome_activity_note" />
 
                 <TextView
-                    android:id="@+id/txt_meet_num"
+                    android:id="@+id/txt_bonus_month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="18"
-                    android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" khách hàng"
+                    android:text="148,500,000"
                     android:textSize="@dimen/welcome_activity_note"
                     android:textStyle="bold" />
 
@@ -194,59 +135,106 @@
                 android:layout_width="100dp"
                 android:layout_height="1dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@android:color/darker_gray" />
-            <!--tư vấn end-->
 
-            <!--ký hợp đồng-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ký hợp đồng "
+                    android:text="Thưởng sản xuất quý"
                     android:textSize="@dimen/welcome_activity_note" />
 
                 <TextView
-                    android:id="@+id/txt_contract_num"
+                    android:id="@+id/txt_bonus_quarter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="6"
-                    android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" khách hàng"
+                    android:text="43,200,000"
                     android:textSize="@dimen/welcome_activity_note"
                     android:textStyle="bold" />
 
             </LinearLayout>
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thưởng tiến độ MDRT"
+                    android:textSize="@dimen/welcome_activity_note" />
+
+                <TextView
+                    android:id="@+id/txt_bonus_mdrt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="42,000,000"
+                    android:textSize="@dimen/welcome_activity_note"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <!--ký hợp đồng-->
-
-    <Button
-        android:id="@+id/btn_next"
+    <LinearLayout
+        android:id="@+id/layout_bot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tổng thu nhập năm"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/welcome_activity_note"/>
+
+        <TextView
+            android:id="@+id/total_income"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="613,000,000 đ"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/welcome_activity_title"/>
+
+    <Button
+        android:id="@+id/btn_agree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/cus_button_events"
-        android:text="Tiếp tục"
+        android:text="Đồng ý với kế hoạch này"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
+
+    </LinearLayout>
+
 
 
 </RelativeLayout>

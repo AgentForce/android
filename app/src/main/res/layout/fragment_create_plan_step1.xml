@@ -118,6 +118,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/cus_button_events"
             android:text="Tiếp tục"
+            android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
     </LinearLayout>

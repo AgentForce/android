@@ -13,7 +13,9 @@ import manulife.manulifesop.ProjectApplication;
 public class SOPSharedPreferences {
 
     private static final String EXTRA_FIRST_USING_KEY = "extra_first_using_key";
-    private static final String EXTRA_CREATED_KEY = "extra_created_key";
+    private static final String EXTRA_ACCESS_TOKEN_KEY = "extra_access_token_key";
+    private static final String EXTRA_REFRESH_TOKEN_KEY = "extra_refresh_token_key";
+
 
     private SharedPreferences mPreferences;
     private static SOPSharedPreferences mSOPSharedPreferences;
@@ -41,16 +43,22 @@ public class SOPSharedPreferences {
         return mPreferences.getBoolean(EXTRA_FIRST_USING_KEY,false);
     }
 
-    public void saveCreatedPlan()
+    public void saveToken(String accessToken, String refreshToken)
     {
         SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putBoolean(EXTRA_CREATED_KEY,true);
+        editor.putString(EXTRA_ACCESS_TOKEN_KEY,accessToken);
+        editor.putString(EXTRA_REFRESH_TOKEN_KEY,refreshToken);
         editor.commit();
     }
 
-    public boolean isCreatedPlan()
+    public String getAccessToken()
     {
-        return mPreferences.getBoolean(EXTRA_CREATED_KEY,false);
+        return mPreferences.getString(EXTRA_ACCESS_TOKEN_KEY,"");
+    }
+
+    public String getRefreshToken()
+    {
+        return mPreferences.getString(EXTRA_REFRESH_TOKEN_KEY,"");
     }
 
 }

@@ -30,8 +30,8 @@ public interface LoginContract {
 
         void createPass(String user, String pass);
         void login(String userName, String pass);
+        void chekCampaign();
 
-        void checkPermissionGranted();
         void getDeviceInfo(Context context);
     }
 }

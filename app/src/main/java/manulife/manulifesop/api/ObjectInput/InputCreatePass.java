@@ -4,24 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by trinm on 12/01/2018.
+ * Created by Chick on 2/8/2018.
  */
 
-public class InputLoginData {
-    @SerializedName("UserName")
-    @Expose
-    private String userName;
+public class InputCreatePass {
     @SerializedName("Password")
     @Expose
     private String password;
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public String getPassword() {
         return password;

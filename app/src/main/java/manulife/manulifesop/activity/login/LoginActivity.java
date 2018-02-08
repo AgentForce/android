@@ -91,8 +91,7 @@ public class LoginActivity extends BaseActivity<LoginPresent>
         //show agency fragment in first
         //showFragment(AgencyFragment.newInstance(),true);
         initViewPager();
-
-        mActionListener.checkPermissionGranted();
+        mActionListener.getDeviceInfo(getApplicationContext());
     }
 
     private void setupSupportForApp() {
@@ -224,7 +223,7 @@ public class LoginActivity extends BaseActivity<LoginPresent>
 
     @Override
     public void showCreatePass(String pass) {
-        showLoading("Thiết lập mật khẩu!");
+        showLoading("Xử lý dữ liệu!");
         mActionListener.createPass(mAgencyID,pass);
     }
 
@@ -236,7 +235,9 @@ public class LoginActivity extends BaseActivity<LoginPresent>
 
     @Override
     public void showMainFAActvity() {
-        goNextScreen(MainFAActivity.class);
+        Bundle data = new Bundle();
+        data.putBoolean("isGetCampaign",true);
+        goNextScreen(MainFAActivity.class,data);
     }
 
     @Override
@@ -324,26 +325,5 @@ public class LoginActivity extends BaseActivity<LoginPresent>
         return mAgencyID;
     }
 
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
 
-            case 2: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mActionListener.getDeviceInfo(this);
-                } else {
-                    showInform("Thông báo", "Không đủ quyền để chạy chương trình", "OK", SweetAlertDialog.ERROR_TYPE, new CallBackInformDialog() {
-                        @Override
-                        public void DiaglogPositive() {
-                            Intent startMain = new Intent(Intent.ACTION_MAIN);
-                            startMain.addCategory(Intent.CATEGORY_HOME);
-                            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(startMain);
-                            System.exit(1);
-                        }
-                    });
-                }
-                return;
-            }
-        }
-    }
 }

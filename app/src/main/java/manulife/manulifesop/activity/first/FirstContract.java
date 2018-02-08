@@ -17,5 +17,6 @@ public interface FirstContract {
     interface Action{
         void checkInternetViaPingServer();
         void clickAgreeButton();
+        void checkPermissionGranted();
     }
 }

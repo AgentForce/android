@@ -49,7 +49,8 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         mActionListener = new MainFAPresenter(this,this);
         setupSupportForApp();
         setupMenuBot();
-        mActionListener.checkIsGetCampaign();
+        mActionListener.checkIsGetCampaign(getIntent().getExtras()
+                .getBoolean("isGetCampaign",false));
     }
 
     private void setupSupportForApp()

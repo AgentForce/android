@@ -12,6 +12,6 @@ public interface MainFAContract {
         void showFragmentConfirmCreatePlan();
     }
     interface Action{
-        void checkIsGetCampaign();
+        void checkIsGetCampaign(boolean isGetCampaign);
     }
 }

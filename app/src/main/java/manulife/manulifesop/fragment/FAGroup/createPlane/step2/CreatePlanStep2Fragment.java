@@ -84,17 +84,40 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
 
     private void initEventsSeekBar() {
         seekBarIncome.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
+            boolean isUserTouch = false;
+
             @Override
             public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
+
                 float min = seekBar.getMin();
                 float max = seekBar.getMax();
                 if (progress == max) {
 
-                    txtIncomeMin.setText((int)min+"tr");
-                    txtIncomeMax.setText((int)(max+100)+"tr");
-                    seekBarIncome.setMax(max+100);
-                    seekBarIncome.setMin(min);
-                    seekBarIncome.setProgress(max);
+                    if(isUserTouch) {
+
+                        int minNew = (min == 10) ? 100 : (int) (min + 100);
+
+                        txtIncomeMin.setText((int) (minNew) + "tr");
+                        txtIncomeMax.setText((int) (max + 100) + "tr");
+                        seekBarIncome.setMax(max + 100);
+                        seekBarIncome.setMin(minNew);
+                        //seekBarIncome.setProgress(minNew + 1);
+                        isUserTouch = false;
+                    }
+
+                    //seekBarIncome.setProgress(max);
+                } else if (progress == min && min > 10) {
+
+                    if(isUserTouch) {
+                        int minNew = ((min - 100) > 10) ? (int) (min - 100) : 10;
+                        txtIncomeMin.setText(minNew + "tr");
+                        txtIncomeMax.setText((int) (max - 100) + "tr");
+                        seekBarIncome.setMax(max - 100);
+                        seekBarIncome.setMin(minNew);
+                        //seekBarIncome.setProgress(min - 1);
+
+                        isUserTouch = false;
+                    }
                 }
             }
 
@@ -105,7 +128,7 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
 
             @Override
             public void onStartTrackingTouch(IndicatorSeekBar seekBar, int thumbPosOnTick) {
-
+                isUserTouch = true;
             }
 
             @Override
@@ -121,7 +144,7 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
         switch (id) {
             case R.id.btn_next: {
                 //get contract num
-                float contractNumFloat = (float) (seekBarIncome.getProgress()*100) / (float)seekProfit.getProgress() / (float)seekContractPrice.getProgress();
+                float contractNumFloat = (float) (seekBarIncome.getProgress() * 100) / (float) seekProfit.getProgress() / (float) seekContractPrice.getProgress();
                 int contractNum = Math.round(contractNumFloat);
                 mActivity.showNextFragment(contractNum);
                 break;
