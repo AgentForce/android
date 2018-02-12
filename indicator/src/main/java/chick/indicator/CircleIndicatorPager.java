@@ -3,6 +3,8 @@ package chick.indicator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewPager;
@@ -10,6 +12,8 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import java.util.List;
 
 public class CircleIndicatorPager extends LinearLayout {
 
@@ -22,6 +26,9 @@ public class CircleIndicatorPager extends LinearLayout {
     private int mIndicatorUnselectedBackgroundResId = R.drawable.white_radius;
 
     private int mLastPosition = -1;
+
+    //new code
+    private List<Integer> mListIndicatorBackgroundResId;
 
     public CircleIndicatorPager(Context context) {
         super(context);
@@ -45,6 +52,17 @@ public class CircleIndicatorPager extends LinearLayout {
     }
 
     public void setViewPager(ViewPager viewPager) {
+        mViewpager = viewPager;
+        if (mViewpager != null && mViewpager.getAdapter() != null) {
+            mLastPosition = -1;
+            createIndicators();
+            mViewpager.removeOnPageChangeListener(mInternalPageChangeListener);
+            mViewpager.addOnPageChangeListener(mInternalPageChangeListener);
+            mInternalPageChangeListener.onPageSelected(mViewpager.getCurrentItem());
+        }
+    }
+
+    public void setViewPager(ViewPager viewPager,List<Integer> ListIndicatorBackgroundResId) {
         mViewpager = viewPager;
         if (mViewpager != null && mViewpager.getAdapter() != null) {
             mLastPosition = -1;
@@ -146,6 +164,7 @@ public class CircleIndicatorPager extends LinearLayout {
             View selectedIndicator = getChildAt(position);
             if (selectedIndicator != null) {
                 selectedIndicator.setBackgroundResource(mIndicatorBackgroundResId);
+
             }
             mLastPosition = position;
         }
@@ -186,5 +205,11 @@ public class CircleIndicatorPager extends LinearLayout {
     private int dip2px(float dpValue) {
         final float scale = getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
+    }
+
+    //new code
+    public void setListIndicatorBackgroundResId(List<Integer> listIndicatorBackgroundResId)
+    {
+        this.mListIndicatorBackgroundResId = listIndicatorBackgroundResId;
     }
 }

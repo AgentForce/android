@@ -10,6 +10,7 @@ public interface MainFAContract {
     interface View extends BaseMVPView
     {
         void showFragmentConfirmCreatePlan();
+        void showDashBoard();
     }
     interface Action{
         void checkIsGetCampaign(boolean isGetCampaign);

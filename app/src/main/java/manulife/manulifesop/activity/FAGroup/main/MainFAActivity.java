@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanPresenter;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
+import manulife.manulifesop.fragment.FAGroup.dashboard.FADashBoardFragment;
 
 /**
  * Created by Chick on 1/23/2018.
@@ -27,6 +29,8 @@ import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlan
 
 public class MainFAActivity extends BaseActivity<MainFAPresenter> implements MainFAContract.View {
 
+    @BindView(R.id.layout_notification)
+    RelativeLayout layoutNotification;
     @BindView(R.id.txt_actionbar_title)
     TextView txtActionbarTitle;
     @BindView(R.id.status_bar)
@@ -55,6 +59,8 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
     private void setupSupportForApp()
     {
+        layoutNotification.setVisibility(View.VISIBLE);
+
         txtActionbarTitle.setText(getResources().getString(R.string.activity_main_fa_dashboard));
         layoutBackButton.setVisibility(View.GONE);
 
@@ -121,6 +127,15 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         ft.replace(R.id.frame_container, ConfirmCreatePlanFragment.newInstance());
+        ft.commit();
+    }
+
+    @Override
+    public void showDashBoard() {
+        //Toast.makeText(this, "show main dashboard", Toast.LENGTH_SHORT).show();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        ft.replace(R.id.frame_container, FADashBoardFragment.newInstance());
         ft.commit();
     }
 }

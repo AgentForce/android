@@ -15,10 +15,18 @@ import manulife.manulifesop.base.BaseFragment;
 public class CustomViewPagerAdapter extends FragmentPagerAdapter {
 
     private List<BaseFragment> mListFragments;
+    private List<String> mTabTitles;
 
     public CustomViewPagerAdapter(FragmentManager fm, List<BaseFragment> fragments) {
         super(fm);
         mListFragments = fragments;
+        mTabTitles = null;
+    }
+
+    public CustomViewPagerAdapter(FragmentManager fm, List<BaseFragment> fragments, List<String> tabTitles) {
+        super(fm);
+        mListFragments = fragments;
+        mTabTitles = tabTitles;
     }
 
     @Override
@@ -35,6 +43,11 @@ public class CustomViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position
-        return "Tháng " + (position+1);
+        //return "Tháng " + (position+1);
+        if(mTabTitles != null)
+        {
+            return mTabTitles.get(position);
+        }
+        return "";
     }
 }

@@ -17,4 +17,11 @@
         <item name="tab_5">#F63D2B</item>
     </array>
 
+    <color name="color_dashboard_contact">#f44236</color>
+    <color name="color_dashboard_meeting">#ffb200</color>
+    <color name="color_dashboard_advisory">#1d89e5</color>
+    <color name="color_dashboard_sign">#4caf52</color>
+    <color name="color_dashboard_introduce">#fe7537</color>
+
+
 </resources>

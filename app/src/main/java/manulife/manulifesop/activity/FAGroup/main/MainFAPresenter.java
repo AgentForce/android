@@ -22,7 +22,7 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
     @Override
     public void checkIsGetCampaign(boolean isGetCampaign) {
         if (isGetCampaign) {
-            mPresenterView.showMessage("Thông báo","Load dashboard", SweetAlertDialog.SUCCESS_TYPE);
+            mPresenterView.showDashBoard();
         } else {
             //if is not campaign
             mPresenterView.showFragmentConfirmCreatePlan();
