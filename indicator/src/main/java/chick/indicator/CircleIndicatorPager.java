@@ -29,6 +29,7 @@ public class CircleIndicatorPager extends LinearLayout {
 
     //new code
     private List<Integer> mListIndicatorBackgroundResId;
+    private boolean mMaintainPrevious;
 
     public CircleIndicatorPager(Context context) {
         super(context);
@@ -105,6 +106,7 @@ public class CircleIndicatorPager extends LinearLayout {
             return;
         }
 
+        //old code
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CircleIndicatorPager);
         mIndicatorWidth =
                 typedArray.getDimensionPixelSize(R.styleable.CircleIndicatorPager_ci_width, -1);
@@ -125,6 +127,10 @@ public class CircleIndicatorPager extends LinearLayout {
 
         int gravity = typedArray.getInt(R.styleable.CircleIndicatorPager_ci_gravity, -1);
         setGravity(gravity >= 0 ? gravity : Gravity.CENTER);
+
+        //new code
+        mMaintainPrevious = typedArray.getBoolean(R.styleable.CircleIndicatorPager_ci_maintain_previous,
+                false);
 
         typedArray.recycle();
     }
@@ -156,9 +162,19 @@ public class CircleIndicatorPager extends LinearLayout {
                 return;
             }
 
-            View currentIndicator;
+            //old code
+            /*View currentIndicator;
             if (mLastPosition >= 0 && mLastPosition > position && (currentIndicator = getChildAt(mLastPosition)) != null) {
                 currentIndicator.setBackgroundResource(mIndicatorUnselectedBackgroundResId);
+            }*/
+            //new code
+            View currentIndicator;
+            if (mLastPosition >= 0 && (currentIndicator = getChildAt(mLastPosition)) != null) {
+                if(mMaintainPrevious == true && mLastPosition > position) {
+                    currentIndicator.setBackgroundResource(mIndicatorUnselectedBackgroundResId);
+                }else if(mMaintainPrevious == false && mLastPosition != position){
+                    currentIndicator.setBackgroundResource(mIndicatorUnselectedBackgroundResId);
+                }
             }
 
             View selectedIndicator = getChildAt(position);

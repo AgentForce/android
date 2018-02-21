@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:id="@+id/layout_root">
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include
-        android:layout_height="wrap_content"
+        layout="@layout/actionbar_custom"
         android:layout_width="match_parent"
-        layout="@layout/actionbar_custom"/>
+        android:layout_height="wrap_content" />
 
     <chick.indicator.CircleIndicatorPager
         android:id="@+id/circle_indicator_pager"
@@ -21,12 +21,12 @@
         app:ci_drawable="@drawable/blue_radius"
         app:ci_drawable_unselected="@drawable/gray_radius"
         app:ci_height="10dp"
-        app:ci_width="10dp"
-        />
+        app:ci_maintain_previous="true"
+        app:ci_width="10dp" />
 
     <manulife.manulifesop.element.CustomViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
