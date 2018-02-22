@@ -15,6 +15,7 @@
             <enum name="vertical" value="1"/>
         </attr>
 
+        <!--new code-->
         <attr name="ci_maintain_previous" format="boolean"/>
 
         <attr name="ci_gravity">

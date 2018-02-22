@@ -28,7 +28,7 @@ public class CircleIndicatorPager extends LinearLayout {
     private int mLastPosition = -1;
 
     //new code
-    private List<Integer> mListIndicatorBackgroundResId;
+    private List<Integer> mListIndicatorBackgroundResId = null;
     private boolean mMaintainPrevious;
 
     public CircleIndicatorPager(Context context) {
@@ -63,7 +63,7 @@ public class CircleIndicatorPager extends LinearLayout {
         }
     }
 
-    public void setViewPager(ViewPager viewPager,List<Integer> ListIndicatorBackgroundResId) {
+    public void setViewPager(ViewPager viewPager, List<Integer> ListIndicatorBackgroundResId) {
         mViewpager = viewPager;
         if (mViewpager != null && mViewpager.getAdapter() != null) {
             mLastPosition = -1;
@@ -71,6 +71,7 @@ public class CircleIndicatorPager extends LinearLayout {
             mViewpager.removeOnPageChangeListener(mInternalPageChangeListener);
             mViewpager.addOnPageChangeListener(mInternalPageChangeListener);
             mInternalPageChangeListener.onPageSelected(mViewpager.getCurrentItem());
+            mListIndicatorBackgroundResId = ListIndicatorBackgroundResId;
         }
     }
 
@@ -170,17 +171,26 @@ public class CircleIndicatorPager extends LinearLayout {
             //new code
             View currentIndicator;
             if (mLastPosition >= 0 && (currentIndicator = getChildAt(mLastPosition)) != null) {
-                if(mMaintainPrevious == true && mLastPosition > position) {
+                if (mMaintainPrevious == true && mLastPosition > position) {
                     currentIndicator.setBackgroundResource(mIndicatorUnselectedBackgroundResId);
-                }else if(mMaintainPrevious == false && mLastPosition != position){
+                } else if (mMaintainPrevious == false && mLastPosition != position) {
                     currentIndicator.setBackgroundResource(mIndicatorUnselectedBackgroundResId);
                 }
             }
 
-            View selectedIndicator = getChildAt(position);
+            //old code
+            /*View selectedIndicator = getChildAt(position);
             if (selectedIndicator != null) {
                 selectedIndicator.setBackgroundResource(mIndicatorBackgroundResId);
-
+            }*/
+            //new code
+            View selectedIndicator = getChildAt(position);
+            if (selectedIndicator != null) {
+                if (mListIndicatorBackgroundResId != null && mListIndicatorBackgroundResId.size() == mViewpager.getAdapter().getCount()) {
+                    selectedIndicator.setBackgroundResource(mListIndicatorBackgroundResId.get(position));
+                } else {
+                    selectedIndicator.setBackgroundResource(mIndicatorBackgroundResId);
+                }
             }
             mLastPosition = position;
         }
@@ -224,8 +234,7 @@ public class CircleIndicatorPager extends LinearLayout {
     }
 
     //new code
-    public void setListIndicatorBackgroundResId(List<Integer> listIndicatorBackgroundResId)
-    {
+    public void setListIndicatorBackgroundResId(List<Integer> listIndicatorBackgroundResId) {
         this.mListIndicatorBackgroundResId = listIndicatorBackgroundResId;
     }
 }

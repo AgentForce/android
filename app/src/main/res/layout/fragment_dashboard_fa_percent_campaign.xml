@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:ci_drawable="@drawable/blue_radius"
+
         app:ci_drawable_unselected="@drawable/gray_radius"
         app:ci_height="10dp"
         app:ci_width="10dp" />

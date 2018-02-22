@@ -64,20 +64,24 @@ public class CampaignPercentFragment extends BaseFragment<MainFAActivity,Campaig
         mListFragment.add(OnePercentFragment.newInstance());
         mListFragment.add(OnePercentFragment.newInstance());
         mListFragment.add(OnePercentFragment.newInstance());
-
-        mAdapter = new CustomViewPagerAdapter(getChildFragmentManager(), mListFragment);
+        mListFragment.add(OnePercentFragment.newInstance());
+        mListFragment.add(OnePercentFragment.newInstance());
 
         //create list color indicator
         List<Integer> listBackground = new ArrayList<>();
-        listBackground.add(R.drawable.blue_radius);
-        listBackground.add(R.drawable.blue_radius);
-        listBackground.add(R.drawable.blue_radius);
+        listBackground.add(R.drawable.step1_radius);
+        listBackground.add(R.drawable.step2_radius);
+        listBackground.add(R.drawable.step3_radius);
+        listBackground.add(R.drawable.step4_radius);
+        listBackground.add(R.drawable.step5_radius);
+
+        mAdapter = new CustomViewPagerAdapter(getChildFragmentManager(), mListFragment);
 
         if (viewPager != null) {
             viewPager.setAdapter(mAdapter);
         }
         if (indicator != null) {
-            indicator.setViewPager(viewPager);
+            indicator.setViewPager(viewPager,listBackground);
         }
     }
 
