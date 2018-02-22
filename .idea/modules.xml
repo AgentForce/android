@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/android.iml" filepath="$PROJECT_DIR$/android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://D:\WorkOutSource\android\bottom-navigation\bottom-navigation.iml" filepath="D:\WorkOutSource\android\bottom-navigation\bottom-navigation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/circular_progress_bar/circular_progress_bar.iml" filepath="$PROJECT_DIR$/circular_progress_bar/circular_progress_bar.iml" />
       <module fileurl="file://$PROJECT_DIR$/indicator/indicator.iml" filepath="$PROJECT_DIR$/indicator/indicator.iml" />
       <module fileurl="file://$PROJECT_DIR$/sweet-alert-dialog/sweet-alert-dialog.iml" filepath="$PROJECT_DIR$/sweet-alert-dialog/sweet-alert-dialog.iml" />
     </modules>

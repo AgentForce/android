@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import chick.circular_progress_bar.CircularProgressBar;
 import chick.indicator.CircleIndicatorPager;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
@@ -23,6 +24,8 @@ import manulife.manulifesop.fragment.FAGroup.dashboard.campaignPercent.CampaignP
 
 public class OnePercentFragment extends BaseFragment<MainFAActivity,OnePercentPresent> implements OnePercentContract.View {
 
+    @BindView(R.id.circular_progress)
+    CircularProgressBar circularProgressBar;
 
     public static OnePercentFragment newInstance() {
         Bundle args = new Bundle();
@@ -44,6 +47,10 @@ public class OnePercentFragment extends BaseFragment<MainFAActivity,OnePercentPr
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        circularProgressBar.setTitle("42%");
+        circularProgressBar.setSubTitle("Ký hợp đồng");
+        circularProgressBar.setProgress(42);
     }
 
 }

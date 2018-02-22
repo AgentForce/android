@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:circular="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:gravity="center_horizontal|center_vertical">
-    <com.makeramen.roundedimageview.RoundedImageView
+    android:gravity="center_horizontal|center_vertical"
+    android:orientation="vertical">
+    <chick.circular_progress_bar.CircularProgressBar
+        android:id="@+id/circular_progress"
+        style="@style/Widget.ProgressBar.Holo.CircularProgressBar"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:background="@color/color_dashboard_contact"
-        android:scaleType="fitCenter"
-        app:riv_corner_radius="40dp"
-        app:riv_mutate_background="true" />
+        app:cpb_progressColor="#F63D2B"
+        circular:cpb_subtitle="subtitle"
+        app:cpb_strokeWidth="15"
+        circular:cpb_title="Title" />
 </LinearLayout>
