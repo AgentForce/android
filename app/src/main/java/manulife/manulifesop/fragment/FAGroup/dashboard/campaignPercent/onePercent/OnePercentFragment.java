@@ -1,5 +1,6 @@
 package manulife.manulifesop.fragment.FAGroup.dashboard.campaignPercent.onePercent;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -27,8 +28,16 @@ public class OnePercentFragment extends BaseFragment<MainFAActivity,OnePercentPr
     @BindView(R.id.circular_progress)
     CircularProgressBar circularProgressBar;
 
-    public static OnePercentFragment newInstance() {
+    private int mPercent;
+    private String mSubTitle;
+    private int mColor;
+
+
+    public static OnePercentFragment newInstance(String subTitle,int percent,int color) {
         Bundle args = new Bundle();
+        args.putInt("percent",percent);
+        args.putString("subtitle",subTitle);
+        args.putInt("color",color);
         OnePercentFragment fragment = new OnePercentFragment();
         fragment.setArguments(args);
         return fragment;
@@ -48,9 +57,14 @@ public class OnePercentFragment extends BaseFragment<MainFAActivity,OnePercentPr
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        circularProgressBar.setTitle("42%");
-        circularProgressBar.setSubTitle("Ký hợp đồng");
-        circularProgressBar.setProgress(42);
+        mPercent = getArguments().getInt("percent",0);
+        mSubTitle = getArguments().getString("subtitle","");
+        mColor = getArguments().getInt("color", Color.parseColor("#bada55"));
+
+        circularProgressBar.setTitle(mPercent + "%");
+        circularProgressBar.setSubTitle(mSubTitle);
+        circularProgressBar.setProgress(mPercent);
+        circularProgressBar.setProgressColor(mColor);
     }
 
 }

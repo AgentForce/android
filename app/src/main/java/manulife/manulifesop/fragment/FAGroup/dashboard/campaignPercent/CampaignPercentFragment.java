@@ -61,11 +61,11 @@ public class CampaignPercentFragment extends BaseFragment<MainFAActivity,Campaig
     private void initViewpager()
     {
         mListFragment = new ArrayList<>();
-        mListFragment.add(OnePercentFragment.newInstance());
-        mListFragment.add(OnePercentFragment.newInstance());
-        mListFragment.add(OnePercentFragment.newInstance());
-        mListFragment.add(OnePercentFragment.newInstance());
-        mListFragment.add(OnePercentFragment.newInstance());
+        mListFragment.add(OnePercentFragment.newInstance("Liên hệ",60,getResources().getColor(R.color.color_dashboard_contact)));
+        mListFragment.add(OnePercentFragment.newInstance("Hẹn gặp",50,getResources().getColor(R.color.color_dashboard_meeting)));
+        mListFragment.add(OnePercentFragment.newInstance("Tư vấn",40,getResources().getColor(R.color.color_dashboard_advisory)));
+        mListFragment.add(OnePercentFragment.newInstance("Ký hợp đồng",30,getResources().getColor(R.color.color_dashboard_sign)));
+        mListFragment.add(OnePercentFragment.newInstance("Giới thiệu",20,getResources().getColor(R.color.color_dashboard_introduce)));
 
         //create list color indicator
         List<Integer> listBackground = new ArrayList<>();
