@@ -2,6 +2,8 @@ package manulife.manulifesop.fragment.FAGroup.dashboard;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -10,7 +12,9 @@ import java.util.List;
 import butterknife.BindView;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
+import manulife.manulifesop.adapter.ActiveHistAdapter;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
+import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step1.CreatePlanStep1Fragment;
@@ -27,13 +31,18 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity,FADashBoard
 
     @BindView(R.id.sliding_tabs)
     TabLayout tabLayout;
-
     @BindView(R.id.view_pager)
     CustomViewPager viewPager;
+    @BindView(R.id.rcv_log)
+    RecyclerView listActiHist;
 
-    private CustomViewPagerAdapter mAdapter;
+    private CustomViewPagerAdapter mAdapterViewPager;
     private List<BaseFragment> mListFragment;
     private List<String> mTabTitles;
+
+    //variable for activity hist
+    private ActiveHistAdapter mAdapterActiveHist;
+    private List<ActiveHistFA> mDataActiveHist;
 
 
     public static FADashBoardFragment newInstance() {
@@ -58,6 +67,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity,FADashBoard
         super.onViewCreated(view, savedInstanceState);
 
         initViewPager();
+        initActiHistList();
     }
 
     private void initViewPager()
@@ -74,11 +84,35 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity,FADashBoard
         mTabTitles.add("Tháng 12");
         mTabTitles.add("Năm 2017");
 
-        mAdapter = new CustomViewPagerAdapter(getChildFragmentManager(), mListFragment,mTabTitles);
+        mAdapterViewPager = new CustomViewPagerAdapter(getChildFragmentManager(), mListFragment,mTabTitles);
         if (viewPager != null) {
-            viewPager.setAdapter(mAdapter);
+            viewPager.setAdapter(mAdapterViewPager);
             tabLayout.setupWithViewPager(viewPager);
         }
+    }
+    private void initActiHistList()
+    {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        listActiHist.setLayoutManager(layoutManager);
+
+        //init data
+        mDataActiveHist = new ArrayList<>();
+
+        ActiveHistFA temp = new ActiveHistFA();
+        temp.setAvatar("avatar");
+        temp.setTitle("title code input");
+        temp.setContent("content code input");
+        mDataActiveHist.add(temp);
+
+        ActiveHistFA temp2 = new ActiveHistFA();
+        temp2.setAvatar("avatar");
+        temp2.setTitle("title2 code input");
+        temp2.setContent("content2 code input");
+        mDataActiveHist.add(temp2);
+
+        mAdapterActiveHist = new ActiveHistAdapter(getContext(),mDataActiveHist);
+
+        listActiHist.setAdapter(mAdapterActiveHist);
 
     }
 
