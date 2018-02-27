@@ -9,9 +9,12 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface CreatePlanContract {
     interface View extends BaseMVPView
     {
-        void showNextFragment(int contractNum);
+        void showNextFragment(int contractNum,String startDate, String endDate,int income,int contractPrice, int profit);
+        void showCreateCampaign();
+        void showSuccessView(boolean isgotCampaign);
     }
     interface Action{
-
+        void createCampaign(String startDate, String endDate, long profit, long contractPrice, long inCome);
+        void checkCampaign();
     }
 }

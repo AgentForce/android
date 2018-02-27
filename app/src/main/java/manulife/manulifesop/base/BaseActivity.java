@@ -159,6 +159,7 @@ public class BaseActivity<P extends BasePresenter> extends AppCompatActivity imp
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this,messageType);
         sweetAlertDialog.setTitleText(title);
         sweetAlertDialog.setContentText(message);
+        sweetAlertDialog.setConfirmText("OK");
         sweetAlertDialog.setCanceledOnTouchOutside(true);
         sweetAlertDialog.show();
     }

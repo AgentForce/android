@@ -72,29 +72,13 @@ public class CreatePlanStep3Fragment extends BaseFragment<CreatePlanActivity, Cr
         txtCusNum.setText((contractNum * 10) + "");
     }
 
-    /*@Override
-    public void onResume() {
-        int contractNum = mActivity.getContractNum();
-        if(rbMonthYear.getCheckedRadioButtonId() == R.id.rbn_month)
-        {
-            txtContractNum.setText(contractNum+"");
-            txtMeetNum.setText((contractNum*3)+"");
-            txtAppointmentNum.setText((contractNum*5)+"");
-            txtCusNum.setText((contractNum*10)+"");
-        }else
-        {
-            Toast.makeText(mActivity, "load via year", Toast.LENGTH_SHORT).show();
-        }
-
-        super.onResume();
-    }*/
 
     @OnClick(R.id.btn_next)
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.btn_next: {
-                mActivity.showNextFragment(0);
+                mActivity.showNextFragment(0,"","",0,0,0);
                 break;
             }
         }

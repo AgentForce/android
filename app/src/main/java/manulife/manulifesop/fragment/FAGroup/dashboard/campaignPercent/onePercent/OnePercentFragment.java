@@ -4,11 +4,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import chick.circular_progress_bar.CircularProgressBar;
 import chick.indicator.CircleIndicatorPager;
 import manulife.manulifesop.R;
@@ -16,7 +18,9 @@ import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
+import manulife.manulifesop.fragment.FAGroup.dashboard.FADashBoardFragment;
 import manulife.manulifesop.fragment.FAGroup.dashboard.campaignPercent.CampaignPercentContract;
+import manulife.manulifesop.fragment.FAGroup.dashboard.campaignPercent.CampaignPercentFragment;
 import manulife.manulifesop.fragment.FAGroup.dashboard.campaignPercent.CampaignPercentPresent;
 
 /**
@@ -27,6 +31,9 @@ public class OnePercentFragment extends BaseFragment<MainFAActivity,OnePercentPr
 
     @BindView(R.id.circular_progress)
     CircularProgressBar circularProgressBar;
+
+    @BindView(R.id.txt_title)
+    TextView txtEditNum;
 
     private int mPercent;
     private String mSubTitle;
@@ -67,4 +74,17 @@ public class OnePercentFragment extends BaseFragment<MainFAActivity,OnePercentPr
         circularProgressBar.setProgressColor(mColor);
     }
 
+    @OnClick(R.id.txt_title)
+    public void onClick(View view)
+    {
+        int id = view.getId();
+        switch (id)
+        {
+            case R.id.txt_title:
+            {
+                ((CampaignPercentFragment)this.getParentFragment()).editNumberContract();
+                break;
+            }
+        }
+    }
 }

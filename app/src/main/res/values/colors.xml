@@ -23,5 +23,11 @@
     <color name="color_dashboard_sign">#4caf52</color>
     <color name="color_dashboard_introduce">#fe7537</color>
 
+    <color name="color_dashboard_contact_previous">#fff6f5</color>
+    <color name="color_dashboard_meeting_previous">#fff4da</color>
+    <color name="color_dashboard_advisory_previous">#e0eefc</color>
+    <color name="color_dashboard_sign_previous">#e6f4e7</color>
+    <color name="color_dashboard_introduce_previous">#fcece1</color>
+
 
 </resources>

@@ -2,11 +2,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <layer-list>
-            <item>
+            <item android:right="5dp" android:left="5dp">
                 <shape>
-                    <gradient android:angle="0"
-                        android:endColor="@color/colorSecond"
-                        android:startColor="@color/colorSecond2" />
+                    <gradient android:angle="0" android:endColor="@color/colorSecond" android:startColor="@color/colorSecond2" />
                     <corners android:radius="40dp" />
                 </shape>
             </item>

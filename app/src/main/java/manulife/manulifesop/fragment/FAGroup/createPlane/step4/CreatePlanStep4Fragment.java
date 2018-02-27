@@ -50,23 +50,6 @@ public class CreatePlanStep4Fragment extends BaseFragment<CreatePlanActivity,Cre
         super.onViewCreated(view, savedInstanceState);
     }
 
-    /*@Override
-    public void onResume() {
-        int contractNum = mActivity.getContractNum();
-        if(rbMonthYear.getCheckedRadioButtonId() == R.id.rbn_month)
-        {
-            txtContractNum.setText(contractNum+"");
-            txtMeetNum.setText((contractNum*3)+"");
-            txtAppointmentNum.setText((contractNum*5)+"");
-            txtCusNum.setText((contractNum*10)+"");
-        }else
-        {
-            Toast.makeText(mActivity, "load via year", Toast.LENGTH_SHORT).show();
-        }
-
-        super.onResume();
-    }*/
-
     @OnClick(R.id.btn_agree)
     public void onClick(View view)
     {
@@ -75,11 +58,11 @@ public class CreatePlanStep4Fragment extends BaseFragment<CreatePlanActivity,Cre
         {
             case R.id.btn_agree:
             {
-                mActivity.showConfirm("Thông báo", "Bạn có đồng ý với kế hoạch kinh doanh?", "Đồng ý", "Quay lại"
-                        , SweetAlertDialog.SUCCESS_TYPE, new CallBackConfirmDialog() {
+                mActivity.showConfirm("Thông báo", "Bạn có đồng ý với kế hoạch kinh doanh?", "Đồng ý", "Hủy"
+                        , SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
                             @Override
                             public void DiaglogPositive() {
-
+                                mActivity.showCreateCampaign();
                             }
 
                             @Override

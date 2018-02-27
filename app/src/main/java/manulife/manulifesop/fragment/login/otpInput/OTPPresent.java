@@ -48,7 +48,7 @@ public class OTPPresent extends BasePresenter<OTPContract.View> implements OTPCo
     }
 
     private void handleResponseRequestOTP(RequestOTP requestOTP) {
-        if (requestOTP.getStatus() == 200) {
+        if (requestOTP.getStatus() == 1) {
             if (requestOTP.getData().getStatus()) {
                 mPresenterView.disableRequestButton(true);
                 mPresenterView.finishLoading();
@@ -81,7 +81,7 @@ public class OTPPresent extends BasePresenter<OTPContract.View> implements OTPCo
     }
 
     private void handleResponseVerify(VerifyOTP verifyOTP) {
-        if (verifyOTP.getStatusCode() == 200) {
+        if (verifyOTP.getStatusCode() == 1) {
             if (verifyOTP.getData().getStatus()) {
                 mPresenterView.finishLoading();
                 mPresenterView.showFragmentCreatePass();

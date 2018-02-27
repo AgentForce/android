@@ -1,6 +1,7 @@
 package manulife.manulifesop.api;
 
 import io.reactivex.Observable;
+import manulife.manulifesop.api.ObjectInput.InputCreateCampaign;
 import manulife.manulifesop.api.ObjectInput.InputCreatePass;
 import manulife.manulifesop.api.ObjectInput.InputLoginData;
 import manulife.manulifesop.api.ObjectInput.InputRequestOTP;
@@ -57,5 +58,9 @@ public interface ApiInterface {
     Observable<VerifyOTP> checkCampaign(@Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                       @Header("devicename") String devicename, @Header("imei") String imei);
 
+    @POST("campaigns/fa")
+    Observable<VerifyOTP> createCampaign(@Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                    @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                    @Body InputCreateCampaign data);
 
 }

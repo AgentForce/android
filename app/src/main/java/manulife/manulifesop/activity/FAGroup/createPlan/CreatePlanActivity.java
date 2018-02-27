@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import chick.indicator.CircleIndicatorPager;
 import manulife.manulifesop.R;
+import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
@@ -45,7 +47,32 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     @BindView(R.id.layout_root)
     View layoutRoot;
 
+    @BindView(R.id.layout_step)
+    LinearLayout layoutStep;
+    @BindView(R.id.layout_success)
+    RelativeLayout layoutSuccess;
+
+    //view for success layout
+    @BindView(R.id.btn_goto_main)
+    Button btnGoMain;
+    @BindView(R.id.txt_start_date)
+    TextView txtStartDate;
+    @BindView(R.id.txt_end_date)
+    TextView txtEndDate;
+    @BindView(R.id.txt_income)
+    TextView txtIncome;
+    @BindView(R.id.txt_contract_num)
+    TextView txtContractNum;
+
+    private boolean mIsGotCampaing = false;
+    private boolean mIsShowSuccessView = false;
+
     private int mContractNum = 0;
+    private int mIncome =0;
+    private int mContractPrice = 0;
+    private int mProfit;
+    private String mStartDate = "";
+    private String mEndDate = "";
 
 
     private List<BaseFragment> mListFragment;
@@ -112,20 +139,25 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
         });
     }
 
-    @OnClick({R.id.layout_btn_back})
+    @OnClick({R.id.layout_btn_back,R.id.btn_goto_main})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.layout_btn_back: {
-                //backToPrevious(new Bundle());
                 processBackPressed();
+                break;
+            }
+            case R.id.btn_goto_main: {
+                Bundle data = new Bundle();
+                data.putBoolean("isGetCampaign",mIsGotCampaing);
+                goNextScreen(MainFAActivity.class,data);
                 break;
             }
         }
     }
 
     private void processBackPressed() {
-        if (viewPager.getCurrentItem() > 0) {
+        if (viewPager.getCurrentItem() > 0 && !mIsShowSuccessView) {
             int backPosition = viewPager.getCurrentItem() - 1;
             viewPager.setCurrentItem(backPosition, true);
         } else {
@@ -140,10 +172,50 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     }
 
     @Override
-    public void showNextFragment(int contractNum) {
+    public void showNextFragment(int contractNum,String startDate, String endDate,int income,int contractPrice, int profit) {
         if (contractNum > 0) {
             this.mContractNum = contractNum;
+            txtContractNum.setText(String.valueOf(contractNum));
         }
+        if(startDate.length() > 0){
+            this.mStartDate = startDate;
+            txtStartDate.setText(startDate);
+        }
+        if(endDate.length() > 0){
+            this.mEndDate = endDate;
+            txtEndDate.setText(endDate);
+        }
+        if(income > 0){
+            this.mIncome = income;
+            txtIncome.setText(String.valueOf(income));
+        }
+        if(contractPrice > 0){
+            this.mContractPrice = contractPrice;
+        }
+        if(profit > 0){
+            this.mProfit = profit;
+        }
+
         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+    }
+
+    @Override
+    public void showCreateCampaign() {
+        showLoading("Xử lý dữ liệu!");
+        mActionListener.createCampaign(mStartDate,mEndDate,mProfit,mContractPrice,mIncome);
+    }
+
+    @Override
+    public void showSuccessView(boolean isgotCampaign) {
+        this.mIsGotCampaing = isgotCampaign;
+        this.mIsShowSuccessView = true;
+
+        Animation in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        layoutStep.startAnimation(out);
+        layoutStep.setVisibility(View.GONE);
+        layoutSuccess.startAnimation(in);
+        layoutSuccess.setVisibility(View.VISIBLE);
+
     }
 }

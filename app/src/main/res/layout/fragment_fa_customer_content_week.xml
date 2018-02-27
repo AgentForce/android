@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--mục tiêu theo tuần-->
+    <LinearLayout
+        android:id="@+id/layout_object_week"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical"
+        android:visibility="visible">
+        <!--khách hàng liên hệ-->
+        <include
+            layout="@layout/layout_fa_customer_contact"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <!--khách hàng hẹn gặp-->
+        <include
+            layout="@layout/layout_fa_customer_meeting"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <!--khách hàng tư vấn-->
+        <include
+            layout="@layout/layout_fa_customer_advisory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <!--khách hàng ký hợp đồng-->
+        <include
+            layout="@layout/layout_fa_customer_sign"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <!--khách hàng giới thiệu-->
+        <include
+            layout="@layout/layout_fa_customer_introduce"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp" />
+    </LinearLayout>
+</ScrollView>

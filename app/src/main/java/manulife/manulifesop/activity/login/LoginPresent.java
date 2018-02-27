@@ -74,7 +74,7 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     }
 
     private void handleResponseCreatePass(VerifyOTP data) {
-        if (data.getStatusCode() == 200) {
+        if (data.getStatusCode() == 1) {
             if (data.getData().getStatus()) {
                 login(mUserCreatePass, mPassCreatePass);
             }
@@ -101,10 +101,9 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     }
 
     private void handleResponseLogin(LoginResult data) {
-        if (data.getStatus() == 200) {
+        if (data.getStatus() == 1) {
             SOPSharedPreferences.getInstance(mContext).saveToken(data.getData().getAccessToken(),
                     data.getData().getRefreshToken());
-
             chekCampaign();
 
         } else {
@@ -126,11 +125,12 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     }
 
     private void handleResponseCheckCampaign(VerifyOTP data) {
-        if (data.getStatusCode() == 200) {
+        if (data.getStatusCode() == 1) {
             mPresenterView.finishLoading();
             if (data.getData().getStatus()) {
                 //go to main if campaign is created
                 mPresenterView.showMainFAActvity();
+                //mPresenterView.showConfirmCreatePlan();
             } else {
                 mPresenterView.showConfirmCreatePlan();
             }

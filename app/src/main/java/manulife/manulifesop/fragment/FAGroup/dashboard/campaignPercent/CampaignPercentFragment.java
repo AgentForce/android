@@ -19,6 +19,7 @@ import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanContract;
 import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
 import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanPresent;
+import manulife.manulifesop.fragment.FAGroup.dashboard.FADashBoardFragment;
 import manulife.manulifesop.fragment.FAGroup.dashboard.campaignPercent.onePercent.OnePercentFragment;
 
 /**
@@ -84,5 +85,7 @@ public class CampaignPercentFragment extends BaseFragment<MainFAActivity,Campaig
             indicator.setViewPager(viewPager,listBackground);
         }
     }
-
+    public void editNumberContract(){
+        ((FADashBoardFragment)this.getParentFragment()).showEditNumContract();
+    }
 }

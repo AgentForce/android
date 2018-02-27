@@ -16,7 +16,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface CreatePlanStep1Contract {
 
     interface View extends BaseMVPView {
-
+        void showDatePicker(final String type);
     }
 
     interface Action {

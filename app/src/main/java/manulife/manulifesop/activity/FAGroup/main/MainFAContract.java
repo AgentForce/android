@@ -11,6 +11,7 @@ public interface MainFAContract {
     {
         void showFragmentConfirmCreatePlan();
         void showDashBoard();
+        void showCustomer();
     }
     interface Action{
         void checkIsGetCampaign(boolean isGetCampaign);

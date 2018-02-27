@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +18,6 @@ import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step1.CreatePlanStep1Fragment;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Fragment;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step3.CreatePlanStep3Fragment;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step4.CreatePlanStep4Fragment;
 import manulife.manulifesop.fragment.FAGroup.dashboard.campaignPercent.CampaignPercentFragment;
 
 /**
@@ -54,7 +51,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity,FADashBoard
 
     @Override
     public int contentViewLayout() {
-        return R.layout.fragment_dashboard_fa;
+        return R.layout.fragment_fa_dashboard;
     }
 
     @Override
@@ -114,6 +111,11 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity,FADashBoard
 
         listActiHist.setAdapter(mAdapterActiveHist);
 
+    }
+
+    @Override
+    public void showEditNumContract() {
+        Toast.makeText(mActivity, "test " + viewPager.getCurrentItem(), Toast.LENGTH_SHORT).show();
     }
 
     /*@OnClick(R.id.btn_start)

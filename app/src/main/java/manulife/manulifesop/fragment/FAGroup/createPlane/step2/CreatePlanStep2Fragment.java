@@ -146,36 +146,9 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
                 //get contract num
                 float contractNumFloat = (float) (seekBarIncome.getProgress() * 100) / (float) seekProfit.getProgress() / (float) seekContractPrice.getProgress();
                 int contractNum = Math.round(contractNumFloat);
-                mActivity.showNextFragment(contractNum);
+                mActivity.showNextFragment(contractNum, "", "", seekBarIncome.getProgress(),seekContractPrice.getProgress(),seekProfit.getProgress());
                 break;
             }
         }
     }
-
-    /*SmsReceiver.bindListener(new SmsListener() {
-            @Override
-            public void messageReceived(String messageText) {
-
-                //From the received text string you may do string operations to get the required OTP
-                //It depends on your SMS format
-                showMessage("Thong bao",messageText, SweetAlertDialog.SUCCESS_TYPE);
-                Log.d("test",messageText+"_______________________________________");
-                System.out.println(messageText+"_______________________________________");
-
-                //Toast.makeText(getContext(),"Message: "+messageText,Toast.LENGTH_LONG).show();
-
-                // If your OTP is six digits number, you may use the below code
-
-                *//*Pattern pattern = Pattern.compile(OTP_REGEX);
-                Matcher matcher = pattern.matcher(messageText);
-                String otp;
-                while (matcher.find())
-                {
-                    otp = matcher.group();
-                }
-
-                Toast.makeText(MainActivity.this,"OTP: "+ otp ,Toast.LENGTH_LONG).show();*//*
-
-            }
-        });*/
 }

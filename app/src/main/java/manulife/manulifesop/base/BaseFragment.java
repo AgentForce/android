@@ -60,9 +60,10 @@ public abstract class BaseFragment<T extends BaseActivity, P extends BasePresent
 
 
     public void showMessage(String title,String message,int messageType) {
-        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(mActivity, SweetAlertDialog.NORMAL_TYPE);
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(mActivity, messageType);
         sweetAlertDialog.setTitleText("Thông báo");
         sweetAlertDialog.setContentText(message);
+        sweetAlertDialog.setConfirmText("OK");
         sweetAlertDialog.setCanceledOnTouchOutside(true);
         sweetAlertDialog.show();
     }

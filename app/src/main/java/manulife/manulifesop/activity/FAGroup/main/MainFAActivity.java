@@ -3,6 +3,7 @@ package manulife.manulifesop.activity.FAGroup.main;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,6 +22,7 @@ import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanPresenter;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
+import manulife.manulifesop.fragment.FAGroup.customer.FACustomerFragment;
 import manulife.manulifesop.fragment.FAGroup.dashboard.FADashBoardFragment;
 
 /**
@@ -44,21 +46,28 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
     @BindView(R.id.frame_container)
     FrameLayout frameLayout;
 
+    private boolean mIsgetCampaign = false;
+
     AHBottomNavigationAdapter mNavigationAdapter;
+
+    private FragmentTransaction mFragmentTran;
+    private Fragment mCurrentFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_fa);
-        mActionListener = new MainFAPresenter(this,this);
+        mActionListener = new MainFAPresenter(this, this);
         setupSupportForApp();
         setupMenuBot();
-        mActionListener.checkIsGetCampaign(getIntent().getExtras()
-                .getBoolean("isGetCampaign",false));
+        mIsgetCampaign = getIntent().getExtras()
+                .getBoolean("isGetCampaign", false);
+
+        mActionListener.checkIsGetCampaign(mIsgetCampaign);
+        //mActionListener.checkIsGetCampaign(true);
     }
 
-    private void setupSupportForApp()
-    {
+    private void setupSupportForApp() {
         layoutNotification.setVisibility(View.VISIBLE);
 
         txtActionbarTitle.setText(getResources().getString(R.string.activity_main_fa_dashboard));
@@ -74,8 +83,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         viewStatusBar.setLayoutParams(params);
     }
 
-    private void setupMenuBot()
-    {
+    private void setupMenuBot() {
         int[] tabColors = getApplicationContext().getResources().getIntArray(R.array.tab_colors);
         mNavigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bot);
         mNavigationAdapter.setupWithBottomNavigation(bottomNavigation, tabColors);
@@ -86,25 +94,28 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
-                switch (position)
-                {
-                    case 0:
-                    {
-                        Toast.makeText(MainFAActivity.this, "position 0", Toast.LENGTH_SHORT).show();
+                switch (position) {
+                    case 0: {
+                        mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                        if (!(mCurrentFragment instanceof FADashBoardFragment)
+                                && mIsgetCampaign) {
+                            showDashBoard();
+                        }
                         break;
                     }
-                    case 1:
-                    {
-                        Toast.makeText(MainFAActivity.this, "position 1", Toast.LENGTH_SHORT).show();
+                    case 1: {
+                        mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                        if (!(mCurrentFragment instanceof FACustomerFragment)
+                                && mIsgetCampaign) {
+                            showCustomer();
+                        }
                         break;
                     }
-                    case 2:
-                    {
+                    case 2: {
                         Toast.makeText(MainFAActivity.this, "position 2", Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    case 3:
-                    {
+                    case 3: {
                         Toast.makeText(MainFAActivity.this, "position 3", Toast.LENGTH_SHORT).show();
                         break;
                     }
@@ -123,19 +134,26 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
     @Override
     public void showFragmentConfirmCreatePlan() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        mFragmentTran = getSupportFragmentManager().beginTransaction();
         //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-        ft.replace(R.id.frame_container, ConfirmCreatePlanFragment.newInstance());
-        ft.commit();
+        mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        mFragmentTran.replace(R.id.frame_container, ConfirmCreatePlanFragment.newInstance());
+        mFragmentTran.commit();
     }
 
     @Override
     public void showDashBoard() {
-        //Toast.makeText(this, "show main dashboard", Toast.LENGTH_SHORT).show();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-        ft.replace(R.id.frame_container, FADashBoardFragment.newInstance());
-        ft.commit();
+        mFragmentTran = getSupportFragmentManager().beginTransaction();
+        mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        mFragmentTran.replace(R.id.frame_container, FADashBoardFragment.newInstance());
+        mFragmentTran.commit();
+    }
+
+    @Override
+    public void showCustomer() {
+        mFragmentTran = getSupportFragmentManager().beginTransaction();
+        mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        mFragmentTran.replace(R.id.frame_container, FACustomerFragment.newInstance());
+        mFragmentTran.commit();
     }
 }

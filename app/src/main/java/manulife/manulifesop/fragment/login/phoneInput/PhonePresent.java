@@ -42,7 +42,7 @@ public class PhonePresent extends BasePresenter<PhoneContract.View> implements P
     }
 
     private void handleResponseCheckUser(CheckUser checkUser) {
-        if (checkUser.statusCode == 200)//thành công
+        if (checkUser.statusCode == 1)//thành công
         {
             switch (checkUser.data.status){
                 case 1: {//user chưa active

@@ -10,7 +10,6 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface OnePercentContract {
 
     interface View extends BaseMVPView {
-
     }
 
     interface Action {

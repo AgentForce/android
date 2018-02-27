@@ -10,7 +10,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface FADashBoardContract {
 
     interface View extends BaseMVPView {
-
+        void showEditNumContract();
     }
 
     interface Action {

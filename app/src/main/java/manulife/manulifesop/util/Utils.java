@@ -10,6 +10,8 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import manulife.manulifesop.ProjectApplication;
@@ -71,5 +73,41 @@ public class Utils {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static Date convertStringToDate(String strDate,String inputFormat) {
+        Date convertDate = new Date();
+        SimpleDateFormat df = new SimpleDateFormat(inputFormat);
+        try {
+            convertDate = df.parse(strDate);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return convertDate;
+    }
+
+    public static String convertDateToString(Date date,String inputFormat) {
+        String convertString = "";
+        SimpleDateFormat df = new SimpleDateFormat(inputFormat);
+        try {
+            convertString = df.format(date);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return convertString;
+    }
+
+    public static String convertStringDateToStringDate(String inputDate, String inputFormat, String outputFormat) {
+        String result = "";
+        Date converDate = new Date();
+        SimpleDateFormat df = new SimpleDateFormat(inputFormat);
+        SimpleDateFormat df2 = new SimpleDateFormat(outputFormat);
+        try {
+            converDate = df.parse(inputDate);
+            result = df2.format(converDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
