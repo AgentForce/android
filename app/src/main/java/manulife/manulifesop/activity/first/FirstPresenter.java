@@ -42,8 +42,16 @@ public class FirstPresenter extends BasePresenter<FirstContract.View> implements
     @Override
     public void checkInternetViaPingServer() {
         if (Utils.isConnectedToNetwork()) {
-            new TestInternet().execute(3000);
-        }
+            new TestInternet().execute(5000);
+            //checkFirstUserLoading();
+        }/*else{
+            mPresenterView.showInform("Thông báo", "Kiểm tra lại kết nối mạng.", "Thử lại", SweetAlertDialog.WARNING_TYPE, new CallBackInformDialog() {
+                @Override
+                public void DiaglogPositive() {
+
+                }
+            });
+        }*/
     }
 
     @Override
@@ -73,7 +81,7 @@ public class FirstPresenter extends BasePresenter<FirstContract.View> implements
                     int TIMEOUT_VALUE = params[0];
                     try {
                         //URL testUrl = new URL(ApiService.BASE_URL);
-                        URL testUrl = new URL("https://www.google.com.vn");
+                        URL testUrl = new URL("https://vnexpress.net");
 
                         URLConnection testConnection = testUrl.openConnection();
                         testConnection.setConnectTimeout(TIMEOUT_VALUE);
@@ -125,7 +133,7 @@ public class FirstPresenter extends BasePresenter<FirstContract.View> implements
                 mPresenterView.showInform("Thông báo", "Kiểm tra lại kết nối mạng.", "Thử lại", SweetAlertDialog.WARNING_TYPE, new CallBackInformDialog() {
                     @Override
                     public void DiaglogPositive() {
-                        new TestInternet().execute(3000);
+                        new TestInternet().execute(5000);
                     }
                 });
             } else { // code if connected

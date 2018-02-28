@@ -9,6 +9,9 @@
 
     <color name="botMenuDisable">#9c9c9c</color>
 
+    <color name="backgroundGrey">#eeeeee</color>
+
+
     <array name="tab_colors">
         <item name="tab_1">#455C65</item>
         <item name="tab_2">#00886A</item>

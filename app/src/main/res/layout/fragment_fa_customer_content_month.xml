@@ -12,6 +12,7 @@
 
         <!--khách hàng liên hệ-->
         <RelativeLayout
+            android:id="@+id/layout_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -63,6 +64,7 @@
             android:background="@android:color/darker_gray" />
         <!--khách hàng hẹn gặp-->
         <RelativeLayout
+            android:id="@+id/layout_meeting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -114,6 +116,7 @@
             android:background="@android:color/darker_gray" />
         <!--khách hàng tư vấn-->
         <RelativeLayout
+            android:id="@+id/layout_advisory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -165,6 +168,7 @@
             android:background="@android:color/darker_gray" />
         <!--khách hàng ký hợp đồng-->
         <RelativeLayout
+            android:id="@+id/layout_sign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -216,6 +220,7 @@
             android:background="@android:color/darker_gray" />
         <!--khách hàng giới thiệu-->
         <RelativeLayout
+            android:id="@+id/layout_introduce"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

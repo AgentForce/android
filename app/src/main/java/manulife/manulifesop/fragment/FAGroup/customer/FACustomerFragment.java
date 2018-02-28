@@ -2,11 +2,15 @@ package manulife.manulifesop.fragment.FAGroup.customer;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,6 +24,7 @@ import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
+import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Fragment;
 import manulife.manulifesop.fragment.FAGroup.customer.ContentCustomer.FAContentCustomerFragment;
 import manulife.manulifesop.fragment.FAGroup.dashboard.FADashBoardContract;
@@ -35,8 +40,11 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
 
     @BindView(R.id.tabs_menu)
     TabLayout tabLayout;
-    @BindView(R.id.view_pager_customer)
-    CustomViewPager viewPager;
+
+    @BindView(R.id.frame_container_customer)
+    FrameLayout mFrameLayout;
+
+    private FragmentTransaction mFragmentTran;
 
     private CustomViewPagerAdapter mAdapter;
 
@@ -61,38 +69,38 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initTabMenu();
+        showContentCustomer(1);
     }
 
     private void initTabMenu() {
 
-        viewPager.setSwipe(false);
-
-        List<String> tabTitles = new ArrayList<>();
         for (int i = 1; i <= 12; i++) {
-            tabTitles.add("Tháng " + i);
+            tabLayout.addTab(tabLayout.newTab().setText("Tháng " + i).setTag(i));
         }
 
-        List<BaseFragment> mListFragment = new ArrayList<>();
-        mListFragment.add(FAContentCustomerFragment.newInstance());
-        mListFragment.add(FAContentCustomerFragment.newInstance());
-        mListFragment.add(FAContentCustomerFragment.newInstance());
-        mListFragment.add(FAContentCustomerFragment.newInstance());
-        mListFragment.add(FAContentCustomerFragment.newInstance());
-        mListFragment.add(FAContentCustomerFragment.newInstance());
-        mListFragment.add(FAContentCustomerFragment.newInstance());
-        mListFragment.add(FAContentCustomerFragment.newInstance());
-        mListFragment.add(FAContentCustomerFragment.newInstance());
-        mListFragment.add(FAContentCustomerFragment.newInstance());
-        mListFragment.add(FAContentCustomerFragment.newInstance());
-        mListFragment.add(FAContentCustomerFragment.newInstance());
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                showContentCustomer((Integer) tab.getTag());
+            }
 
-        mAdapter = new CustomViewPagerAdapter(getChildFragmentManager(),
-                mListFragment, tabTitles);
-        if (viewPager != null) {
-            viewPager.setAdapter(mAdapter);
-        }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-        tabLayout.setupWithViewPager(viewPager);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    private void showContentCustomer(int month){
+        mFragmentTran = getChildFragmentManager().beginTransaction();
+        mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        mFragmentTran.replace(R.id.frame_container_customer, FAContentCustomerFragment.newInstance(month));
+        mFragmentTran.commit();
     }
 
 }

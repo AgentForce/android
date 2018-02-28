@@ -6,8 +6,10 @@ import manulife.manulifesop.api.ObjectInput.InputCreatePass;
 import manulife.manulifesop.api.ObjectInput.InputLoginData;
 import manulife.manulifesop.api.ObjectInput.InputRequestOTP;
 import manulife.manulifesop.api.ObjectInput.InputVerifyOTP;
+import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
 import manulife.manulifesop.api.ObjectResponse.CheckUser;
 import manulife.manulifesop.api.ObjectResponse.CheckVersion;
+import manulife.manulifesop.api.ObjectResponse.DashboardResult;
 import manulife.manulifesop.api.ObjectResponse.LoginResult;
 import manulife.manulifesop.api.ObjectResponse.RequestOTP;
 import manulife.manulifesop.api.ObjectResponse.VerifyOTP;
@@ -19,6 +21,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by trinm on 12/01/2018.
@@ -63,4 +66,12 @@ public interface ApiInterface {
                                     @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
                                     @Body InputCreateCampaign data);
 
+    @GET("campaigns/dashboard/{type}")
+    Observable<DashboardResult> dashBoard(@Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                          @Header("devicename") String devicename, @Header("imei") String imei,
+                                          @Path(value = "type", encoded = false) String type);
+    @GET("activities")
+    Observable<ActivitiHist> activities(@Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                       @Header("devicename") String devicename, @Header("imei") String imei,
+                                        @Query("page") int page,@Query("limit") int limit);
 }

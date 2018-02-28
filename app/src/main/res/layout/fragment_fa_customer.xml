@@ -20,8 +20,12 @@
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         app:tabTextColor="@color/gray_btn_bg_color" />
 
-    <manulife.manulifesop.element.CustomViewPager
+    <!--<manulife.manulifesop.element.CustomViewPager
         android:id="@+id/view_pager_customer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>-->
+    <FrameLayout
+        android:id="@+id/frame_container_customer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

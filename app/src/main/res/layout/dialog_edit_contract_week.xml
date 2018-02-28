@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/cus_border_white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="Sửa số lượng liên hệ"
+            android:textStyle="bold"
+            android:textSize="@dimen/welcome_activity_note" />
+
+        <include
+            android:layout_marginTop="2dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            layout="@layout/dialog_edit_contract_week_step1"/>
+        <include
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            layout="@layout/dialog_edit_contract_week_step2"/>
+        <include
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            layout="@layout/dialog_edit_contract_week_step3"/>
+        <include
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            layout="@layout/dialog_edit_contract_week_step4"/>
+        <include
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            layout="@layout/dialog_edit_contract_week_step5"/>
+
+        <View
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#c2c2c2"
+            />
+        <LinearLayout
+            android:id="@+id/layout_bot"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="50">
+                <TextView
+                    android:id="@+id/txt_cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Hủy"
+                    android:gravity="center"
+                    android:textColor="@drawable/text_color_blue"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:textSize="@dimen/welcome_activity_note"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#c2c2c2"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="50">
+                <TextView
+                    android:id="@+id/txt_ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Đồng ý"
+                    android:gravity="center"
+                    android:textColor="@drawable/text_color_blue"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:textSize="@dimen/welcome_activity_note"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</ScrollView>

@@ -43,8 +43,9 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
 
     private CustomViewPagerAdapter mAdapter;
 
-    public static FAContentCustomerFragment newInstance() {
+    public static FAContentCustomerFragment newInstance(int month) {
         Bundle args = new Bundle();
+        args.putInt("month",month);
         FAContentCustomerFragment fragment = new FAContentCustomerFragment();
         fragment.setArguments(args);
         return fragment;
@@ -63,6 +64,10 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        int month = getArguments().getInt("month",0);
+        Toast.makeText(mActivity, String.valueOf(month), Toast.LENGTH_SHORT).show();
+
         initViews();
     }
 

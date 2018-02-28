@@ -1,5 +1,7 @@
 package manulife.manulifesop.fragment.FAGroup.dashboard;
 
+import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
+import manulife.manulifesop.api.ObjectResponse.DashboardResult;
 import manulife.manulifesop.base.BaseMVPView;
 
 
@@ -10,10 +12,11 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface FADashBoardContract {
 
     interface View extends BaseMVPView {
-        void showEditNumContract();
+        void showDataDashboard(DashboardResult dataWeekMonth, DashboardResult dataYear, ActivitiHist activities);
     }
 
     interface Action {
-
+        void getDataDashboard();
+        void getActivities();
     }
 }
