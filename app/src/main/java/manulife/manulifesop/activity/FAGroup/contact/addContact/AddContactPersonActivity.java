@@ -80,6 +80,7 @@ public class AddContactPersonActivity extends BaseActivity<AddContactPersonPrese
         initViews();
         mActionListener.readAllContacts();
         loadDateList();
+        
     }
 
     private void initViews() {
