@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/circular_progress_bar" />
+            <option value="$PROJECT_DIR$/cirleCheckbox" />
             <option value="$PROJECT_DIR$/indicator" />
             <option value="$PROJECT_DIR$/sweet-alert-dialog" />
           </set>

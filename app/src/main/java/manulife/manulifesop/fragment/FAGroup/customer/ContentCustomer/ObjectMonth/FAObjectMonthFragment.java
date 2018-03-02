@@ -9,6 +9,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.OnClick;
 import manulife.manulifesop.R;
+import manulife.manulifesop.activity.FAGroup.contact.ContactPersonActivity;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.fragment.FAGroup.customer.ContentCustomer.ObjectWeek.FAObjectWeekContract;
@@ -65,7 +66,8 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
         {
             case R.id.layout_contact:
             {
-                Toast.makeText(mActivity, "layout_contact", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mActivity, "layout_contact", Toast.LENGTH_SHORT).show();
+                mActivity.goNextScreen(ContactPersonActivity.class);
                 break;
             }
             case R.id.layout_meeting:

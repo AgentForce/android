@@ -28,6 +28,9 @@ import manulife.manulifesop.fragment.FAGroup.dashboard.campaignPercent.CampaignP
 
 public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> implements ContactPersonContract.View {
 
+    @BindView(R.id.layout_root)
+    LinearLayout layoutRoot;
+
     @BindView(R.id.txt_actionbar_title)
     TextView txtActionbarTitle;
     @BindView(R.id.layout_btn_back)
@@ -49,7 +52,7 @@ public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_person);
         mActionListener = new ContactPersonPresenter(this,this);
-
+        hideKeyboardOutside(layoutRoot,this);
         setupSupportForApp();
         initViewPager();
     }

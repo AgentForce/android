@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_title_step5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_step5"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/color_dashboard_introduce" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:layout_weight="50"
+                android:text="Nguồn"
+                android:textSize="@dimen/welcome_activity_content" />
+
+            <LinearLayout
+                android:id="@+id/layout_choose_step5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/backgroundGrey" />
+
+                <TextView
+                    android:id="@+id/txt_step5_choose"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="choose"
+                    android:textSize="@dimen/welcome_activity_content"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_layout_step5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:el_duration="500"
+        app:el_expanded="false"
+        app:el_parallax="0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+                <!--line 1-->
+                <RadioGroup
+                    android:id="@+id/rg_step5_line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="100"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_step5_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:background="@drawable/cus_radio_background_option"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:minHeight="40dp"
+                        android:text="Cá nhân"
+                        android:textColor="@drawable/cus_radio_background_option"
+                        android:textSize="12sp" />
+
+                    <RadioButton
+                        android:id="@+id/rb_step5_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="50"
+                        android:background="@drawable/cus_radio_background_option"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:minHeight="40dp"
+                        android:text="Sự kiện"
+                        android:textColor="@drawable/cus_radio_background_option"
+                        android:textSize="12sp" />
+                </RadioGroup>
+                <!--line 2-->
+                <RadioGroup
+                    android:id="@+id/rg_step5_line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="100"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_step5_3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:background="@drawable/cus_radio_background_option"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:minHeight="40dp"
+                        android:text="KH giới thiêu"
+                        android:textColor="@drawable/cus_radio_background_option"
+                        android:textSize="12sp" />
+
+                    <RadioButton
+                        android:id="@+id/rb_step5_4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="50"
+                        android:background="@drawable/cus_radio_background_option"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:minHeight="40dp"
+                        android:text="Khác"
+                        android:textColor="@drawable/cus_radio_background_option"
+                        android:textSize="12sp" />
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+    </net.cachapa.expandablelayout.ExpandableLayout>
+
+</LinearLayout>

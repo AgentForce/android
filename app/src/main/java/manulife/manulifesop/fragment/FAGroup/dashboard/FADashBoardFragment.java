@@ -1,7 +1,11 @@
 package manulife.manulifesop.fragment.FAGroup.dashboard;
 
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,6 +25,7 @@ import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
+import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 import manulife.manulifesop.fragment.FAGroup.dashboard.campaignPercent.CampaignPercentFragment;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
 
@@ -75,7 +80,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
         mActionListener = new FADashBoardPresent(this);
     }
 
-    private  final class onLoadingMoreDataTask implements EndlessScrollListenerRecyclerView.onActionListViewScroll {
+    private final class onLoadingMoreDataTask implements EndlessScrollListenerRecyclerView.onActionListViewScroll {
 
         @Override
         public void onApiLoadMoreTask(int page) {
@@ -93,15 +98,14 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
         initActiHistList();
     }
 
-    private void initView()
-    {
+    private void initView() {
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         //init data
         mDataActiveHist = new ArrayList<>();
     }
 
     @Override
-    public void showDataDashboard(DashboardResult dataWeekMonth,DashboardResult dataYear, ActivitiHist activities) {
+    public void showDataDashboard(DashboardResult dataWeekMonth, DashboardResult dataYear, ActivitiHist activities) {
         int step1 = 0, step2 = 0, step3 = 0, step4 = 0, step5 = 0;
         for (int i = 0; i < dataWeekMonth.data.campaign.size(); i++) {
             step1 += dataWeekMonth.data.campaign.get(i).currentCallSale;
@@ -142,23 +146,47 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
     private void initActiHistList() {
         listActiHist.setLayoutManager(mLayoutManager);
 
-        for(int i=0;i<10;i++){
+        for (int i = 0; i < 10; i++) {
             ActiveHistFA temp = new ActiveHistFA();
             temp.setAvatar("avatar " + i);
             temp.setTitle("title code input " + i);
             temp.setContent("content code input " + i);
             mDataActiveHist.add(temp);
         }
-        if(mAdapterActiveHist == null){
-        mAdapterActiveHist = new ActiveHistAdapter(getContext(), mDataActiveHist);
-        listActiHist.setAdapter(mAdapterActiveHist);}
-        else{
+        if (mAdapterActiveHist == null) {
+            mAdapterActiveHist = new ActiveHistAdapter(getContext(), mDataActiveHist, new CallBackClickContact() {
+                @Override
+                public void onClickMenuRight(int position, int option) {
+                    Toast.makeText(mActivity, "Vi tri " + position + " option " + option, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onClickMainContent(int position) {
+                    Toast.makeText(mActivity, mDataActiveHist.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            listActiHist.setAdapter(mAdapterActiveHist);
+        } else {
             mAdapterActiveHist.notifyDataSetChanged();
         }
 
+        //set space between two items
+        int[] ATTRS = new int[]{android.R.attr.listDivider};
+        TypedArray a = getContext().obtainStyledAttributes(ATTRS);
+        Drawable divider = a.getDrawable(0);
+        int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
+        int insetRight = getResources().getDimensionPixelSize(R.dimen.margin_right_DividerItemDecoration);
+        InsetDrawable insetDivider = new InsetDrawable(divider, insetLeft, 0, insetRight, 0);
+        a.recycle();
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listActiHist.getContext(),
+                mLayoutManager.getOrientation());
+        dividerItemDecoration.setDrawable(insetDivider);
+        listActiHist.addItemDecoration(dividerItemDecoration);
+
         listActiHist.clearOnScrollListeners();
         listActiHist.addOnScrollListener(new EndlessScrollListenerRecyclerView(
-                0,3,new onLoadingMoreDataTask(),mLayoutManager));
+                0, 3, new onLoadingMoreDataTask(), mLayoutManager));
 
     }
 

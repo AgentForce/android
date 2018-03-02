@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import manulife.manulifesop.R;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
+import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 
 /**
  * Created by PhamTruong on 01/06/2017.
@@ -32,11 +34,13 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
     private Context mContext;
     private List<ActiveHistFA> mListObject = null;
     private FragmentManager fm;
+    private CallBackClickContact mCallback;
 
     //Constructor
-    public ActiveHistAdapter(Context context, List<ActiveHistFA> arr) {
+    public ActiveHistAdapter(Context context, List<ActiveHistFA> arr, CallBackClickContact callBackClickContact) {
         this.mContext = context;
         this.mListObject = arr;
+        this.mCallback = callBackClickContact;
     }
 
     /**
@@ -70,7 +74,7 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
         holder.txtTitle.setText(object.getTitle());
         holder.txtContent.setText(object.getContent());
         holder.userAvatar.setBorderColor(mContext.getResources().getColor(R.color.colorSecond));
-        holder.layoutRoot.setOnClickListener(new View.OnClickListener() {
+        holder.layoutMenuRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PopupMenu popup = new PopupMenu(mContext, holder.menuRight);
@@ -83,15 +87,18 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
                         switch (item.getItemId()) {
                             case R.id.menu1:
                                 //handle menu1 click
-                                Toast.makeText(mContext, "menu 1", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(mContext, "menu 1", Toast.LENGTH_SHORT).show();
+                                mCallback.onClickMenuRight(position,0);
                                 break;
                             case R.id.menu2:
                                 //handle menu2 click
-                                Toast.makeText(mContext, "menu 2", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(mContext, "menu 2", Toast.LENGTH_SHORT).show();
+                                mCallback.onClickMenuRight(position,1);
                                 break;
                             case R.id.menu3:
-                                Toast.makeText(mContext, "menu 3", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(mContext, "menu 3", Toast.LENGTH_SHORT).show();
                                 //handle menu3 click
+                                mCallback.onClickMenuRight(position,1);
                                 break;
                         }
                         return false;
@@ -101,6 +108,14 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
                 popup.show();
             }
         });
+        holder.layoutRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(mContext, mListObject.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                mCallback.onClickMainContent(position);
+            }
+        });
+
     }
 
     /**
@@ -131,8 +146,10 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
         TextView txtContent;
         @BindView(R.id.menu_right)
         ImageButton menuRight;
+        @BindView(R.id.layout_menu_right)
+        View layoutMenuRight;
         @BindView(R.id.layout_root)
-        RelativeLayout layoutRoot;
+        LinearLayout layoutRoot;
 
 
 

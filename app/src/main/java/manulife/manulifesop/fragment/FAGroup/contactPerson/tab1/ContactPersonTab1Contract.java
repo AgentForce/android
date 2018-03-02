@@ -10,7 +10,6 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface ContactPersonTab1Contract {
 
     interface View extends BaseMVPView {
-
     }
 
     interface Action {

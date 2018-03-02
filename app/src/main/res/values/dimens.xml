@@ -6,5 +6,8 @@
     <dimen name="welcome_activity_title">20sp</dimen>
     <dimen name="welcome_activity_content">14sp</dimen>
     <dimen name="welcome_activity_note">16sp</dimen>
+    
+    <dimen name="margin_left_DividerItemDecoration">70dp</dimen>
+    <dimen name="margin_right_DividerItemDecoration">10dp</dimen>
 
 </resources>

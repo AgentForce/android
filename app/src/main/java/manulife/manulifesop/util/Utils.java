@@ -1,12 +1,15 @@
 package manulife.manulifesop.util;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.SyncStateContract;
+import android.support.v4.widget.NestedScrollView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ScrollView;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -109,5 +112,9 @@ public class Utils {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static void smoothScrollViewToPosition(final Context context, final NestedScrollView scrollView, final int Yposition){
+        ObjectAnimator.ofInt(scrollView, "scrollY",  Yposition).setDuration(1000).start();
     }
 }

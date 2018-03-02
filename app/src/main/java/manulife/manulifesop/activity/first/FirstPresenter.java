@@ -156,6 +156,10 @@ public class FirstPresenter extends BasePresenter<FirstContract.View> implements
             if (mContext.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                 temp.add(Manifest.permission.READ_PHONE_STATE);
             }
+            //READ_CONTACTS
+            if (mContext.checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                temp.add(Manifest.permission.READ_CONTACTS);
+            }
 
             if (temp.size() > 0) {
                 String permissions[] = new String[temp.size()];
