@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -18,7 +17,7 @@ import butterknife.ButterKnife;
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter;
 import cn.refactor.library.SmoothCheckBox;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.contact.addContact.AddContactPersonActivity;
+import manulife.manulifesop.activity.FAGroup.clients.related.addContact.AddContactPersonActivity;
 import manulife.manulifesop.adapter.ObjectData.ContactPerson;
 
 /**

@@ -2,10 +2,8 @@ package manulife.manulifesop.activity.FAGroup.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -19,10 +17,9 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 
 import butterknife.BindView;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanPresenter;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
-import manulife.manulifesop.fragment.FAGroup.customer.FACustomerFragment;
+import manulife.manulifesop.fragment.FAGroup.clients.FACustomerFragment;
 import manulife.manulifesop.fragment.FAGroup.dashboard.FADashBoardFragment;
 
 /**
@@ -60,11 +57,11 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         mActionListener = new MainFAPresenter(this, this);
         setupSupportForApp();
         setupMenuBot();
-        mIsgetCampaign = getIntent().getExtras()
-                .getBoolean("isGetCampaign", false);
-
+        /*mIsgetCampaign = getIntent().getExtras()
+                .getBoolean("isGetCampaign", false);*/
+        mIsgetCampaign = true;
         mActionListener.checkIsGetCampaign(mIsgetCampaign);
-        //mActionListener.checkIsGetCampaign(true);
+
     }
 
     private void setupSupportForApp() {

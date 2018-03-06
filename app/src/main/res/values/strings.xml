@@ -51,4 +51,7 @@
 
     <!--activity_main_fa-->
     <string name="activity_main_fa_dashboard">Trang chủ</string>
+
+    <string name="hint_name">Họ &amp; tên</string>
+
 </resources>

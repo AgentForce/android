@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/cus_border_white"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true">
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/txt_title"
+            android:text="Hủy"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_alignTop="@+id/txt_title"
+            android:layout_alignBottom="@+id/txt_title"
+            android:textColor="@drawable/text_color_green"
+            android:textSize="@dimen/welcome_activity_note"
+            android:clickable="true" />
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_centerVertical="true"
+            android:text="Thêm số điện thoại mới"
+            android:textSize="@dimen/welcome_activity_note" />
+
+        <TextView
+            android:id="@+id/txt_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/txt_title"
+            android:text="Thêm"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical|right"
+            android:layout_alignTop="@+id/txt_title"
+            android:layout_alignBottom="@+id/txt_title"
+            android:textColor="@drawable/text_color_green"
+            android:clickable="true"
+            android:textSize="@dimen/welcome_activity_note" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/backgroundGrey" />
+    
+    <EditText
+        android:id="@+id/edt_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Số điện thoại"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="@dimen/welcome_activity_content"/>
+
+    <EditText
+        android:id="@+id/edt_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="@dimen/welcome_activity_content"
+        android:layout_marginBottom="30dp"/>
+
+</LinearLayout>

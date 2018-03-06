@@ -58,4 +58,6 @@ dependencies {
     compile 'ca.barrenechea.header-decor:header-decor:0.2.8'
 
     compile 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+
+    compile 'com.github.clans:fab:1.6.4'
 }

@@ -27,7 +27,7 @@
             android:name=".activity.first.FirstActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeTranslucent">
-            <!--<intent-filter>
+           <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -50,17 +50,6 @@
             android:name=".activity.FAGroup.main.MainFAActivity"
             android:label="@string/activity_main_fa_dashboard"
             android:screenOrientation="portrait">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
-
-        <activity
-            android:name=".activity.FAGroup.contact.ContactPersonActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -69,12 +58,44 @@
         </activity>
 
         <activity
-            android:name=".activity.FAGroup.contact.addContact.AddContactPersonActivity"
+            android:name=".activity.FAGroup.clients.contact.ContactPersonActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <activity
+            android:name=".activity.FAGroup.clients.related.addContact.AddContactPersonActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
-            android:name=".activity.FAGroup.contact.updateContactInfo.UpdateContactInfoActivity"
+            android:name=".activity.FAGroup.clients.related.updateContactInfo.UpdateContactInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".activity.FAGroup.clients.related.contactDetail.ContactDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".activity.FAGroup.clients.related.createEvent.CreateEventActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".activity.FAGroup.clients.related.eventDetail.EventDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".activity.FAGroup.clients.introduceContact.IntroduceContactActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
+        <activity
+            android:name=".activity.FAGroup.clients.appointment.AppointmentActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
 
