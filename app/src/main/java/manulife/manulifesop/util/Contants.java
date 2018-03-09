@@ -17,4 +17,13 @@ public class Contants {
     public static final String REFUSE = "refuse";
     public static final String CONTACT = "contact";
     public static final String INTRODURE = "introdure";
+    public static final String CONSULTANT = "consultant";
+    public static final String CONSULTATION_APPOINTMENT = "consultation_appointment";
+
+    //menu call type
+    public static final String APPOINTMENT_MENU = "appointment_menu";
+    public static final String CONSULTANT_MENU = "consultant_menu";
+    public static final String CONTACT_MENU = "contact_menu";
+    public static final String SIGNED_MENU = "signed_menu";
+    public static final String INTRODUCE_MENU = "introduce_menu";
 }

@@ -1,5 +1,6 @@
 package manulife.manulifesop.fragment.FAGroup.clients.ContentClient;
 
+import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.base.BaseMVPView;
 
 
@@ -10,10 +11,10 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface FAContentCustomerContract {
 
     interface View extends BaseMVPView {
-
+        void showCampaignsMonth(CampaignMonth data);
     }
 
     interface Action {
-
+        void getCampaignMonth(int month);
     }
 }

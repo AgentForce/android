@@ -25,6 +25,9 @@ public class ActivitiHist {
 
     public class Data {
 
+        @SerializedName("count")
+        @Expose
+        public Integer count;
         @SerializedName("page")
         @Expose
         public Integer page;
@@ -43,39 +46,18 @@ public class ActivitiHist {
             @SerializedName("ActivityTypeId")
             @Expose
             public Integer activityTypeId;
-            @SerializedName("Phone")
-            @Expose
-            public String phone;
             @SerializedName("Name")
             @Expose
             public String name;
             @SerializedName("ProcessStep")
             @Expose
             public Integer processStep;
-            @SerializedName("Location")
-            @Expose
-            public String location;
-            @SerializedName("StartDate")
-            @Expose
-            public String startDate;
-            @SerializedName("EndDate")
-            @Expose
-            public String endDate;
-            @SerializedName("FullDate")
-            @Expose
-            public Boolean fullDate;
-            @SerializedName("Notification")
-            @Expose
-            public Integer notification;
             @SerializedName("Description")
             @Expose
             public String description;
-            @SerializedName("Type")
+            @SerializedName("CreatedAt")
             @Expose
-            public Integer type;
-            @SerializedName("Status")
-            @Expose
-            public Boolean status;
+            public String createdAt;
             @SerializedName("manulife_lead")
             @Expose
             public ManulifeLead manulifeLead;
@@ -88,6 +70,12 @@ public class ActivitiHist {
                 @SerializedName("ProcessStep")
                 @Expose
                 public Integer processStep;
+                @SerializedName("StatusProcessStep")
+                @Expose
+                public Integer statusProcessStep;
+                @SerializedName("Phone")
+                @Expose
+                public String phone;
 
             }
 

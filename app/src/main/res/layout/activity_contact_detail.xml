@@ -196,12 +196,22 @@
 
     </LinearLayout>
 
-    <include
-        android:id="@+id/layout_menu"
-        layout="@layout/layout_float_menu"
+    <LinearLayout
+        android:id="@+id/layout_menu_bot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
-        android:visibility="gone"/>
+        android:orientation="vertical"
+        android:visibility="gone">
+        <ViewStub
+            android:id="@+id/layout_menu"
+            layout="@layout/layout_float_menu_contact"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <!--<ViewStub
+            layout="@layout/layout_float_menu_contact"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />-->
+    </LinearLayout>
 
 </RelativeLayout>

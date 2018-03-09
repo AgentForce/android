@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import java.util.Calendar;
+
 import butterknife.BindView;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
@@ -50,6 +52,8 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mActivity.showHideActionbar(true);
+        mActivity.updateActionbarTitle("Khách hàng");
         initTabMenu();
         showContentCustomer(1);
     }
@@ -59,6 +63,8 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
         for (int i = 1; i <= 12; i++) {
             tabLayout.addTab(tabLayout.newTab().setText("Tháng " + i).setTag(i));
         }
+        
+        tabLayout.getTabAt(Calendar.getInstance().get(Calendar.MONTH)).select();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

@@ -3,14 +3,21 @@ package manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ObjectMonth;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.appointment.AppointmentActivity;
+import manulife.manulifesop.activity.FAGroup.clients.consultant.ConsultantActivity;
 import manulife.manulifesop.activity.FAGroup.clients.contact.ContactPersonActivity;
+import manulife.manulifesop.activity.FAGroup.clients.introduceContact.IntroduceContactActivity;
+import manulife.manulifesop.activity.FAGroup.clients.signed.SignedPersonActivity;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
+import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.base.BaseFragment;
 
 /**
@@ -30,9 +37,21 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
     @BindView(R.id.layout_introduce)
     RelativeLayout layoutIntroduce;
 
+    //variables load number of campaign
+    @BindView(R.id.txt_step1_result)
+    TextView txtStep1;
+    @BindView(R.id.txt_step2_result)
+    TextView txtStep2;
+    @BindView(R.id.txt_step3_result)
+    TextView txtStep3;
+    @BindView(R.id.txt_step4_result)
+    TextView txtStep4;
+    @BindView(R.id.txt_step5_result)
+    TextView txtStep5;
 
-    public static FAObjectMonthFragment newInstance() {
+    public static FAObjectMonthFragment newInstance(CampaignMonth data) {
         Bundle args = new Bundle();
+        args.putSerializable("data", data);
         FAObjectMonthFragment fragment = new FAObjectMonthFragment();
         fragment.setArguments(args);
         return fragment;
@@ -51,44 +70,69 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        CampaignMonth data = (CampaignMonth) getArguments().getSerializable("data");
+        initViews(data);
     }
 
+    private void initViews(CampaignMonth data) {
+        if (data != null) {
+            int targetStep1 = 0, targetStep2 = 0, targetStep3 = 0, targetStep4 = 0, targetStep5 = 0;
+            int currentStep1 = 0, currentStep2 = 0, currentStep3 = 0, currentStep4 = 0, currentStep5 = 0;
+            for (int i = 0; i < data.data.campaigns.size(); i++) {
+                targetStep1 += data.data.campaigns.get(i).targetCallSale;
+                currentStep1 += data.data.campaigns.get(i).currentCallSale;
 
+                targetStep2 += data.data.campaigns.get(i).targetMetting;
+                currentStep2 += data.data.campaigns.get(i).currentMetting;
 
-    @OnClick({R.id.layout_contact,R.id.layout_meeting,R.id.layout_advisory,R.id.layout_sign,R.id.layout_introduce})
-    public void onClick(View view)
-    {
+                targetStep3 += data.data.campaigns.get(i).targetPresentation;
+                currentStep3 += data.data.campaigns.get(i).currentPresentation;
+
+                targetStep4 += data.data.campaigns.get(i).targetContractSale;
+                currentStep4 += data.data.campaigns.get(i).currentContract;
+
+                targetStep5 += data.data.campaigns.get(i).targetReLead;
+                currentStep5 += data.data.campaigns.get(i).currentReLead;
+            }
+
+            txtStep1.setText(currentStep1 + "/" + targetStep1);
+            txtStep2.setText(currentStep2 + "/" + targetStep2);
+            txtStep3.setText(currentStep3 + "/" + targetStep3);
+            txtStep4.setText(currentStep4 + "/" + targetStep4);
+            txtStep5.setText(currentStep5 + "/" + targetStep5);
+        }
+    }
+
+    @OnClick({R.id.layout_contact, R.id.layout_meeting, R.id.layout_advisory, R.id.layout_sign, R.id.layout_introduce})
+    public void onClick(View view) {
         int id = view.getId();
-        switch (id)
-        {
-            case R.id.layout_contact:
-            {
+        switch (id) {
+            case R.id.layout_contact: {
                 //Toast.makeText(mActivity, "layout_contact", Toast.LENGTH_SHORT).show();
                 mActivity.goNextScreen(ContactPersonActivity.class);
                 break;
             }
-            case R.id.layout_meeting:
-            {
+            case R.id.layout_meeting: {
                 //Toast.makeText(mActivity, "layout_meeting", Toast.LENGTH_SHORT).show();
                 mActivity.goNextScreen(AppointmentActivity.class);
                 break;
             }
-            case R.id.layout_advisory:
-            {
-                Toast.makeText(mActivity, "layout_advisory", Toast.LENGTH_SHORT).show();
+            case R.id.layout_advisory: {
+                //Toast.makeText(mActivity, "layout_advisory", Toast.LENGTH_SHORT).show();
+                mActivity.goNextScreen(ConsultantActivity.class);
                 break;
             }
-            case R.id.layout_introduce:
-            {
-                Toast.makeText(mActivity, "layout_introduce", Toast.LENGTH_SHORT).show();
+            case R.id.layout_sign: {
+                //Toast.makeText(mActivity, "layout_sign", Toast.LENGTH_SHORT).show();
+                mActivity.goNextScreen(SignedPersonActivity.class);
                 break;
             }
-            case R.id.layout_sign:
-            {
-                Toast.makeText(mActivity, "layout_sign", Toast.LENGTH_SHORT).show();
+            case R.id.layout_introduce: {
+                //Toast.makeText(mActivity, "layout_introduce", Toast.LENGTH_SHORT).show();
+                mActivity.goNextScreen(IntroduceContactActivity.class);
                 break;
             }
+
         }
     }
 

@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,12 +23,17 @@ import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
 import manulife.manulifesop.fragment.FAGroup.clients.FACustomerFragment;
 import manulife.manulifesop.fragment.FAGroup.dashboard.FADashBoardFragment;
+import manulife.manulifesop.fragment.FAGroup.events.FAEventsFragment;
+import manulife.manulifesop.fragment.FAGroup.personal.FAPersonalFragment;
 
 /**
  * Created by Chick on 1/23/2018.
  */
 
 public class MainFAActivity extends BaseActivity<MainFAPresenter> implements MainFAContract.View {
+
+    @BindView(R.id.layout_top)
+    LinearLayout layoutAllActionbar;
 
     @BindView(R.id.layout_notification)
     RelativeLayout layoutNotification;
@@ -57,9 +64,8 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         mActionListener = new MainFAPresenter(this, this);
         setupSupportForApp();
         setupMenuBot();
-        /*mIsgetCampaign = getIntent().getExtras()
-                .getBoolean("isGetCampaign", false);*/
-        mIsgetCampaign = true;
+        mIsgetCampaign = getIntent().getExtras()
+                .getBoolean("isGetCampaign", false);
         mActionListener.checkIsGetCampaign(mIsgetCampaign);
 
     }
@@ -109,11 +115,17 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
                         break;
                     }
                     case 2: {
-                        Toast.makeText(MainFAActivity.this, "position 2", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainFAActivity.this, "position 2", Toast.LENGTH_SHORT).show();
+                        mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                        if (!(mCurrentFragment instanceof FAEventsFragment)
+                                && mIsgetCampaign) {
+                            showEvents();
+                        }
                         break;
                     }
                     case 3: {
-                        Toast.makeText(MainFAActivity.this, "position 3", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainFAActivity.this, "position 3", Toast.LENGTH_SHORT).show();
+                        showPersonal();
                         break;
                     }
                 }
@@ -127,6 +139,24 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_notify, menu);
         return true;
+    }
+
+    @Override
+    public void updateActionbarTitle(String title) {
+        txtActionbarTitle.setText(title);
+    }
+
+    @Override
+    public void showHideActionbar(boolean isShow) {
+        if(isShow) {
+            if (layoutAllActionbar.getVisibility() == View.GONE){
+                layoutAllActionbar.setVisibility(View.VISIBLE);
+            }
+        }else{
+            if (layoutAllActionbar.getVisibility() == View.VISIBLE){
+                layoutAllActionbar.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
@@ -153,4 +183,21 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         mFragmentTran.replace(R.id.frame_container, FACustomerFragment.newInstance());
         mFragmentTran.commit();
     }
+
+    @Override
+    public void showEvents() {
+        mFragmentTran = getSupportFragmentManager().beginTransaction();
+        mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        mFragmentTran.replace(R.id.frame_container, FAEventsFragment.newInstance());
+        mFragmentTran.commit();
+    }
+
+    @Override
+    public void showPersonal() {
+        mFragmentTran = getSupportFragmentManager().beginTransaction();
+        mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        mFragmentTran.replace(R.id.frame_container, FAPersonalFragment.newInstance());
+        mFragmentTran.commit();
+    }
+
 }

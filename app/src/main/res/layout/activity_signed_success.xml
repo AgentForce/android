@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:id="@+id/layout_root">
+
+    <include
+        android:id="@+id/layout_top"
+        layout="@layout/actionbar_custom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_done"
+        android:layout_below="@+id/layout_top">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:text="Hợp đồng #48493 đã được ký thành công"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/welcome_activity_title"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:text="@string/activity_signed_success_title"
+                android:textSize="@dimen/welcome_activity_note" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/cus_border_edittext">
+
+                <EditText
+                    android:id="@+id/edt_revenue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/txt_vnd"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/activity_signed_success_hint_1"
+                    android:inputType="numberDecimal"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="10dp"
+                    android:textSize="@dimen/welcome_activity_note" />
+
+                <TextView
+                    android:id="@+id/txt_vnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:text="VND"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/welcome_activity_note"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/cus_border_edittext">
+
+                <EditText
+                    android:id="@+id/edt_profit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/txt_percent"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/activity_signed_success_hint_2"
+                    android:inputType="numberDecimal"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="10dp"
+                    android:textSize="@dimen/welcome_activity_note" />
+
+                <TextView
+                    android:id="@+id/txt_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:text="%"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/welcome_activity_note"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/edt_contact_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/cus_border_edittext"
+                android:hint="@string/activity_signed_success_hint_3"
+                android:inputType="numberDecimal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:textSize="@dimen/welcome_activity_note" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="60">
+
+                <RadioButton
+                    android:id="@+id/rb_main"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="30"
+                    android:background="@drawable/cus_radio_background_green_border"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="Sản phẩm chính"
+                    android:textColor="@drawable/cus_radio_background_green_border"
+                    android:layout_marginRight="5dp"/>
+
+                <RadioButton
+                    android:id="@+id/rb_sub"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="30"
+                    android:background="@drawable/cus_radio_background_green_border"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="Phụ"
+                    android:textColor="@drawable/cus_radio_background_green_border"
+                    android:layout_marginLeft="5dp"/>
+            </RadioGroup>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/cus_button_events"
+        android:text="Hoàn tất"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+</RelativeLayout>

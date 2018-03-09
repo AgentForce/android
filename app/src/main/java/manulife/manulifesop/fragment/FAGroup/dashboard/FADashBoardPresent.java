@@ -41,7 +41,7 @@ public class FADashBoardPresent extends BasePresenter<FADashBoardContract.View> 
                     this.mDataDashboardYear = dashboardResult;
                     return ApiService.getServer().activities(
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
-                            DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, 1,10);
+                            DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, 1, 10);
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -53,16 +53,31 @@ public class FADashBoardPresent extends BasePresenter<FADashBoardContract.View> 
     }
 
     private void handleResponseDashboard(ActivitiHist data) {
-        if(data.statusCode == 1){
-            mPresenterView.showDataDashboard(mDataDashboardWeekMonth,mDataDashboardYear,data);
+        if (data.statusCode == 1) {
+            mPresenterView.showDataDashboard(mDataDashboardWeekMonth, mDataDashboardYear, data);
             mPresenterView.finishLoading();
-        }else{
+        } else {
             mPresenterView.finishLoading(data.msg, false);
         }
     }
 
     @Override
-    public void getActivities() {
+    public void getActivities(int page) {
+        getCompositeDisposable().add(ApiService.getServer().activities(Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
+                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, page, 10)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseActivity, this::handleError)
+        );
+    }
 
+    private void handleResponseActivity(ActivitiHist activitiHist) {
+        if (activitiHist.statusCode == 1) {
+            mPresenterView.showACtivities(activitiHist);
+            mPresenterView.finishLoading();
+        }else{
+            mPresenterView.finishLoading(activitiHist.msg, false);
+        }
     }
 }

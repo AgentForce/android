@@ -13,10 +13,11 @@ public interface FADashBoardContract {
 
     interface View extends BaseMVPView {
         void showDataDashboard(DashboardResult dataWeekMonth, DashboardResult dataYear, ActivitiHist activities);
+        void showACtivities(ActivitiHist activities);
     }
 
     interface Action {
         void getDataDashboard();
-        void getActivities();
+        void getActivities(int page);
     }
 }

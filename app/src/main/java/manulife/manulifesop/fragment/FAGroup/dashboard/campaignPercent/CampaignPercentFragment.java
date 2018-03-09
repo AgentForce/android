@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.warkiz.widget.IndicatorSeekBar;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,9 +43,12 @@ public class CampaignPercentFragment extends BaseFragment<MainFAActivity, Campai
     private CustomViewPagerAdapter mAdapter;
     private List<BaseFragment> mListFragment;
 
-    public static CampaignPercentFragment newInstance(String type) {
+    private List<Integer> mListPercent;
+
+    public static CampaignPercentFragment newInstance(String type,List<Integer> listPercent) {
         Bundle args = new Bundle();
         args.putString("type", type);
+        args.putSerializable("percent", (Serializable) listPercent);
         CampaignPercentFragment fragment = new CampaignPercentFragment();
         fragment.setArguments(args);
         return fragment;
@@ -64,16 +68,17 @@ public class CampaignPercentFragment extends BaseFragment<MainFAActivity, Campai
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.mPercentFragmentType = getArguments().getString("type", "");
+        this.mListPercent = (List<Integer>) getArguments().getSerializable("percent");
         initViewpager();
     }
 
     private void initViewpager() {
         mListFragment = new ArrayList<>();
-        mListFragment.add(OnePercentFragment.newInstance("Liên hệ", 60, getResources().getColor(R.color.color_dashboard_contact)));
-        mListFragment.add(OnePercentFragment.newInstance("Hẹn gặp", 50, getResources().getColor(R.color.color_dashboard_meeting)));
-        mListFragment.add(OnePercentFragment.newInstance("Tư vấn", 40, getResources().getColor(R.color.color_dashboard_advisory)));
-        mListFragment.add(OnePercentFragment.newInstance("Ký hợp đồng", 30, getResources().getColor(R.color.color_dashboard_sign)));
-        mListFragment.add(OnePercentFragment.newInstance("Giới thiệu", 20, getResources().getColor(R.color.color_dashboard_introduce)));
+        mListFragment.add(OnePercentFragment.newInstance("Liên hệ", mListPercent.get(0), getResources().getColor(R.color.color_dashboard_contact)));
+        mListFragment.add(OnePercentFragment.newInstance("Hẹn gặp", mListPercent.get(1), getResources().getColor(R.color.color_dashboard_meeting)));
+        mListFragment.add(OnePercentFragment.newInstance("Tư vấn", mListPercent.get(2), getResources().getColor(R.color.color_dashboard_advisory)));
+        mListFragment.add(OnePercentFragment.newInstance("Ký hợp đồng", mListPercent.get(3), getResources().getColor(R.color.color_dashboard_sign)));
+        mListFragment.add(OnePercentFragment.newInstance("Giới thiệu", mListPercent.get(4), getResources().getColor(R.color.color_dashboard_introduce)));
 
         //create list color indicator
         List<Integer> listBackground = new ArrayList<>();

@@ -12,6 +12,7 @@ import butterknife.BindView;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
+import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ObjectMonth.FAObjectMonthFragment;
@@ -54,18 +55,19 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
 
         int month = getArguments().getInt("month",0);
         Toast.makeText(mActivity, String.valueOf(month), Toast.LENGTH_SHORT).show();
-
-        initViews();
+        mActionListener.getCampaignMonth(month);
+        //initViews();
     }
 
-    private void initViews() {
+    @Override
+    public void showCampaignsMonth(CampaignMonth data) {
         List<String> tabTitles = new ArrayList<>();
         tabTitles.add("Mục tiêu tháng");
         tabTitles.add("Mục tiêu theo tuần");
 
         List<BaseFragment> mListFragment = new ArrayList<>();
-        mListFragment.add(FAObjectMonthFragment.newInstance());
-        mListFragment.add(FAObjectWeekFragment.newInstance());
+        mListFragment.add(FAObjectMonthFragment.newInstance(data));
+        mListFragment.add(FAObjectWeekFragment.newInstance(data));
 
         mAdapter = new CustomViewPagerAdapter(getChildFragmentManager(),
                 mListFragment, tabTitles);
@@ -76,7 +78,6 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
 
         tabLayoutOptions.setupWithViewPager(viewPager);
     }
-
 
     /*@OnClick(R.id.btn_start)
     public void onClick(View view)

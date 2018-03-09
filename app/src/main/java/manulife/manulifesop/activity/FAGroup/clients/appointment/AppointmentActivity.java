@@ -21,7 +21,7 @@ import manulife.manulifesop.fragment.FAGroup.clients.appointment.AppointmentCont
 import manulife.manulifesop.util.Contants;
 
 
-public class AppointmentActivity extends BaseActivity<ContactPersonPresenter> implements ContactPersonContract.View {
+public class AppointmentActivity extends BaseActivity<AppointmentPresenter> implements AppointmentContract.View {
 
     @BindView(R.id.layout_root)
     LinearLayout layoutRoot;
@@ -46,7 +46,7 @@ public class AppointmentActivity extends BaseActivity<ContactPersonPresenter> im
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_person);
-        mActionListener = new ContactPersonPresenter(this,this);
+        mActionListener = new AppointmentPresenter(this,this);
         hideKeyboardOutside(layoutRoot,this);
         setupSupportForApp();
         initViewPager();

@@ -160,6 +160,7 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
     public void gotoConactDetail() {
         Bundle data = new Bundle();
         data.putString("type",mType);
+        data.putString("type_menu",Contants.APPOINTMENT_MENU);
         mActivity.goNextScreen(ContactDetailActivity.class,data);
     }
 

@@ -56,6 +56,7 @@
                     android:id="@+id/img_contact_step1_result_ok"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
+                    android:alpha="0"
                     android:background="@color/colorPrimaryDark" />
 
                 <TextView

@@ -1,1 +1,1 @@
-include ':app', ':sweet-alert-dialog', ':indicator', ':circular_progress_bar', ':cirleCheckbox'
+include ':app', ':sweet-alert-dialog', ':indicator', ':circular_progress_bar', ':cirleCheckbox', ':calendar_events'

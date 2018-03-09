@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,6 +29,7 @@ import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 import manulife.manulifesop.fragment.FAGroup.dashboard.campaignPercent.CampaignPercentFragment;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -84,8 +86,9 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
 
         @Override
         public void onApiLoadMoreTask(int page) {
-            Toast.makeText(mActivity, "load more", Toast.LENGTH_SHORT).show();
-            initActiHistList();
+            //Toast.makeText(mActivity, "load more", Toast.LENGTH_SHORT).show();
+            showLoading("Lấy dữ liệu!");
+            mActionListener.getActivities(page);
         }
     }
 
@@ -93,9 +96,12 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //mActionListener.getDataDashboard();
+        mActivity.showHideActionbar(true);
+        mActivity.updateActionbarTitle("Trang chủ");
         initView();
-        initViewPager();
-        initActiHistList();
+        mActionListener.getDataDashboard();
+        //initViewPager();
+        //initActiHistList();
     }
 
     private void initView() {
@@ -120,21 +126,96 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
         txtStep4.setText(String.valueOf(step4));
         txtStep5.setText(String.valueOf(step5));
 
-
+        initViewPager(dataWeekMonth,dataYear);
+        showACtivities(activities);
     }
 
-    private void initViewPager() {
+    private void initViewPager(DashboardResult dataWeekMonth, DashboardResult dataYear) {
         viewPager.setSwipe(false);
 
+        int currentCallSale = 0,currentMetting =0, currentPresentation =0,
+                currentContractSale =0,currentReLead =0;
+        int targetCallSale = 0,targetMetting =0, targetPresentation =0,
+                targetContractSale =0,targetReLead =0;
+        int percentTemp;
+
+        List<Integer> percentCurrentWeek = new ArrayList<>();
+        List<Integer> percentMonth = new ArrayList<>();
+        List<Integer> percentYear = new ArrayList<>();
+        for(int i=0;i<dataWeekMonth.data.campaign.size();i++)
+        {
+            if(dataWeekMonth.data.currentWeek == dataWeekMonth.data.campaign.get(i).week){
+                //lien he
+                percentTemp = Math.round((float)(dataWeekMonth.data.campaign.get(i).currentCallSale*100)/dataWeekMonth.data.campaign.get(i).targetCallSale);
+                percentCurrentWeek.add(percentTemp);
+                //hen gap
+                percentTemp = Math.round((float)(dataWeekMonth.data.campaign.get(i).currentMetting*100)/dataWeekMonth.data.campaign.get(i).targetMetting);
+                percentCurrentWeek.add(percentTemp);
+                //tu van
+                percentTemp = Math.round((float)(dataWeekMonth.data.campaign.get(i).currentPresentation*100)/dataWeekMonth.data.campaign.get(i).targetPresentation);
+                percentCurrentWeek.add(percentTemp);
+                //ky hop dong
+                percentTemp = Math.round((float)(dataWeekMonth.data.campaign.get(i).currentContract*100)/dataWeekMonth.data.campaign.get(i).targetContractSale);
+                percentCurrentWeek.add(percentTemp);
+                //gioi thie
+                percentTemp = Math.round((float)(dataWeekMonth.data.campaign.get(i).currentReLead*100)/dataWeekMonth.data.campaign.get(i).targetReLead);
+                percentCurrentWeek.add(percentTemp);
+            }
+            currentCallSale += dataWeekMonth.data.campaign.get(i).currentCallSale;
+            targetCallSale += dataWeekMonth.data.campaign.get(i).targetCallSale;
+
+            currentMetting += dataWeekMonth.data.campaign.get(i).currentMetting;
+            targetMetting += dataWeekMonth.data.campaign.get(i).targetMetting;
+
+            currentPresentation += dataWeekMonth.data.campaign.get(i).currentPresentation;
+            targetPresentation += dataWeekMonth.data.campaign.get(i).targetPresentation;
+
+            currentContractSale += dataWeekMonth.data.campaign.get(i).currentContract;
+            targetContractSale += dataWeekMonth.data.campaign.get(i).targetContractSale;
+
+            currentReLead += dataWeekMonth.data.campaign.get(i).currentReLead;
+            targetReLead += dataWeekMonth.data.campaign.get(i).targetReLead;
+
+        }
+
+        //generate pervent month
+        percentTemp = Math.round((float)(currentCallSale*100)/targetCallSale);
+        percentMonth.add(percentTemp);
+        percentTemp = Math.round((float)(currentMetting*100)/targetMetting);
+        percentMonth.add(percentTemp);
+        percentTemp = Math.round((float)(currentPresentation*100)/targetPresentation);
+        percentMonth.add(percentTemp);
+        percentTemp = Math.round((float)(currentContractSale*100)/targetContractSale);
+        percentMonth.add(percentTemp);
+        percentTemp = Math.round((float)(currentReLead*100)/targetReLead);
+        percentMonth.add(percentTemp);
+
+        //generate percent year
+        //lien he
+        percentTemp = Math.round((float)(dataYear.data.campaign.get(0).currentCallSale*100)/dataYear.data.campaign.get(0).targetCallSale);
+        percentYear.add(percentTemp);
+        //hen gap
+        percentTemp = Math.round((float)(dataYear.data.campaign.get(0).currentMetting*100)/dataYear.data.campaign.get(0).targetMetting);
+        percentYear.add(percentTemp);
+        //tu van
+        percentTemp = Math.round((float)(dataYear.data.campaign.get(0).currentPresentation*100)/dataYear.data.campaign.get(0).targetPresentation);
+        percentYear.add(percentTemp);
+        //ky hop dong
+        percentTemp = Math.round((float)(dataYear.data.campaign.get(0).currentContract*100)/dataYear.data.campaign.get(0).targetContractSale);
+        percentYear.add(percentTemp);
+        //gioi thie
+        percentTemp = Math.round((float)(dataYear.data.campaign.get(0).currentReLead*100)/dataYear.data.campaign.get(0).targetReLead);
+        percentYear.add(percentTemp);
+
         mListFragment = new ArrayList<>();
-        mListFragment.add(CampaignPercentFragment.newInstance("week"));
-        mListFragment.add(CampaignPercentFragment.newInstance("month"));
-        mListFragment.add(CampaignPercentFragment.newInstance("year"));
+        mListFragment.add(CampaignPercentFragment.newInstance("week",percentCurrentWeek));
+        mListFragment.add(CampaignPercentFragment.newInstance("month",percentMonth));
+        mListFragment.add(CampaignPercentFragment.newInstance("year",percentYear));
 
         mTabTitles = new ArrayList<>();
         mTabTitles.add("Tuần này");
-        mTabTitles.add("Tháng 12");
-        mTabTitles.add("Năm 2017");
+        mTabTitles.add("Tháng " + (Calendar.getInstance().get(Calendar.MONTH) + 1));
+        mTabTitles.add("Năm " + Calendar.getInstance().get(Calendar.YEAR));
 
         mAdapterViewPager = new CustomViewPagerAdapter(getChildFragmentManager(), mListFragment, mTabTitles);
         if (viewPager != null) {
@@ -143,14 +224,21 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
         }
     }
 
-    private void initActiHistList() {
+    @Override
+    public void showACtivities(ActivitiHist activities) {
         listActiHist.setLayoutManager(mLayoutManager);
 
-        for (int i = 0; i < 10; i++) {
+        String dateCreated;
+
+        for (int i = 0; i < activities.data.rows.size(); i++) {
             ActiveHistFA temp = new ActiveHistFA();
+
+            dateCreated = Utils.convertStringDateToStringDate(activities.data.rows.get(i).createdAt,
+                    "yyyy-MM-dd'T'HH:mm:ss.sss'Z'","dd-MM-yyyy HH:mm:ss");
+
             temp.setAvatar("avatar " + i);
-            temp.setTitle("title code input " + i);
-            temp.setContent("content code input " + i);
+            temp.setTitle(activities.data.rows.get(i).name);
+            temp.setContent(activities.data.rows.get(i).description + " - " +dateCreated);
             mDataActiveHist.add(temp);
         }
         if (mAdapterActiveHist == null) {
@@ -185,9 +273,20 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
         listActiHist.addItemDecoration(dividerItemDecoration);
 
         listActiHist.clearOnScrollListeners();
+        /*listActiHist.addOnScrollListener(new EndlessScrollListenerRecyclerView(
+                activities.data.page, genLastPage(activities.data.count,activities.data.limit), new onLoadingMoreDataTask(), mLayoutManager));*/
         listActiHist.addOnScrollListener(new EndlessScrollListenerRecyclerView(
-                0, 3, new onLoadingMoreDataTask(), mLayoutManager));
+                activities.data.page, 3, new onLoadingMoreDataTask(), mLayoutManager));
+    }
 
+    private int genLastPage(int count, int limit){
+        int rs;
+        if(count%limit > 0){
+            rs = (count/limit) + 1;
+        }else{
+            rs = count/limit;
+        }
+        return rs;
     }
 
     /*@OnClick(R.id.btn_start)

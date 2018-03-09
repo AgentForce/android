@@ -3,12 +3,14 @@ package manulife.manulifesop.activity.FAGroup.clients.related.contactDetail;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.view.View;
+import android.view.ViewStub;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,19 +18,24 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import io.reactivex.internal.schedulers.ImmediateThinScheduler;
 import manulife.manulifesop.R;
+import manulife.manulifesop.activity.FAGroup.clients.related.createEvent.CreateEventActivity;
+import manulife.manulifesop.activity.FAGroup.clients.related.signedSuccess.SignedSuccessActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
 import manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step1.ContactDetailStep1Fragment;
+import manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step1Refuse.ContactDetailStep1RefuseFragment;
 import manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step2.ContactDetailStep2Fragment;
 import manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step3.ContactDetailStep3Fragment;
 import manulife.manulifesop.util.Contants;
 
 
-public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> implements ContactDetailContract.View {
+public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> implements ContactDetailContract.View,
+        View.OnClickListener{
 
     @BindView(R.id.txt_actionbar_title)
     TextView txtActionbarTitle;
@@ -48,16 +55,14 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     CustomViewPager viewPager;
 
     //variable for menu
+    @BindView(R.id.layout_menu_bot)
+    LinearLayout layoutMenuBot;
+
     @BindView(R.id.layout_menu)
-    RelativeLayout layoutMenu;
-    @BindView(R.id.layout_menu_appointment)
-    LinearLayout layoutMenuAppointent;
-    @BindView(R.id.layout_menu_call_later)
-    LinearLayout layoutMenuCallLater;
-    @BindView(R.id.layout_menu_cancel)
-    LinearLayout layoutMenuCancel;
+    ViewStub layoutMenu;
 
     private String mType;
+    private String mTypeMenu;
 
     private CustomViewPagerAdapter mAdapterViewPager;
     private List<BaseFragment> mListFragment;
@@ -66,10 +71,17 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_detail);
         mType = getIntent().getStringExtra("type");
+        mTypeMenu = getIntent().getStringExtra("type_menu");
+
+        if (mType.equals(Contants.REFUSE)) {
+            setContentView(R.layout.activity_contact_detail_refuse);
+        } else {
+            setContentView(R.layout.activity_contact_detail);
+        }
         mActionListener = new ContactDetailPresenter(this, this);
         initViews();
+        initMenuAfterCall();
         initViewPager();
     }
 
@@ -100,18 +112,151 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                     txtTitleType.setText("Khách hàng đã hẹn gặp");
                     break;
                 }
+                case Contants.CONSULTANT: {
+                    txtTitleType.setText("Khách hàng tư vấn");
+                    break;
+                }
+                case Contants.CONSULTATION_APPOINTMENT: {
+                    txtTitleType.setText("Khách hàng đã hẹn tư vấn");
+                    break;
+                }
             }
         }
-        //set background for refuse customer
-        if (mType.equals(Contants.REFUSE)) {
-            viewStatusBar.setBackground(getResources().getDrawable(R.color.backgroundGrey));
-            imageTop.setBackground(getResources().getDrawable(R.drawable.login_header_bg_disable));
+    }
+
+    private void initMenuAfterCall() {
+        if(mTypeMenu != null){
+            switch (mTypeMenu){
+                case Contants.APPOINTMENT_MENU:{
+                    layoutMenu.setLayoutResource(R.layout.layout_float_menu_appointment);
+                    layoutMenu.inflate();
+
+                    findViewById(R.id.layout_menu_consultant).setOnClickListener(this);
+                    findViewById(R.id.layout_menu_appointment_event).setOnClickListener(this);
+                    findViewById(R.id.layout_menu_call_later).setOnClickListener(this);
+                    findViewById(R.id.layout_menu_cancel).setOnClickListener(this);
+
+                    break;
+                }
+                case Contants.CONSULTANT_MENU:{
+                    layoutMenu.setLayoutResource(R.layout.layout_float_menu_consultant);
+                    layoutMenu.inflate();
+
+                    findViewById(R.id.layout_menu_signed).setOnClickListener(this);
+                    findViewById(R.id.layout_menu_consultant_appointment).setOnClickListener(this);
+                    findViewById(R.id.layout_menu_call_later).setOnClickListener(this);
+                    findViewById(R.id.layout_menu_cancel).setOnClickListener(this);
+
+                    break;
+                }
+                case Contants.CONTACT_MENU:{
+                    layoutMenu.setLayoutResource(R.layout.layout_float_menu_contact);
+                    layoutMenu.inflate();
+
+                    findViewById(R.id.layout_menu_appointment).setOnClickListener(this);
+                    findViewById(R.id.layout_menu_call_later).setOnClickListener(this);
+                    findViewById(R.id.layout_menu_cancel).setOnClickListener(this);
+
+                    break;
+                }
+                case Contants.SIGNED_MENU:{
+                    layoutMenu.setLayoutResource(R.layout.layout_float_menu_signed);
+                    layoutMenu.inflate();
+
+                    findViewById(R.id.layout_menu_sign_success).setOnClickListener(this);
+                    findViewById(R.id.layout_menu_waiting_approve).setOnClickListener(this);
+                    findViewById(R.id.layout_menu_applied).setOnClickListener(this);
+
+                    break;
+                }
+                case Contants.INTRODUCE_MENU:{
+                    layoutMenu.setLayoutResource(R.layout.layout_float_menu_introduce);
+                    layoutMenu.inflate();
+
+                    findViewById(R.id.layout_menu_contact).setOnClickListener(this);
+                    findViewById(R.id.layout_menu_call_later).setOnClickListener(this);
+                    findViewById(R.id.layout_menu_cancel).setOnClickListener(this);
+
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id){
+            //menu chung
+            case R.id.layout_menu_call_later:{
+                Toast.makeText(this, "Cân nhắc gọi lại sau", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.layout_menu_cancel:{
+                Toast.makeText(this, "Từ chối", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            //menu khách hàng hẹn gặp
+            case R.id.layout_menu_consultant:{
+                Toast.makeText(this, "Chuyển sang tư vấn", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.layout_menu_appointment_event:{
+                //Toast.makeText(this, "Thêm event hẹn gặp", Toast.LENGTH_SHORT).show();
+                Bundle data = new Bundle();
+                data.putString("type", "Thêm event từ khách hàng hẹn gặp");
+                goNextScreen(CreateEventActivity.class,data);
+                break;
+            }
+
+            //menu khách hàng tư vấn
+            case R.id.layout_menu_signed:{
+                Toast.makeText(this, "Chuyển sang tư vấn", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.layout_menu_consultant_appointment:{
+                Toast.makeText(this, "Hẹn tư vấn", Toast.LENGTH_SHORT).show();
+                break;
+            }
+
+            //menu khách hàng ký hợp đồng
+            case R.id.layout_menu_sign_success:{
+                //Toast.makeText(this, "Ký hợp đồng thành công", Toast.LENGTH_SHORT).show();
+                goNextScreen(SignedSuccessActivity.class);
+                break;
+            }
+            case R.id.layout_menu_waiting_approve:{
+                Toast.makeText(this, "Chờ duyệt", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.layout_menu_applied:{
+                Toast.makeText(this, "Đã nộp hồ sơ", Toast.LENGTH_SHORT).show();
+                break;
+            }
+
+            //menu khách hàng giới thiệu
+            case R.id.layout_menu_contact:{
+                Toast.makeText(this, "chuyển sang liên hệ", Toast.LENGTH_SHORT).show();
+                break;
+            }
+
+            //menu liên hệ
+            case R.id.layout_menu_appointment:{
+                Toast.makeText(this, "Chuyển sang hẹn gặp", Toast.LENGTH_SHORT).show();
+                break;
+            }
+
+
         }
     }
 
     private void initViewPager() {
         mListFragment = new ArrayList<>();
-        mListFragment.add(ContactDetailStep1Fragment.newInstance());
+        if (mType.equals(Contants.REFUSE)) {
+            mListFragment.add(ContactDetailStep1RefuseFragment.newInstance());
+        } else {
+            mListFragment.add(ContactDetailStep1Fragment.newInstance());
+        }
         mListFragment.add(ContactDetailStep2Fragment.newInstance());
         mListFragment.add(ContactDetailStep3Fragment.newInstance());
 
@@ -130,18 +275,18 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
 
     @Override
     public void showHideMenuAfterCall() {
-        if (layoutMenu.getVisibility() == View.VISIBLE) {
+        if (layoutMenuBot.getVisibility() == View.VISIBLE) {
             Animation out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
-            layoutMenu.startAnimation(out);
-            layoutMenu.setVisibility(View.GONE);
+            layoutMenuBot.startAnimation(out);
+            layoutMenuBot.setVisibility(View.GONE);
         } else {
             Animation in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-            layoutMenu.startAnimation(in);
-            layoutMenu.setVisibility(View.VISIBLE);
+            layoutMenuBot.startAnimation(in);
+            layoutMenuBot.setVisibility(View.VISIBLE);
         }
     }
 
-    @OnClick({R.id.layout_menu_appointment, R.id.layout_menu_call_later, R.id.layout_menu_cancel})
+    /*@OnClick({R.id.layout_menu_appointment, R.id.layout_menu_call_later, R.id.layout_menu_cancel})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -192,5 +337,5 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
             }
 
         }
-    }
+    }*/
 }

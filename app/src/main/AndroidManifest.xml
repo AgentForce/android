@@ -27,11 +27,11 @@
             android:name=".activity.first.FirstActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeTranslucent">
-           <!--<intent-filter>
+           <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.login.LoginActivity"
@@ -50,11 +50,11 @@
             android:name=".activity.FAGroup.main.MainFAActivity"
             android:label="@string/activity_main_fa_dashboard"
             android:screenOrientation="portrait">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
 
         <activity
@@ -96,6 +96,18 @@
 
         <activity
             android:name=".activity.FAGroup.clients.appointment.AppointmentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".activity.FAGroup.clients.consultant.ConsultantActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".activity.FAGroup.clients.signed.SignedPersonActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".activity.FAGroup.clients.related.signedSuccess.SignedSuccessActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
 

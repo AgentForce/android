@@ -12,6 +12,11 @@ public interface MainFAContract {
         void showFragmentConfirmCreatePlan();
         void showDashBoard();
         void showCustomer();
+        void showEvents();
+        void showPersonal();
+
+        void showHideActionbar(boolean isShow);
+        void updateActionbarTitle(String title);
     }
     interface Action{
         void checkIsGetCampaign(boolean isGetCampaign);

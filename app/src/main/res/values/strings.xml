@@ -48,10 +48,14 @@
     <string name="activity_create_plan_title_seekbar2_step2">Trung bình hợp đồng (Triệu đồng)</string>
     <string name="activity_create_plan_title_seekbar3_step2">Thu nhập mong muốn hàng tháng (Triệu đồng)</string>
 
+    <!--activity_signed_success-->
+    <string name="activity_signed_success_title">Vui lòng nhập vài thông tin dưới đây để hoàn tất hợp đồng</string>
+    <string name="activity_signed_success_hint_1">Nhập doanh thu bảo hiểm 1 năm</string>
+    <string name="activity_signed_success_hint_2">Nhập hoa hồng nhận năm đầu tiên</string>
+    <string name="activity_signed_success_hint_3">Số lượng hợp đồng</string>
 
     <!--activity_main_fa-->
     <string name="activity_main_fa_dashboard">Trang chủ</string>
-
     <string name="hint_name">Họ &amp; tên</string>
 
 </resources>

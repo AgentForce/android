@@ -7,6 +7,7 @@ import manulife.manulifesop.api.ObjectInput.InputLoginData;
 import manulife.manulifesop.api.ObjectInput.InputRequestOTP;
 import manulife.manulifesop.api.ObjectInput.InputVerifyOTP;
 import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
+import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.api.ObjectResponse.CheckUser;
 import manulife.manulifesop.api.ObjectResponse.CheckVersion;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
@@ -74,4 +75,10 @@ public interface ApiInterface {
     Observable<ActivitiHist> activities(@Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                        @Header("devicename") String devicename, @Header("imei") String imei,
                                         @Query("page") int page,@Query("limit") int limit);
+
+    @GET("campaigns/period/{period}")
+    Observable<CampaignMonth> campaignMonth(@Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                            @Header("devicename") String devicename, @Header("imei") String imei,
+                                            @Path(value = "period", encoded = false) int period);
+
 }

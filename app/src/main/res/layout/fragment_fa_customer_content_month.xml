@@ -262,7 +262,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/txt_step5_result"
                 android:layout_toRightOf="@+id/image_step5_left"
-                android:text="Khách hàng ký hợp đồng"
+                android:text="Khách hàng giới thiêu"
                 android:textSize="@dimen/welcome_activity_content" />
         </RelativeLayout>
 

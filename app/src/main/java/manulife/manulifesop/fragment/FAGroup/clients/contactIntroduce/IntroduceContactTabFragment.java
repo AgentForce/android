@@ -160,6 +160,7 @@ View.OnClickListener{
     public void gotoConactDetail() {
         Bundle data = new Bundle();
         data.putString("type",mType);
+        data.putString("type_menu",Contants.INTRODUCE_MENU);
         mActivity.goNextScreen(ContactDetailActivity.class,data);
     }
 
