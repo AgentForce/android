@@ -2,6 +2,7 @@ package manulife.manulifesop.activity.FAGroup.clients.related.contactDetail;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.animation.Animation;
@@ -279,10 +280,27 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
             Animation out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
             layoutMenuBot.startAnimation(out);
             layoutMenuBot.setVisibility(View.GONE);
+
+            enableViewTop(true);
         } else {
             Animation in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
             layoutMenuBot.startAnimation(in);
             layoutMenuBot.setVisibility(View.VISIBLE);
+
+            enableViewTop(false);
+        }
+    }
+
+    private void enableViewTop(boolean isEnable){
+        viewPager.setSwipe(isEnable);
+        LinearLayout tabStrip = ((LinearLayout)tabMenu.getChildAt(0));
+        for(int i = 0; i < tabStrip.getChildCount(); i++) {
+            tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return !isEnable;
+                }
+            });
         }
     }
 

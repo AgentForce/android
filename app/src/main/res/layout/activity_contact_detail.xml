@@ -208,7 +208,7 @@
             layout="@layout/layout_float_menu_contact"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <!--<ViewStub
+        <!--<include
             layout="@layout/layout_float_menu_contact"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />-->

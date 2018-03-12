@@ -18,5 +18,6 @@ public interface FAEventsContract {
     }
 
     interface Action {
+        void getAllActivitisInMonth(int month);
     }
 }

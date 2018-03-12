@@ -16,6 +16,7 @@ import butterknife.BindView;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
 import manulife.manulifesop.base.BaseFragment;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -51,7 +52,8 @@ public class FAEventsFragment extends BaseFragment<MainFAActivity, FAEventsPrese
         mActivity.showHideActionbar(true);
         setTitleFromDate(Calendar.getInstance().getTime());
         initCalendarEvents();
-        addEventToDate(null);
+        //addEventToDate(null);
+        mActionListener.getAllActivitisInMonth(Utils.getCurrentMonth(getContext()));
     }
     private void setTitleFromDate(Date date){
         SimpleDateFormat df = new SimpleDateFormat("MM/yyyy");

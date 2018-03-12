@@ -1,9 +1,11 @@
 package manulife.manulifesop.fragment.FAGroup.clients;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
 import java.util.Calendar;
@@ -27,6 +29,8 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
 
     @BindView(R.id.frame_container_customer)
     FrameLayout mFrameLayout;
+
+    private int mCurrentMonth;
 
     private FragmentTransaction mFragmentTran;
 
@@ -54,8 +58,34 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
         super.onViewCreated(view, savedInstanceState);
         mActivity.showHideActionbar(true);
         mActivity.updateActionbarTitle("Khách hàng");
+        mCurrentMonth = Calendar.getInstance().get(Calendar.MONTH);
         initTabMenu();
-        showContentCustomer(1);
+        //showContentCustomer(mCurrentMonth);
+        scrollToTabAfterLayout(mCurrentMonth);
+    }
+
+    private void scrollToTabAfterLayout(final int tabIndex) {
+        if (getView() != null) {
+            final ViewTreeObserver observer = tabLayout.getViewTreeObserver();
+
+            if (observer.isAlive()) {
+                observer.dispatchOnGlobalLayout(); // In case a previous call is waiting when this call is made
+                observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            observer.removeOnGlobalLayoutListener(this);
+                        } else {
+                            //noinspection deprecation
+                            observer.removeGlobalOnLayoutListener(this);
+                        }
+
+                        tabLayout.getTabAt(tabIndex).select();
+
+                    }
+                });
+            }
+        }
     }
 
     private void initTabMenu() {
@@ -63,8 +93,6 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
         for (int i = 1; i <= 12; i++) {
             tabLayout.addTab(tabLayout.newTab().setText("Tháng " + i).setTag(i));
         }
-        
-        tabLayout.getTabAt(Calendar.getInstance().get(Calendar.MONTH)).select();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -84,7 +112,7 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
         });
     }
 
-    private void showContentCustomer(int month){
+    private void showContentCustomer(int month) {
         mFragmentTran = getChildFragmentManager().beginTransaction();
         mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         mFragmentTran.replace(R.id.frame_container_customer, FAContentCustomerFragment.newInstance(month));

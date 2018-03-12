@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -89,9 +90,9 @@ public class Utils {
         return convertDate;
     }
 
-    public static String convertDateToString(Date date,String inputFormat) {
+    public static String convertDateToString(Date date,String outputFormat) {
         String convertString = "";
-        SimpleDateFormat df = new SimpleDateFormat(inputFormat);
+        SimpleDateFormat df = new SimpleDateFormat(outputFormat);
         try {
             convertString = df.format(date);
         } catch (Exception ex) {
@@ -116,5 +117,9 @@ public class Utils {
 
     public static void smoothScrollViewToPosition(final Context context, final NestedScrollView scrollView, final int Yposition){
         ObjectAnimator.ofInt(scrollView, "scrollY",  Yposition).setDuration(1000).start();
+    }
+
+    public static int getCurrentMonth(final Context context){
+       return (Calendar.getInstance().get(Calendar.MONTH) +1);
     }
 }

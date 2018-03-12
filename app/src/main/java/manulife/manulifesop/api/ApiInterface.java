@@ -80,5 +80,4 @@ public interface ApiInterface {
     Observable<CampaignMonth> campaignMonth(@Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                             @Header("devicename") String devicename, @Header("imei") String imei,
                                             @Path(value = "period", encoded = false) int period);
-
 }
