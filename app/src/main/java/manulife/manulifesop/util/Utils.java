@@ -122,4 +122,14 @@ public class Utils {
     public static int getCurrentMonth(final Context context){
        return (Calendar.getInstance().get(Calendar.MONTH) +1);
     }
+
+    public static int genLastPage(int count, int limit){
+        int rs;
+        if(count%limit > 0){
+            rs = (count/limit) + 1;
+        }else{
+            rs = count/limit;
+        }
+        return rs;
+    }
 }

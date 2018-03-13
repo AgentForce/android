@@ -1,5 +1,6 @@
 package manulife.manulifesop.fragment.FAGroup.clients.contactPerson;
 
+import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.base.BaseMVPView;
 
 
@@ -11,9 +12,10 @@ public interface ContactPersonTab1Contract {
 
     interface View extends BaseMVPView {
         void gotoConactDetail();
+        void loadContactList(UsersList data);
     }
 
     interface Action {
-
+        void getUserListProcess(int period, int status, int page);
     }
 }

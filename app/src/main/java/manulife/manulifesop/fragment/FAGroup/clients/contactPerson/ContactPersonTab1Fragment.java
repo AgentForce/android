@@ -32,10 +32,12 @@ import manulife.manulifesop.activity.FAGroup.clients.introduceContact.IntroduceC
 import manulife.manulifesop.adapter.ActiveHistAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.adapter.ObjectData.ContactPerson;
+import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -65,9 +67,14 @@ View.OnClickListener{
     private EditText edtPhoneAlert;
     private EditText edtNameAlert;
 
-    public static ContactPersonTab1Fragment newInstance(String type) {
+    private int mMonth;
+
+
+    public static ContactPersonTab1Fragment newInstance(String type, UsersList usersList,int month) {
         Bundle args = new Bundle();
         args.putString("type",type);
+        args.putSerializable("data",usersList);
+        args.putInt("month",month);
         ContactPersonTab1Fragment fragment = new ContactPersonTab1Fragment();
         fragment.setArguments(args);
         return fragment;
@@ -78,8 +85,7 @@ View.OnClickListener{
 
         @Override
         public void onApiLoadMoreTask(int page) {
-            Toast.makeText(mActivity, "load more", Toast.LENGTH_SHORT).show();
-            loadDataContact();
+            mActionListener.getUserListProcess(mMonth,(mType.equals(Contants.CONTACT)) ? 1 : 2,page);
         }
     }
 
@@ -97,8 +103,10 @@ View.OnClickListener{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mType = getArguments().getString("type","");
+        mMonth = getArguments().getInt("month",0);
         initViews();
-        loadDataContact();
+        //loadDataContact();
+        loadContactList((UsersList) getArguments().getSerializable("data"));
     }
 
     private void initViews() {
@@ -112,7 +120,57 @@ View.OnClickListener{
         mData = new ArrayList<>();
     }
 
-    private void loadDataContact() {
+    @Override
+    public void loadContactList(UsersList data) {
+        listContact.setLayoutManager(mLayoutManager);
+
+        for (int i = 0; i < data.data.rows.size(); i++) {
+            ActiveHistFA temp = new ActiveHistFA();
+            temp.setAvatar("avatar " + i);
+            temp.setTitle(data.data.rows.get(i).name);
+            temp.setContent(data.data.rows.get(i).phone);
+            mData.add(temp);
+        }
+        if (mAdapterActiveHist == null) {
+            mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
+                @Override
+                public void onClickMenuRight(int position, int option) {
+                    Toast.makeText(mActivity, "vi tri " + position + " options " + option, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onClickMainContent(int position) {
+                    gotoConactDetail();
+                }
+            });
+            listContact.setAdapter(mAdapterActiveHist);
+        } else {
+            mAdapterActiveHist.notifyDataSetChanged();
+        }
+
+        //set space between two items
+        int[] ATTRS = new int[]{android.R.attr.listDivider};
+        TypedArray a = getContext().obtainStyledAttributes(ATTRS);
+        Drawable divider = a.getDrawable(0);
+        int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
+        int insetRight = getResources().getDimensionPixelSize(R.dimen.margin_right_DividerItemDecoration);
+        InsetDrawable insetDivider = new InsetDrawable(divider, insetLeft, 0, insetRight, 0);
+        a.recycle();
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listContact.getContext(),
+                mLayoutManager.getOrientation());
+        dividerItemDecoration.setDrawable(insetDivider);
+        listContact.addItemDecoration(dividerItemDecoration);
+
+
+        listContact.clearOnScrollListeners();
+        listContact.addOnScrollListener(new EndlessScrollListenerRecyclerView(
+                Integer.valueOf(data.data.page),
+                Utils.genLastPage(data.data.count,
+                        Integer.valueOf(data.data.limit)), new onLoadingMoreDataTask(), mLayoutManager));
+    }
+
+    /*private void loadDataContact() {
         listContact.setLayoutManager(mLayoutManager);
 
         for (int i = 0; i < 10; i++) {
@@ -157,7 +215,7 @@ View.OnClickListener{
         listContact.clearOnScrollListeners();
         listContact.addOnScrollListener(new EndlessScrollListenerRecyclerView(
                 0, 3, new onLoadingMoreDataTask(), mLayoutManager));
-    }
+    }*/
 
     @Override
     public void gotoConactDetail() {

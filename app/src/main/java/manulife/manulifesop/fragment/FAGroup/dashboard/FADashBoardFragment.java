@@ -279,16 +279,6 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
                 activities.data.page, 3, new onLoadingMoreDataTask(), mLayoutManager));
     }
 
-    private int genLastPage(int count, int limit){
-        int rs;
-        if(count%limit > 0){
-            rs = (count/limit) + 1;
-        }else{
-            rs = count/limit;
-        }
-        return rs;
-    }
-
     /*@OnClick(R.id.btn_start)
     public void onClick(View view)
     {

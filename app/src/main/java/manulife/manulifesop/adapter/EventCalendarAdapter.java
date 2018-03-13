@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -19,21 +20,22 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
-import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
+import manulife.manulifesop.adapter.ObjectData.EventCalendar;
 import manulife.manulifesop.adapter.ObjectData.EventData;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 
 
-public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
+public class EventCalendarAdapter extends RecyclerView.Adapter<EventCalendarAdapter.ViewHolder> {
     //Declares variables
     private Context mContext;
-    private List<EventData> mListObject = null;
+    private List<EventCalendar> mListObject = null;
     private FragmentManager fm;
     private CallBackClickContact mCallback;
 
     //Constructor
-    public EventAdapter(Context context, List<EventData> arr, CallBackClickContact callBackClickContact) {
+    public EventCalendarAdapter(Context context, List<EventCalendar> arr, CallBackClickContact callBackClickContact) {
         this.mContext = context;
         this.mListObject = arr;
         this.mCallback = callBackClickContact;
@@ -49,7 +51,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View cardView = inflater.inflate(R.layout.item_event, null, false);
+        View cardView = inflater.inflate(R.layout.item_event_calendar, null, false);
         fm = ((AppCompatActivity) mContext).getSupportFragmentManager();
         ViewHolder viewHolder = new ViewHolder(cardView);
         return viewHolder;
@@ -63,18 +65,25 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final EventData object = mListObject.get(position);
+        final EventCalendar object = mListObject.get(position);
         if (object.getAvatar() != null && object.getAvatar().length() > 1) {
 
         }
         holder.txtName.setText(object.getName());
-        holder.txtTitleType.setText(object.getTypeEvent());
-        holder.txtDateTime.setText(object.getDateTime());
-        holder.userAvatar.setBorderColor(mContext.getResources().getColor(R.color.colorSecond));
+        holder.txtTitleType.setText(ProjectApplication.getHashmapProcessStep().get(object.getProcessStep()));
+        holder.txtDateTime.setText(object.getDate());
+        holder.txtAvatarName.setText(object.getName().substring(0,1));
+        holder.menuLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "Location clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         holder.layoutMenuRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popup = new PopupMenu(mContext, holder.menuRight);
+                PopupMenu popup = new PopupMenu(mContext, holder.layoutMenuRight);
                 popup.inflate(R.menu.option_menu_active_hist);
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
@@ -134,16 +143,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
      */
     static class ViewHolder extends RecyclerView.ViewHolder {
         //Declares variables
-        @BindView(R.id.img_user_avatar)
-        RoundedImageView userAvatar;
+        @BindView(R.id.txt_avatar)
+        TextView txtAvatarName;
         @BindView(R.id.txt_name)
         TextView txtName;
         @BindView(R.id.txt_title_tyle)
         TextView txtTitleType;
         @BindView(R.id.txt_date_time)
         TextView txtDateTime;
-        @BindView(R.id.menu_right)
-        ImageButton menuRight;
+        @BindView(R.id.img_location)
+        ImageButton menuLocation;
         @BindView(R.id.layout_menu_right)
         View layoutMenuRight;
         @BindView(R.id.layout_root)

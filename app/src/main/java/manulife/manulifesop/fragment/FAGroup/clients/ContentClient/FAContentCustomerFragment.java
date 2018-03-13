@@ -31,6 +31,8 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
 
     private CustomViewPagerAdapter mAdapter;
 
+    private int mMonth;
+
     public static FAContentCustomerFragment newInstance(int month) {
         Bundle args = new Bundle();
         args.putInt("month",month);
@@ -53,9 +55,8 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        int month = getArguments().getInt("month",0);
-        Toast.makeText(mActivity, String.valueOf(month), Toast.LENGTH_SHORT).show();
-        mActionListener.getCampaignMonth(month);
+        mMonth = getArguments().getInt("month",0);
+        mActionListener.getCampaignMonth(mMonth);
         //initViews();
     }
 
@@ -66,7 +67,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
         tabTitles.add("Mục tiêu theo tuần");
 
         List<BaseFragment> mListFragment = new ArrayList<>();
-        mListFragment.add(FAObjectMonthFragment.newInstance(data));
+        mListFragment.add(FAObjectMonthFragment.newInstance(data,mMonth));
         mListFragment.add(FAObjectWeekFragment.newInstance(data));
 
         mAdapter = new CustomViewPagerAdapter(getChildFragmentManager(),

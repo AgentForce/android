@@ -52,16 +52,17 @@ public class SignedSuccessActivity extends BaseActivity<SignedSuccessPresenter> 
         viewStatusBar.setLayoutParams(params);
     }
 
-    /*@OnClick({R.id.layout_delete})
+    @OnClick({R.id.layout_btn_back})
     public void onClick(View view)
     {
         int id = view.getId();
         switch (id)
         {
-            case R.id.layout_delete:{
-                Toast.makeText(this, "delete", Toast.LENGTH_SHORT).show();
+            case R.id.layout_btn_back:{
+                onBackPressed();
+                break;
             }
 
         }
-    }*/
+    }
 }

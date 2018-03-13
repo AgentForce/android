@@ -65,8 +65,7 @@ public class EventDetailActivity extends BaseActivity<EventDetailPresenter> impl
     }
 
 
-
-    @OnClick({R.id.layout_delete})
+    @OnClick({R.id.layout_delete,R.id.layout_btn_back})
     public void onClick(View view)
     {
         int id = view.getId();
@@ -74,6 +73,11 @@ public class EventDetailActivity extends BaseActivity<EventDetailPresenter> impl
         {
             case R.id.layout_delete:{
                 Toast.makeText(this, "delete", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.layout_btn_back:{
+                onBackPressed();
+                break;
             }
 
         }

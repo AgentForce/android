@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import manulife.manulifesop.R;
+import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
@@ -81,22 +83,16 @@ public class IntroduceContactActivity extends BaseActivity<IntroduceContactPrese
         viewStatusBar.setLayoutParams(params);
     }
 
-    /*@OnClick({R.id.btn_start, R.id.txt_go_main})
+    @OnClick({R.id.layout_btn_back})
     public void onClick(View view)
     {
         int id = view.getId();
         switch (id)
         {
-            case R.id.btn_start:{
-                goNextScreen(CreatePlanActivity.class);
-                break;
-            }
-            case R.id.txt_go_main:{
-                Bundle data = new Bundle();
-                data.putBoolean("isGetCampaign",false);
-                goNextScreen(MainFAActivity.class,data);
+            case R.id.layout_btn_back:{
+                onBackPressed();
                 break;
             }
         }
-    }*/
+    }
 }

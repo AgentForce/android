@@ -32,9 +32,6 @@ import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
 
-/**
- * Created by Chick on 10/27/2017.
- */
 
 public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivity, ContactDetailStep2Present> implements ContactDetailStep2Contract.View, View.OnClickListener {
 

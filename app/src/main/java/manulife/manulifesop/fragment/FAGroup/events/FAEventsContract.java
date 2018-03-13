@@ -1,7 +1,11 @@
 package manulife.manulifesop.fragment.FAGroup.events;
 
-import java.util.Date;
+import android.graphics.Color;
 
+import java.util.Date;
+import java.util.List;
+
+import manulife.manulifesop.adapter.ObjectData.EventCalendar;
 import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
 import manulife.manulifesop.base.BaseMVPView;
@@ -14,10 +18,12 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface FAEventsContract {
 
     interface View extends BaseMVPView {
-        void addEventToDate(Date date);
+        void addEventToDate(Date date, List<String> colors);
+        void showDataEvents(List<EventCalendar> data);
     }
 
     interface Action {
         void getAllActivitisInMonth(int month);
+        void getEventsOneDay(Date date);
     }
 }

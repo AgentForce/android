@@ -7,6 +7,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import manulife.manulifesop.R;
 import manulife.manulifesop.base.BaseActivity;
 
@@ -48,16 +49,17 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
 
 
 
-    /*@OnClick({R.id.layout_menu_appointment})
+    @OnClick({R.id.layout_btn_back})
     public void onClick(View view)
     {
         int id = view.getId();
         switch (id)
         {
-            case R.id.layout_menu_appointment:{
-
+            case R.id.layout_btn_back:{
+                onBackPressed();
+                break;
             }
 
         }
-    }*/
+    }
 }

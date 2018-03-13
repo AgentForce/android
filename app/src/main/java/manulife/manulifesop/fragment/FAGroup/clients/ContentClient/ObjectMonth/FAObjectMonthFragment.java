@@ -49,9 +49,14 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
     @BindView(R.id.txt_step5_result)
     TextView txtStep5;
 
-    public static FAObjectMonthFragment newInstance(CampaignMonth data) {
+    private int mMonth;
+
+    private int targetStep1 = 0, targetStep2 = 0, targetStep3 = 0, targetStep4 = 0, targetStep5 = 0;
+
+    public static FAObjectMonthFragment newInstance(CampaignMonth data,int month) {
         Bundle args = new Bundle();
         args.putSerializable("data", data);
+        args.putInt("month",month);
         FAObjectMonthFragment fragment = new FAObjectMonthFragment();
         fragment.setArguments(args);
         return fragment;
@@ -72,11 +77,12 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
         super.onViewCreated(view, savedInstanceState);
         CampaignMonth data = (CampaignMonth) getArguments().getSerializable("data");
         initViews(data);
+        mMonth = getArguments().getInt("month",0);
     }
 
     private void initViews(CampaignMonth data) {
         if (data != null) {
-            int targetStep1 = 0, targetStep2 = 0, targetStep3 = 0, targetStep4 = 0, targetStep5 = 0;
+            //int targetStep1 = 0, targetStep2 = 0, targetStep3 = 0, targetStep4 = 0, targetStep5 = 0;
             int currentStep1 = 0, currentStep2 = 0, currentStep3 = 0, currentStep4 = 0, currentStep5 = 0;
             for (int i = 0; i < data.data.campaigns.size(); i++) {
                 targetStep1 += data.data.campaigns.get(i).targetCallSale;
@@ -109,7 +115,10 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
         switch (id) {
             case R.id.layout_contact: {
                 //Toast.makeText(mActivity, "layout_contact", Toast.LENGTH_SHORT).show();
-                mActivity.goNextScreen(ContactPersonActivity.class);
+                Bundle data = new Bundle();
+                data.putInt("month",mMonth);
+                data.putInt("target",targetStep1);
+                mActivity.goNextScreen(ContactPersonActivity.class,data);
                 break;
             }
             case R.id.layout_meeting: {

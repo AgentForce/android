@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import manulife.manulifesop.R;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
+import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
@@ -40,6 +42,9 @@ public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> 
     private List<BaseFragment> mListFragment;
     private List<String> mTabTitles;
 
+    private int mTarget;
+    private int mMonth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,18 +52,21 @@ public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> 
         mActionListener = new ContactPersonPresenter(this,this);
         hideKeyboardOutside(layoutRoot,this);
         setupSupportForApp();
-        initViewPager();
+        mTarget = getIntent().getIntExtra("target",0);
+        mMonth = getIntent().getIntExtra("month",0);
+        mActionListener.getAllContactPerson(mMonth,1);
     }
 
-    private void initViewPager(){
-        //type = contact, calllater
+
+    @Override
+    public void initViewPager(UsersList contact, UsersList callLater) {
         mListFragment = new ArrayList<>();
-        mListFragment.add(ContactPersonTab1Fragment.newInstance(Contants.CONTACT));
-        mListFragment.add(ContactPersonTab1Fragment.newInstance(Contants.CALLLATER));
+        mListFragment.add(ContactPersonTab1Fragment.newInstance(Contants.CONTACT,contact,mMonth));
+        mListFragment.add(ContactPersonTab1Fragment.newInstance(Contants.CALLLATER,callLater,mMonth));
 
         mTabTitles = new ArrayList<>();
-        mTabTitles.add("Liên hệ(0/50)");
-        mTabTitles.add("Gọi lại sau");
+        mTabTitles.add("Liên hệ("+contact.data.count + "/" + mTarget+")");
+        mTabTitles.add("Gọi lại sau("+callLater.data.count+")");
 
         mAdapterViewPager = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment, mTabTitles);
         if (viewPager != null) {
@@ -82,22 +90,16 @@ public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> 
         viewStatusBar.setLayoutParams(params);
     }
 
-    /*@OnClick({R.id.btn_start, R.id.txt_go_main})
+    @OnClick({R.id.layout_btn_back})
     public void onClick(View view)
     {
         int id = view.getId();
         switch (id)
         {
-            case R.id.btn_start:{
-                goNextScreen(CreatePlanActivity.class);
-                break;
-            }
-            case R.id.txt_go_main:{
-                Bundle data = new Bundle();
-                data.putBoolean("isGetCampaign",false);
-                goNextScreen(MainFAActivity.class,data);
+            case R.id.layout_btn_back:{
+                onBackPressed();
                 break;
             }
         }
-    }*/
+    }
 }

@@ -303,6 +303,18 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
             });
         }
     }
+    @OnClick({R.id.layout_btn_back})
+    public void onClickView(View view){
+        int id = view.getId();
+        switch (id){
+            case R.id.layout_btn_back:{
+                onBackPressed();
+                break;
+            }
+        }
+    }
+
+
 
     /*@OnClick({R.id.layout_menu_appointment, R.id.layout_menu_call_later, R.id.layout_menu_cancel})
     public void onClick(View view) {
