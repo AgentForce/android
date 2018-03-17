@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.appointment.AppointmentActivity;
 import manulife.manulifesop.activity.FAGroup.clients.consultant.ConsultantActivity;
@@ -49,9 +50,12 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
     @BindView(R.id.txt_step5_result)
     TextView txtStep5;
 
+    private CampaignMonth nData;
     private int mMonth;
 
     private int targetStep1 = 0, targetStep2 = 0, targetStep3 = 0, targetStep4 = 0, targetStep5 = 0;
+
+
 
     public static FAObjectMonthFragment newInstance(CampaignMonth data,int month) {
         Bundle args = new Bundle();
@@ -75,8 +79,8 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        CampaignMonth data = (CampaignMonth) getArguments().getSerializable("data");
-        initViews(data);
+        nData = (CampaignMonth) getArguments().getSerializable("data");
+        initViews(nData);
         mMonth = getArguments().getInt("month",0);
     }
 
@@ -118,27 +122,42 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
                 Bundle data = new Bundle();
                 data.putInt("month",mMonth);
                 data.putInt("target",targetStep1);
+                data.putInt("targetIntroduce",targetStep5);
+                ProjectApplication.getInstance().setCampaign(nData);
                 mActivity.goNextScreen(ContactPersonActivity.class,data);
                 break;
             }
             case R.id.layout_meeting: {
                 //Toast.makeText(mActivity, "layout_meeting", Toast.LENGTH_SHORT).show();
-                mActivity.goNextScreen(AppointmentActivity.class);
+                Bundle data = new Bundle();
+                data.putInt("month",mMonth);
+                data.putInt("target",targetStep2);
+                mActivity.goNextScreen(AppointmentActivity.class,data);
                 break;
             }
             case R.id.layout_advisory: {
                 //Toast.makeText(mActivity, "layout_advisory", Toast.LENGTH_SHORT).show();
-                mActivity.goNextScreen(ConsultantActivity.class);
+                Bundle data = new Bundle();
+                data.putInt("month",mMonth);
+                data.putInt("target",targetStep3);
+                mActivity.goNextScreen(ConsultantActivity.class,data);
                 break;
             }
             case R.id.layout_sign: {
                 //Toast.makeText(mActivity, "layout_sign", Toast.LENGTH_SHORT).show();
-                mActivity.goNextScreen(SignedPersonActivity.class);
+                Bundle data = new Bundle();
+                data.putInt("month",mMonth);
+                data.putInt("target",targetStep4);
+                mActivity.goNextScreen(SignedPersonActivity.class,data);
                 break;
             }
             case R.id.layout_introduce: {
                 //Toast.makeText(mActivity, "layout_introduce", Toast.LENGTH_SHORT).show();
-                mActivity.goNextScreen(IntroduceContactActivity.class);
+                Bundle data = new Bundle();
+                data.putInt("month",mMonth);
+                data.putInt("target",targetStep5);
+                ProjectApplication.getInstance().setCampaign(nData);
+                mActivity.goNextScreen(IntroduceContactActivity.class,data);
                 break;
             }
 

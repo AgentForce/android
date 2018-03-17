@@ -12,6 +12,7 @@ public interface FAContentCustomerContract {
 
     interface View extends BaseMVPView {
         void showCampaignsMonth(CampaignMonth data);
+        void showConfirmAcvitveCampaign();
     }
 
     interface Action {

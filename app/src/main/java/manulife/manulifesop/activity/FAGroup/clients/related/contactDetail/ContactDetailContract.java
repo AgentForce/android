@@ -10,7 +10,9 @@ public interface ContactDetailContract {
     interface View extends BaseMVPView
     {
         void showHideMenuAfterCall();
+        void initViewPager();
     }
     interface Action{
+        void getContactDetail(int id);
     }
 }

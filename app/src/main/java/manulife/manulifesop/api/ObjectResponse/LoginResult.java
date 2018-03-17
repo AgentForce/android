@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginResult {
 
-    @SerializedName("status")
+    @SerializedName("statusCode")
     @Expose
     private Integer status;
     @SerializedName("data")

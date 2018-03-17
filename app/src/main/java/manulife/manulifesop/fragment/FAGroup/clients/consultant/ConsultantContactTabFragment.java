@@ -15,18 +15,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.appointment.AppointmentActivity;
 import manulife.manulifesop.activity.FAGroup.clients.consultant.ConsultantActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.ContactDetailActivity;
 import manulife.manulifesop.adapter.ActiveHistAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
+import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 import manulife.manulifesop.fragment.FAGroup.clients.appointment.AppointmentContactTabContract;
 import manulife.manulifesop.fragment.FAGroup.clients.appointment.AppointmentContactTabPresent;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -40,15 +43,19 @@ public class ConsultantContactTabFragment extends BaseFragment<ConsultantActivit
     TextView txtTitle;
 
     private String mType;
+    private int mTarget;
+    private int mMonth;
 
     private ActiveHistAdapter mAdapterActiveHist;
     private List<ActiveHistFA> mData;
     private LinearLayoutManager mLayoutManager;
 
 
-    public static ConsultantContactTabFragment newInstance(String type) {
+    public static ConsultantContactTabFragment newInstance(String type, int target, int month) {
         Bundle args = new Bundle();
         args.putString("type", type);
+        args.putInt("target", target);
+        args.putInt("month", month);
         ConsultantContactTabFragment fragment = new ConsultantContactTabFragment();
         fragment.setArguments(args);
         return fragment;
@@ -60,7 +67,7 @@ public class ConsultantContactTabFragment extends BaseFragment<ConsultantActivit
         @Override
         public void onApiLoadMoreTask(int page) {
             Toast.makeText(mActivity, "load more", Toast.LENGTH_SHORT).show();
-            loadDataContact();
+            //loadDataContact();
         }
     }
 
@@ -78,24 +85,32 @@ public class ConsultantContactTabFragment extends BaseFragment<ConsultantActivit
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mType = getArguments().getString("type", "");
+        mTarget = getArguments().getInt("target", 0);
+        mMonth = getArguments().getInt("month", 0);
         initViews();
-        //loadDataContact();
+        loadDataContact();
     }
 
     private void initViews() {
         //type = appointment, seen, calllater
         if (mType != null && !mType.equals("")) {
             switch (mType) {
-                case Contants.APPOINTMENT: {
-                    txtTitle.setText("Tư vấn");
+                case Contants.CONSULTANT: {
+                    txtTitle.setText("Tư vấn(" +
+                            ProjectApplication.getInstance().getConsultantNeed().data.count
+                            + "/" + mTarget + ")");
                     break;
                 }
-                case Contants.SEEN: {
+                case Contants.CONSULTATION_APPOINTMENT: {
                     txtTitle.setText("Đã hẹn tư vấn");
                     break;
                 }
                 case Contants.CALLLATER: {
                     txtTitle.setText("Liên hệ sau");
+                    break;
+                }
+                case Contants.REFUSE: {
+                    txtTitle.setText("Từ chối");
                     break;
                 }
             }
@@ -104,20 +119,36 @@ public class ConsultantContactTabFragment extends BaseFragment<ConsultantActivit
         mData = new ArrayList<>();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadDataContact();
-    }
-
     private void loadDataContact() {
         listContact.setLayoutManager(mLayoutManager);
 
-        for (int i = 0; i < 10; i++) {
+        UsersList data = new UsersList();
+        switch (mType) {
+            case Contants.CONSULTANT: {
+                data = ProjectApplication.getInstance().getConsultantNeed();
+                break;
+            }
+            case Contants.CONSULTATION_APPOINTMENT: {
+                data = ProjectApplication.getInstance().getConsultantSeen();
+                break;
+            }
+            case Contants.CALLLATER: {
+                data = ProjectApplication.getInstance().getConsultantCallLater();
+                break;
+            }
+            case Contants.REFUSE: {
+                data = ProjectApplication.getInstance().getConsultantRefuse();
+                break;
+            }
+        }
+
+
+        for (int i = 0; i < data.data.rows.size(); i++) {
             ActiveHistFA temp = new ActiveHistFA();
+            temp.setId(data.data.rows.get(i).id);
             temp.setAvatar("avatar " + i);
-            temp.setTitle("title code input " + i);
-            temp.setContent("content code input " + i);
+            temp.setTitle(data.data.rows.get(i).name);
+            temp.setContent(data.data.rows.get(i).phone);
             mData.add(temp);
         }
 
@@ -130,7 +161,7 @@ public class ConsultantContactTabFragment extends BaseFragment<ConsultantActivit
 
             @Override
             public void onClickMainContent(int position) {
-                gotoConactDetail();
+                gotoConactDetail(mData.get(position).getId());
             }
         });
         listContact.setAdapter(mAdapterActiveHist);
@@ -152,15 +183,19 @@ public class ConsultantContactTabFragment extends BaseFragment<ConsultantActivit
 
         listContact.clearOnScrollListeners();
         listContact.addOnScrollListener(new EndlessScrollListenerRecyclerView(
-                0, 3, new onLoadingMoreDataTask(), mLayoutManager));
+                Integer.valueOf(data.data.page)
+                , Utils.genLastPage(data.data.count,
+                Integer.valueOf(data.data.limit))
+                , new onLoadingMoreDataTask(), mLayoutManager));
     }
 
     @Override
-    public void gotoConactDetail() {
+    public void gotoConactDetail(int id) {
         Bundle data = new Bundle();
-        data.putString("type",mType);
-        data.putString("type_menu",Contants.CONSULTANT_MENU);
-        mActivity.goNextScreen(ContactDetailActivity.class,data);
+        data.putString("type", mType);
+        data.putString("type_menu", Contants.CONSULTANT_MENU);
+        data.putInt("id",id);
+        mActivity.goNextScreen(ContactDetailActivity.class, data);
     }
 
 

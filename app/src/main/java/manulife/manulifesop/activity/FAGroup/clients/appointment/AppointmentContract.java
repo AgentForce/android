@@ -9,8 +9,9 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface AppointmentContract {
     interface View extends BaseMVPView
     {
-
+        void initViewPager();
     }
     interface Action{
+        void loadAllData(int period);
     }
 }

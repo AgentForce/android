@@ -60,6 +60,7 @@
                     android:background="@color/colorPrimaryDark" />
 
                 <TextView
+                    android:id="@+id/txt_contact_step1_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
@@ -71,7 +72,7 @@
                     android:id="@+id/txt_contact_step1_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10/12"
+                    android:text="0/0"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
@@ -82,7 +83,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/cus_step1_background_present"
+                android:background="@drawable/cus_step1_background_next"
                 android:gravity="center_horizontal|center_vertical"
                 android:orientation="vertical">
 
@@ -94,17 +95,18 @@
                     android:background="@color/colorPrimaryDark" />
 
                 <TextView
+                    android:id="@+id/txt_contact_step2_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Giai đoạn 2"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/botMenuDisable" />
 
                 <TextView
                     android:id="@+id/txt_contact_step2_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10/12"
-                    android:textColor="@android:color/white" />
+                    android:text="0/0"
+                    android:textColor="@android:color/black" />
             </LinearLayout>
 
             <!--giai doan 3-->
@@ -126,6 +128,7 @@
                     android:background="@color/colorPrimaryDark" />
 
                 <TextView
+                    android:id="@+id/txt_contact_step3_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Giai đoạn 3"
@@ -135,7 +138,7 @@
                     android:id="@+id/txt_contact_step3_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10/12"
+                    android:text="0/0"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
@@ -157,6 +160,7 @@
                     android:background="@color/colorPrimaryDark" />
 
                 <TextView
+                    android:id="@+id/txt_contact_step4_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Giai đoạn 4"
@@ -166,7 +170,7 @@
                     android:id="@+id/txt_contact_step4_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10/12"
+                    android:text="0/0"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 

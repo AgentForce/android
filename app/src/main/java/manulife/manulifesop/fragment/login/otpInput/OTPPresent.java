@@ -2,6 +2,7 @@ package manulife.manulifesop.fragment.login.otpInput;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -14,6 +15,7 @@ import manulife.manulifesop.api.ObjectResponse.VerifyOTP;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
+import manulife.manulifesop.util.SOPSharedPreferences;
 import manulife.manulifesop.util.Utils;
 
 /**
@@ -22,11 +24,11 @@ import manulife.manulifesop.util.Utils;
 
 public class OTPPresent extends BasePresenter<OTPContract.View> implements OTPContract.Action {
 
-    private Context mContest;
+    private Context mContext;
 
     public OTPPresent(OTPContract.View presenterView, Context context) {
         super(presenterView);
-        this.mContest = context;
+        this.mContext = context;
     }
 
     @Override
@@ -40,6 +42,7 @@ public class OTPPresent extends BasePresenter<OTPContract.View> implements OTPCo
         data.setUserName(user);
 
         getCompositeDisposable().add(ApiService.getServer().requestOTP(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum, data)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -73,6 +76,7 @@ public class OTPPresent extends BasePresenter<OTPContract.View> implements OTPCo
         data.setUserName(user);
 
         getCompositeDisposable().add(ApiService.getServer().verifyOTP(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum, data)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())

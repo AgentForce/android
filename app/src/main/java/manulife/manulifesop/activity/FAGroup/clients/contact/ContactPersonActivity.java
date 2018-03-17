@@ -43,6 +43,7 @@ public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> 
     private List<String> mTabTitles;
 
     private int mTarget;
+    private int mTargetIntroduce;
     private int mMonth;
 
     @Override
@@ -50,9 +51,10 @@ public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_person);
         mActionListener = new ContactPersonPresenter(this,this);
-        hideKeyboardOutside(layoutRoot,this);
+        hideKeyboardOutside(layoutRoot);
         setupSupportForApp();
         mTarget = getIntent().getIntExtra("target",0);
+        mTargetIntroduce = getIntent().getIntExtra("targetIntroduce",0);
         mMonth = getIntent().getIntExtra("month",0);
         mActionListener.getAllContactPerson(mMonth,1);
     }
@@ -61,8 +63,8 @@ public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> 
     @Override
     public void initViewPager(UsersList contact, UsersList callLater) {
         mListFragment = new ArrayList<>();
-        mListFragment.add(ContactPersonTab1Fragment.newInstance(Contants.CONTACT,contact,mMonth));
-        mListFragment.add(ContactPersonTab1Fragment.newInstance(Contants.CALLLATER,callLater,mMonth));
+        mListFragment.add(ContactPersonTab1Fragment.newInstance(Contants.CONTACT,contact,mMonth,mTargetIntroduce));
+        mListFragment.add(ContactPersonTab1Fragment.newInstance(Contants.CALLLATER,callLater,mMonth,mTargetIntroduce));
 
         mTabTitles = new ArrayList<>();
         mTabTitles.add("Liên hệ("+contact.data.count + "/" + mTarget+")");

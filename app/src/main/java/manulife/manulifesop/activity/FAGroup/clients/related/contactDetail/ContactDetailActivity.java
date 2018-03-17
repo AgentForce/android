@@ -64,6 +64,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
 
     private String mType;
     private String mTypeMenu;
+    private int mUserId;
 
     private CustomViewPagerAdapter mAdapterViewPager;
     private List<BaseFragment> mListFragment;
@@ -74,6 +75,9 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         super.onCreate(savedInstanceState);
         mType = getIntent().getStringExtra("type");
         mTypeMenu = getIntent().getStringExtra("type_menu");
+        mUserId = getIntent().getIntExtra("id",0);
+        //test default
+        mUserId = 51;
 
         if (mType.equals(Contants.REFUSE)) {
             setContentView(R.layout.activity_contact_detail_refuse);
@@ -83,7 +87,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         mActionListener = new ContactDetailPresenter(this, this);
         initViews();
         initMenuAfterCall();
-        initViewPager();
+        mActionListener.getContactDetail(mUserId);
     }
 
     private void initViews() {
@@ -251,7 +255,8 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         }
     }
 
-    private void initViewPager() {
+    @Override
+    public void initViewPager() {
         mListFragment = new ArrayList<>();
         if (mType.equals(Contants.REFUSE)) {
             mListFragment.add(ContactDetailStep1RefuseFragment.newInstance());
@@ -271,7 +276,6 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
             viewPager.setAdapter(mAdapterViewPager);
             tabMenu.setupWithViewPager(viewPager);
         }
-
     }
 
     @Override

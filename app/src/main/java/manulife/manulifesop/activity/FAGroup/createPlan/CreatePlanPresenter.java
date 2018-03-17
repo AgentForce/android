@@ -51,6 +51,7 @@ public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> 
         data.setIncomeMonthly(inCome * 1000000);
 
         getCompositeDisposable().add(ApiService.getServer().createCampaign(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum, data)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -73,6 +74,7 @@ public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> 
     @Override
     public void checkCampaign() {
         getCompositeDisposable().add(ApiService.getServer().checkCampaign(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                 DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI)
                 .subscribeOn(Schedulers.computation())

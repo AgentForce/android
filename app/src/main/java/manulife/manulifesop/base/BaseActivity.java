@@ -91,12 +91,12 @@ public class BaseActivity<P extends BasePresenter> extends AppCompatActivity imp
 
 
 
-    protected void hideKeyboardOutside(View view, final Activity activity) {
+    protected void hideKeyboardOutside(View view) {
         //Set up touch listener for non-text box views to hide keyboard.
         if (!(view instanceof EditText)) {
             view.setOnTouchListener(
                     (v, event) -> {
-                        Utils.hideSoftKeyboard(activity);
+                        Utils.hideSoftKeyboard(view);
                         v.clearFocus();
                         return false;
                     });
@@ -105,7 +105,7 @@ public class BaseActivity<P extends BasePresenter> extends AppCompatActivity imp
         if (view instanceof ViewGroup) {
             for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
                 View innerView = ((ViewGroup) view).getChildAt(i);
-                hideKeyboardOutside(innerView, activity);
+                hideKeyboardOutside(innerView);
             }
         }
     }

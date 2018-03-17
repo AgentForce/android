@@ -1,6 +1,8 @@
 package manulife.manulifesop.base;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -58,6 +60,17 @@ public abstract class BaseFragment<T extends BaseActivity, P extends BasePresent
         super.onStop();
     }
 
+    public <T extends Activity> void goNextScreenFragment(Class<T> clazz,Bundle bun,int requestCode){
+        Intent intent = new Intent(getContext(), clazz);
+        intent.putExtras(bun);
+        startActivityForResult(intent, requestCode);
+        mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+    public <T extends Activity> void goNextScreenFragment(Class<T> clazz,int requestCode){
+        Intent intent = new Intent(getContext(), clazz);
+        startActivityForResult(intent, requestCode);
+        mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
 
     public void showMessage(String title,String message,int messageType) {
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(mActivity, messageType);

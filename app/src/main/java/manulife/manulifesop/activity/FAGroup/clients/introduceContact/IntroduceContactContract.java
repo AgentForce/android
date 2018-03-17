@@ -1,5 +1,6 @@
 package manulife.manulifesop.activity.FAGroup.clients.introduceContact;
 
+import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.base.BaseMVPView;
 
 /**
@@ -9,8 +10,9 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface IntroduceContactContract {
     interface View extends BaseMVPView
     {
-
+        void initViewPager();
     }
     interface Action{
+        void getAllIntroduces(int period, int page);
     }
 }

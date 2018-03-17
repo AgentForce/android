@@ -33,7 +33,7 @@ public class SignedSuccessActivity extends BaseActivity<SignedSuccessPresenter> 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signed_success);
-        hideKeyboardOutside(layoutRoot,this);
+        hideKeyboardOutside(layoutRoot);
         mActionListener = new SignedSuccessPresenter(this, this);
         setupSupportForApp();
     }

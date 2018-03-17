@@ -48,7 +48,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new FAContentCustomerPresent(this);
+        mActionListener = new FAContentCustomerPresent(this,getContext());
     }
 
     @Override
@@ -78,6 +78,11 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
         }
 
         tabLayoutOptions.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void showConfirmAcvitveCampaign() {
+        Toast.makeText(mActivity, "Hiển thị dialog đồng ý active", Toast.LENGTH_SHORT).show();
     }
 
     /*@OnClick(R.id.btn_start)

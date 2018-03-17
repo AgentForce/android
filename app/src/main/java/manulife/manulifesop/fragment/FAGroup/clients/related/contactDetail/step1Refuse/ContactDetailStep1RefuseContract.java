@@ -10,6 +10,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface ContactDetailStep1RefuseContract {
 
     interface View extends BaseMVPView {
+        void initViews();
     }
 
     interface Action {

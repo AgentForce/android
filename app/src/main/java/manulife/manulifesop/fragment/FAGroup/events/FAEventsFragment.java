@@ -62,7 +62,7 @@ public class FAEventsFragment extends BaseFragment<MainFAActivity, FAEventsPrese
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new FAEventsPresent(this);
+        mActionListener = new FAEventsPresent(this,getContext());
     }
 
 

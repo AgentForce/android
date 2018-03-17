@@ -68,8 +68,10 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ActiveHistFA object = mListObject.get(position);
-        if (object.getAvatar() != null && object.getAvatar().length() > 1) {
-
+        if (object.getTitle() != null && object.getTitle().length() > 1) {
+            holder.txtAvatarTitle.setText(
+                    object.getTitle().substring(0,1)
+            );
         }
         holder.txtTitle.setText(object.getTitle());
         holder.txtContent.setText(object.getContent());
@@ -140,6 +142,8 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
         //Declares variables
         @BindView(R.id.img_user_avatar)
         RoundedImageView userAvatar;
+        @BindView(R.id.txt_avatar)
+        TextView txtAvatarTitle;
         @BindView(R.id.txt_title)
         TextView txtTitle;
         @BindView(R.id.txt_content)

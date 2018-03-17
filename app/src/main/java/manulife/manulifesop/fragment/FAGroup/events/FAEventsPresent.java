@@ -1,6 +1,7 @@
 package manulife.manulifesop.fragment.FAGroup.events;
 
 
+import android.content.Context;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ import manulife.manulifesop.api.ObjectResponse.EventsOneDay;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
+import manulife.manulifesop.util.SOPSharedPreferences;
 import manulife.manulifesop.util.Utils;
 
 /**
@@ -30,11 +32,12 @@ import manulife.manulifesop.util.Utils;
 
 public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implements FAEventsContract.Action {
 
-    private DashboardResult mDataDashboardWeekMonth;
-    private DashboardResult mDataDashboardYear;
 
-    public FAEventsPresent(FAEventsContract.View presenterView) {
+    private Context mContext;
+
+    public FAEventsPresent(FAEventsContract.View presenterView, Context context) {
         super(presenterView);
+        this.mContext = context;
     }
 
     @Override
@@ -46,6 +49,7 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
         String lastDay = Utils.convertDateToString(calendar.getTime(),"yyyy-MM-dd");
 
         getCompositeDisposable().add(ApiService.getServer().getEventsMonth(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                 firstDay,lastDay)
                 .subscribeOn(Schedulers.computation())
@@ -61,7 +65,7 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
                 //mPresenterView.addEventToDate(Utils.convertStringToDate(data.data.get(i).date,"yyyy-MM-dd"));
                 colors = new ArrayList<>();
                 for(int j=0;j<data.data.get(i).activities.size();j++){
-                    colors.add(ProjectApplication.getProcessStepColor(data.data.get(i).activities.get(j).processStep));
+                    colors.add(ProjectApplication.getInstance().getProcessStepColor(data.data.get(i).activities.get(j).processStep));
                     if(j>3)break;
                 }
                 mPresenterView.addEventToDate(Utils.convertStringToDate(data.data.get(i).date,"yyyy-MM-dd"),colors);
@@ -77,6 +81,7 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
         mPresenterView.showLoading("Lấy dữ liệu");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         getCompositeDisposable().add(ApiService.getServer().getEventsDay(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                 df.format(date))
                 .subscribeOn(Schedulers.computation())

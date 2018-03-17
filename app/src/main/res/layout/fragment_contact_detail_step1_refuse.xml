@@ -46,7 +46,6 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toLeftOf="@+id/img_row1"
-                            android:text="31"
                             android:textSize="@dimen/welcome_activity_content" />
 
                         <ImageView
@@ -98,7 +97,6 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toLeftOf="@+id/img_row2"
-                            android:text="Nhiều hơn 20 triệu đồng"
                             android:textSize="@dimen/welcome_activity_content" />
 
                         <ImageView
@@ -149,7 +147,6 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toLeftOf="@+id/img_row3"
-                            android:text="Kết hôn - Đã có con"
                             android:textSize="@dimen/welcome_activity_content" />
 
                         <ImageView
@@ -201,7 +198,6 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toLeftOf="@+id/img_row4"
-                            android:text="Thân thiết"
                             android:textSize="@dimen/welcome_activity_content" />
 
                         <ImageView
@@ -252,7 +248,6 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toLeftOf="@+id/img_row5"
-                            android:text="Được giới thiệu"
                             android:textSize="@dimen/welcome_activity_content" />
 
                         <ImageView
@@ -280,14 +275,14 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minWidth="80dp"
                         android:text="Ghi chú"
@@ -302,7 +297,6 @@
                         android:layout_marginRight="20dp"
                         android:gravity="center_vertical"
                         android:minHeight="50dp"
-                        android:text="Ghi chú"
                         android:textSize="@dimen/welcome_activity_content" />
 
                 </LinearLayout>

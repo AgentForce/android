@@ -64,9 +64,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final EventData object = mListObject.get(position);
-        if (object.getAvatar() != null && object.getAvatar().length() > 1) {
 
-        }
+        holder.txtAvatar.setText(object.getName().substring(0,1));
         holder.txtName.setText(object.getName());
         holder.txtTitleType.setText(object.getTypeEvent());
         holder.txtDateTime.setText(object.getDateTime());
@@ -136,6 +135,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         //Declares variables
         @BindView(R.id.img_user_avatar)
         RoundedImageView userAvatar;
+        @BindView(R.id.txt_avatar)
+        TextView txtAvatar;
         @BindView(R.id.txt_name)
         TextView txtName;
         @BindView(R.id.txt_title_tyle)

@@ -10,10 +10,11 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface AppointmentContactTabContract {
 
     interface View extends BaseMVPView {
-        void gotoConactDetail();
+        void gotoConactDetail(int id);
+        void loadDataContact();
     }
 
     interface Action {
-
+        void getContact(int period, int status, int page);
     }
 }

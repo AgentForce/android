@@ -20,9 +20,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.adapter.ObjectData.ContactPerson;
 import manulife.manulifesop.base.BaseActivity;
+import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
 import manulife.manulifesop.util.Utils;
 
 
@@ -128,12 +130,21 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
     private List<ContactPerson> mDataChoosed;
     private int mPosition = 0;
 
+    //variable for change relead to contact
+    private boolean mIsChangeToContact;
+    private int mReleadID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact_update_info);
         mActionListener = new UpdateContactInfoPresenter(this, this);
         mDataChoosed = (List<ContactPerson>) getIntent().getSerializableExtra("data");
+
+        //get data for change relead to contact
+        mIsChangeToContact = getIntent().getBooleanExtra("isChangeToContact", false);
+        mReleadID = getIntent().getIntExtra("idRelead", 0);
+
         setupSupportForApp();
         initViews();
     }
@@ -150,6 +161,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 if (checkedId != -1) {
                     RadioButton tmp = findViewById(checkedId);
                     txtStep1Choose.setText(tmp.getText());
+                    txtStep1Choose.setTag(tmp.getTag());
                     initListenerStep1Line2();
                 }
             }
@@ -161,6 +173,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 if (checkedId != -1) {
                     RadioButton tmp = findViewById(checkedId);
                     txtStep1Choose.setText(tmp.getText());
+                    txtStep1Choose.setTag(tmp.getTag());
                     initListenerStep1Line1();
                 }
             }
@@ -173,6 +186,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 if (checkedId != -1) {
                     RadioButton tmp = findViewById(checkedId);
                     txtStep2Choose.setText(tmp.getText());
+                    txtStep2Choose.setTag(tmp.getTag());
                     initListenerStep2Line2();
                 }
             }
@@ -184,6 +198,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 if (checkedId != -1) {
                     RadioButton tmp = findViewById(checkedId);
                     txtStep2Choose.setText(tmp.getText());
+                    txtStep2Choose.setTag(tmp.getTag());
                     initListenerStep2Line1();
                 }
             }
@@ -196,6 +211,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 if (checkedId != -1) {
                     RadioButton tmp = findViewById(checkedId);
                     txtStep3Choose.setText(tmp.getText());
+                    txtStep3Choose.setTag(tmp.getTag());
                     initListenerStep3Line2();
                 }
             }
@@ -207,6 +223,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 if (checkedId != -1) {
                     RadioButton tmp = findViewById(checkedId);
                     txtStep3Choose.setText(tmp.getText());
+                    txtStep3Choose.setTag(tmp.getTag());
                     initListenerStep3Line1();
                 }
             }
@@ -219,6 +236,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 if (checkedId != -1) {
                     RadioButton tmp = findViewById(checkedId);
                     txtStep4Choose.setText(tmp.getText());
+                    txtStep4Choose.setTag(tmp.getTag());
                     initListenerStep4Line2();
                 }
             }
@@ -230,6 +248,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 if (checkedId != -1) {
                     RadioButton tmp = findViewById(checkedId);
                     txtStep4Choose.setText(tmp.getText());
+                    txtStep4Choose.setTag(tmp.getTag());
                     initListenerStep4Line1();
                 }
             }
@@ -242,6 +261,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 if (checkedId != -1) {
                     RadioButton tmp = findViewById(checkedId);
                     txtStep5Choose.setText(tmp.getText());
+                    txtStep5Choose.setTag(tmp.getTag());
                     initListenerStep5Line2();
                 }
             }
@@ -253,6 +273,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 if (checkedId != -1) {
                     RadioButton tmp = findViewById(checkedId);
                     txtStep5Choose.setText(tmp.getText());
+                    txtStep5Choose.setTag(tmp.getTag());
                     initListenerStep5Line1();
                 }
             }
@@ -268,6 +289,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton tmp = findViewById(checkedId);
                 txtStep1Choose.setText(tmp.getText());
+                txtStep1Choose.setTag(tmp.getTag());
                 initListenerStep1Line2();
             }
         });
@@ -282,6 +304,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton tmp = findViewById(checkedId);
                 txtStep1Choose.setText(tmp.getText());
+                txtStep1Choose.setTag(tmp.getTag());
                 initListenerStep1Line1();
             }
         });
@@ -296,6 +319,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton tmp = findViewById(checkedId);
                 txtStep2Choose.setText(tmp.getText());
+                txtStep2Choose.setTag(tmp.getTag());
                 initListenerStep2Line2();
             }
         });
@@ -310,6 +334,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton tmp = findViewById(checkedId);
                 txtStep2Choose.setText(tmp.getText());
+                txtStep2Choose.setTag(tmp.getTag());
                 initListenerStep2Line1();
             }
         });
@@ -324,6 +349,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton tmp = findViewById(checkedId);
                 txtStep3Choose.setText(tmp.getText());
+                txtStep3Choose.setTag(tmp.getTag());
                 initListenerStep3Line2();
             }
         });
@@ -338,6 +364,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton tmp = findViewById(checkedId);
                 txtStep3Choose.setText(tmp.getText());
+                txtStep3Choose.setTag(tmp.getTag());
                 initListenerStep3Line1();
             }
         });
@@ -352,6 +379,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton tmp = findViewById(checkedId);
                 txtStep4Choose.setText(tmp.getText());
+                txtStep4Choose.setTag(tmp.getTag());
                 initListenerStep4Line2();
             }
         });
@@ -366,6 +394,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton tmp = findViewById(checkedId);
                 txtStep4Choose.setText(tmp.getText());
+                txtStep4Choose.setTag(tmp.getTag());
                 initListenerStep4Line1();
             }
         });
@@ -380,6 +409,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton tmp = findViewById(checkedId);
                 txtStep5Choose.setText(tmp.getText());
+                txtStep5Choose.setTag(tmp.getTag());
                 initListenerStep5Line2();
             }
         });
@@ -394,6 +424,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton tmp = findViewById(checkedId);
                 txtStep5Choose.setText(tmp.getText());
+                txtStep5Choose.setTag(tmp.getTag());
                 initListenerStep5Line1();
             }
         });
@@ -442,7 +473,15 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
     @Override
     public void loadNextContact(int position) {
         if (position == mDataChoosed.size())
-            showMessage("Thông báo", "Đã cập nhật tất cả thông tin!", SweetAlertDialog.SUCCESS_TYPE);
+            //showMessage("Thông báo", "Đã cập nhật tất cả thông tin!", SweetAlertDialog.SUCCESS_TYPE);
+            showInform("Thông báo", "Đã cập nhật tất cả thông tin!", "OK", SweetAlertDialog.SUCCESS_TYPE
+                    , new CallBackInformDialog() {
+                        @Override
+                        public void DiaglogPositive() {
+                            setResult(RESULT_OK);
+                            finish();
+                        }
+                    });
         else {
             mPosition = position;
 
@@ -457,6 +496,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep1.startAnimation(out);
             layoutChooseStep1.setVisibility(View.GONE);
             expandableLayoutStep1.collapse();
+            imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
             initListenerStep1Line1();
             initListenerStep1Line2();
 
@@ -465,6 +505,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep2.startAnimation(out);
             layoutChooseStep2.setVisibility(View.GONE);
             expandableLayoutStep2.collapse();
+            imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
             initListenerStep2Line1();
             initListenerStep2Line2();
 
@@ -473,6 +514,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep3.startAnimation(out);
             layoutChooseStep3.setVisibility(View.GONE);
             expandableLayoutStep3.collapse();
+            imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
             initListenerStep3Line1();
             initListenerStep3Line2();
 
@@ -481,6 +523,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep4.startAnimation(out);
             layoutChooseStep4.setVisibility(View.GONE);
             expandableLayoutStep4.collapse();
+            imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
             initListenerStep4Line1();
             initListenerStep4Line2();
 
@@ -489,14 +532,21 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep5.startAnimation(out);
             layoutChooseStep5.setVisibility(View.GONE);
             expandableLayoutStep5.collapse();
+            imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
             initListenerStep5Line1();
             initListenerStep5Line2();
 
             edtNote.setText("");
 
-            Utils.smoothScrollViewToPosition(this,scrollView,0);
+            Utils.smoothScrollViewToPosition(this, scrollView, 0);
 
         }
+    }
+
+    @Override
+    public void finishChangeToContact() {
+        setResult(RESULT_OK);
+        finish();
     }
 
     @OnClick({R.id.layout_btn_back, R.id.layout_title_step1, R.id.layout_title_step2,
@@ -611,7 +661,19 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             }
             case R.id.btn_ok: {
                 if (validateInput()) {
-                    mActionListener.updateContactInfo(mPosition);
+                    //check if is process for add contact or change relead to contact
+                    if (!mIsChangeToContact) {
+                        mActionListener.updateContactInfo(mPosition, txtName.getText().toString(), txtPhone.getText().toString(), Integer.valueOf(txtStep1Choose.getTag().toString()),
+                                0, Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
+                                Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
+                    } else {
+                        mActionListener.changeReleadToContact(mReleadID, ProjectApplication.getInstance().getCampaignWeekId(),
+                                Integer.valueOf(txtStep1Choose.getTag().toString()), 0, Integer.valueOf(txtStep2Choose.getTag().toString()),
+                                Integer.valueOf(txtStep3Choose.getTag().toString()),
+                                Integer.valueOf(txtStep4Choose.getTag().toString()),
+                                Integer.valueOf(txtStep5Choose.getTag().toString()),
+                                edtNote.getText().toString());
+                    }
                 }
                 break;
             }

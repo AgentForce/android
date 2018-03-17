@@ -70,7 +70,7 @@ public class EventCalendarAdapter extends RecyclerView.Adapter<EventCalendarAdap
 
         }
         holder.txtName.setText(object.getName());
-        holder.txtTitleType.setText(ProjectApplication.getHashmapProcessStep().get(object.getProcessStep()));
+        holder.txtTitleType.setText(ProjectApplication.getInstance().getHashmapProcessStep().get(object.getProcessStep()));
         holder.txtDateTime.setText(object.getDate());
         holder.txtAvatarName.setText(object.getName().substring(0,1));
         holder.menuLocation.setOnClickListener(new View.OnClickListener() {

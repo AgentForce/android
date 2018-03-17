@@ -1,5 +1,6 @@
 package manulife.manulifesop.fragment.FAGroup.clients.contactIntroduce;
 
+import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.base.BaseMVPView;
 
 
@@ -10,10 +11,13 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface IntroduceContactTabContract {
 
     interface View extends BaseMVPView {
-        void gotoConactDetail();
+        void showDialogChooseWeek(boolean isChangeContact);
+        void loadContactList(UsersList data);
+        void reloadData();
     }
 
     interface Action {
-
+        void getUserListProcess(int period, int page);
+        void addIntroduceContact(String phone, String name, int campaignID);
     }
 }

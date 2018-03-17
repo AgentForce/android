@@ -82,7 +82,7 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
-        hideKeyboardOutside(layoutRoot, this);
+        hideKeyboardOutside(layoutRoot);
         mActionListener = new CreatePlanPresenter(this, this);
         setupSupportForApp();
         initViewPager();

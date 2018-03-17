@@ -35,6 +35,9 @@ public class CampaignMonth implements Serializable{
 
         public class Campaign implements Serializable{
 
+            @SerializedName("Id")
+            @Expose
+            public Integer id;
             @SerializedName("Period")
             @Expose
             public Integer period;

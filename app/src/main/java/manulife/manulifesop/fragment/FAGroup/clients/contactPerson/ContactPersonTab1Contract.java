@@ -11,8 +11,9 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface ContactPersonTab1Contract {
 
     interface View extends BaseMVPView {
-        void gotoConactDetail();
+        void gotoContactDetail(int id);
         void loadContactList(UsersList data);
+        void showDialogChooseWeek();
     }
 
     interface Action {

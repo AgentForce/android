@@ -7,10 +7,11 @@ import manulife.manulifesop.base.BaseMVPView;
  */
 
 public interface ConsultantContract {
-    interface View extends BaseMVPView
-    {
-
+    interface View extends BaseMVPView {
+        void initViewPager();
     }
-    interface Action{
+
+    interface Action {
+        void getAllData(int period);
     }
 }

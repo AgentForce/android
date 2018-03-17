@@ -11,6 +11,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.contact.ContactPersonContract;
 import manulife.manulifesop.activity.FAGroup.clients.contact.ContactPersonPresenter;
@@ -44,27 +45,42 @@ public class ConsultantActivity extends BaseActivity<ConsultantPresenter> implem
     private List<BaseFragment> mListFragment;
     private List<String> mTabTitles;
 
+    private int mMonth;
+    private int mTarget;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_person);
-        mActionListener = new ConsultantPresenter(this,this);
-        hideKeyboardOutside(layoutRoot,this);
+        mActionListener = new ConsultantPresenter(this, this);
+        mMonth = getIntent().getIntExtra("month", 0);
+        mTarget = getIntent().getIntExtra("target", 0);
+        hideKeyboardOutside(layoutRoot);
         setupSupportForApp();
-        initViewPager();
+        mActionListener.getAllData(mMonth);
     }
 
-    private void initViewPager(){
+    @Override
+    public void initViewPager() {
         mListFragment = new ArrayList<>();
         //type = appointment, seen, calllater, refuse
-        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.CONSULTANT));
-        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.CONSULTATION_APPOINTMENT));
-        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.CALLLATER));
+        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.CONSULTANT,mTarget,mMonth));
+        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.CONSULTATION_APPOINTMENT,mTarget,mMonth));
+        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.CALLLATER,mTarget,mMonth));
+        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.REFUSE,mTarget,mMonth));
 
         mTabTitles = new ArrayList<>();
-        mTabTitles.add("Tư vấn");
-        mTabTitles.add("Đã hẹn tư vấn");
-        mTabTitles.add("Liên hệ sau");
+        mTabTitles.add("Tư vấn(" +
+                ProjectApplication.getInstance().getConsultantNeed().data.count +
+                "/" + mTarget + ")");
+        mTabTitles.add("Đã hẹn tư vấn(" +
+                ProjectApplication.getInstance().getConsultantSeen().data.count + ")");
+        mTabTitles.add("Liên hệ sau(" +
+                ProjectApplication.getInstance().getConsultantCallLater().data.count
+                + ")");
+        mTabTitles.add("Từ chối(" +
+                ProjectApplication.getInstance().getConsultantRefuse().data.count
+                + ")");
 
         mAdapterViewPager = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment, mTabTitles);
         if (viewPager != null) {
@@ -86,15 +102,15 @@ public class ConsultantActivity extends BaseActivity<ConsultantPresenter> implem
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewStatusBar.getLayoutParams();
         params.height = statusBarHeight;
         viewStatusBar.setLayoutParams(params);
+
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
     @OnClick({R.id.layout_btn_back})
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
         int id = view.getId();
-        switch (id)
-        {
-            case R.id.layout_btn_back:{
+        switch (id) {
+            case R.id.layout_btn_back: {
                 onBackPressed();
                 break;
             }

@@ -15,15 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.appointment.AppointmentActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.ContactDetailActivity;
 import manulife.manulifesop.adapter.ActiveHistAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
+import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -37,15 +40,19 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
     TextView txtTitle;
 
     private String mType;
+    private int mMonth;
+    private int mTarget;
 
     private ActiveHistAdapter mAdapterActiveHist;
     private List<ActiveHistFA> mData;
     private LinearLayoutManager mLayoutManager;
 
 
-    public static AppointmentContactTabFragment newInstance(String type) {
+    public static AppointmentContactTabFragment newInstance(String type, int target, int month) {
         Bundle args = new Bundle();
         args.putString("type", type);
+        args.putInt("target", target);
+        args.putInt("month", month);
         AppointmentContactTabFragment fragment = new AppointmentContactTabFragment();
         fragment.setArguments(args);
         return fragment;
@@ -56,8 +63,26 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
 
         @Override
         public void onApiLoadMoreTask(int page) {
-            Toast.makeText(mActivity, "load more", Toast.LENGTH_SHORT).show();
-            loadDataContact();
+            int status = 1;
+            switch (mType) {
+                case Contants.APPOINTMENT: {
+                    status = 1;
+                    break;
+                }
+                case Contants.REFUSE: {
+                    status = 2;
+                    break;
+                }
+                case Contants.CALLLATER: {
+                    status = 3;
+                    break;
+                }
+                case Contants.SEEN: {
+                    status = 4;
+                    break;
+                }
+            }
+            mActionListener.getContact(mMonth,status,page);
         }
     }
 
@@ -68,15 +93,17 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new AppointmentContactTabPresent(this);
+        mActionListener = new AppointmentContactTabPresent(this, getContext());
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mType = getArguments().getString("type", "");
+        mTarget = getArguments().getInt("target", 0);
+        mMonth = getArguments().getInt("month", 0);
         initViews();
-        //loadDataContact();
+        loadDataContact();
     }
 
     private void initViews() {
@@ -84,7 +111,9 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
         if (mType != null && !mType.equals("")) {
             switch (mType) {
                 case Contants.APPOINTMENT: {
-                    txtTitle.setText("Hẹn gặp");
+                    txtTitle.setText("Hẹn gặp(" +
+                            ProjectApplication.getInstance().getAppointMentNeed().data.count +
+                            "/" + mTarget + ")");
                     break;
                 }
                 case Contants.SEEN: {
@@ -95,7 +124,7 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
                     txtTitle.setText("Liên hệ sau");
                     break;
                 }
-                case Contants.REFUSE:{
+                case Contants.REFUSE: {
                     txtTitle.setText("Từ chối");
                     break;
                 }
@@ -106,22 +135,36 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        loadDataContact();
-    }
-
-    private void loadDataContact() {
+    public void loadDataContact() {
         listContact.setLayoutManager(mLayoutManager);
-
-        for (int i = 0; i < 10; i++) {
-            ActiveHistFA temp = new ActiveHistFA();
-            temp.setAvatar("avatar " + i);
-            temp.setTitle("title code input " + i);
-            temp.setContent("content code input " + i);
-            mData.add(temp);
+        UsersList data = new UsersList();
+        switch (mType) {
+            case Contants.APPOINTMENT: {
+                data = ProjectApplication.getInstance().getAppointMentNeed();
+                break;
+            }
+            case Contants.SEEN: {
+                data = ProjectApplication.getInstance().getAppointMentSeen();
+                break;
+            }
+            case Contants.CALLLATER: {
+                data = ProjectApplication.getInstance().getAppointMentCallLater();
+                break;
+            }
+            case Contants.REFUSE: {
+                data = ProjectApplication.getInstance().getAppointMentRefuse();
+                break;
+            }
         }
 
+        for (int i = 0; i < data.data.rows.size(); i++) {
+            ActiveHistFA temp = new ActiveHistFA();
+            temp.setId(data.data.rows.get(i).id);
+            temp.setAvatar("avatar " + i);
+            temp.setTitle(data.data.rows.get(i).name);
+            temp.setContent(data.data.rows.get(i).phone);
+            mData.add(temp);
+        }
 
         mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
             @Override
@@ -131,7 +174,7 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
 
             @Override
             public void onClickMainContent(int position) {
-                gotoConactDetail();
+                gotoConactDetail(mData.get(position).getId());
             }
         });
         listContact.setAdapter(mAdapterActiveHist);
@@ -153,15 +196,19 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
 
         listContact.clearOnScrollListeners();
         listContact.addOnScrollListener(new EndlessScrollListenerRecyclerView(
-                0, 3, new onLoadingMoreDataTask(), mLayoutManager));
+                Integer.valueOf(data.data.page)
+                , Utils.genLastPage(data.data.count,
+                Integer.valueOf(data.data.limit))
+                , new onLoadingMoreDataTask(), mLayoutManager));
     }
 
     @Override
-    public void gotoConactDetail() {
+    public void gotoConactDetail(int id) {
         Bundle data = new Bundle();
-        data.putString("type",mType);
-        data.putString("type_menu",Contants.APPOINTMENT_MENU);
-        mActivity.goNextScreen(ContactDetailActivity.class,data);
+        data.putString("type", mType);
+        data.putString("type_menu", Contants.APPOINTMENT_MENU);
+        data.putInt("id",id);
+        mActivity.goNextScreen(ContactDetailActivity.class, data);
     }
 
 

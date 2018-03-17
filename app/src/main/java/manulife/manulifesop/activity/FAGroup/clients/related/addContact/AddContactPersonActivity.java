@@ -1,6 +1,8 @@
 package manulife.manulifesop.activity.FAGroup.clients.related.addContact;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,11 +24,14 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.related.updateContactInfo.UpdateContactInfoActivity;
 import manulife.manulifesop.adapter.ContactPersonAdapter;
 import manulife.manulifesop.adapter.ObjectData.ContactPerson;
+import manulife.manulifesop.api.ObjectResponse.ContactDetail;
 import manulife.manulifesop.base.BaseActivity;
+import manulife.manulifesop.util.Contants;
 
 
 public class AddContactPersonActivity extends BaseActivity<AddContactPersonPresenter> implements AddContactPersonContract.View {
@@ -63,7 +68,7 @@ public class AddContactPersonActivity extends BaseActivity<AddContactPersonPrese
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
-        hideKeyboardOutside(layoutRoot, this);
+        hideKeyboardOutside(layoutRoot);
         mContext = this;
         mDataChoosed = new ArrayList<>();
         mActionListener = new AddContactPersonPresenter(this, this);
@@ -191,7 +196,7 @@ public class AddContactPersonActivity extends BaseActivity<AddContactPersonPrese
                         //showMessage("Thông báo", mDataChoosed.size() + mDataChoosed.get(0).getName(), SweetAlertDialog.WARNING_TYPE);
                         Bundle data = new Bundle();
                         data.putSerializable("data", (Serializable) mDataChoosed);
-                        goNextScreen(UpdateContactInfoActivity.class, data);
+                        goNextScreen(UpdateContactInfoActivity.class, data, Contants.ADD_CONTACT);
                     } else {
                         showMessage("Thông báo", "Chọn ít nhất một số điện thoại", SweetAlertDialog.WARNING_TYPE);
                     }
@@ -202,6 +207,15 @@ public class AddContactPersonActivity extends BaseActivity<AddContactPersonPrese
                 onBackPressed();
                 break;
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Contants.ADD_CONTACT && resultCode == Activity.RESULT_OK){
+            setResult(RESULT_OK);
+            finish();
         }
     }
 }

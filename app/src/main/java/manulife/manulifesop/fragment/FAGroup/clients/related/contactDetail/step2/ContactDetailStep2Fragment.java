@@ -22,12 +22,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.ContactDetailActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.createEvent.CreateEventActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.eventDetail.EventDetailActivity;
 import manulife.manulifesop.adapter.EventAdapter;
 import manulife.manulifesop.adapter.ObjectData.EventData;
+import manulife.manulifesop.api.ObjectResponse.ContactActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
@@ -58,7 +60,7 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
         @Override
         public void onApiLoadMoreTask(int page) {
             Toast.makeText(mActivity, "load more", Toast.LENGTH_SHORT).show();
-            loadData();
+            //loadData();
         }
     }
 
@@ -75,9 +77,8 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initViews();
-        loadData();
+        loadContactActivities(ProjectApplication.getInstance().getContactActivity());
     }
 
     private void initViews() {
@@ -85,7 +86,8 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
         mData = new ArrayList<>();
     }
 
-    private void loadData() {
+    @Override
+    public void loadContactActivities(ContactActivity data) {
         rcvEvent.setLayoutManager(mLayoutManager);
 
         for (int i = 0; i < 10; i++) {

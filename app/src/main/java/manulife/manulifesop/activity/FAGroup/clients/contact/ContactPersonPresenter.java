@@ -14,6 +14,7 @@ import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
+import manulife.manulifesop.util.SOPSharedPreferences;
 
 /**
  * Created by trinm on 12/01/2018.
@@ -34,6 +35,7 @@ public class ContactPersonPresenter extends BasePresenter<ContactPersonContract.
     public void getAllContactPerson(int period, final int page) {
         mPresenterView.showLoading("Xử lý dữ liệu");
         getCompositeDisposable().add(ApiService.getServer().getUserList(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                 period, 1,1,page,10)//khách hàng liên hệ
                 .subscribeOn(Schedulers.computation())
@@ -41,6 +43,7 @@ public class ContactPersonPresenter extends BasePresenter<ContactPersonContract.
                 .flatMap(usersList -> {
                     this.mContact = usersList;
                     return ApiService.getServer().getUserList(
+                            SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                             period, 1,2,page,10);// khách hàng gọi lại sau
                 })

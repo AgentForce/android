@@ -11,6 +11,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
@@ -42,25 +43,35 @@ public class IntroduceContactActivity extends BaseActivity<IntroduceContactPrese
     private List<BaseFragment> mListFragment;
     private List<String> mTabTitles;
 
+    private int mTarget;
+    private int mMonth;
+
+    //variable is open from contact activity
+    private boolean mIsFromContactActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_person);
-        mActionListener = new IntroduceContactPresenter(this,this);
-        hideKeyboardOutside(layoutRoot,this);
+        mActionListener = new IntroduceContactPresenter(this, this);
+        hideKeyboardOutside(layoutRoot);
+        mTarget = getIntent().getIntExtra("target", 0);
+        mMonth = getIntent().getIntExtra("month", 0);
+
+        //variable is open from contact activity
+        mIsFromContactActivity = getIntent().getBooleanExtra("isFromContact",false);
+
         setupSupportForApp();
-        initViewPager();
+        mActionListener.getAllIntroduces(mMonth, 1);
     }
 
-    private void initViewPager(){
+    public void initViewPager() {
         mListFragment = new ArrayList<>();
-        mListFragment.add(IntroduceContactTabFragment.newInstance(Contants.INTRODURE));
-        mListFragment.add(IntroduceContactTabFragment.newInstance(Contants.CALLLATER));
+        mListFragment.add(IntroduceContactTabFragment.newInstance(Contants.INTRODURE, 3, mIsFromContactActivity));
 
         mTabTitles = new ArrayList<>();
-        mTabTitles.add("KH giới thiệu(0/50)");
-        mTabTitles.add("Gọi lại sau");
-
+        mTabTitles.add("KH giới thiệu(" +
+                ProjectApplication.getInstance().getIntroduce().data.count + "/" + mTarget + ")");
         mAdapterViewPager = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment, mTabTitles);
         if (viewPager != null) {
             viewPager.setAdapter(mAdapterViewPager);
@@ -81,15 +92,17 @@ public class IntroduceContactActivity extends BaseActivity<IntroduceContactPrese
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewStatusBar.getLayoutParams();
         params.height = statusBarHeight;
         viewStatusBar.setLayoutParams(params);
+
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabLayout.setSelectedTabIndicatorHeight(0);
+        tabLayout.setClickable(false);
     }
 
     @OnClick({R.id.layout_btn_back})
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
         int id = view.getId();
-        switch (id)
-        {
-            case R.id.layout_btn_back:{
+        switch (id) {
+            case R.id.layout_btn_back: {
                 onBackPressed();
                 break;
             }

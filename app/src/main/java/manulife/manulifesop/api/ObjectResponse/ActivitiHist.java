@@ -16,24 +16,24 @@ public class ActivitiHist {
     @SerializedName("data")
     @Expose
     public Data data;
-    @SerializedName("msg")
-    @Expose
-    public String msg;
     @SerializedName("msgCode")
     @Expose
     public String msgCode;
+    @SerializedName("msg")
+    @Expose
+    public String msg;
 
     public class Data {
 
-        @SerializedName("count")
-        @Expose
-        public Integer count;
         @SerializedName("page")
         @Expose
         public Integer page;
         @SerializedName("limit")
         @Expose
         public Integer limit;
+        @SerializedName("count")
+        @Expose
+        public Integer count;
         @SerializedName("rows")
         @Expose
         public List<Row> rows = null;
@@ -43,41 +43,21 @@ public class ActivitiHist {
             @SerializedName("Id")
             @Expose
             public Integer id;
-            @SerializedName("ActivityTypeId")
+            @SerializedName("Phone")
             @Expose
-            public Integer activityTypeId;
+            public String phone;
             @SerializedName("Name")
             @Expose
             public String name;
             @SerializedName("ProcessStep")
             @Expose
             public Integer processStep;
-            @SerializedName("Description")
+            @SerializedName("StatusProcessStep")
             @Expose
-            public String description;
-            @SerializedName("CreatedAt")
+            public Integer statusProcessStep;
+            @SerializedName("UpdatedAt")
             @Expose
-            public String createdAt;
-            @SerializedName("manulife_lead")
-            @Expose
-            public ManulifeLead manulifeLead;
-
-            public class ManulifeLead {
-
-                @SerializedName("Name")
-                @Expose
-                public String name;
-                @SerializedName("ProcessStep")
-                @Expose
-                public Integer processStep;
-                @SerializedName("StatusProcessStep")
-                @Expose
-                public Integer statusProcessStep;
-                @SerializedName("Phone")
-                @Expose
-                public String phone;
-
-            }
+            public String updatedAt;
 
         }
 

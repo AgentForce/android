@@ -103,7 +103,8 @@
                         android:minHeight="40dp"
                         android:text="Dưới hoặc bằng 25t"
                         android:textColor="@drawable/cus_radio_background_option"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:tag="1"/>
 
                     <RadioButton
                         android:id="@+id/rb_step1_2"
@@ -118,7 +119,8 @@
                         android:minHeight="40dp"
                         android:text="Từ 45t đến 64t"
                         android:textColor="@drawable/cus_radio_background_option"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:tag="3"/>
                 </RadioGroup>
                 <!--line 2-->
                 <RadioGroup
@@ -141,7 +143,8 @@
                         android:minHeight="40dp"
                         android:text="Từ 26t đến 44t"
                         android:textColor="@drawable/cus_radio_background_option"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:tag="2"/>
 
                     <RadioButton
                         android:id="@+id/rb_step1_4"
@@ -156,7 +159,8 @@
                         android:minHeight="40dp"
                         android:text="Từ 64t trở lên"
                         android:textColor="@drawable/cus_radio_background_option"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:tag="4"/>
                 </RadioGroup>
             </LinearLayout>
         </LinearLayout>

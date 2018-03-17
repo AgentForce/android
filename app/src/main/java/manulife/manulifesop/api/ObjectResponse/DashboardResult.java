@@ -31,7 +31,7 @@ public class DashboardResult {
         @SerializedName("currentWeek")
         @Expose
         public Integer currentWeek;
-        @SerializedName("campaign")
+        @SerializedName("campaigns")
         @Expose
         public List<Campaign> campaign = null;
 

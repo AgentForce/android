@@ -58,6 +58,7 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
         data.setPassword(pass);
 
         getCompositeDisposable().add(ApiService.getServer().setPassword(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                 DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum, data)
                 .subscribeOn(Schedulers.computation())
@@ -115,6 +116,7 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     public void chekCampaign() {
 
         getCompositeDisposable().add(ApiService.getServer().checkCampaign(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                 DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI)
                 .subscribeOn(Schedulers.computation())

@@ -37,6 +37,12 @@ public class Utils {
         }
     }
 
+    public static void hideSoftKeyboard(View view) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) view.getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
     public static boolean isConnectedToNetwork() {
         ConnectivityManager cm = (ConnectivityManager) ProjectApplication.getInstance()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);

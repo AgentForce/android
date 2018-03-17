@@ -85,7 +85,7 @@ public class LoginActivity extends BaseActivity<LoginPresent>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_new);
         mActionListener = new LoginPresent(this, this);
-        hideKeyboardOutside(layoutRoot, this);
+        hideKeyboardOutside(layoutRoot);
         mTitleActionBar = Arrays.asList(getResources().getStringArray(R.array.loin_actionbar_array));
         setupSupportForApp();
         //show agency fragment in first
