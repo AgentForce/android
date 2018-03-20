@@ -1,6 +1,8 @@
 package manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step2;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -32,7 +34,9 @@ import manulife.manulifesop.adapter.ObjectData.EventData;
 import manulife.manulifesop.api.ObjectResponse.ContactActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
+import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
+import manulife.manulifesop.util.Utils;
 
 
 public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivity, ContactDetailStep2Present> implements ContactDetailStep2Contract.View, View.OnClickListener {
@@ -47,9 +51,11 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
     private LinearLayoutManager mLayoutManager;
 
     private AlertDialog alertDialog;
+    private int mContactID;
 
-    public static ContactDetailStep2Fragment newInstance() {
+    public static ContactDetailStep2Fragment newInstance(int contactID) {
         Bundle args = new Bundle();
+        args.putInt("contactID",contactID);
         ContactDetailStep2Fragment fragment = new ContactDetailStep2Fragment();
         fragment.setArguments(args);
         return fragment;
@@ -71,12 +77,13 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new ContactDetailStep2Present(this);
+        mActionListener = new ContactDetailStep2Present(this,getContext());
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mContactID = getArguments().getInt("contactID",0);
         initViews();
         loadContactActivities(ProjectApplication.getInstance().getContactActivity());
     }
@@ -90,12 +97,18 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
     public void loadContactActivities(ContactActivity data) {
         rcvEvent.setLayoutManager(mLayoutManager);
 
-        for (int i = 0; i < 10; i++) {
-            EventData temp = new EventData();
+        EventData temp;
+        for (int i = 0; i < data.data.size(); i++) {
+            temp = new EventData();
             temp.setAvatar("avatar " + i);
-            temp.setName("name code input " + i);
-            temp.setTypeEvent("têp code input " + i);
-            temp.setDateTime("Date time " + i);
+            temp.setEventID(data.data.get(i).id);
+            temp.setProcessStep(data.data.get(i).processStep);
+            temp.setName(data.data.get(i).manulifeLead.name);
+            temp.setTypeEvent(ProjectApplication.getInstance().getEventStringFromType(
+                    data.data.get(i).type
+            ));
+            temp.setDateTime(Utils.convertStringDateToStringDate(data.data.get(i).startDate,
+                    "yyyy-MM-dd'T'HH:mm:ss.sss'Z'","dd/MM/yyyy HH:mm:ss"));
             mData.add(temp);
         }
         if (mAdapter == null) {
@@ -110,7 +123,7 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
                     //Toast.makeText(mActivity, "Main click", Toast.LENGTH_SHORT).show();
                     Bundle data = new Bundle();
                     data.putSerializable("data",mData.get(position));
-                    mActivity.goNextScreen(EventDetailActivity.class,data);
+                    goNextScreenFragment(EventDetailActivity.class,data, Contants.EVENT_DETAIL);
                 }
             });
             rcvEvent.setAdapter(mAdapter);
@@ -133,11 +146,19 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
         rcvEvent.addItemDecoration(dividerItemDecoration);
 
 
-        rcvEvent.clearOnScrollListeners();
+        /*rcvEvent.clearOnScrollListeners();
         rcvEvent.addOnScrollListener(new EndlessScrollListenerRecyclerView(
-                0, 3, new onLoadingMoreDataTask(), mLayoutManager));
+                0, 3, new onLoadingMoreDataTask(), mLayoutManager));*/
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK && requestCode == Contants.EVENT_DETAIL){
+            mData.clear();
+            mActionListener.getEvents(mContactID);
+        }
+    }
 
     @OnClick({R.id.btn_create_event})
     public void onClickEvent(View view) {
@@ -172,42 +193,50 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
     }
 
     private void initDialogEvent(View view) {
-        view.findViewById(R.id.txt_introduce).setOnClickListener(this);
+        view.findViewById(R.id.txt_first_meet).setOnClickListener(this);
         view.findViewById(R.id.txt_advisory).setOnClickListener(this);
-        view.findViewById(R.id.txt_call_back).setOnClickListener(this);
+        view.findViewById(R.id.txt_sign).setOnClickListener(this);
         view.findViewById(R.id.txt_different).setOnClickListener(this);
-        view.findViewById(R.id.btn_create_event).setOnClickListener(this);
+        view.findViewById(R.id.btn_cancel).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
-            case R.id.txt_introduce: {
+            case R.id.txt_first_meet: {
                 Bundle data = new Bundle();
-                data.putString("type", "Gọi giới thiệu");
+                data.putInt("typeInt",1);
+                data.putInt("contactID",mContactID);
+                alertDialog.dismiss();
                 mActivity.goNextScreen(CreateEventActivity.class, data);
                 break;
             }
             case R.id.txt_advisory: {
                 Bundle data = new Bundle();
-                data.putString("type", "Gọi tư vấn");
+                data.putInt("typeInt",2);
+                data.putInt("contactID",mContactID);
+                alertDialog.dismiss();
                 mActivity.goNextScreen(CreateEventActivity.class, data);
                 break;
             }
-            case R.id.txt_call_back: {
+            case R.id.txt_sign: {
                 Bundle data = new Bundle();
-                data.putString("type", "Gọi lại");
+                data.putInt("typeInt",3);
+                data.putInt("contactID",mContactID);
+                alertDialog.dismiss();
                 mActivity.goNextScreen(CreateEventActivity.class, data);
                 break;
             }
             case R.id.txt_different: {
                 Bundle data = new Bundle();
-                data.putString("type", "Khác");
+                data.putInt("typeInt",4);
+                data.putInt("contactID",mContactID);
+                alertDialog.dismiss();
                 mActivity.goNextScreen(CreateEventActivity.class, data);
                 break;
             }
-            case R.id.btn_create_event: {
+            case R.id.btn_cancel: {
                 alertDialog.dismiss();
                 break;
             }

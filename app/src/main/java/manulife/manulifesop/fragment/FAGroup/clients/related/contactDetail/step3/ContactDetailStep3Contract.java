@@ -15,6 +15,6 @@ public interface ContactDetailStep3Contract {
     }
 
     interface Action {
-
+        void getContactHistory(int leadId, int page);
     }
 }

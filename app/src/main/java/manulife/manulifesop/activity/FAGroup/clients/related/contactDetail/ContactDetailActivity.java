@@ -1,5 +1,6 @@
 package manulife.manulifesop.activity.FAGroup.clients.related.contactDetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.view.MotionEvent;
@@ -20,6 +21,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.reactivex.internal.schedulers.ImmediateThinScheduler;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.related.createEvent.CreateEventActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.signedSuccess.SignedSuccessActivity;
@@ -35,8 +37,7 @@ import manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step3
 import manulife.manulifesop.util.Contants;
 
 
-public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> implements ContactDetailContract.View,
-        View.OnClickListener{
+public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> implements ContactDetailContract.View{
 
     @BindView(R.id.txt_actionbar_title)
     TextView txtActionbarTitle;
@@ -49,6 +50,10 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
 
     @BindView(R.id.txt_title_tyle)
     TextView txtTitleType;
+    @BindView(R.id.txt_user_name)
+    TextView txtUserName;
+    @BindView(R.id.txt_phone)
+    TextView txtPhone;
 
     @BindView(R.id.tabs)
     TabLayout tabMenu;
@@ -62,7 +67,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     @BindView(R.id.layout_menu)
     ViewStub layoutMenu;
 
-    private String mType;
+    private String mTypeString;
     private String mTypeMenu;
     private int mUserId;
 
@@ -73,13 +78,14 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mType = getIntent().getStringExtra("type");
+        mTypeString = getIntent().getStringExtra("type");
         mTypeMenu = getIntent().getStringExtra("type_menu");
-        mUserId = getIntent().getIntExtra("id",0);
-        //test default
-        mUserId = 51;
+        mUserId = getIntent().getIntExtra("id", 0);
 
-        if (mType.equals(Contants.REFUSE)) {
+        //test
+        //mUserId = 52;
+
+        if (mTypeString.equals(Contants.REFUSE)) {
             setContentView(R.layout.activity_contact_detail_refuse);
         } else {
             setContentView(R.layout.activity_contact_detail);
@@ -91,96 +97,67 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     }
 
     private void initViews() {
-        if (mType != null) {
-            switch (mType) {
-                case Contants.APPOINTMENT: {
-                    txtTitleType.setText("Khách hàng hẹn gặp");
-                    break;
-                }
-                case Contants.CALLLATER: {
-                    txtTitleType.setText("Khách hàng gọi lại sau");
-                    break;
-                }
-                case Contants.CONTACT: {
-                    txtTitleType.setText("Khách hàng liên hệ");
-                    break;
-                }
-                case Contants.INTRODURE: {
-                    txtTitleType.setText("Khách hàng giới thiệu");
-                    break;
-                }
-                case Contants.REFUSE: {
-                    txtTitleType.setText("Khách hàng từ chối");
-                    break;
-                }
-                case Contants.SEEN: {
-                    txtTitleType.setText("Khách hàng đã hẹn gặp");
-                    break;
-                }
-                case Contants.CONSULTANT: {
-                    txtTitleType.setText("Khách hàng tư vấn");
-                    break;
-                }
-                case Contants.CONSULTATION_APPOINTMENT: {
-                    txtTitleType.setText("Khách hàng đã hẹn tư vấn");
-                    break;
-                }
-            }
-        }
+        txtTitleType.setText(mTypeString);
     }
 
     private void initMenuAfterCall() {
-        if(mTypeMenu != null){
-            switch (mTypeMenu){
-                case Contants.APPOINTMENT_MENU:{
-                    layoutMenu.setLayoutResource(R.layout.layout_float_menu_appointment);
-                    layoutMenu.inflate();
-
-                    findViewById(R.id.layout_menu_consultant).setOnClickListener(this);
-                    findViewById(R.id.layout_menu_appointment_event).setOnClickListener(this);
-                    findViewById(R.id.layout_menu_call_later).setOnClickListener(this);
-                    findViewById(R.id.layout_menu_cancel).setOnClickListener(this);
-
-                    break;
-                }
-                case Contants.CONSULTANT_MENU:{
-                    layoutMenu.setLayoutResource(R.layout.layout_float_menu_consultant);
-                    layoutMenu.inflate();
-
-                    findViewById(R.id.layout_menu_signed).setOnClickListener(this);
-                    findViewById(R.id.layout_menu_consultant_appointment).setOnClickListener(this);
-                    findViewById(R.id.layout_menu_call_later).setOnClickListener(this);
-                    findViewById(R.id.layout_menu_cancel).setOnClickListener(this);
-
-                    break;
-                }
-                case Contants.CONTACT_MENU:{
+        if (mTypeMenu != null) {
+            switch (mTypeMenu) {
+                case Contants.CONTACT_MENU: {
                     layoutMenu.setLayoutResource(R.layout.layout_float_menu_contact);
                     layoutMenu.inflate();
 
-                    findViewById(R.id.layout_menu_appointment).setOnClickListener(this);
-                    findViewById(R.id.layout_menu_call_later).setOnClickListener(this);
-                    findViewById(R.id.layout_menu_cancel).setOnClickListener(this);
+                    processMenuContact listener = new processMenuContact();
+                    findViewById(R.id.layout_menu_appointment).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_call_later).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_cancel).setOnClickListener(listener);
 
                     break;
                 }
-                case Contants.SIGNED_MENU:{
+
+                case Contants.APPOINTMENT_MENU: {
+                    layoutMenu.setLayoutResource(R.layout.layout_float_menu_appointment);
+                    layoutMenu.inflate();
+
+                    processMenuAppointment listener = new processMenuAppointment();
+                    findViewById(R.id.layout_menu_consultant).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_appointment_event).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_call_later).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_cancel).setOnClickListener(listener);
+
+                    break;
+                }
+                case Contants.CONSULTANT_MENU: {
+                    layoutMenu.setLayoutResource(R.layout.layout_float_menu_consultant);
+                    layoutMenu.inflate();
+
+                    processMenuConsultant listener = new processMenuConsultant();
+                    findViewById(R.id.layout_menu_signed).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_consultant_appointment).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_call_later).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_cancel).setOnClickListener(listener);
+
+                    break;
+                }
+
+                case Contants.SIGNED_MENU: {
                     layoutMenu.setLayoutResource(R.layout.layout_float_menu_signed);
                     layoutMenu.inflate();
 
-                    findViewById(R.id.layout_menu_sign_success).setOnClickListener(this);
-                    findViewById(R.id.layout_menu_waiting_approve).setOnClickListener(this);
-                    findViewById(R.id.layout_menu_applied).setOnClickListener(this);
+                    processMenuSigned listener = new processMenuSigned();
+                    findViewById(R.id.layout_menu_sign_success).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_waiting_approve).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_applied).setOnClickListener(listener);
 
                     break;
                 }
-                case Contants.INTRODUCE_MENU:{
+                case Contants.INTRODUCE_MENU: {
                     layoutMenu.setLayoutResource(R.layout.layout_float_menu_introduce);
                     layoutMenu.inflate();
 
-                    findViewById(R.id.layout_menu_contact).setOnClickListener(this);
+                    /*findViewById(R.id.layout_menu_contact).setOnClickListener(this);
                     findViewById(R.id.layout_menu_call_later).setOnClickListener(this);
-                    findViewById(R.id.layout_menu_cancel).setOnClickListener(this);
+                    findViewById(R.id.layout_menu_cancel).setOnClickListener(this);*/
 
                     break;
                 }
@@ -189,81 +166,134 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     }
 
     @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        switch (id){
-            //menu chung
-            case R.id.layout_menu_call_later:{
-                Toast.makeText(this, "Cân nhắc gọi lại sau", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.layout_menu_cancel:{
-                Toast.makeText(this, "Từ chối", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            //menu khách hàng hẹn gặp
-            case R.id.layout_menu_consultant:{
-                Toast.makeText(this, "Chuyển sang tư vấn", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.layout_menu_appointment_event:{
-                //Toast.makeText(this, "Thêm event hẹn gặp", Toast.LENGTH_SHORT).show();
-                Bundle data = new Bundle();
-                data.putString("type", "Thêm event từ khách hàng hẹn gặp");
-                goNextScreen(CreateEventActivity.class,data);
-                break;
-            }
+    public void finishChangeStatus() {
+        setResult(RESULT_OK);
+        finish();
+    }
 
-            //menu khách hàng tư vấn
-            case R.id.layout_menu_signed:{
-                Toast.makeText(this, "Chuyển sang tư vấn", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.layout_menu_consultant_appointment:{
-                Toast.makeText(this, "Hẹn tư vấn", Toast.LENGTH_SHORT).show();
-                break;
-            }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK &&  requestCode == Contants.ADD_EVENT){
+            mActionListener.getContactDetail(mUserId);
+        }
+    }
 
-            //menu khách hàng ký hợp đồng
-            case R.id.layout_menu_sign_success:{
-                //Toast.makeText(this, "Ký hợp đồng thành công", Toast.LENGTH_SHORT).show();
-                goNextScreen(SignedSuccessActivity.class);
-                break;
-            }
-            case R.id.layout_menu_waiting_approve:{
-                Toast.makeText(this, "Chờ duyệt", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.layout_menu_applied:{
-                Toast.makeText(this, "Đã nộp hồ sơ", Toast.LENGTH_SHORT).show();
-                break;
-            }
+    private class processMenuContact implements View.OnClickListener {
 
-            //menu khách hàng giới thiệu
-            case R.id.layout_menu_contact:{
-                Toast.makeText(this, "chuyển sang liên hệ", Toast.LENGTH_SHORT).show();
-                break;
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            switch (id) {
+                case R.id.layout_menu_appointment: {
+                    mActionListener.updateStatusProcess(mUserId,true,1);
+                    break;
+                }
+                case R.id.layout_menu_call_later: {
+                    mActionListener.updateStatusProcess(mUserId,false,Contants.USER_CALLLATER);
+                    break;
+                }
+                case R.id.layout_menu_cancel: {
+                    mActionListener.updateStatusProcess(mUserId,false,Contants.USER_REFUSE);
+                    break;
+                }
             }
+        }
+    }
 
-            //menu liên hệ
-            case R.id.layout_menu_appointment:{
-                Toast.makeText(this, "Chuyển sang hẹn gặp", Toast.LENGTH_SHORT).show();
-                break;
+    private class processMenuAppointment implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            switch (id) {
+                case R.id.layout_menu_consultant: {
+                    mActionListener.updateStatusProcess(mUserId,true,1);
+                    break;
+                }
+                case R.id.layout_menu_appointment_event: {
+                    Bundle data = new Bundle();
+                    data.putInt("typeInt",1);
+                    data.putInt("contactID",mUserId);
+                    goNextScreen(CreateEventActivity.class, data,Contants.ADD_EVENT);
+                    break;
+                }
+                case R.id.layout_menu_call_later: {
+                    mActionListener.updateStatusProcess(mUserId,false,Contants.APPOINTMENT_CALLLATER);
+                    break;
+                }
+                case R.id.layout_menu_cancel: {
+                    mActionListener.updateStatusProcess(mUserId,false,Contants.APPOINTMENT_REFUSE);
+                    break;
+                }
             }
+        }
+    }
 
+    private class processMenuConsultant implements View.OnClickListener {
 
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            switch (id) {
+                case R.id.layout_menu_signed: {
+                    mActionListener.updateStatusProcess(mUserId,true,1);
+                    break;
+                }
+                case R.id.layout_menu_consultant_appointment: {
+                    Bundle data = new Bundle();
+                    data.putInt("typeInt",1);
+                    data.putInt("contactID",mUserId);
+                    goNextScreen(CreateEventActivity.class, data,Contants.ADD_EVENT);
+                    break;
+                }
+                case R.id.layout_menu_call_later: {
+                    mActionListener.updateStatusProcess(mUserId,false,Contants.CONSULTANT_CALLLATER);
+                    break;
+                }
+                case R.id.layout_menu_cancel: {
+                    mActionListener.updateStatusProcess(mUserId,false,Contants.CONSULTANT_REFUSE);
+                    break;
+                }
+            }
+        }
+    }
+
+    private class processMenuSigned implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            switch (id) {
+                case R.id.layout_menu_sign_success: {
+                    mActionListener.updateStatusProcess(mUserId,false,4);
+                    break;
+                }
+                case R.id.layout_menu_waiting_approve: {
+                    mActionListener.updateStatusProcess(mUserId,false,3);
+                    break;
+                }
+                case R.id.layout_menu_applied: {
+                    mActionListener.updateStatusProcess(mUserId,false,2);
+                    break;
+                }
+            }
         }
     }
 
     @Override
     public void initViewPager() {
+
+        txtUserName.setText(ProjectApplication.getInstance().getContactDetail().data.name);
+        txtPhone.setText(ProjectApplication.getInstance().getContactDetail().data.phone);
+
         mListFragment = new ArrayList<>();
-        if (mType.equals(Contants.REFUSE)) {
-            mListFragment.add(ContactDetailStep1RefuseFragment.newInstance());
+        if (mTypeString.equals(Contants.REFUSE)) {
+            mListFragment.add(ContactDetailStep1RefuseFragment.newInstance(mTypeMenu, mUserId));
         } else {
             mListFragment.add(ContactDetailStep1Fragment.newInstance());
         }
-        mListFragment.add(ContactDetailStep2Fragment.newInstance());
+        mListFragment.add(ContactDetailStep2Fragment.newInstance(mUserId));
         mListFragment.add(ContactDetailStep3Fragment.newInstance());
 
         mTabTitles = new ArrayList<>();
@@ -272,7 +302,8 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         mTabTitles.add("Hoạt động");
 
         mAdapterViewPager = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment, mTabTitles);
-        if (viewPager != null) {
+        //if (viewPager != null)
+        {
             viewPager.setAdapter(mAdapterViewPager);
             tabMenu.setupWithViewPager(viewPager);
         }
@@ -295,10 +326,10 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         }
     }
 
-    private void enableViewTop(boolean isEnable){
+    private void enableViewTop(boolean isEnable) {
         viewPager.setSwipe(isEnable);
-        LinearLayout tabStrip = ((LinearLayout)tabMenu.getChildAt(0));
-        for(int i = 0; i < tabStrip.getChildCount(); i++) {
+        LinearLayout tabStrip = ((LinearLayout) tabMenu.getChildAt(0));
+        for (int i = 0; i < tabStrip.getChildCount(); i++) {
             tabStrip.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -307,11 +338,12 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
             });
         }
     }
+
     @OnClick({R.id.layout_btn_back})
-    public void onClickView(View view){
+    public void onClickView(View view) {
         int id = view.getId();
-        switch (id){
-            case R.id.layout_btn_back:{
+        switch (id) {
+            case R.id.layout_btn_back: {
                 onBackPressed();
                 break;
             }

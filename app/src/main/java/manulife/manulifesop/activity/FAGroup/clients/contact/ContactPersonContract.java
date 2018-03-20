@@ -10,7 +10,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface ContactPersonContract {
     interface View extends BaseMVPView
     {
-        void initViewPager(UsersList contact,UsersList callLater);
+        void initViewPager(UsersList contact,UsersList callLater,UsersList refuse);
     }
     interface Action{
         void getAllContactPerson(int period, int page);

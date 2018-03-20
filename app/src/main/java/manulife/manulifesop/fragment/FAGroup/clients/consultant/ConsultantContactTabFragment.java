@@ -42,7 +42,9 @@ public class ConsultantContactTabFragment extends BaseFragment<ConsultantActivit
     @BindView(R.id.txt_title)
     TextView txtTitle;
 
-    private String mType;
+    private int mType;
+    private String mTypeString;
+
     private int mTarget;
     private int mMonth;
 
@@ -51,9 +53,10 @@ public class ConsultantContactTabFragment extends BaseFragment<ConsultantActivit
     private LinearLayoutManager mLayoutManager;
 
 
-    public static ConsultantContactTabFragment newInstance(String type, int target, int month) {
+    public static ConsultantContactTabFragment newInstance(int type, String typeString, int target, int month) {
         Bundle args = new Bundle();
-        args.putString("type", type);
+        args.putInt("type", type);
+        args.putString("typeString", typeString);
         args.putInt("target", target);
         args.putInt("month", month);
         ConsultantContactTabFragment fragment = new ConsultantContactTabFragment();
@@ -66,8 +69,7 @@ public class ConsultantContactTabFragment extends BaseFragment<ConsultantActivit
 
         @Override
         public void onApiLoadMoreTask(int page) {
-            Toast.makeText(mActivity, "load more", Toast.LENGTH_SHORT).show();
-            //loadDataContact();
+            mActionListener.getContact(mMonth, mType, page);
         }
     }
 
@@ -78,70 +80,74 @@ public class ConsultantContactTabFragment extends BaseFragment<ConsultantActivit
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new ConsultantContactTabPresent(this);
+        mActionListener = new ConsultantContactTabPresent(this,getContext());
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mType = getArguments().getString("type", "");
+        mType = getArguments().getInt("type", 1);
+        mTypeString = getArguments().getString("typeString", "");
         mTarget = getArguments().getInt("target", 0);
         mMonth = getArguments().getInt("month", 0);
         initViews();
-        loadDataContact();
+        loadDataContact(getFirstData());
     }
 
     private void initViews() {
         //type = appointment, seen, calllater
-        if (mType != null && !mType.equals("")) {
-            switch (mType) {
-                case Contants.CONSULTANT: {
-                    txtTitle.setText("Tư vấn(" +
-                            ProjectApplication.getInstance().getConsultantNeed().data.count
-                            + "/" + mTarget + ")");
-                    break;
-                }
-                case Contants.CONSULTATION_APPOINTMENT: {
-                    txtTitle.setText("Đã hẹn tư vấn");
-                    break;
-                }
-                case Contants.CALLLATER: {
-                    txtTitle.setText("Liên hệ sau");
-                    break;
-                }
-                case Contants.REFUSE: {
-                    txtTitle.setText("Từ chối");
-                    break;
-                }
+
+        switch (mType) {
+            case Contants.CONSULTANT_NEED: {
+                txtTitle.setText("Tư vấn(" +
+                        ProjectApplication.getInstance().getConsultantNeed().data.count
+                        + "/" + mTarget + ")");
+                break;
+            }
+            case Contants.CONSULTANT_SEEN: {
+                txtTitle.setText("Đã hẹn tư vấn");
+                break;
+            }
+            case Contants.CONSULTANT_CALLLATER: {
+                txtTitle.setText("Liên hệ sau");
+                break;
+            }
+            case Contants.CONSULTANT_REFUSE: {
+                txtTitle.setText("Từ chối");
+                break;
             }
         }
+
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mData = new ArrayList<>();
     }
 
-    private void loadDataContact() {
-        listContact.setLayoutManager(mLayoutManager);
-
+    private UsersList getFirstData() {
         UsersList data = new UsersList();
         switch (mType) {
-            case Contants.CONSULTANT: {
+            case Contants.CONSULTANT_NEED: {
                 data = ProjectApplication.getInstance().getConsultantNeed();
                 break;
             }
-            case Contants.CONSULTATION_APPOINTMENT: {
+            case Contants.CONSULTANT_SEEN: {
                 data = ProjectApplication.getInstance().getConsultantSeen();
                 break;
             }
-            case Contants.CALLLATER: {
+            case Contants.CONSULTANT_CALLLATER: {
                 data = ProjectApplication.getInstance().getConsultantCallLater();
                 break;
             }
-            case Contants.REFUSE: {
+            case Contants.CONSULTANT_REFUSE: {
                 data = ProjectApplication.getInstance().getConsultantRefuse();
                 break;
             }
         }
+        return data;
+    }
 
+    @Override
+    public void loadDataContact(UsersList data) {
+        listContact.setLayoutManager(mLayoutManager);
 
         for (int i = 0; i < data.data.rows.size(); i++) {
             ActiveHistFA temp = new ActiveHistFA();
@@ -192,30 +198,9 @@ public class ConsultantContactTabFragment extends BaseFragment<ConsultantActivit
     @Override
     public void gotoConactDetail(int id) {
         Bundle data = new Bundle();
-        data.putString("type", mType);
+        data.putString("type", mTypeString);
         data.putString("type_menu", Contants.CONSULTANT_MENU);
-        data.putInt("id",id);
-        mActivity.goNextScreen(ContactDetailActivity.class, data);
+        data.putInt("id", id);
+        mActivity.goNextScreen(ContactDetailActivity.class, data, Contants.CONTACT_DETAIL);
     }
-
-
-    /*@OnClick({R.id.txt_add_from_telephone, R.id.txt_add_new})
-    public void onClickEvent(View view) {
-        int id = view.getId();
-        switch (id) {
-            case R.id.txt_add_from_telephone: {
-                mActivity.goNextScreen(AddContactPersonActivity.class);
-                break;
-            }
-            case R.id.txt_add_new: {
-                showpDialogAddNew();
-                break;
-            }
-            case R.id.txt_add_from_introduce: {
-                mActivity.goNextScreen(IntroduceContactActivity.class);
-                break;
-            }
-        }
-    }*/
-
 }

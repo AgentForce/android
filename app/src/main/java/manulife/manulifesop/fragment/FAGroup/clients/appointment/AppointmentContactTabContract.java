@@ -1,5 +1,6 @@
 package manulife.manulifesop.fragment.FAGroup.clients.appointment;
 
+import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.base.BaseMVPView;
 
 
@@ -11,7 +12,7 @@ public interface AppointmentContactTabContract {
 
     interface View extends BaseMVPView {
         void gotoConactDetail(int id);
-        void loadDataContact();
+        void loadDataContact(UsersList data);
     }
 
     interface Action {

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="false"
+    android:id="@+id/layout_root">
 
     <include
         android:id="@+id/layout_top"
@@ -123,8 +125,7 @@
     </ScrollView>
 
     <LinearLayout
-
-        android:id="@+id/layout_call"
+        android:id="@+id/layout_create"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -132,6 +133,7 @@
         android:clickable="true"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

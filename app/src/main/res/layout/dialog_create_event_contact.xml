@@ -26,13 +26,13 @@
             android:background="@color/backgroundGrey" />
 
         <TextView
-            android:id="@+id/txt_introduce"
+            android:id="@+id/txt_first_meet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="Gọi giới thiệu"
+            android:text="Hẹn gặp lần đầu"
             android:textColor="@drawable/text_color_blue"
             android:textSize="@dimen/welcome_activity_note"
             android:clickable="true" />
@@ -49,7 +49,7 @@
             android:gravity="center_horizontal"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="Gọi tư vấn"
+            android:text="Hẹn tư vấn"
             android:textColor="@drawable/text_color_blue"
             android:clickable="true"
             android:textSize="@dimen/welcome_activity_note" />
@@ -60,13 +60,13 @@
             android:background="@color/backgroundGrey" />
 
         <TextView
-            android:id="@+id/txt_call_back"
+            android:id="@+id/txt_sign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="Gọi lại"
+            android:text="Hẹn chốt hợp đồng"
             android:textColor="@drawable/text_color_blue"
             android:clickable="true"
             android:textSize="@dimen/welcome_activity_note" />
@@ -83,7 +83,7 @@
             android:gravity="center_horizontal"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="Khác"
+            android:text="Sự kiện khác"
             android:textColor="@drawable/text_color_blue"
             android:clickable="true"
             android:textSize="@dimen/welcome_activity_note" />
@@ -91,7 +91,7 @@
 
 
     <Button
-        android:id="@+id/btn_create_event"
+        android:id="@+id/btn_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"

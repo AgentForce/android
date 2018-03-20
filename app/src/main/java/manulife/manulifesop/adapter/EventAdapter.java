@@ -1,6 +1,7 @@
 package manulife.manulifesop.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.adapter.ObjectData.EventData;
@@ -69,7 +71,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.txtName.setText(object.getName());
         holder.txtTitleType.setText(object.getTypeEvent());
         holder.txtDateTime.setText(object.getDateTime());
-        holder.userAvatar.setBorderColor(mContext.getResources().getColor(R.color.colorSecond));
+        holder.userAvatar.setBorderColor(
+                Color.parseColor(ProjectApplication.getInstance().getProcessStepColor(
+                   object.getProcessStep() - 1
+                )));
         holder.layoutMenuRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,5 +1,6 @@
 package manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step1Refuse;
 
+import manulife.manulifesop.api.ObjectInput.InputChangeContactStatus;
 import manulife.manulifesop.base.BaseMVPView;
 
 
@@ -11,9 +12,10 @@ public interface ContactDetailStep1RefuseContract {
 
     interface View extends BaseMVPView {
         void initViews();
+        void finishUpdateStatus();
     }
 
     interface Action {
-
+        void changeStatusToOne(int leadID, boolean isChangeProcessStep, int status);
     }
 }

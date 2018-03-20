@@ -31,12 +31,18 @@ public class ContactActivity {
         @SerializedName("Status")
         @Expose
         public Boolean status;
+        @SerializedName("CreatedAt")
+        @Expose
+        public String createDate;
         @SerializedName("StartDate")
         @Expose
         public String startDate;
         @SerializedName("ProcessStep")
         @Expose
         public Integer processStep;
+        @SerializedName("Type")
+        @Expose
+        public Integer type;
         @SerializedName("manulife_lead")
         @Expose
         public ManulifeLead manulifeLead;

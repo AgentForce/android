@@ -5,6 +5,7 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import java.util.HashMap;
+import java.util.List;
 
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.api.ObjectResponse.ContactActivity;
@@ -53,6 +54,7 @@ public class ProjectApplication extends MultiDexApplication {
     private ContactDetail mContactDetail;
     private ContactActivity mContactActivity;
     private ContactHistory mContactHistory;
+    private HashMap<Integer,String> mEventType;
 
     //variables for appointment activity
     private UsersList mAppointment_Need;
@@ -75,6 +77,9 @@ public class ProjectApplication extends MultiDexApplication {
 
     //variable for introduce contact
     private UsersList mIntroduce;
+
+    //variable for contact
+    List<UsersList> mListDataContact;
 
     public void setInstance(ProjectApplication application) {
         synchronized (instanceLock) {
@@ -116,6 +121,21 @@ public class ProjectApplication extends MultiDexApplication {
         setHashmapMarriage();
         setHashmapRelationship();
         setHashmapSource();
+        setHashmapEventType();
+
+
+    }
+
+    public void setHashmapEventType(){
+        mEventType = new HashMap<>();
+        mEventType.put(1,"Hẹn gặp lần đầu");
+        mEventType.put(2,"Hẹn tư vấn");
+        mEventType.put(3,"Hẹn chốt hợp đồng");
+        mEventType.put(4,"Sự kiện khác");
+    }
+
+    public String getEventStringFromType(int type){
+        return mEventType.get(type);
     }
 
     public void setHashmapStringProcessStatus(){
@@ -164,14 +184,14 @@ public class ProjectApplication extends MultiDexApplication {
         mProcessStepColor.put(3,"#4caf52");
     }
     public String getIncomeString(int value){
-        return mProcessStepValue.get(value);
+        return mIncomeMonth.get(value);
     }
     private void setHashmapIncome(){
         mIncomeMonth = new HashMap<>();
-        mProcessStepValue.put(1,"Dưới 10 triệu");
-        mProcessStepValue.put(2,"Từ 10tr đến 20tr");
-        mProcessStepValue.put(3,"Từ 20tr đến 30tr");
-        mProcessStepValue.put(4,"Trên 30 triệu");
+        mIncomeMonth.put(1,"Dưới 10 triệu");
+        mIncomeMonth.put(2,"Từ 10tr đến 20tr");
+        mIncomeMonth.put(3,"Từ 20tr đến 30tr");
+        mIncomeMonth.put(4,"Trên 30 triệu");
 
     }
 
@@ -354,4 +374,7 @@ public class ProjectApplication extends MultiDexApplication {
     public UsersList getIntroduce(){
         return this.mIntroduce;
     }
+
+    //init for contact
+
 }

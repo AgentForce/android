@@ -1,5 +1,7 @@
 package manulife.manulifesop.activity.FAGroup.clients.consultant;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.view.View;
@@ -61,13 +63,21 @@ public class ConsultantActivity extends BaseActivity<ConsultantPresenter> implem
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK){
+            mActionListener.getAllData(mMonth);
+        }
+    }
+
+    @Override
     public void initViewPager() {
         mListFragment = new ArrayList<>();
         //type = appointment, seen, calllater, refuse
-        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.CONSULTANT,mTarget,mMonth));
-        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.CONSULTATION_APPOINTMENT,mTarget,mMonth));
-        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.CALLLATER,mTarget,mMonth));
-        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.REFUSE,mTarget,mMonth));
+        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.CONSULTANT_NEED,Contants.CONSULTANT,mTarget,mMonth));
+        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.CONSULTANT_SEEN,Contants.CONSULTATION_APPOINTMENT,mTarget,mMonth));
+        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.CONSULTANT_CALLLATER,Contants.CALLLATER,mTarget,mMonth));
+        mListFragment.add(ConsultantContactTabFragment.newInstance(Contants.CONSULTANT_REFUSE,Contants.REFUSE,mTarget,mMonth));
 
         mTabTitles = new ArrayList<>();
         mTabTitles.add("Tư vấn(" +

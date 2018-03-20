@@ -3,7 +3,6 @@ package manulife.manulifesop.fragment.FAGroup.clients.contactPerson;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -31,10 +30,10 @@ import butterknife.OnClick;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.contact.ContactPersonActivity;
+import manulife.manulifesop.activity.FAGroup.clients.introduceContact.IntroduceContactActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.addContact.AddContactPersonActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.ContactDetailActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.updateContactInfo.UpdateContactInfoActivity;
-import manulife.manulifesop.activity.FAGroup.clients.introduceContact.IntroduceContactActivity;
 import manulife.manulifesop.adapter.ActiveHistAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.adapter.ObjectData.ContactPerson;
@@ -64,7 +63,8 @@ View.OnClickListener{
     @BindView(R.id.txt_title)
     TextView txtTitle;
 
-    private String mType;
+    private int mType;
+    private String mTypeString;
 
     private ActiveHistAdapter mAdapterActiveHist;
     private List<ActiveHistFA> mData;
@@ -80,9 +80,10 @@ View.OnClickListener{
     private CampaignMonth mCampaignMonth;
     private boolean misAddFromPhone = false;
 
-    public static ContactPersonTab1Fragment newInstance(String type, UsersList usersList,int month, int targetIntroduce) {
+    public static ContactPersonTab1Fragment newInstance(int type,String typeString,UsersList usersList,int month, int targetIntroduce) {
         Bundle args = new Bundle();
-        args.putString("type",type);
+        args.putInt("type",type);
+        args.putString("typeString",typeString);
         args.putSerializable("data",usersList);
         args.putInt("month",month);
         args.putInt("targetIntroduce", targetIntroduce);
@@ -96,7 +97,7 @@ View.OnClickListener{
 
         @Override
         public void onApiLoadMoreTask(int page) {
-            mActionListener.getUserListProcess(mMonth,(mType.equals(Contants.CONTACT)) ? 1 : 2,page);
+            mActionListener.getUserListProcess(mMonth,mType,page);
         }
     }
 
@@ -113,20 +114,24 @@ View.OnClickListener{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mType = getArguments().getString("type","");
+        mType = getArguments().getInt("type",1);
+        mTypeString = getArguments().getString("typeString","");
         mMonth = getArguments().getInt("month",0);
         mTargetIntroduce = getArguments().getInt("targetIntroduce",0);
         initViews();
         //loadDataContact();
-        loadContactList((UsersList) getArguments().getSerializable("data"));
+        UsersList data = (UsersList) getArguments().getSerializable("data");
+        loadContactList(data);
     }
 
     private void initViews() {
         //type = contact, calllater
-        if(!mType.equals("") && mType.equals(Contants.CONTACT)){
+        if(mType==Contants.USER_CONTACT){
             txtTitle.setText("Liên hệ");
-        }else{
+        }else if(mType==Contants.USER_CALLLATER){
             txtTitle.setText("Gọi lại sau");
+        }else{
+            txtTitle.setText("Từ chối");
         }
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mData = new ArrayList<>();
@@ -144,7 +149,8 @@ View.OnClickListener{
             temp.setContent(data.data.rows.get(i).phone);
             mData.add(temp);
         }
-        if (mAdapterActiveHist == null) {
+        //if (mAdapterActiveHist == null)
+        {
             mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
                 @Override
                 public void onClickMenuRight(int position, int option) {
@@ -157,9 +163,10 @@ View.OnClickListener{
                 }
             });
             listContact.setAdapter(mAdapterActiveHist);
-        } else {
-            mAdapterActiveHist.notifyDataSetChanged();
         }
+        /*else {
+            mAdapterActiveHist.notifyDataSetChanged();
+        }*/
 
         //set space between two items
         int[] ATTRS = new int[]{android.R.attr.listDivider};
@@ -186,11 +193,11 @@ View.OnClickListener{
     @Override
     public void gotoContactDetail(int id) {
         Bundle data = new Bundle();
-        data.putString("type",mType);
+        data.putString("type",mTypeString);
         data.putString("type_menu",Contants.CONTACT_MENU);
         data.putInt("id",id);
         //data.putString("type_menu",Contants.SIGNED_MENU);
-        mActivity.goNextScreen(ContactDetailActivity.class,data);
+        mActivity.goNextScreen(ContactDetailActivity.class,data,Contants.CONTACT_DETAIL);
     }
 
     private void showpDialogAddNew() {
@@ -255,7 +262,7 @@ View.OnClickListener{
                             edtNameAlert.getText().toString(),edtPhoneAlert.getText().toString(),0));
                     Bundle data = new Bundle();
                     data.putSerializable("data", (Serializable) dataInput);
-                    goNextScreenFragment(UpdateContactInfoActivity.class,data,Contants.ADD_CONTACT);
+                    mActivity.goNextScreen(UpdateContactInfoActivity.class,data,Contants.ADD_CONTACT);
                     alertDialog.dismiss();
                 }
                 break;
@@ -274,7 +281,7 @@ View.OnClickListener{
                 if(misAddFromPhone) {
                     alertDialog.dismiss();
                     //mActivity.goNextScreen(AddContactPersonActivity.class);
-                    goNextScreenFragment(AddContactPersonActivity.class,Contants.ADD_CONTACT);
+                    mActivity.goNextScreen(AddContactPersonActivity.class,Contants.ADD_CONTACT);
                 }else
                 {
                     alertDialog.dismiss();
@@ -289,7 +296,7 @@ View.OnClickListener{
                 if(misAddFromPhone) {
                     alertDialog.dismiss();
                     //mActivity.goNextScreen(AddContactPersonActivity.class);
-                    goNextScreenFragment(AddContactPersonActivity.class,Contants.ADD_CONTACT);
+                    mActivity.goNextScreen(AddContactPersonActivity.class,Contants.ADD_CONTACT);
                 }else
                 {
                     alertDialog.dismiss();
@@ -304,7 +311,7 @@ View.OnClickListener{
                 if(misAddFromPhone) {
                     alertDialog.dismiss();
                     //mActivity.goNextScreen(AddContactPersonActivity.class);
-                    goNextScreenFragment(AddContactPersonActivity.class,Contants.ADD_CONTACT);
+                    mActivity.goNextScreen(AddContactPersonActivity.class,Contants.ADD_CONTACT);
                 }else
                 {
                     alertDialog.dismiss();
@@ -319,7 +326,7 @@ View.OnClickListener{
                 if(misAddFromPhone) {
                     alertDialog.dismiss();
                     //mActivity.goNextScreen(AddContactPersonActivity.class);
-                    goNextScreenFragment(AddContactPersonActivity.class,Contants.ADD_CONTACT);
+                    mActivity.goNextScreen(AddContactPersonActivity.class,Contants.ADD_CONTACT);
                 }else
                 {
                     alertDialog.dismiss();
@@ -330,7 +337,7 @@ View.OnClickListener{
         }
     }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == Activity.RESULT_OK){
@@ -338,7 +345,7 @@ View.OnClickListener{
             mData.clear();
             mActionListener.getUserListProcess(mMonth,(mType.equals(Contants.CONTACT)) ? 1 : 2,1);
         }
-    }
+    }*/
 
     private boolean validateInputAddContact(){
         if(edtPhoneAlert.getText().length() <= 0){
@@ -376,7 +383,7 @@ View.OnClickListener{
                 data.putInt("month",mMonth);
                 data.putBoolean("isFromContact",true);
                 //mActivity.goNextScreen(IntroduceContactActivity.class,data);
-                goNextScreenFragment(IntroduceContactActivity.class,data,Contants.ADD_INTRODUCE_FROM_CONTACT);
+                mActivity.goNextScreen(IntroduceContactActivity.class,data,Contants.ADD_INTRODUCE_FROM_CONTACT);
                 break;
             }
         }

@@ -48,7 +48,8 @@ public class ContactDetailStep3Fragment extends BaseFragment<ContactDetailActivi
 
         @Override
         public void onApiLoadMoreTask(int page) {
-            Toast.makeText(mActivity, "Load more", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mActivity, "Load more", Toast.LENGTH_SHORT).show();
+            mActionListener.getContactHistory(mData.get(0).getId(),page);
         }
     }
 
@@ -59,7 +60,7 @@ public class ContactDetailStep3Fragment extends BaseFragment<ContactDetailActivi
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new ContactDetailStep3Present(this);
+        mActionListener = new ContactDetailStep3Present(this,getContext());
     }
 
     @Override
@@ -69,7 +70,7 @@ public class ContactDetailStep3Fragment extends BaseFragment<ContactDetailActivi
         loadData(ProjectApplication.getInstance().getContactHistory());
     }
 
-    public void initViews(){
+    public void initViews() {
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mData = new ArrayList<>();
     }
@@ -78,32 +79,33 @@ public class ContactDetailStep3Fragment extends BaseFragment<ContactDetailActivi
     public void loadData(ContactHistory data) {
         listData.setLayoutManager(mLayoutManager);
 
-        /*for (int i = 0; i < data.data.rows.size(); i++) {
-            ActiveHistFA temp = new ActiveHistFA();
-            temp.setId(data.data.rows.get(i).id);
-            temp.setAvatar("avatar " + i);
-            temp.setTitle(data.data.rows.get(i).name);
-            temp.setContent(data.data.rows.get(i).phone);
-            mData.add(temp);
-        }*/
-        for (int i = 0; i < 10; i++) {
-            ActiveHistFA temp = new ActiveHistFA();
-            temp.setTitle("Title " + i);
-            temp.setContent("Content " + i);
+        ActiveHistFA temp;
+        for (int i = 0; i < data.data.count; i++) {
+            temp = new ActiveHistFA();
+            temp.setId(data.data.rows.get(i).leadID);
+            temp.setTitle(ProjectApplication.getInstance().getStringProcessStatus(
+                    data.data.rows.get(i).processStep + "" + data.data.rows.get(i).statusProcessStep
+            ));
+            temp.setContent(Utils.convertStringDateToStringDate(
+                    data.data.rows.get(i).createdAt, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'",
+                    "dd/MM/yyyy HH:mm:ss"
+            ));
             mData.add(temp);
         }
 
-        mAdapter = new ContactHistAdapter(getContext(), mData);
-        listData.setAdapter(mAdapter);
+        if (mAdapter == null) {
+            mAdapter = new ContactHistAdapter(getContext(), mData);
+            listData.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
 
-        /*listData.clearOnScrollListeners();
-        listData.addOnScrollListener(new EndlessScrollListenerRecyclerView(
+        listData.clearOnScrollListeners();
+        /*listData.addOnScrollListener(new EndlessScrollListenerRecyclerView(
                 Integer.valueOf(data.data.page)
                 , Utils.genLastPage(data.data.count,
                 Integer.valueOf(data.data.limit))
                 , new onLoadingMoreDataTask(), mLayoutManager));*/
-
-        listData.clearOnScrollListeners();
         listData.addOnScrollListener(new EndlessScrollListenerRecyclerView(
                 Integer.valueOf(data.data.page)
                 , 3

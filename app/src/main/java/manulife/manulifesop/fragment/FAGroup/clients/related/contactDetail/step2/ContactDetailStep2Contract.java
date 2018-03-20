@@ -16,6 +16,6 @@ public interface ContactDetailStep2Contract {
     }
 
     interface Action {
-
+        void getEvents(int leadID);
     }
 }

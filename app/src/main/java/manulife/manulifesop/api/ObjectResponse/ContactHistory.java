@@ -40,45 +40,18 @@ public class ContactHistory {
 
         public class Row {
 
-            @SerializedName("Phone")
+            @SerializedName("LeadId")
             @Expose
-            public String phone;
-            @SerializedName("Name")
-            @Expose
-            public String name;
-            @SerializedName("Age")
-            @Expose
-            public Integer age;
-            @SerializedName("Gender")
-            @Expose
-            public Integer gender;
-            @SerializedName("IncomeMonthly")
-            @Expose
-            public Integer incomeMonthly;
-            @SerializedName("MaritalStatus")
-            @Expose
-            public Integer maritalStatus;
-            @SerializedName("Relationship")
-            @Expose
-            public Integer relationship;
-            @SerializedName("Source")
-            @Expose
-            public Integer source;
-            @SerializedName("LeadType")
-            @Expose
-            public Integer leadType;
-            @SerializedName("ProcessStep")
-            @Expose
-            public Integer processStep;
-            @SerializedName("Description")
-            @Expose
-            public String description;
+            public Integer leadID;
             @SerializedName("StatusProcessStep")
             @Expose
             public Integer statusProcessStep;
-            @SerializedName("Score")
+            @SerializedName("ProcessStep")
             @Expose
-            public Integer score;
+            public Integer processStep;
+            @SerializedName("CreatedAt")
+            @Expose
+            public String createdAt;
 
         }
 

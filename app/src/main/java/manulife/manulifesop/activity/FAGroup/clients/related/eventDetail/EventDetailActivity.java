@@ -1,5 +1,6 @@
 package manulife.manulifesop.activity.FAGroup.clients.related.eventDetail;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -8,9 +9,13 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
 import manulife.manulifesop.adapter.ObjectData.EventData;
+import manulife.manulifesop.api.ObjectResponse.ActivityDetail;
 import manulife.manulifesop.base.BaseActivity;
+import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
+import manulife.manulifesop.util.Utils;
 
 
 public class EventDetailActivity extends BaseActivity<EventDetailPresenter> implements EventDetailContract.View {
@@ -28,9 +33,13 @@ public class EventDetailActivity extends BaseActivity<EventDetailPresenter> impl
     TextView txtEventDate;
     @BindView(R.id.txt_contact_name)
     TextView txtContactName;
+    @BindView(R.id.txt_all_day)
+    TextView txtAllDay;
 
     @BindView(R.id.layout_delete)
     LinearLayout layoutDelete;
+
+    private int mEventID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +49,7 @@ public class EventDetailActivity extends BaseActivity<EventDetailPresenter> impl
         setupSupportForApp();
         initData();
     }
+
     private void setupSupportForApp() {
         //txtActionbarTitle.setText(getResources().getString(R.string.activity_create_plan_title_actionbar));
         txtActionbarTitle.setText("Chi tiết");
@@ -55,27 +65,55 @@ public class EventDetailActivity extends BaseActivity<EventDetailPresenter> impl
         viewStatusBar.setLayoutParams(params);
     }
 
-    private void initData(){
+    private void initData() {
         EventData data = (EventData) getIntent().getSerializableExtra("data");
-        if(data != null){
+        if (data != null) {
             txtTitleType.setText(data.getTypeEvent());
             txtEventDate.setText(data.getDateTime());
             txtContactName.setText(data.getName());
+            mEventID = data.getEventID();
+            mActionListener.getActivityDetail(mEventID);
         }
     }
 
+    @Override
+    public void loadData(ActivityDetail data) {
+        if (!data.data.fullDate) {
+            txtAllDay.setText("Khoản thời gian");
+            txtEventDate.setText(
+                    Utils.convertStringDateToStringDate(data.data.startDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "dd/MM/yyyy HH:mm:ss")
+                            + " - " + Utils.convertStringDateToStringDate(data.data.endDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "dd/MM/yyyy HH:mm:ss")
+            );
+        }
+    }
 
-    @OnClick({R.id.layout_delete,R.id.layout_btn_back})
-    public void onClick(View view)
-    {
+    @Override
+    public void finishSuccess() {
+        setResult(Activity.RESULT_OK);
+        finish();
+    }
+
+    @OnClick({R.id.layout_delete, R.id.layout_btn_back})
+    public void onClick(View view) {
         int id = view.getId();
-        switch (id)
-        {
-            case R.id.layout_delete:{
-                Toast.makeText(this, "delete", Toast.LENGTH_SHORT).show();
+        switch (id) {
+            case R.id.layout_delete: {
+                //Toast.makeText(this, "delete", Toast.LENGTH_SHORT).show();
+                showConfirm("Xác nhận", "Xóa sự kiện?", "Đồng ý", "Hủy",
+                        SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
+                            @Override
+                            public void DiaglogPositive() {
+                                mActionListener.deleteEvent(mEventID);
+                            }
+
+                            @Override
+                            public void DiaglogNegative() {
+
+                            }
+                        });
                 break;
             }
-            case R.id.layout_btn_back:{
+            case R.id.layout_btn_back: {
                 onBackPressed();
                 break;
             }

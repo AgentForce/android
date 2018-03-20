@@ -11,8 +11,10 @@ public interface ContactDetailContract {
     {
         void showHideMenuAfterCall();
         void initViewPager();
+        void finishChangeStatus();
     }
     interface Action{
         void getContactDetail(int id);
+        void updateStatusProcess(int leadID,boolean isChangeStep, int changeToStatus);
     }
 }

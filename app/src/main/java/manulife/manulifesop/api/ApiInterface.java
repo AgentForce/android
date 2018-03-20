@@ -2,14 +2,17 @@ package manulife.manulifesop.api;
 
 import io.reactivex.Observable;
 import manulife.manulifesop.api.ObjectInput.InputAddContact;
+import manulife.manulifesop.api.ObjectInput.InputChangeContactStatus;
 import manulife.manulifesop.api.ObjectInput.InputChangeRelead;
 import manulife.manulifesop.api.ObjectInput.InputCreateCampaign;
+import manulife.manulifesop.api.ObjectInput.InputCreateEvent;
 import manulife.manulifesop.api.ObjectInput.InputCreatePass;
 import manulife.manulifesop.api.ObjectInput.InputIntroduceContact;
 import manulife.manulifesop.api.ObjectInput.InputLoginData;
 import manulife.manulifesop.api.ObjectInput.InputRequestOTP;
 import manulife.manulifesop.api.ObjectInput.InputVerifyOTP;
 import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
+import manulife.manulifesop.api.ObjectResponse.ActivityDetail;
 import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.api.ObjectResponse.CheckUser;
@@ -17,6 +20,7 @@ import manulife.manulifesop.api.ObjectResponse.CheckVersion;
 import manulife.manulifesop.api.ObjectResponse.ContactActivity;
 import manulife.manulifesop.api.ObjectResponse.ContactHistory;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
+import manulife.manulifesop.api.ObjectResponse.EventsCreate;
 import manulife.manulifesop.api.ObjectResponse.EventsMonth;
 import manulife.manulifesop.api.ObjectResponse.EventsOneDay;
 import manulife.manulifesop.api.ObjectResponse.LoginResult;
@@ -25,6 +29,7 @@ import manulife.manulifesop.api.ObjectResponse.ContactDetail;
 import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.api.ObjectResponse.VerifyOTP;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -140,10 +145,31 @@ public interface ApiInterface {
 
     @POST("releads")
     Observable<BaseResponse> addIntroduceContact(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
-                                        @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
-                                        @Body InputIntroduceContact data);
+                                                 @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                 @Body InputIntroduceContact data);
+
     @POST("releads/movetolead")
     Observable<BaseResponse> changeIntroduceContact(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                    @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                    @Body InputChangeRelead data);
+
+    @GET("activities/{id}")
+    Observable<ActivityDetail> getActivityDetail(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                 @Header("devicename") String devicename, @Header("imei") String imei,
+                                                 @Path(value = "id", encoded = false) int id);
+
+    @PUT("leads/status/{id}")
+    Observable<BaseResponse> changeContactStatus(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                                  @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
-                                                 @Body InputChangeRelead data);
+                                                 @Path(value = "id", encoded = false) int id,
+                                                 @Body InputChangeContactStatus data);
+
+    @DELETE("activities/{id}")
+    Observable<BaseResponse> deleteEvent(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                         @Header("devicename") String devicename, @Header("imei") String imei,
+                                         @Path(value = "id", encoded = false) int id);
+    @POST("activities")
+    Observable<EventsCreate> createActivity(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                            @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                            @Body InputCreateEvent data);
 }

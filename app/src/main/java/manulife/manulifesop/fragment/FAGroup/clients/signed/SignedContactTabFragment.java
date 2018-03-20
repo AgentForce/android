@@ -201,9 +201,9 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
     public void gotoConactDetail(int id) {
         Bundle data = new Bundle();
         data.putString("type", mType);
-        data.putString("type_menu", Contants.CONSULTANT_MENU);
+        data.putString("type_menu", Contants.SIGNED_MENU);
         data.putInt("id",id);
-        mActivity.goNextScreen(ContactDetailActivity.class, data);
+        mActivity.goNextScreen(ContactDetailActivity.class, data,Contants.CONTACT_DETAIL);
     }
 
 

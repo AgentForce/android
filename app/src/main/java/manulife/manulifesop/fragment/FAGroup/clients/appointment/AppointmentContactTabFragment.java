@@ -39,7 +39,8 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
     @BindView(R.id.txt_title)
     TextView txtTitle;
 
-    private String mType;
+    private int mType;
+    private String mTypeString;
     private int mMonth;
     private int mTarget;
 
@@ -48,9 +49,11 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
     private LinearLayoutManager mLayoutManager;
 
 
-    public static AppointmentContactTabFragment newInstance(String type, int target, int month) {
+    public static AppointmentContactTabFragment newInstance(int type, String typeString, int target, int month) {
         Bundle args = new Bundle();
-        args.putString("type", type);
+        args.putInt("type", type);
+        args.putString("typeString", typeString);
+        args.putString("typeString", typeString);
         args.putInt("target", target);
         args.putInt("month", month);
         AppointmentContactTabFragment fragment = new AppointmentContactTabFragment();
@@ -63,26 +66,7 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
 
         @Override
         public void onApiLoadMoreTask(int page) {
-            int status = 1;
-            switch (mType) {
-                case Contants.APPOINTMENT: {
-                    status = 1;
-                    break;
-                }
-                case Contants.REFUSE: {
-                    status = 2;
-                    break;
-                }
-                case Contants.CALLLATER: {
-                    status = 3;
-                    break;
-                }
-                case Contants.SEEN: {
-                    status = 4;
-                    break;
-                }
-            }
-            mActionListener.getContact(mMonth,status,page);
+            mActionListener.getContact(mMonth, mType, page);
         }
     }
 
@@ -99,63 +83,67 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mType = getArguments().getString("type", "");
+        mType = getArguments().getInt("type", 1);
+        mTypeString = getArguments().getString("typeString", "");
         mTarget = getArguments().getInt("target", 0);
         mMonth = getArguments().getInt("month", 0);
         initViews();
-        loadDataContact();
+        loadDataContact(getFirstData());
+    }
+
+    private UsersList getFirstData(){
+        UsersList data = new UsersList();
+        switch (mType) {
+            case Contants.APPOINTMENT_NEED: {
+                data = ProjectApplication.getInstance().getAppointMentNeed();
+                break;
+            }
+            case Contants.APPOINTMENT_SEEN: {
+                data = ProjectApplication.getInstance().getAppointMentSeen();
+                break;
+            }
+            case Contants.APPOINTMENT_CALLLATER: {
+                data = ProjectApplication.getInstance().getAppointMentCallLater();
+                break;
+            }
+            case Contants.APPOINTMENT_REFUSE: {
+                data = ProjectApplication.getInstance().getAppointMentRefuse();
+                break;
+            }
+        }
+        return data;
     }
 
     private void initViews() {
         //type = appointment, seen, calllater
-        if (mType != null && !mType.equals("")) {
-            switch (mType) {
-                case Contants.APPOINTMENT: {
-                    txtTitle.setText("Hẹn gặp(" +
-                            ProjectApplication.getInstance().getAppointMentNeed().data.count +
-                            "/" + mTarget + ")");
-                    break;
-                }
-                case Contants.SEEN: {
-                    txtTitle.setText("Đã hẹn gặp");
-                    break;
-                }
-                case Contants.CALLLATER: {
-                    txtTitle.setText("Liên hệ sau");
-                    break;
-                }
-                case Contants.REFUSE: {
-                    txtTitle.setText("Từ chối");
-                    break;
-                }
+        switch (mType) {
+            case Contants.APPOINTMENT_NEED: {
+                txtTitle.setText("Hẹn gặp(" +
+                        ProjectApplication.getInstance().getAppointMentNeed().data.count +
+                        "/" + mTarget + ")");
+                break;
+            }
+            case Contants.APPOINTMENT_SEEN: {
+                txtTitle.setText("Đã hẹn gặp");
+                break;
+            }
+            case Contants.APPOINTMENT_CALLLATER: {
+                txtTitle.setText("Liên hệ sau");
+                break;
+            }
+            case Contants.APPOINTMENT_REFUSE: {
+                txtTitle.setText("Từ chối");
+                break;
             }
         }
+
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mData = new ArrayList<>();
     }
 
     @Override
-    public void loadDataContact() {
+    public void loadDataContact(UsersList data) {
         listContact.setLayoutManager(mLayoutManager);
-        UsersList data = new UsersList();
-        switch (mType) {
-            case Contants.APPOINTMENT: {
-                data = ProjectApplication.getInstance().getAppointMentNeed();
-                break;
-            }
-            case Contants.SEEN: {
-                data = ProjectApplication.getInstance().getAppointMentSeen();
-                break;
-            }
-            case Contants.CALLLATER: {
-                data = ProjectApplication.getInstance().getAppointMentCallLater();
-                break;
-            }
-            case Contants.REFUSE: {
-                data = ProjectApplication.getInstance().getAppointMentRefuse();
-                break;
-            }
-        }
 
         for (int i = 0; i < data.data.rows.size(); i++) {
             ActiveHistFA temp = new ActiveHistFA();
@@ -205,10 +193,10 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
     @Override
     public void gotoConactDetail(int id) {
         Bundle data = new Bundle();
-        data.putString("type", mType);
+        data.putString("type", mTypeString);
         data.putString("type_menu", Contants.APPOINTMENT_MENU);
-        data.putInt("id",id);
-        mActivity.goNextScreen(ContactDetailActivity.class, data);
+        data.putInt("id", id);
+        mActivity.goNextScreen(ContactDetailActivity.class, data, Contants.CONTACT_DETAIL);
     }
 
 

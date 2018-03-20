@@ -1,7 +1,10 @@
 package manulife.manulifesop.activity.FAGroup.clients.contact;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -50,31 +53,42 @@ public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_person);
-        mActionListener = new ContactPersonPresenter(this,this);
+        mActionListener = new ContactPersonPresenter(this, this);
         hideKeyboardOutside(layoutRoot);
         setupSupportForApp();
-        mTarget = getIntent().getIntExtra("target",0);
-        mTargetIntroduce = getIntent().getIntExtra("targetIntroduce",0);
-        mMonth = getIntent().getIntExtra("month",0);
-        mActionListener.getAllContactPerson(mMonth,1);
+        mTarget = getIntent().getIntExtra("target", 0);
+        mTargetIntroduce = getIntent().getIntExtra("targetIntroduce", 0);
+        mMonth = getIntent().getIntExtra("month", 0);
+        mActionListener.getAllContactPerson(mMonth, 1);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            mActionListener.getAllContactPerson(mMonth, 1);
+        }
+    }
 
     @Override
-    public void initViewPager(UsersList contact, UsersList callLater) {
+    public void initViewPager(UsersList contact, UsersList callLater,UsersList refuse) {
+
+        viewPager.setSaveFromParentEnabled(false);
+
         mListFragment = new ArrayList<>();
-        mListFragment.add(ContactPersonTab1Fragment.newInstance(Contants.CONTACT,contact,mMonth,mTargetIntroduce));
-        mListFragment.add(ContactPersonTab1Fragment.newInstance(Contants.CALLLATER,callLater,mMonth,mTargetIntroduce));
+        mListFragment.add(ContactPersonTab1Fragment.newInstance(Contants.USER_CONTACT,Contants.CONTACT, contact, mMonth, mTargetIntroduce));
+        mListFragment.add(ContactPersonTab1Fragment.newInstance(Contants.USER_CALLLATER,Contants.CALLLATER, callLater, mMonth, mTargetIntroduce));
+        mListFragment.add(ContactPersonTab1Fragment.newInstance(Contants.USER_REFUSE,Contants.REFUSE, refuse, mMonth, mTargetIntroduce));
 
         mTabTitles = new ArrayList<>();
-        mTabTitles.add("Liên hệ("+contact.data.count + "/" + mTarget+")");
-        mTabTitles.add("Gọi lại sau("+callLater.data.count+")");
+        mTabTitles.add("Liên hệ(" + contact.data.count + "/" + mTarget + ")");
+        mTabTitles.add("Gọi lại sau(" + callLater.data.count + ")");
+        mTabTitles.add("Từ chối(" + refuse.data.count + ")");
 
         mAdapterViewPager = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment, mTabTitles);
-        if (viewPager != null) {
-            viewPager.setAdapter(mAdapterViewPager);
-            tabLayout.setupWithViewPager(viewPager);
-        }
+        viewPager.setAdapter(mAdapterViewPager);
+        tabLayout.setupWithViewPager(viewPager);
+
     }
 
     private void setupSupportForApp() {
@@ -93,12 +107,10 @@ public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> 
     }
 
     @OnClick({R.id.layout_btn_back})
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
         int id = view.getId();
-        switch (id)
-        {
-            case R.id.layout_btn_back:{
+        switch (id) {
+            case R.id.layout_btn_back: {
                 onBackPressed();
                 break;
             }

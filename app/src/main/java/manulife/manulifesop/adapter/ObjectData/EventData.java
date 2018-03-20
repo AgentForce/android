@@ -11,6 +11,8 @@ public class EventData implements Serializable{
     private String name;
     private String typeEvent;
     private String dateTime;
+    private int processStep;
+    private int eventID;
 
     public String getAvatar() {
         return avatar;
@@ -42,5 +44,21 @@ public class EventData implements Serializable{
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public int getProcessStep() {
+        return processStep;
+    }
+
+    public void setProcessStep(int processStep) {
+        this.processStep = processStep;
+    }
+
+    public int getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
     }
 }

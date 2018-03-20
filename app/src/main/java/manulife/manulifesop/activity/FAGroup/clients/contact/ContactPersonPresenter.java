@@ -25,6 +25,7 @@ public class ContactPersonPresenter extends BasePresenter<ContactPersonContract.
     private Context mContext;
 
     private UsersList mContact;
+    private UsersList mCallater;
 
     public ContactPersonPresenter(ContactPersonContract.View presenterView, Context context) {
         super(presenterView);
@@ -37,7 +38,7 @@ public class ContactPersonPresenter extends BasePresenter<ContactPersonContract.
         getCompositeDisposable().add(ApiService.getServer().getUserList(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                period, 1,1,page,10)//khách hàng liên hệ
+                period, 1,Contants.USER_CONTACT,page,10)//khách hàng liên hệ
                 .subscribeOn(Schedulers.computation())
                 .unsubscribeOn(Schedulers.io())
                 .flatMap(usersList -> {
@@ -45,7 +46,14 @@ public class ContactPersonPresenter extends BasePresenter<ContactPersonContract.
                     return ApiService.getServer().getUserList(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 1,2,page,10);// khách hàng gọi lại sau
+                            period, 1,Contants.USER_CALLLATER,page,10);// khách hàng gọi lại sau
+                })
+                .flatMap(usersList -> {
+                    this.mCallater = usersList;
+                    return ApiService.getServer().getUserList(
+                            SOPSharedPreferences.getInstance(mContext).getAccessToken(),
+                            Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
+                            period, 1,Contants.USER_REFUSE,page,10);// khách hàng từ chối
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleResponse, this::handleError));
@@ -57,7 +65,7 @@ public class ContactPersonPresenter extends BasePresenter<ContactPersonContract.
 
     private void handleResponse(UsersList usersList) {
         if(usersList.statusCode == 1){
-            mPresenterView.initViewPager(mContact,usersList);
+            mPresenterView.initViewPager(mContact,mCallater,usersList);
             mPresenterView.finishLoading();
         }else{
             mPresenterView.finishLoading(usersList.msg,false);

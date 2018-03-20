@@ -21,7 +21,7 @@ import manulife.manulifesop.util.SOPSharedPreferences;
 public class AppointmentContactTabPresent extends BasePresenter<AppointmentContactTabContract.View> implements AppointmentContactTabContract.Action{
 
     private Context mContext;
-    private int mStatus;
+    //private int mStatus;
 
     public AppointmentContactTabPresent(AppointmentContactTabContract.View presenterView,Context context) {
         super(presenterView);
@@ -30,7 +30,7 @@ public class AppointmentContactTabPresent extends BasePresenter<AppointmentConta
 
     @Override
     public void getContact(int period, int status, int page) {
-        this.mStatus = status;
+        //this.mStatus = status;
         mPresenterView.showLoading("Lấy dữ liệu");
         getCompositeDisposable().add(ApiService.getServer().getUserList(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
@@ -48,25 +48,7 @@ public class AppointmentContactTabPresent extends BasePresenter<AppointmentConta
 
     private void handleResponse(UsersList usersList) {
         if(usersList.statusCode == 1){
-            switch (mStatus){
-                case 1:{
-                    ProjectApplication.getInstance().setAppointMentNeed(usersList);
-                    break;
-                }
-                case 2:{
-                    ProjectApplication.getInstance().setAppointMentRefuse(usersList);
-                    break;
-                }
-                case 3:{
-                    ProjectApplication.getInstance().setAppointMentCallLater(usersList);
-                    break;
-                }
-                case 4:{
-                    ProjectApplication.getInstance().setAppointMentSeen(usersList);
-                    break;
-                }
-            }
-            mPresenterView.loadDataContact();
+            mPresenterView.loadDataContact(usersList);
             mPresenterView.finishLoading();
         }else{
             mPresenterView.finishLoading(usersList.msg,false);

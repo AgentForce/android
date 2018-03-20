@@ -1,5 +1,7 @@
 package manulife.manulifesop.activity.FAGroup.clients.appointment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.view.View;
@@ -60,13 +62,21 @@ public class AppointmentActivity extends BaseActivity<AppointmentPresenter> impl
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK){
+            mActionListener.loadAllData(mMonth);
+        }
+    }
+
+    @Override
     public void initViewPager() {
         mListFragment = new ArrayList<>();
         //type = appointment, seen, calllater, refuse
-        mListFragment.add(AppointmentContactTabFragment.newInstance(Contants.APPOINTMENT,mTarget,mMonth));
-        mListFragment.add(AppointmentContactTabFragment.newInstance(Contants.SEEN,mTarget,mMonth));
-        mListFragment.add(AppointmentContactTabFragment.newInstance(Contants.CALLLATER,mTarget,mMonth));
-        mListFragment.add(AppointmentContactTabFragment.newInstance(Contants.REFUSE,mTarget,mMonth));
+        mListFragment.add(AppointmentContactTabFragment.newInstance(Contants.APPOINTMENT_NEED,Contants.APPOINTMENT,mTarget,mMonth));
+        mListFragment.add(AppointmentContactTabFragment.newInstance(Contants.APPOINTMENT_SEEN,Contants.SEEN,mTarget,mMonth));
+        mListFragment.add(AppointmentContactTabFragment.newInstance(Contants.APPOINTMENT_CALLLATER,Contants.CALLLATER,mTarget,mMonth));
+        mListFragment.add(AppointmentContactTabFragment.newInstance(Contants.APPOINTMENT_REFUSE,Contants.REFUSE,mTarget,mMonth));
 
         mTabTitles = new ArrayList<>();
         mTabTitles.add("Hẹn gặp(" +
