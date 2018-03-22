@@ -17,6 +17,8 @@ import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectInput.InputCreateCampaign;
+import manulife.manulifesop.api.ObjectInput.InputGetForcastTarget;
+import manulife.manulifesop.api.ObjectResponse.CampaignForcastTarget;
 import manulife.manulifesop.api.ObjectResponse.VerifyOTP;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
@@ -90,5 +92,29 @@ public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> 
         } else {
             mPresenterView.showSuccessView(false);
         }
+    }
+
+    @Override
+    public void getCampaignForcast(int income, int profit, int contractPrice) {
+        mPresenterView.showLoading("Xử lý dữ liệu");
+        String checksum = "adfadf";
+        InputGetForcastTarget data = new InputGetForcastTarget();
+        data.fyc = income * 1000000;
+        data.rate = profit;
+        data.caseSize = contractPrice * 1000000;
+        data.isNewAgent = true;
+        data.isFc = true;
+
+        getCompositeDisposable().add(ApiService.getServer().getCampaignForcast(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
+                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum, data)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseGetForcast, this::handleError));
+    }
+
+    private void handleResponseGetForcast(CampaignForcastTarget campaignForcastTarget) {
+        mPresenterView.finishLoading("Đã gọi api chờ xử lý",true);
     }
 }

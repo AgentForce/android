@@ -130,6 +130,9 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
             public void onPageSelected(int position) {
                 if (position == 2)
                     ((CreatePlanStep3Fragment) mAdapter.getItem(position)).updateDate(mContractNum);
+                else if(position == 3){
+                    mActionListener.getCampaignForcast(mIncome,mProfit,mContractPrice);
+                }
             }
 
             @Override

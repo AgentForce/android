@@ -13,9 +13,13 @@ public interface FAContentCustomerContract {
     interface View extends BaseMVPView {
         void showCampaignsMonth(CampaignMonth data);
         void showConfirmAcvitveCampaign();
+
+        void showDialogEditCampaign();
+        void updateData();
     }
 
     interface Action {
         void getCampaignMonth(int month);
+        void updateCampaignWeek(int month,int contractW1,int contractW2,int contractW3,int contractW4);
     }
 }

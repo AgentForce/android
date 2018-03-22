@@ -130,8 +130,7 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
 
     @Override
     public void reloadData() {
-        mData.clear();
-        mActionListener.getUserListProcess(mMonth, 1);
+        mActivity.reloadData();
     }
 
     @Override
@@ -324,7 +323,7 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
                 });
     }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Contants.CHANGE_TO_CONTACT && resultCode == RESULT_OK) {
@@ -336,7 +335,7 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
                 mActivity.finish();
             }
         }
-    }
+    }*/
 
     private boolean validateInputAddContact() {
         if (edtPhoneAlert.getText().length() <= 0) {

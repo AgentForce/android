@@ -31,10 +31,11 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.base.BaseActivity;
+import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
 import manulife.manulifesop.util.Utils;
 
 
-public class CreateEventActivity extends BaseActivity<CreateEventPresenter> implements CreateEventContract.View,View.OnClickListener {
+public class CreateEventActivity extends BaseActivity<CreateEventPresenter> implements CreateEventContract.View, View.OnClickListener {
 
     @BindView(R.id.txt_actionbar_title)
     TextView txtActionbarTitle;
@@ -180,32 +181,32 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
-            case R.id.txt_first_meet:{
-                mTypeInt =1;
+        switch (id) {
+            case R.id.txt_first_meet: {
+                mTypeInt = 1;
                 txtType.setText(ProjectApplication.getInstance().getEventStringFromType(1));
                 alertDialog.dismiss();
                 break;
             }
-            case R.id.txt_advisory:{
-                mTypeInt =2;
+            case R.id.txt_advisory: {
+                mTypeInt = 2;
                 txtType.setText(ProjectApplication.getInstance().getEventStringFromType(2));
                 alertDialog.dismiss();
                 break;
             }
-            case R.id.txt_sign:{
-                mTypeInt =3;
+            case R.id.txt_sign: {
+                mTypeInt = 3;
                 txtType.setText(ProjectApplication.getInstance().getEventStringFromType(3));
                 alertDialog.dismiss();
                 break;
             }
-            case R.id.txt_different:{
-                mTypeInt =4;
+            case R.id.txt_different: {
+                mTypeInt = 4;
                 txtType.setText(ProjectApplication.getInstance().getEventStringFromType(4));
                 alertDialog.dismiss();
                 break;
             }
-            case R.id.btn_cancel:{
+            case R.id.btn_cancel: {
                 alertDialog.dismiss();
                 break;
             }
@@ -249,8 +250,8 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
                         String selectDateSave = Utils.convertDateToString(calendar.getTime(), "yyyy-MM-dd HH:mm:ss");
 
                         if (type.equals("start")) {
-                            if (calendar.getTime()
-                                    .before(Utils.convertStringToDate(txtEndDate.getTag().toString(), "dd/MM/yyyy HH:mm"))) {
+                            if (Utils.convertStringToDate(selectDateSave,"yyyy-MM-dd HH:mm:ss")
+                                    .before(Utils.convertStringToDate(txtEndDate.getTag().toString(), "yyyy-MM-dd HH:mm:ss"))) {
                                 txtStartDate.setText(selectDate);
                                 txtStartTime.setText(selectTime);
                                 txtStartDate.setTag(selectDateSave);
@@ -259,8 +260,8 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
                             }
                         } else {
                             //check end date is larger than start date
-                            if (Utils.convertStringToDate(txtStartDate.getTag().toString(), "dd/MM/yyyy HH:mm")
-                                    .before(calendar.getTime())) {
+                            if (Utils.convertStringToDate(txtStartDate.getTag().toString(), "yyyy-MM-dd HH:mm:ss")
+                                    .before(Utils.convertStringToDate(selectDateSave,"yyyy-MM-dd HH:mm:ss"))) {
                                 txtEndDate.setText(selectDate);
                                 txtEndTime.setText(selectTime);
                                 txtEndDate.setTag(selectDateSave);
@@ -308,7 +309,7 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
     }
 
     @OnClick({R.id.layout_btn_back, R.id.txt_start_date, R.id.txt_end_date, R.id.layout_create,
-    R.id.txt_type})
+            R.id.txt_type})
     public void onClickView(View view) {
         int id = view.getId();
         switch (id) {
@@ -327,12 +328,23 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
             case R.id.layout_create: {
                 if (checkValidate()) {
                     //thêm sự kiện
-                    mActionListener.createEvent(mContactID, mTypeInt, txtContactName.getText().toString(),
-                            edtLocation.getText().toString(), (String) txtStartDate.getTag(), (String) txtEndDate.getTag(),
-                            edtNote.getText().toString(), switchAllday.isChecked(), 30, switchBoss.isChecked());
+                    showConfirm("Xác nhận", "Đồng ý tạo sự kiện", "Đồng ý",
+                            "Hủy", SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
+                                @Override
+                                public void DiaglogPositive() {
+                                    mActionListener.createEvent(mContactID, mTypeInt, edtTitle.getText().toString(),
+                                            edtLocation.getText().toString(), (String) txtStartDate.getTag(), (String) txtEndDate.getTag(),
+                                            edtNote.getText().toString(), switchAllday.isChecked(), 30, switchBoss.isChecked());
+                                }
+
+                                @Override
+                                public void DiaglogNegative() {
+                                }
+                            });
                 }
+                break;
             }
-            case R.id.txt_type:{
+            case R.id.txt_type: {
                 showMenuChooseEvent();
             }
         }

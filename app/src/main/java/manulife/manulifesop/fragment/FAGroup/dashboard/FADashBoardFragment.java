@@ -110,6 +110,11 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
         //initActiHistList();
     }
 
+    @Override
+    public void updateData() {
+        mActionListener.getDataDashboard();
+    }
+
     private void initView() {
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         //init data
@@ -217,9 +222,9 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
             percentYear.add(percentTemp);
 
             mListFragment = new ArrayList<>();
-            mListFragment.add(CampaignPercentFragment.newInstance("week", percentCurrentWeek));
-            mListFragment.add(CampaignPercentFragment.newInstance("month", percentMonth));
-            mListFragment.add(CampaignPercentFragment.newInstance("year", percentYear));
+            mListFragment.add(CampaignPercentFragment.newInstance("week", percentCurrentWeek,dataWeekMonth));
+            mListFragment.add(CampaignPercentFragment.newInstance("month", percentMonth,dataWeekMonth));
+            mListFragment.add(CampaignPercentFragment.newInstance("year", percentYear,dataWeekMonth));
 
             mTabTitles = new ArrayList<>();
             mTabTitles.add("Tuần này");

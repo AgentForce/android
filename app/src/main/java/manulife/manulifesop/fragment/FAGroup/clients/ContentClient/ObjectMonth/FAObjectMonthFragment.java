@@ -1,6 +1,7 @@
 package manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ObjectMonth;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -85,6 +86,7 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
     }
 
     private void initViews(CampaignMonth data) {
+
         if (data != null) {
             //int targetStep1 = 0, targetStep2 = 0, targetStep3 = 0, targetStep4 = 0, targetStep5 = 0;
             int currentStep1 = 0, currentStep2 = 0, currentStep3 = 0, currentStep4 = 0, currentStep5 = 0;

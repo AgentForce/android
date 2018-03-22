@@ -85,18 +85,35 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
                         calendar.set(year, month, day);
 
                         String selectDate = Utils.convertDateToString(calendar.getTime(), "dd/MM/yyyy");
+                        Calendar calendarNextOneDay = Calendar.getInstance();
+                        calendarNextOneDay.add(Calendar.DAY_OF_YEAR, -1);
 
                         if (type.equals("start")) {
-                            edtStartDate.setText(selectDate);
+                            if (calendar.getTime().after(calendarNextOneDay.getTime()))
+                                if (edtEndDate.getText().length() > 1) {
+                                    if (Utils.convertStringToDate(selectDate, "dd/MM/yyyy").before(Utils.convertStringToDate(edtEndDate.getText().toString(), "dd/MM/yyyy")))
+                                        edtStartDate.setText(selectDate);
+                                    else
+                                        showMessage("Thông báo", "Ngày bắt đầu phải nhỏ hơn ngày kết thúc!", SweetAlertDialog.WARNING_TYPE);
+                                } else {
+                                    edtStartDate.setText(selectDate);
+                                }
+                            else
+                                showMessage("Thông báo", "Ngày bắt đầu phải lớn hơn ngày hiện tại!", SweetAlertDialog.WARNING_TYPE);
+
                         } else {
                             //check end date is larger than start date
-                            if (edtStartDate.getText().length() > 1) {
-                                if (Utils.convertStringToDate(edtStartDate.getText().toString(), "dd/MM/yyyy").before(calendar.getTime()))
-                                    edtEndDate.setText(selectDate);
-                                else
-                                    showMessage("Thông báo", "Ngày kết thúc phải lớn hơn ngày bắt đầu!", SweetAlertDialog.WARNING_TYPE);
+                            if (calendar.getTime().after(calendarNextOneDay.getTime())) {
+                                if (edtStartDate.getText().length() > 1) {
+                                    if (Utils.convertStringToDate(edtStartDate.getText().toString(), "dd/MM/yyyy").before(Utils.convertStringToDate(selectDate, "dd/MM/yyyy")))
+                                        edtEndDate.setText(selectDate);
+                                    else
+                                        showMessage("Thông báo", "Ngày kết thúc phải lớn hơn ngày bắt đầu!", SweetAlertDialog.WARNING_TYPE);
+                                } else {
+                                    showMessage("Thông báo", "Chưa chọn ngày bắt đầu!", SweetAlertDialog.WARNING_TYPE);
+                                }
                             } else {
-                                showMessage("Thông báo", "Chưa chọn ngày bắt đầu!", SweetAlertDialog.WARNING_TYPE);
+                                showMessage("Thông báo", "Ngày kết thúc phải lớn hơn ngày hiện tại!", SweetAlertDialog.WARNING_TYPE);
                             }
                         }
                         alertDialog.dismiss();
@@ -107,14 +124,28 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
         alertDialog.show();
     }
 
+    @Override
+    public boolean checkValidateInput() {
+        if (edtStartDate.getText().length() < 1) {
+            showMessage("Thông báo", "Nhập ngày bắt đầu!", SweetAlertDialog.WARNING_TYPE);
+            return false;
+        }
+        if (edtEndDate.getText().length() < 1) {
+            showMessage("Thông báo", "Nhập ngày kết thúc!", SweetAlertDialog.WARNING_TYPE);
+            return false;
+        }
+        return true;
+    }
 
     @OnClick({R.id.btn_next, R.id.edt_start_date, R.id.edt_end_date})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.btn_next: {
-                mActivity.showNextFragment(0, edtStartDate.getText().toString(),
-                        edtEndDate.getText().toString(), 0, 0, 0);
+                if (checkValidateInput()) {
+                    mActivity.showNextFragment(0, edtStartDate.getText().toString(),
+                            edtEndDate.getText().toString(), 0, 0, 0);
+                }
                 break;
             }
             case R.id.edt_start_date: {

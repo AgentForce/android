@@ -14,6 +14,7 @@ public interface FADashBoardContract {
     interface View extends BaseMVPView {
         void showDataDashboard(DashboardResult dataWeekMonth, DashboardResult dataYear, ActivitiHist activities);
         void showACtivities(ActivitiHist activities);
+        void updateData();
     }
 
     interface Action {

@@ -29,8 +29,10 @@ public class ConfirmCreatePlanFragment extends BaseFragment<MainFAActivity,Confi
 
     @BindView(R.id.btn_start)
     Button btnStart;
-    public static ConfirmCreatePlanFragment newInstance() {
+
+    public static ConfirmCreatePlanFragment newInstance(String title) {
         Bundle args = new Bundle();
+        args.putString("title",title);
         ConfirmCreatePlanFragment fragment = new ConfirmCreatePlanFragment();
         fragment.setArguments(args);
         return fragment;
@@ -49,6 +51,8 @@ public class ConfirmCreatePlanFragment extends BaseFragment<MainFAActivity,Confi
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mActivity.showHideActionbar(true);
+        mActivity.updateActionbarTitle(getArguments().getString("title","Trang chủ"));
     }
 
     @OnClick(R.id.btn_start)

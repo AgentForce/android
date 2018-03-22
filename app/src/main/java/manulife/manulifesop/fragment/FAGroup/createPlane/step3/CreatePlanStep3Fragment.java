@@ -39,6 +39,8 @@ public class CreatePlanStep3Fragment extends BaseFragment<CreatePlanActivity, Cr
     @BindView(R.id.rb_month_year)
     RadioGroup rbMonthYear;
 
+    private int mContract;
+
 
     public static CreatePlanStep3Fragment newInstance() {
         Bundle args = new Bundle();
@@ -60,9 +62,20 @@ public class CreatePlanStep3Fragment extends BaseFragment<CreatePlanActivity, Cr
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initViews();
+    }
+
+    private void initViews(){
+        rbMonthYear.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                updateDate(mContract);
+            }
+        });
     }
 
     public void updateDate(int contractNum) {
+        this.mContract = contractNum;
         if (rbMonthYear.getCheckedRadioButtonId() == R.id.rbn_year) {
             contractNum = contractNum * 12;
         }
@@ -83,31 +96,4 @@ public class CreatePlanStep3Fragment extends BaseFragment<CreatePlanActivity, Cr
             }
         }
     }
-
-    /*SmsReceiver.bindListener(new SmsListener() {
-            @Override
-            public void messageReceived(String messageText) {
-
-                //From the received text string you may do string operations to get the required OTP
-                //It depends on your SMS format
-                showMessage("Thong bao",messageText, SweetAlertDialog.SUCCESS_TYPE);
-                Log.d("test",messageText+"_______________________________________");
-                System.out.println(messageText+"_______________________________________");
-
-                //Toast.makeText(getContext(),"Message: "+messageText,Toast.LENGTH_LONG).show();
-
-                // If your OTP is six digits number, you may use the below code
-
-                *//*Pattern pattern = Pattern.compile(OTP_REGEX);
-                Matcher matcher = pattern.matcher(messageText);
-                String otp;
-                while (matcher.find())
-                {
-                    otp = matcher.group();
-                }
-
-                Toast.makeText(MainActivity.this,"OTP: "+ otp ,Toast.LENGTH_LONG).show();*//*
-
-            }
-        });*/
 }

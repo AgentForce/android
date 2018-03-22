@@ -25,7 +25,7 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
             mPresenterView.showDashBoard();
         } else {
             //if is not campaign
-            mPresenterView.showFragmentConfirmCreatePlan();
+            mPresenterView.showFragmentConfirmCreatePlan("Trang chủ");
         }
     }
 }

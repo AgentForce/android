@@ -154,7 +154,8 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == Activity.RESULT_OK && requestCode == Contants.EVENT_DETAIL){
+        if(resultCode == Activity.RESULT_OK &&
+                (requestCode == Contants.EVENT_DETAIL || requestCode == Contants.ADD_EVENT)){
             mData.clear();
             mActionListener.getEvents(mContactID);
         }
@@ -209,7 +210,7 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
                 data.putInt("typeInt",1);
                 data.putInt("contactID",mContactID);
                 alertDialog.dismiss();
-                mActivity.goNextScreen(CreateEventActivity.class, data);
+                goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
                 break;
             }
             case R.id.txt_advisory: {
@@ -217,7 +218,7 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
                 data.putInt("typeInt",2);
                 data.putInt("contactID",mContactID);
                 alertDialog.dismiss();
-                mActivity.goNextScreen(CreateEventActivity.class, data);
+                goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
                 break;
             }
             case R.id.txt_sign: {
@@ -225,7 +226,7 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
                 data.putInt("typeInt",3);
                 data.putInt("contactID",mContactID);
                 alertDialog.dismiss();
-                mActivity.goNextScreen(CreateEventActivity.class, data);
+                goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
                 break;
             }
             case R.id.txt_different: {
@@ -233,7 +234,7 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
                 data.putInt("typeInt",4);
                 data.putInt("contactID",mContactID);
                 alertDialog.dismiss();
-                mActivity.goNextScreen(CreateEventActivity.class, data);
+                goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
                 break;
             }
             case R.id.btn_cancel: {

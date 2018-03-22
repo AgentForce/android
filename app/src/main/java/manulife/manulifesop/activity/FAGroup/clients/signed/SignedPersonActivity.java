@@ -1,11 +1,12 @@
 package manulife.manulifesop.activity.FAGroup.clients.signed;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +15,10 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.clients.contact.ContactPersonContract;
-import manulife.manulifesop.activity.FAGroup.clients.contact.ContactPersonPresenter;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
-import manulife.manulifesop.fragment.FAGroup.clients.consultant.ConsultantContactTabFragment;
-import manulife.manulifesop.fragment.FAGroup.clients.contactPerson.ContactPersonTab1Fragment;
 import manulife.manulifesop.fragment.FAGroup.clients.signed.SignedContactTabFragment;
 import manulife.manulifesop.util.Contants;
 
@@ -65,7 +62,7 @@ public class SignedPersonActivity extends BaseActivity<SignedPersonPresenter> im
 
     private void setupSupportForApp() {
 
-        txtActionbarTitle.setText("Danh sách ký hợp đồng tháng 12");
+        txtActionbarTitle.setText("KH ký hợp đồng T12");
         layoutBackButton.setVisibility(View.VISIBLE);
 
         int statusBarHeight = 0;
@@ -81,19 +78,24 @@ public class SignedPersonActivity extends BaseActivity<SignedPersonPresenter> im
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            mActionListener.getAllData(mMonth);
+        }
+    }
+
+    @Override
     public void initViewPager() {
         mListFragment = new ArrayList<>();
         //type = appointment, seen, calllater, refuse
-        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_SUCCESS,mTarget,mMonth));
-        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_NOT_APPLY,mTarget,mMonth));
-        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_BHXH,mTarget,mMonth));
-        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_APPLIED,mTarget,mMonth));
-        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_WAIT_APPROVE,mTarget,mMonth));
+        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_NOT_APPLIED,Contants.SIGNED_NOT_APPLY_STRING,mTarget,mMonth));
+        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_BHXH,Contants.SIGNED_BHXH_STRING,mTarget,mMonth));
+        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_APPLIED,Contants.SIGNED_APPLIED_STRING,mTarget,mMonth));
+        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_WAIT_APPROVE,Contants.SIGNED_WAIT_APPROVE_STRING,mTarget,mMonth));
+        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_SUCCESS,Contants.SIGNED_SUCCESS_STRING,mTarget,mMonth));
 
         mTabTitles = new ArrayList<>();
-        mTabTitles.add("Ký HĐ thành công(" +
-                ProjectApplication.getInstance().getSignSuccess().data.count +
-                "/" + mTarget + ")");
         mTabTitles.add("Chưa nộp hồ sơ(" +
                 ProjectApplication.getInstance().getSignNotApply().data.count + ")");
         mTabTitles.add("Hoàn tất BHXH(" +
@@ -105,6 +107,9 @@ public class SignedPersonActivity extends BaseActivity<SignedPersonPresenter> im
         mTabTitles.add("Chờ duyệt(" +
                 ProjectApplication.getInstance().getSignWaitApprove().data.count
                 + ")");
+        mTabTitles.add("Ký HĐ thành công(" +
+                ProjectApplication.getInstance().getSignSuccess().data.count +
+                "/" + mTarget + ")");
 
         mAdapterViewPager = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment, mTabTitles);
         if (viewPager != null) {

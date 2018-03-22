@@ -4,7 +4,7 @@
     <!--activity_welcome-->
     <string name="activity_welcome_title">Chào mừng bạn</string>
     <string name="activity_welcome_content">Khi bấm vào đồng ý, bạn đã chấp nhận các điều khoản &amp; điều kiện của ứng dụng Manulife</string>
-    <string name="activity_welcome_note">ĐIỀU KHOẢN &amp; ĐIỀU KIỆN</string>
+    <string name="activity_welcome_note">Tôi đồng ý cho phép ứng dụng truy cập danh bạn điện thoại của tôi</string>
 
     <!--activity_login-->
     <string name="activity_login_title">Đăng nhập tài khoản</string>

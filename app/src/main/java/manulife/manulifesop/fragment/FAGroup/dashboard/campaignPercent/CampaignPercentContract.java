@@ -10,10 +10,10 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface CampaignPercentContract {
 
     interface View extends BaseMVPView {
-
+        void updateData();
     }
 
     interface Action {
-
+        void updateCampaignWeek(int month, int contractW1, int contractW2, int contractW3, int contractW4);
     }
 }

@@ -18,6 +18,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import manulife.manulifesop.R;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
@@ -25,6 +26,8 @@ import manulife.manulifesop.fragment.FAGroup.clients.FACustomerFragment;
 import manulife.manulifesop.fragment.FAGroup.dashboard.FADashBoardFragment;
 import manulife.manulifesop.fragment.FAGroup.events.FAEventsFragment;
 import manulife.manulifesop.fragment.FAGroup.personal.FAPersonalFragment;
+import manulife.manulifesop.util.DeviceInfo;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 1/23/2018.
@@ -37,6 +40,9 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
     @BindView(R.id.layout_notification)
     RelativeLayout layoutNotification;
+    @BindView(R.id.layout_edit)
+    RelativeLayout layoutEdit;
+
     @BindView(R.id.txt_actionbar_title)
     TextView txtActionbarTitle;
     @BindView(R.id.status_bar)
@@ -66,12 +72,15 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         setupMenuBot();
         mIsgetCampaign = getIntent().getExtras()
                 .getBoolean("isGetCampaign", false);
+        /*mIsgetCampaign = true;
+        new DeviceInfo(this);*/
         mActionListener.checkIsGetCampaign(mIsgetCampaign);
 
     }
 
     private void setupSupportForApp() {
         layoutNotification.setVisibility(View.VISIBLE);
+        layoutEdit.setVisibility(View.GONE);
 
         txtActionbarTitle.setText(getResources().getString(R.string.activity_main_fa_dashboard));
         layoutBackButton.setVisibility(View.GONE);
@@ -100,31 +109,36 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
                 switch (position) {
                     case 0: {
                         mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                        if (!(mCurrentFragment instanceof FADashBoardFragment)
-                                && mIsgetCampaign) {
-                            showDashBoard();
+                        if (!(mCurrentFragment instanceof FADashBoardFragment)) {
+                            if (mIsgetCampaign)
+                                showDashBoard();
+                            else
+                                showFragmentConfirmCreatePlan("Trang chủ");
                         }
                         break;
                     }
                     case 1: {
                         mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                        if (!(mCurrentFragment instanceof FACustomerFragment)
-                                && mIsgetCampaign) {
-                            showCustomer();
+                        if (!(mCurrentFragment instanceof FACustomerFragment)) {
+                            if (mIsgetCampaign)
+                                showCustomer();
+                            else
+                                showFragmentConfirmCreatePlan("Khách hàng");
                         }
                         break;
                     }
                     case 2: {
                         //Toast.makeText(MainFAActivity.this, "position 2", Toast.LENGTH_SHORT).show();
                         mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-                        if (!(mCurrentFragment instanceof FAEventsFragment)
-                                && mIsgetCampaign) {
-                            showEvents();
+                        if (!(mCurrentFragment instanceof FAEventsFragment)) {
+                            if (mIsgetCampaign)
+                                showEvents();
+                            else
+                                showFragmentConfirmCreatePlan("Tháng " + Utils.getCurrentMonth(getApplicationContext()));
                         }
                         break;
                     }
                     case 3: {
-                        //Toast.makeText(MainFAActivity.this, "position 3", Toast.LENGTH_SHORT).show();
                         showPersonal();
                         break;
                     }
@@ -148,28 +162,33 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
     @Override
     public void showHideActionbar(boolean isShow) {
-        if(isShow) {
-            if (layoutAllActionbar.getVisibility() == View.GONE){
+        if (isShow) {
+            if (layoutAllActionbar.getVisibility() == View.GONE) {
                 layoutAllActionbar.setVisibility(View.VISIBLE);
             }
-        }else{
-            if (layoutAllActionbar.getVisibility() == View.VISIBLE){
+        } else {
+            if (layoutAllActionbar.getVisibility() == View.VISIBLE) {
                 layoutAllActionbar.setVisibility(View.GONE);
             }
         }
     }
 
     @Override
-    public void showFragmentConfirmCreatePlan() {
+    public void showFragmentConfirmCreatePlan(String title) {
+        layoutNotification.setVisibility(View.GONE);
+        layoutEdit.setVisibility(View.GONE);
         mFragmentTran = getSupportFragmentManager().beginTransaction();
         //ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-        mFragmentTran.replace(R.id.frame_container, ConfirmCreatePlanFragment.newInstance());
+        mFragmentTran.replace(R.id.frame_container, ConfirmCreatePlanFragment.newInstance(title));
         mFragmentTran.commit();
     }
 
     @Override
     public void showDashBoard() {
+        layoutNotification.setVisibility(View.VISIBLE);
+        layoutEdit.setVisibility(View.GONE);
+
         mFragmentTran = getSupportFragmentManager().beginTransaction();
         mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         mFragmentTran.replace(R.id.frame_container, FADashBoardFragment.newInstance());
@@ -178,6 +197,9 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
     @Override
     public void showCustomer() {
+        layoutNotification.setVisibility(View.GONE);
+        layoutEdit.setVisibility(View.VISIBLE);
+
         mFragmentTran = getSupportFragmentManager().beginTransaction();
         mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         mFragmentTran.replace(R.id.frame_container, FACustomerFragment.newInstance());
@@ -186,6 +208,9 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
     @Override
     public void showEvents() {
+        layoutNotification.setVisibility(View.GONE);
+        layoutEdit.setVisibility(View.GONE);
+
         mFragmentTran = getSupportFragmentManager().beginTransaction();
         mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         mFragmentTran.replace(R.id.frame_container, FAEventsFragment.newInstance());
@@ -198,6 +223,24 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         mFragmentTran.replace(R.id.frame_container, FAPersonalFragment.newInstance());
         mFragmentTran.commit();
+    }
+
+    @OnClick({R.id.layout_notification, R.id.layout_edit, R.id.layout_add})
+    void onClickViews(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.layout_notification: {
+                Toast.makeText(this, "notification", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.layout_edit: {
+                mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+                if (mCurrentFragment instanceof FACustomerFragment)
+                    ((FACustomerFragment) mCurrentFragment).showDialogEditCampaign();
+
+                break;
+            }
+        }
     }
 
 }

@@ -10,7 +10,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface FACustomerContract {
 
     interface View extends BaseMVPView {
-
+        void showDialogEditCampaign();
     }
 
     interface Action {

@@ -16,5 +16,6 @@ public interface CreatePlanContract {
     interface Action{
         void createCampaign(String startDate, String endDate, long profit, long contractPrice, long inCome);
         void checkCampaign();
+        void getCampaignForcast(int income,int profit,int contractPrice);
     }
 }

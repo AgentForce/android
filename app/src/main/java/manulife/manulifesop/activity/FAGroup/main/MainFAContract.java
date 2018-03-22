@@ -9,7 +9,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface MainFAContract {
     interface View extends BaseMVPView
     {
-        void showFragmentConfirmCreatePlan();
+        void showFragmentConfirmCreatePlan(String title);
         void showDashBoard();
         void showCustomer();
         void showEvents();

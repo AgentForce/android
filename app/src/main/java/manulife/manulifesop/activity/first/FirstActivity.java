@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import butterknife.BindView;
@@ -25,12 +27,16 @@ public class FirstActivity extends BaseActivity<FirstPresenter> implements First
     RelativeLayout layoutWelcome;
     @BindView(R.id.btn_agree)
     Button btnAgree;
+    @BindView(R.id.cb_agree)
+    AppCompatCheckBox cbAgree;
+    @BindView(R.id.layout_permission)
+    LinearLayout layoutPermission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
-        mActionListener = new FirstPresenter(this,this);
+        mActionListener = new FirstPresenter(this, this);
     }
 
     @Override
@@ -45,16 +51,19 @@ public class FirstActivity extends BaseActivity<FirstPresenter> implements First
         goNextScreen(LoginActivity.class);
     }
 
-    @OnClick({R.id.btn_agree})
-    public void onClick(View view)
-    {
+    @OnClick({R.id.btn_agree,R.id.layout_permission})
+    public void onClick(View view) {
         int id = view.getId();
-        switch (id)
-        {
-            case R.id.btn_agree:{
-                //mActionListener.clickAgreeButton();
-                mActionListener.checkPermissionGranted();
+        switch (id) {
+            case R.id.btn_agree: {
+                if (cbAgree.isChecked())
+                    mActionListener.checkPermissionGranted();
+                else
+                    showMessage("Thông báo", "Cần đồng ý điều khoản cho phép đọc danh bạ!", SweetAlertDialog.WARNING_TYPE);
                 break;
+            }
+            case R.id.layout_permission:{
+                cbAgree.setChecked(!cbAgree.isChecked());
             }
         }
     }

@@ -11,6 +11,7 @@ public interface IntroduceContactContract {
     interface View extends BaseMVPView
     {
         void initViewPager();
+        void reloadData();
     }
     interface Action{
         void getAllIntroduces(int period, int page);

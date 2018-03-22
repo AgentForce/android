@@ -91,7 +91,6 @@ public class LoginActivity extends BaseActivity<LoginPresent>
         //show agency fragment in first
         //showFragment(AgencyFragment.newInstance(),true);
         initViewPager();
-        mActionListener.getDeviceInfo(getApplicationContext());
     }
 
     private void setupSupportForApp() {

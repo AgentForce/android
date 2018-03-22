@@ -12,6 +12,7 @@ import manulife.manulifesop.api.ObjectResponse.ContactActivity;
 import manulife.manulifesop.api.ObjectResponse.ContactDetail;
 import manulife.manulifesop.api.ObjectResponse.ContactHistory;
 import manulife.manulifesop.api.ObjectResponse.UsersList;
+import manulife.manulifesop.util.DeviceInfo;
 
 /*
 import com.crashlytics.android.Crashlytics;
@@ -113,6 +114,7 @@ public class ProjectApplication extends MultiDexApplication {
         //PreferenceUtils.init(this);
         //initCustomFont();
 
+        new DeviceInfo(this);
         //new code
         setHashmapStringProcessStatus();
         setHashmapProcessStep();

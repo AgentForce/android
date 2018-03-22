@@ -1,5 +1,6 @@
 package manulife.manulifesop.fragment.FAGroup.clients.signed;
 
+import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.base.BaseMVPView;
 
 
@@ -11,9 +12,10 @@ public interface SignedContactTabContract {
 
     interface View extends BaseMVPView {
         void gotoConactDetail(int id);
+        void loadDataContact(UsersList data);
     }
 
     interface Action {
-
+        void getContact(int period, int status, int page);
     }
 }

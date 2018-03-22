@@ -43,7 +43,7 @@
                 app:isb_indicator_text_size="16sp"
                 app:isb_max="100"
                 app:isb_min="0"
-                app:isb_progress="25"
+                app:isb_progress="0"
                 app:isb_seek_bar_type="continuous"
                 app:isb_show_indicator="true"
                 app:isb_text_color="@color/colorSecond"
@@ -65,12 +65,13 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@color/color_dashboard_contact" />
+                android:src="@drawable/ic_contact_red"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Liên hệ"
+                android:layout_marginLeft="3dp"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -96,7 +97,7 @@
                 app:isb_indicator_text_size="16sp"
                 app:isb_max="100"
                 app:isb_min="0"
-                app:isb_progress="25"
+                app:isb_progress="0"
                 app:isb_seek_bar_type="continuous"
                 app:isb_show_indicator="true"
                 app:isb_text_color="@color/colorSecond"
@@ -118,12 +119,13 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@color/color_dashboard_meeting" />
+                android:src="@drawable/ic_appointment"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Hẹn gặp"
+                android:layout_marginLeft="3dp"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -149,7 +151,7 @@
                 app:isb_indicator_text_size="16sp"
                 app:isb_max="100"
                 app:isb_min="0"
-                app:isb_progress="25"
+                app:isb_progress="0"
                 app:isb_seek_bar_type="continuous"
                 app:isb_show_indicator="true"
                 app:isb_text_color="@color/colorSecond"
@@ -171,12 +173,13 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@color/color_dashboard_advisory" />
+                android:src="@drawable/ic_consultant" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Tư vấn"
+                android:layout_marginLeft="3dp"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -202,7 +205,7 @@
                 app:isb_indicator_text_size="16sp"
                 app:isb_max="100"
                 app:isb_min="0"
-                app:isb_progress="25"
+                app:isb_progress="0"
                 app:isb_seek_bar_type="continuous"
                 app:isb_show_indicator="true"
                 app:isb_text_color="@color/colorSecond"
@@ -224,12 +227,13 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@color/color_dashboard_sign" />
+                android:src="@drawable/ic_signed" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Ký kết"
+                android:layout_marginLeft="3dp"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -255,7 +259,7 @@
                 app:isb_indicator_text_size="16sp"
                 app:isb_max="100"
                 app:isb_min="0"
-                app:isb_progress="25"
+                app:isb_progress="0"
                 app:isb_seek_bar_type="continuous"
                 app:isb_show_indicator="true"
                 app:isb_text_color="@color/colorSecond"
@@ -277,12 +281,13 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@color/color_dashboard_introduce" />
+                android:src="@drawable/ic_introduce_red" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Giới thiệu"
+                android:layout_marginLeft="3dp"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>

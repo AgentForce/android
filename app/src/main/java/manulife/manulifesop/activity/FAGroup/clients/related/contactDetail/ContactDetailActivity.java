@@ -1,5 +1,6 @@
 package manulife.manulifesop.activity.FAGroup.clients.related.contactDetail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -145,10 +146,10 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                     layoutMenu.inflate();
 
                     processMenuSigned listener = new processMenuSigned();
-                    findViewById(R.id.layout_menu_sign_success).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_sign_BHXH).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_sign_applied).setOnClickListener(listener);
                     findViewById(R.id.layout_menu_waiting_approve).setOnClickListener(listener);
-                    findViewById(R.id.layout_menu_applied).setOnClickListener(listener);
-
+                    findViewById(R.id.layout_menu_sign_succcess).setOnClickListener(listener);
                     break;
                 }
                 case Contants.INTRODUCE_MENU: {
@@ -215,6 +216,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                     Bundle data = new Bundle();
                     data.putInt("typeInt",1);
                     data.putInt("contactID",mUserId);
+                    showHideMenuAfterCall();
                     goNextScreen(CreateEventActivity.class, data,Contants.ADD_EVENT);
                     break;
                 }
@@ -265,16 +267,20 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         public void onClick(View view) {
             int id = view.getId();
             switch (id) {
-                case R.id.layout_menu_sign_success: {
-                    mActionListener.updateStatusProcess(mUserId,false,4);
+                case R.id.layout_menu_sign_BHXH: {
+                    mActionListener.updateStatusProcess(mUserId,false, Contants.SIGNED_BHXH);
+                    break;
+                }
+                case R.id.layout_menu_sign_applied: {
+                    mActionListener.updateStatusProcess(mUserId,false,Contants.SIGNED_APPLIED);
                     break;
                 }
                 case R.id.layout_menu_waiting_approve: {
-                    mActionListener.updateStatusProcess(mUserId,false,3);
+                    mActionListener.updateStatusProcess(mUserId,false,Contants.SIGNED_WAIT_APPROVE);
                     break;
                 }
-                case R.id.layout_menu_applied: {
-                    mActionListener.updateStatusProcess(mUserId,false,2);
+                case R.id.layout_menu_sign_succcess: {
+                    mActionListener.updateStatusProcess(mUserId,false,Contants.SIGNED_SUCCESS);
                     break;
                 }
             }

@@ -3,13 +3,14 @@ package manulife.manulifesop.api.ObjectResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by ADMIN on 2/28/2018.
  */
 
-public class DashboardResult {
+public class DashboardResult implements Serializable{
     @SerializedName("statusCode")
     @Expose
     public Integer statusCode;
@@ -23,7 +24,7 @@ public class DashboardResult {
     @Expose
     public String msgCode;
 
-    public class Data {
+    public class Data implements Serializable{
 
         @SerializedName("type")
         @Expose
@@ -35,7 +36,7 @@ public class DashboardResult {
         @Expose
         public List<Campaign> campaign = null;
 
-        public class Campaign {
+        public class Campaign implements Serializable{
 
             @SerializedName("Period")
             @Expose

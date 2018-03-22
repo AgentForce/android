@@ -43,11 +43,6 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     }
 
     @Override
-    public void getDeviceInfo(Context context) {
-        new DeviceInfo(context);
-    }
-
-    @Override
     public void createPass(String user, String pass) {
 
         this.mUserCreatePass = user;
@@ -129,6 +124,8 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     private void handleResponseCheckCampaign(VerifyOTP data) {
         if (data.getStatusCode() == 1) {
             mPresenterView.finishLoading();
+            //test
+            data.getData().setStatus(false);
             if (data.getData().getStatus()) {
                 //go to main if campaign is created
                 mPresenterView.showMainFAActvity();

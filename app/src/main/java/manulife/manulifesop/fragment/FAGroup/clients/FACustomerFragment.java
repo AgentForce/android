@@ -3,10 +3,12 @@ package manulife.manulifesop.fragment.FAGroup.clients;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -119,4 +121,10 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
         mFragmentTran.commit();
     }
 
+    @Override
+    public void showDialogEditCampaign() {
+        Fragment CurrentFragment = getChildFragmentManager().findFragmentById(R.id.frame_container_customer);
+        if (CurrentFragment instanceof FAContentCustomerFragment)
+            ((FAContentCustomerFragment) CurrentFragment).showDialogEditCampaign();
+    }
 }

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/layout_root_week4">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,10 +27,11 @@
             app:isb_min="0"
             app:isb_progress="25"
             app:isb_seek_bar_type="continuous"
+            app:isb_tick_num="20"
+            app:isb_tick_color="@color/colorSecond"
             app:isb_show_indicator="true"
             app:isb_text_color="@color/colorSecond"
             app:isb_thumb_color="@color/colorSecond"
-            app:isb_tick_num="9"
             app:isb_track_background_bar_color="@color/colorSecond"
             app:isb_track_background_bar_size="3dp"
             app:isb_track_progress_bar_color="@color/colorSecond"
@@ -82,13 +84,15 @@
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:background="@color/color_dashboard_contact" />
+                android:src="@drawable/ic_contact" />
 
             <TextView
                 android:id="@+id/txt_step4_contact"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="15"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:text="12"
+                android:layout_marginLeft="2dp"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -101,13 +105,14 @@
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:background="@color/color_dashboard_meeting" />
+                android:src="@drawable/ic_appointment" />
 
             <TextView
                 android:id="@+id/txt_step4_meeting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="15"
+                android:layout_marginLeft="2dp"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -120,13 +125,14 @@
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:background="@color/color_dashboard_advisory" />
+                android:src="@drawable/ic_consultant" />
 
             <TextView
                 android:id="@+id/txt_step4_advisory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10"
+                android:layout_marginLeft="2dp"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -139,13 +145,14 @@
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:background="@color/color_dashboard_sign" />
+                android:src="@drawable/ic_signed" />
 
             <TextView
                 android:id="@+id/txt_step4_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2"
+                android:layout_marginLeft="2dp"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -158,17 +165,16 @@
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:background="@color/color_dashboard_introduce" />
+                android:src="@drawable/ic_introduce" />
 
             <TextView
                 android:id="@+id/txt_step4_introduce"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="14"
+                android:layout_marginLeft="2dp"
                 android:textSize="12sp" />
         </LinearLayout>
-
-
     </LinearLayout>
 
 </LinearLayout>

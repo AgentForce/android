@@ -84,41 +84,31 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
 
     private void initEventsSeekBar() {
         seekBarIncome.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
-            boolean isUserTouch = false;
 
             @Override
             public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
 
-                float min = seekBar.getMin();
-                float max = seekBar.getMax();
-                if (progress == max) {
-
-                    if(isUserTouch) {
-
+                /*if (fromUserTouch) {
+                    float min = seekBar.getMin();
+                    float max = seekBar.getMax();
+                    if (progress == max) {
                         int minNew = (min == 10) ? 100 : (int) (min + 100);
 
                         txtIncomeMin.setText((int) (minNew) + "tr");
                         txtIncomeMax.setText((int) (max + 100) + "tr");
                         seekBarIncome.setMax(max + 100);
                         seekBarIncome.setMin(minNew);
-                        //seekBarIncome.setProgress(minNew + 1);
-                        isUserTouch = false;
-                    }
 
-                    //seekBarIncome.setProgress(max);
-                } else if (progress == min && min > 10) {
+                    } else if (progress == min && min > 10) {
 
-                    if(isUserTouch) {
                         int minNew = ((min - 100) > 10) ? (int) (min - 100) : 10;
                         txtIncomeMin.setText(minNew + "tr");
                         txtIncomeMax.setText((int) (max - 100) + "tr");
                         seekBarIncome.setMax(max - 100);
                         seekBarIncome.setMin(minNew);
-                        //seekBarIncome.setProgress(min - 1);
 
-                        isUserTouch = false;
                     }
-                }
+                }*/
             }
 
             @Override
@@ -128,12 +118,32 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
 
             @Override
             public void onStartTrackingTouch(IndicatorSeekBar seekBar, int thumbPosOnTick) {
-                isUserTouch = true;
+
             }
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+                float min = seekBar.getMin();
+                float max = seekBar.getMax();
+                if (seekBar.getProgress() == max) {
+                    int minNew = (min == 10) ? 100 : (int) (min + 100);
 
+                    txtIncomeMin.setText((int) (minNew) + "tr");
+                    txtIncomeMax.setText((int) (max + 100) + "tr");
+
+                    seekBarIncome.setMax(max + 100);
+                    seekBarIncome.setMin(minNew);
+                    seekBarIncome.setProgress(minNew);
+
+                } else if (seekBar.getProgress() == min && min > 10) {
+
+                    int minNew = ((min - 100) > 10) ? (int) (min - 100) : 10;
+                    txtIncomeMin.setText(minNew + "tr");
+                    txtIncomeMax.setText((int) (max - 100) + "tr");
+                    seekBarIncome.setMax(max - 100);
+                    seekBarIncome.setMin(minNew);
+                    seekBarIncome.setProgress(max - 100);
+                }
             }
         });
     }
@@ -146,7 +156,7 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
                 //get contract num
                 float contractNumFloat = (float) (seekBarIncome.getProgress() * 100) / (float) seekProfit.getProgress() / (float) seekContractPrice.getProgress();
                 int contractNum = Math.round(contractNumFloat);
-                mActivity.showNextFragment(contractNum, "", "", seekBarIncome.getProgress(),seekContractPrice.getProgress(),seekProfit.getProgress());
+                mActivity.showNextFragment(contractNum, "", "", seekBarIncome.getProgress(), seekContractPrice.getProgress(), seekProfit.getProgress());
                 break;
             }
         }

@@ -17,7 +17,6 @@ import java.util.List;
 import butterknife.BindView;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.clients.consultant.ConsultantActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.ContactDetailActivity;
 import manulife.manulifesop.activity.FAGroup.clients.signed.SignedPersonActivity;
 import manulife.manulifesop.adapter.ActiveHistAdapter;
@@ -25,8 +24,6 @@ import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
-import manulife.manulifesop.fragment.FAGroup.clients.consultant.ConsultantContactTabContract;
-import manulife.manulifesop.fragment.FAGroup.clients.consultant.ConsultantContactTabPresent;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
 import manulife.manulifesop.util.Utils;
@@ -42,7 +39,9 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
     @BindView(R.id.txt_title)
     TextView txtTitle;
 
-    private String mType;
+    private int mType;
+    private String mTypeString;
+
     private int mTarget;
     private int mMonth;
 
@@ -51,9 +50,10 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
     private LinearLayoutManager mLayoutManager;
 
 
-    public static SignedContactTabFragment newInstance(String type, int target, int month) {
+    public static SignedContactTabFragment newInstance(int type, String typeString, int target, int month) {
         Bundle args = new Bundle();
-        args.putString("type", type);
+        args.putInt("type", type);
+        args.putString("typeString", typeString);
         args.putInt("target", target);
         args.putInt("month", month);
         SignedContactTabFragment fragment = new SignedContactTabFragment();
@@ -66,8 +66,7 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
 
         @Override
         public void onApiLoadMoreTask(int page) {
-            Toast.makeText(mActivity, "load more", Toast.LENGTH_SHORT).show();
-            //loadDataContact();
+            mActionListener.getContact(mMonth,mType,page);
         }
     }
 
@@ -78,61 +77,45 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new SignedContactTabPresent(this);
+        mActionListener = new SignedContactTabPresent(this,getContext());
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mType = getArguments().getString("type", "");
+        mType = getArguments().getInt("type", 1);
+        mTypeString = getArguments().getString("typeString", "");
         mTarget = getArguments().getInt("target", 0);
         mMonth = getArguments().getInt("month", 0);
         initViews();
-        loadDataContact();
+        loadDataContact(getFirstData());
     }
 
     private void initViews() {
-        //type = appointment, seen, calllater
-        if (mType != null && !mType.equals("")) {
-            switch (mType) {
-                case Contants.SIGNED_SUCCESS: {
-                    txtTitle.setText("Khách hàng ký hợp đồng thành công(" +
-                            ProjectApplication.getInstance().getSignSuccess().data.count
-                            + "/" + mTarget + ")");
-                    break;
-                }
-                case Contants.SIGNED_NOT_APPLY: {
-                    txtTitle.setText("Khách hàng chưa nộp hồ sơ");
-                    break;
-                }
-                case Contants.SIGNED_BHXH: {
-                    txtTitle.setText("Khách hàng hoàn tất BHXH");
-                    break;
-                }
-                case Contants.SIGNED_APPLIED: {
-                    txtTitle.setText("Khách hàng đã nộp hồ sơ");
-                    break;
-                }
-                case Contants.SIGNED_WAIT_APPROVE: {
-                    txtTitle.setText("Khách hàng chờ duyệt hồ sơ");
-                    break;
-                }
+        switch (mTypeString) {
+            case Contants.SIGNED_SUCCESS_STRING: {
+                txtTitle.setText("Khách hàng ký hợp đồng thành công(" +
+                        ProjectApplication.getInstance().getSignSuccess().data.count
+                        + "/" + mTarget + ")");
+                break;
+            }
+            default: {
+                txtTitle.setText(mTypeString);
             }
         }
+
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mData = new ArrayList<>();
     }
 
-    private void loadDataContact() {
-        listContact.setLayoutManager(mLayoutManager);
-
+    private UsersList getFirstData() {
         UsersList data = new UsersList();
         switch (mType) {
             case Contants.SIGNED_SUCCESS: {
                 data = ProjectApplication.getInstance().getSignSuccess();
                 break;
             }
-            case Contants.SIGNED_NOT_APPLY: {
+            case Contants.SIGNED_NOT_APPLIED: {
                 data = ProjectApplication.getInstance().getSignNotApply();
                 break;
             }
@@ -149,7 +132,12 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
                 break;
             }
         }
+        return data;
+    }
 
+    @Override
+    public void loadDataContact(UsersList data) {
+        listContact.setLayoutManager(mLayoutManager);
 
         for (int i = 0; i < data.data.rows.size(); i++) {
             ActiveHistFA temp = new ActiveHistFA();
@@ -200,30 +188,9 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
     @Override
     public void gotoConactDetail(int id) {
         Bundle data = new Bundle();
-        data.putString("type", mType);
+        data.putString("type", mTypeString);
         data.putString("type_menu", Contants.SIGNED_MENU);
-        data.putInt("id",id);
-        mActivity.goNextScreen(ContactDetailActivity.class, data,Contants.CONTACT_DETAIL);
+        data.putInt("id", id);
+        mActivity.goNextScreen(ContactDetailActivity.class, data, Contants.CONTACT_DETAIL);
     }
-
-
-    /*@OnClick({R.id.txt_add_from_telephone, R.id.txt_add_new})
-    public void onClickEvent(View view) {
-        int id = view.getId();
-        switch (id) {
-            case R.id.txt_add_from_telephone: {
-                mActivity.goNextScreen(AddContactPersonActivity.class);
-                break;
-            }
-            case R.id.txt_add_new: {
-                showpDialogAddNew();
-                break;
-            }
-            case R.id.txt_add_from_introduce: {
-                mActivity.goNextScreen(IntroduceContactActivity.class);
-                break;
-            }
-        }
-    }*/
-
 }

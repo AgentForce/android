@@ -2,11 +2,13 @@ package manulife.manulifesop.api;
 
 import io.reactivex.Observable;
 import manulife.manulifesop.api.ObjectInput.InputAddContact;
+import manulife.manulifesop.api.ObjectInput.InputChangeCampaignWeek;
 import manulife.manulifesop.api.ObjectInput.InputChangeContactStatus;
 import manulife.manulifesop.api.ObjectInput.InputChangeRelead;
 import manulife.manulifesop.api.ObjectInput.InputCreateCampaign;
 import manulife.manulifesop.api.ObjectInput.InputCreateEvent;
 import manulife.manulifesop.api.ObjectInput.InputCreatePass;
+import manulife.manulifesop.api.ObjectInput.InputGetForcastTarget;
 import manulife.manulifesop.api.ObjectInput.InputIntroduceContact;
 import manulife.manulifesop.api.ObjectInput.InputLoginData;
 import manulife.manulifesop.api.ObjectInput.InputRequestOTP;
@@ -14,6 +16,7 @@ import manulife.manulifesop.api.ObjectInput.InputVerifyOTP;
 import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
 import manulife.manulifesop.api.ObjectResponse.ActivityDetail;
 import manulife.manulifesop.api.ObjectResponse.BaseResponse;
+import manulife.manulifesop.api.ObjectResponse.CampaignForcastTarget;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.api.ObjectResponse.CheckUser;
 import manulife.manulifesop.api.ObjectResponse.CheckVersion;
@@ -172,4 +175,13 @@ public interface ApiInterface {
     Observable<EventsCreate> createActivity(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                             @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
                                             @Body InputCreateEvent data);
+    @PUT("campaigns/target/{period}")
+    Observable<BaseResponse> changeCampaignWeek(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                 @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                 @Path(value = "period", encoded = false) int period,
+                                                 @Body InputChangeCampaignWeek data);
+    @POST("campaigns/forcasttarget")
+    Observable<CampaignForcastTarget> getCampaignForcast(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                     @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                     @Body InputGetForcastTarget data);
 }

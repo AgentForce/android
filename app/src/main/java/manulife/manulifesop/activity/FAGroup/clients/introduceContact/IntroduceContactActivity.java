@@ -1,5 +1,7 @@
 package manulife.manulifesop.activity.FAGroup.clients.introduceContact;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.view.View;
@@ -65,6 +67,19 @@ public class IntroduceContactActivity extends BaseActivity<IntroduceContactPrese
         mActionListener.getAllIntroduces(mMonth, 1);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            mActionListener.getAllIntroduces(mMonth, 1);
+        }
+    }
+
+    @Override
+    public void reloadData() {
+        mActionListener.getAllIntroduces(mMonth, 1);
+    }
+
     public void initViewPager() {
         mListFragment = new ArrayList<>();
         mListFragment.add(IntroduceContactTabFragment.newInstance(Contants.INTRODURE, 3, mIsFromContactActivity));
@@ -81,7 +96,7 @@ public class IntroduceContactActivity extends BaseActivity<IntroduceContactPrese
 
     private void setupSupportForApp() {
         //txtActionbarTitle.setText(getResources().getString(R.string.activity_create_plan_title_actionbar));
-        txtActionbarTitle.setText("Danh sách KH giới thiệu tháng 12");
+        txtActionbarTitle.setText("Danh sách KH giới thiệu T12");
         layoutBackButton.setVisibility(View.VISIBLE);
 
         int statusBarHeight = 0;

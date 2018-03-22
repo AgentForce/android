@@ -19,11 +19,12 @@ public class Contants {
     public static final String INTRODURE = "Khách hàng giới thiệu";
     public static final String CONSULTANT = "Khách hàng tư vấn";
     public static final String CONSULTATION_APPOINTMENT = "Khách hàng đã hẹn tư vấn";
-    public static final String SIGNED_SUCCESS = "signed_success";
-    public static final String SIGNED_NOT_APPLY = "signed_not_apply";
-    public static final String SIGNED_BHXH = "signed_bhxh";
-    public static final String SIGNED_APPLIED = "signed_applied";
-    public static final String SIGNED_WAIT_APPROVE = "signed_wait_approve";
+
+    public static final String SIGNED_NOT_APPLY_STRING = "Khách hàng chưa nộp hồ sơ";
+    public static final String SIGNED_BHXH_STRING = "Khách hàng hoàn tất BHXH";
+    public static final String SIGNED_APPLIED_STRING = "Khách hàng đã nộp hồ sơ";
+    public static final String SIGNED_WAIT_APPROVE_STRING = "Khách hàng chờ duyệt hồ sơ";
+    public static final String SIGNED_SUCCESS_STRING = "Khách hàng ký hợp đồng thành công";
 
     //menu call type
     public static final String APPOINTMENT_MENU = "appointment_menu";
@@ -55,5 +56,12 @@ public class Contants {
     public static final int CONSULTANT_REFUSE = 2;
     public static final int CONSULTANT_CALLLATER = 3;
     public static final int CONSULTANT_SEEN = 4;
+
+    //variable for signed
+    public static final int SIGNED_NOT_APPLIED = 1;
+    public static final int SIGNED_BHXH = 2;
+    public static final int SIGNED_APPLIED = 3;
+    public static final int SIGNED_WAIT_APPROVE = 4;
+    public static final int SIGNED_SUCCESS = 5;
 
 }
