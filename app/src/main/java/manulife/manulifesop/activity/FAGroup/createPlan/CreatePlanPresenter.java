@@ -66,10 +66,10 @@ public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> 
     }
 
     private void handleResponse(VerifyOTP rs) {
-        if (rs.getStatusCode() == 1) {
+        if (rs.statusCode == 1) {
             checkCampaign();
         } else {
-            mPresenterView.finishLoading(rs.getMsg(), false);
+            mPresenterView.finishLoading(rs.msg, false);
         }
     }
 
@@ -87,7 +87,7 @@ public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> 
 
     private void handleResponseCheckCampaign(VerifyOTP rs) {
         mPresenterView.finishLoading();
-        if (rs.getStatusCode() == 1) {
+        if (rs.statusCode == 1) {
             mPresenterView.showSuccessView(true);
         } else {
             mPresenterView.showSuccessView(false);
@@ -102,8 +102,6 @@ public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> 
         data.fyc = income * 1000000;
         data.rate = profit;
         data.caseSize = contractPrice * 1000000;
-        data.isNewAgent = true;
-        data.isFc = true;
 
         getCompositeDisposable().add(ApiService.getServer().getCampaignForcast(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
@@ -114,7 +112,12 @@ public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> 
                 .subscribe(this::handleResponseGetForcast, this::handleError));
     }
 
-    private void handleResponseGetForcast(CampaignForcastTarget campaignForcastTarget) {
-        mPresenterView.finishLoading("Đã gọi api chờ xử lý",true);
+    private void handleResponseGetForcast(CampaignForcastTarget rs) {
+        if(rs.statusCode == 1){
+            mPresenterView.showForcast(rs);
+            mPresenterView.finishLoading();
+        }else{
+            mPresenterView.finishLoading(rs.msg,false);
+        }
     }
 }

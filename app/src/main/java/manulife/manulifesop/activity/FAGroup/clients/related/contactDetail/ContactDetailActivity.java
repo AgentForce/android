@@ -38,7 +38,7 @@ import manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step3
 import manulife.manulifesop.util.Contants;
 
 
-public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> implements ContactDetailContract.View{
+public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> implements ContactDetailContract.View {
 
     @BindView(R.id.txt_actionbar_title)
     TextView txtActionbarTitle;
@@ -48,6 +48,17 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     View viewStatusBar;
     @BindView(R.id.img_top_background)
     ImageView imageTop;
+
+    @BindView(R.id.img_start1)
+    ImageView imageStart1;
+    @BindView(R.id.img_start2)
+    ImageView imageStart2;
+    @BindView(R.id.img_start3)
+    ImageView imageStart3;
+    @BindView(R.id.img_start4)
+    ImageView imageStart4;
+    @BindView(R.id.img_start5)
+    ImageView imageStart5;
 
     @BindView(R.id.txt_title_tyle)
     TextView txtTitleType;
@@ -175,10 +186,19 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK &&  requestCode == Contants.ADD_EVENT){
+        /*if(resultCode == RESULT_OK &&
+                (requestCode == Contants.ADD_EVENT || requestCode == Contants.SIGN_SUCCESS)){
             mActionListener.getContactDetail(mUserId);
+        }*/
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Contants.ADD_EVENT) {
+                mActionListener.getContactDetail(mUserId);
+            } else {
+                finishChangeStatus();
+            }
         }
     }
+
 
     private class processMenuContact implements View.OnClickListener {
 
@@ -187,15 +207,15 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
             int id = view.getId();
             switch (id) {
                 case R.id.layout_menu_appointment: {
-                    mActionListener.updateStatusProcess(mUserId,true,1);
+                    mActionListener.updateStatusProcess(mUserId, true, 1);
                     break;
                 }
                 case R.id.layout_menu_call_later: {
-                    mActionListener.updateStatusProcess(mUserId,false,Contants.USER_CALLLATER);
+                    mActionListener.updateStatusProcess(mUserId, false, Contants.USER_CALLLATER);
                     break;
                 }
                 case R.id.layout_menu_cancel: {
-                    mActionListener.updateStatusProcess(mUserId,false,Contants.USER_REFUSE);
+                    mActionListener.updateStatusProcess(mUserId, false, Contants.USER_REFUSE);
                     break;
                 }
             }
@@ -209,23 +229,23 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
             int id = view.getId();
             switch (id) {
                 case R.id.layout_menu_consultant: {
-                    mActionListener.updateStatusProcess(mUserId,true,1);
+                    mActionListener.updateStatusProcess(mUserId, true, 1);
                     break;
                 }
                 case R.id.layout_menu_appointment_event: {
                     Bundle data = new Bundle();
-                    data.putInt("typeInt",1);
-                    data.putInt("contactID",mUserId);
+                    data.putInt("typeInt", 1);
+                    data.putInt("contactID", mUserId);
                     showHideMenuAfterCall();
-                    goNextScreen(CreateEventActivity.class, data,Contants.ADD_EVENT);
+                    goNextScreen(CreateEventActivity.class, data, Contants.ADD_EVENT);
                     break;
                 }
                 case R.id.layout_menu_call_later: {
-                    mActionListener.updateStatusProcess(mUserId,false,Contants.APPOINTMENT_CALLLATER);
+                    mActionListener.updateStatusProcess(mUserId, false, Contants.APPOINTMENT_CALLLATER);
                     break;
                 }
                 case R.id.layout_menu_cancel: {
-                    mActionListener.updateStatusProcess(mUserId,false,Contants.APPOINTMENT_REFUSE);
+                    mActionListener.updateStatusProcess(mUserId, false, Contants.APPOINTMENT_REFUSE);
                     break;
                 }
             }
@@ -239,22 +259,22 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
             int id = view.getId();
             switch (id) {
                 case R.id.layout_menu_signed: {
-                    mActionListener.updateStatusProcess(mUserId,true,1);
+                    mActionListener.updateStatusProcess(mUserId, true, 1);
                     break;
                 }
                 case R.id.layout_menu_consultant_appointment: {
                     Bundle data = new Bundle();
-                    data.putInt("typeInt",1);
-                    data.putInt("contactID",mUserId);
-                    goNextScreen(CreateEventActivity.class, data,Contants.ADD_EVENT);
+                    data.putInt("typeInt", 1);
+                    data.putInt("contactID", mUserId);
+                    goNextScreen(CreateEventActivity.class, data, Contants.ADD_EVENT);
                     break;
                 }
                 case R.id.layout_menu_call_later: {
-                    mActionListener.updateStatusProcess(mUserId,false,Contants.CONSULTANT_CALLLATER);
+                    mActionListener.updateStatusProcess(mUserId, false, Contants.CONSULTANT_CALLLATER);
                     break;
                 }
                 case R.id.layout_menu_cancel: {
-                    mActionListener.updateStatusProcess(mUserId,false,Contants.CONSULTANT_REFUSE);
+                    mActionListener.updateStatusProcess(mUserId, false, Contants.CONSULTANT_REFUSE);
                     break;
                 }
             }
@@ -268,30 +288,70 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
             int id = view.getId();
             switch (id) {
                 case R.id.layout_menu_sign_BHXH: {
-                    mActionListener.updateStatusProcess(mUserId,false, Contants.SIGNED_BHXH);
+                    mActionListener.updateStatusProcess(mUserId, false, Contants.SIGNED_BHXH);
                     break;
                 }
                 case R.id.layout_menu_sign_applied: {
-                    mActionListener.updateStatusProcess(mUserId,false,Contants.SIGNED_APPLIED);
+                    mActionListener.updateStatusProcess(mUserId, false, Contants.SIGNED_APPLIED);
                     break;
                 }
                 case R.id.layout_menu_waiting_approve: {
-                    mActionListener.updateStatusProcess(mUserId,false,Contants.SIGNED_WAIT_APPROVE);
+                    mActionListener.updateStatusProcess(mUserId, false, Contants.SIGNED_WAIT_APPROVE);
                     break;
                 }
                 case R.id.layout_menu_sign_succcess: {
-                    mActionListener.updateStatusProcess(mUserId,false,Contants.SIGNED_SUCCESS);
+                    //mActionListener.updateStatusProcess(mUserId,false,Contants.SIGNED_SUCCESS);
+                    Bundle data = new Bundle();
+                    data.putInt("leadID", mUserId);
+                    goNextScreen(SignedSuccessActivity.class, data, Contants.SIGN_SUCCESS);
                     break;
                 }
+            }
+        }
+
+    }
+
+    private void initScore(int score) {
+        switch (score) {
+            case 1: {
+                imageStart1.setImageResource(R.drawable.ic_start_active);
+                break;
+            }
+            case 2: {
+                imageStart1.setImageResource(R.drawable.ic_start_active);
+                imageStart2.setImageResource(R.drawable.ic_start_active);
+                break;
+            }
+            case 3: {
+                imageStart1.setImageResource(R.drawable.ic_start_active);
+                imageStart2.setImageResource(R.drawable.ic_start_active);
+                imageStart3.setImageResource(R.drawable.ic_start_active);
+                break;
+            }
+            case 4: {
+                imageStart1.setImageResource(R.drawable.ic_start_active);
+                imageStart2.setImageResource(R.drawable.ic_start_active);
+                imageStart3.setImageResource(R.drawable.ic_start_active);
+                imageStart4.setImageResource(R.drawable.ic_start_active);
+                break;
+            }
+            case 5: {
+                imageStart1.setImageResource(R.drawable.ic_start_active);
+                imageStart2.setImageResource(R.drawable.ic_start_active);
+                imageStart3.setImageResource(R.drawable.ic_start_active);
+                imageStart4.setImageResource(R.drawable.ic_start_active);
+                imageStart5.setImageResource(R.drawable.ic_start_active);
+                break;
             }
         }
     }
 
     @Override
     public void initViewPager() {
-
         txtUserName.setText(ProjectApplication.getInstance().getContactDetail().data.name);
         txtPhone.setText(ProjectApplication.getInstance().getContactDetail().data.phone);
+        initScore(ProjectApplication.getInstance().getContactDetail().data.score);
+
 
         mListFragment = new ArrayList<>();
         if (mTypeString.equals(Contants.REFUSE)) {
@@ -317,18 +377,29 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
 
     @Override
     public void showHideMenuAfterCall() {
-        if (layoutMenuBot.getVisibility() == View.VISIBLE) {
-            Animation out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
-            layoutMenuBot.startAnimation(out);
-            layoutMenuBot.setVisibility(View.GONE);
+        //not show menu signed when user is signed success
+        if (!mTypeString.equals(Contants.SIGNED_SUCCESS_STRING)) {
+            if (layoutMenuBot.getVisibility() == View.VISIBLE) {
+                Animation out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+                layoutMenuBot.startAnimation(out);
+                layoutMenuBot.setVisibility(View.GONE);
 
-            enableViewTop(true);
-        } else {
-            Animation in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-            layoutMenuBot.startAnimation(in);
-            layoutMenuBot.setVisibility(View.VISIBLE);
+                if(mAdapterViewPager.getItem(0) instanceof ContactDetailStep1Fragment)
+                {
+                    ((ContactDetailStep1Fragment) mAdapterViewPager.getItem(0)).showXLetter(false);
+                }
 
-            enableViewTop(false);
+                enableViewTop(true);
+            } else {
+                Animation in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+                layoutMenuBot.startAnimation(in);
+                layoutMenuBot.setVisibility(View.VISIBLE);
+                if(mAdapterViewPager.getItem(0) instanceof ContactDetailStep1Fragment)
+                {
+                    ((ContactDetailStep1Fragment) mAdapterViewPager.getItem(0)).showXLetter(true);
+                }
+                enableViewTop(false);
+            }
         }
     }
 

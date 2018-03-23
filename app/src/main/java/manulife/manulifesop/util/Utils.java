@@ -13,6 +13,8 @@ import android.widget.ScrollView;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -137,5 +139,31 @@ public class Utils {
             rs = count/limit;
         }
         return rs;
+    }
+
+    /**
+     * Convert integer number to string type with separator
+     *
+     * @param integerNumber
+     * @return
+     */
+    public static String integerTypeTextFormat(int integerNumber) {
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.getDefault());
+        otherSymbols.setGroupingSeparator(',');
+        DecimalFormat df = new DecimalFormat("#,##0",otherSymbols);
+        return df.format(integerNumber);
+    }
+
+    /**
+     * Convert long number to string type with separator
+     *
+     * @param longNumber
+     * @return
+     */
+    public static String longTypeTextFormat(long longNumber) {
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.getDefault());
+        otherSymbols.setGroupingSeparator(',');
+        DecimalFormat df = new DecimalFormat("#,##0",otherSymbols);
+        return df.format(longNumber);
     }
 }

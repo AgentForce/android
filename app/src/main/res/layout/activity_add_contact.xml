@@ -25,19 +25,18 @@
 
         <ImageView
             android:id="@+id/img_temp1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
-            android:background="@color/color_dashboard_introduce" />
-
+            android:src="@drawable/ic_search"/>
         <EditText
             android:id="@+id/edt_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_toRightOf="@+id/img_temp1"
-            android:layout_alignTop="@+id/img_temp1"
-            android:layout_alignBottom="@+id/img_temp1"
             android:background="@android:color/transparent"
             android:hint="Search"
             android:textSize="@dimen/welcome_activity_note" />

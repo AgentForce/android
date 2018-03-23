@@ -31,12 +31,12 @@
                 android:id="@+id/layout_user_job"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
                 <ImageView
-                    android:layout_width="20dp"
+                    android:layout_width="13dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/ic_customer_infor_title"/>
                 <TextView
                     android:id="@+id/txt_user_job"
                     android:layout_marginLeft="10dp"
@@ -49,13 +49,13 @@
                 android:layout_below="@+id/layout_user_job"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:gravity="center_vertical"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_launcher"/>
+                    android:layout_width="13dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_gps"/>
                 <TextView
                     android:id="@+id/txt_user_address"
                     android:layout_marginLeft="10dp"

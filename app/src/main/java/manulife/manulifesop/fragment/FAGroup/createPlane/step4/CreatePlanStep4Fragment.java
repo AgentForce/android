@@ -5,16 +5,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
+import manulife.manulifesop.api.ObjectResponse.CampaignForcastTarget;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step3.CreatePlanStep3Contract;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step3.CreatePlanStep3Present;
+import manulife.manulifesop.util.Utils;
 
 
 /**
@@ -25,14 +28,60 @@ public class CreatePlanStep4Fragment extends BaseFragment<CreatePlanActivity,Cre
 
     @BindView(R.id.btn_agree)
     Button btnAgree;
-
-
+    @BindView(R.id.txt_month_income)
+    TextView txtIncomeMonthly;
+    @BindView(R.id.txt_bonus_new_agency)
+    TextView txtBonusNewAgency;
+    @BindView(R.id.txt_bonus_month)
+    TextView txtBonusMonth;
+    @BindView(R.id.txt_bonus_quarter)
+    TextView txtBonusQuarter;
+    @BindView(R.id.txt_bonus_mdrt)
+    TextView txtBonusMdrt;
+    @BindView(R.id.total_income)
+    TextView txtTotalIncome;
 
     public static CreatePlanStep4Fragment newInstance() {
         Bundle args = new Bundle();
         CreatePlanStep4Fragment fragment = new CreatePlanStep4Fragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void showData(int income,CampaignForcastTarget data) {
+        txtIncomeMonthly.setText(Utils.integerTypeTextFormat(income));
+        long totalIncome = income;
+        long tmpNum;
+        tmpNum = 0;
+        for(int i=0;i<data.data.newAgent.size();i++){
+            tmpNum+=data.data.newAgent.get(i);
+        }
+        totalIncome += tmpNum;
+        txtBonusNewAgency.setText(Utils.longTypeTextFormat(tmpNum));
+
+        tmpNum = 0;
+        for(int i=0;i<data.data.monthlyBonus.size();i++){
+            tmpNum+=data.data.monthlyBonus.get(i);
+        }
+        totalIncome += tmpNum;
+        txtIncomeMonthly.setText(Utils.longTypeTextFormat(tmpNum));
+
+        tmpNum = 0;
+        for(int i=0;i<data.data.quarterBonus.size();i++){
+            tmpNum+=data.data.quarterBonus.get(i);
+        }
+        totalIncome += tmpNum;
+        txtBonusQuarter.setText(Utils.longTypeTextFormat(tmpNum));
+
+        tmpNum = 0;
+        for(int i=0;i<data.data.mdrtBonus.size();i++){
+            tmpNum+=data.data.mdrtBonus.get(i);
+        }
+        totalIncome += tmpNum;
+        txtBonusMdrt.setText(Utils.longTypeTextFormat(tmpNum));
+
+        txtTotalIncome.setText(Utils.longTypeTextFormat(totalIncome));
     }
 
     @Override
@@ -74,6 +123,8 @@ public class CreatePlanStep4Fragment extends BaseFragment<CreatePlanActivity,Cre
             }
         }
     }
+
+
 
     /*SmsReceiver.bindListener(new SmsListener() {
             @Override

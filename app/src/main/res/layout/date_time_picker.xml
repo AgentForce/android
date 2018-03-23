@@ -42,6 +42,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_weight="10"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:background="@drawable/cus_button_login"
         android:text="Chọn" />

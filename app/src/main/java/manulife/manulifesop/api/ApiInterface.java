@@ -12,6 +12,7 @@ import manulife.manulifesop.api.ObjectInput.InputGetForcastTarget;
 import manulife.manulifesop.api.ObjectInput.InputIntroduceContact;
 import manulife.manulifesop.api.ObjectInput.InputLoginData;
 import manulife.manulifesop.api.ObjectInput.InputRequestOTP;
+import manulife.manulifesop.api.ObjectInput.InputSubmitContract;
 import manulife.manulifesop.api.ObjectInput.InputVerifyOTP;
 import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
 import manulife.manulifesop.api.ObjectResponse.ActivityDetail;
@@ -184,4 +185,9 @@ public interface ApiInterface {
     Observable<CampaignForcastTarget> getCampaignForcast(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                                      @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
                                                      @Body InputGetForcastTarget data);
+
+    @POST("leads/contract")
+    Observable<BaseResponse> submitContract(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                         @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                         @Body InputSubmitContract data);
 }

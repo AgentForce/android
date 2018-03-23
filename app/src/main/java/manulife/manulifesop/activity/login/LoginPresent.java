@@ -50,7 +50,8 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
 
         String checksum = "fadfadf";
         InputCreatePass data = new InputCreatePass();
-        data.setPassword(pass);
+        data.password = pass;
+        data.userName = user;
 
         getCompositeDisposable().add(ApiService.getServer().setPassword(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
@@ -70,12 +71,10 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     }
 
     private void handleResponseCreatePass(VerifyOTP data) {
-        if (data.getStatusCode() == 1) {
-            if (data.getData().getStatus()) {
-                login(mUserCreatePass, mPassCreatePass);
-            }
+        if (data.statusCode == 1) {
+            login(mUserCreatePass, mPassCreatePass);
         } else {
-            mPresenterView.finishLoading(data.getMsg(), false);
+            mPresenterView.finishLoading(data.msg, false);
         }
     }
 
@@ -122,11 +121,11 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     }
 
     private void handleResponseCheckCampaign(VerifyOTP data) {
-        if (data.getStatusCode() == 1) {
+        if (data.statusCode == 1) {
             mPresenterView.finishLoading();
             //test
-            data.getData().setStatus(false);
-            if (data.getData().getStatus()) {
+            //data.data.status = false;
+            if (data.data.status) {
                 //go to main if campaign is created
                 mPresenterView.showMainFAActvity();
                 //mPresenterView.showConfirmCreatePlan();
@@ -134,7 +133,7 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
                 mPresenterView.showConfirmCreatePlan();
             }
         } else {
-            mPresenterView.finishLoading(data.getMsg(), false);
+            mPresenterView.finishLoading(data.msg, false);
         }
     }
 

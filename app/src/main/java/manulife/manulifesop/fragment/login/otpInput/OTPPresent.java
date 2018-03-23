@@ -51,17 +51,17 @@ public class OTPPresent extends BasePresenter<OTPContract.View> implements OTPCo
     }
 
     private void handleResponseRequestOTP(RequestOTP requestOTP) {
-        if (requestOTP.getStatus() == 1) {
-            if (requestOTP.getData().getStatus()) {
+        if (requestOTP.statusCode == 1) {
+            if (requestOTP.data.status) {
                 mPresenterView.disableRequestButton(true);
                 mPresenterView.finishLoading();
             } else {
                 //mPresenterView.disableRequestButton(false);
-                mPresenterView.finishLoading(requestOTP.getMsg(), false);
+                mPresenterView.finishLoading(requestOTP.msg, false);
             }
         } else {
             //mPresenterView.disableRequestButton(false);
-            mPresenterView.finishLoading(requestOTP.getMsg(), false);
+            mPresenterView.finishLoading(requestOTP.msg, false);
         }
 
     }
@@ -85,15 +85,11 @@ public class OTPPresent extends BasePresenter<OTPContract.View> implements OTPCo
     }
 
     private void handleResponseVerify(VerifyOTP verifyOTP) {
-        if (verifyOTP.getStatusCode() == 1) {
-            if (verifyOTP.getData().getStatus()) {
-                mPresenterView.finishLoading();
-                mPresenterView.showFragmentCreatePass();
-            } else {
-                mPresenterView.finishLoading(verifyOTP.getMsg(), false);
-            }
+        if (verifyOTP.statusCode == 1) {
+            mPresenterView.finishLoading();
+            mPresenterView.showFragmentCreatePass();
         } else {
-            mPresenterView.finishLoading(verifyOTP.getMsg(), false);
+            mPresenterView.finishLoading(verifyOTP.msg, false);
         }
     }
 

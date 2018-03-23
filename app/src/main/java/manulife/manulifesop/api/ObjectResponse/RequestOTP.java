@@ -8,64 +8,26 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class RequestOTP {
-    @SerializedName("status")
+    @SerializedName("statusCode")
     @Expose
-    private Integer status;
+    public Integer statusCode;
     @SerializedName("data")
     @Expose
-    private Data data;
+    public Data data;
     @SerializedName("msg")
     @Expose
-    private String msg;
+    public String msg;
     @SerializedName("msgCode")
     @Expose
-    private String msgCode;
-
+    public String msgCode;
     public class Data {
 
-        @SerializedName("Status")
+        @SerializedName("status")
         @Expose
-        private Boolean status;
+        public Boolean status;
+        @SerializedName("token")
+        @Expose
+        public String token;
 
-        public Boolean getStatus() {
-            return status;
-        }
-
-        public void setStatus(Boolean status) {
-            this.status = status;
-        }
-
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Data getData() {
-        return data;
-    }
-
-    public void setData(Data data) {
-        this.data = data;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public String getMsgCode() {
-        return msgCode;
-    }
-
-    public void setMsgCode(String msgCode) {
-        this.msgCode = msgCode;
     }
 }

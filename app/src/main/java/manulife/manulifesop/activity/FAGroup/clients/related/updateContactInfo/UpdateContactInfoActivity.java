@@ -33,6 +33,9 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
 
+    @BindView(R.id.txt_avatar)
+    TextView txtAvatar;
+
     @BindView(R.id.txt_name)
     TextView txtName;
     @BindView(R.id.txt_phone)
@@ -51,6 +54,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
     LinearLayout layoutTitleStep1;
     @BindView(R.id.img_step1)
     ImageView imgStep1;
+    @BindView(R.id.img_step1_add)
+    ImageView imgStep1Add;
+
+
     @BindView(R.id.txt_step1_choose)
     TextView txtStep1Choose;
     @BindView(R.id.rg_step1_line1)
@@ -66,6 +73,9 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
     LinearLayout layoutTitleStep2;
     @BindView(R.id.img_step2)
     ImageView imgStep2;
+    @BindView(R.id.img_step2_add)
+    ImageView imgStep2Add;
+
     @BindView(R.id.txt_step2_choose)
     TextView txtStep2Choose;
     @BindView(R.id.rg_step2_line1)
@@ -81,6 +91,9 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
     LinearLayout layoutTitleStep3;
     @BindView(R.id.img_step3)
     ImageView imgStep3;
+    @BindView(R.id.img_step3_add)
+    ImageView imgStep3Add;
+
     @BindView(R.id.txt_step3_choose)
     TextView txtStep3Choose;
     @BindView(R.id.rg_step3_line1)
@@ -97,6 +110,9 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
     LinearLayout layoutTitleStep4;
     @BindView(R.id.img_step4)
     ImageView imgStep4;
+    @BindView(R.id.img_step4_add)
+    ImageView imgStep4Add;
+
     @BindView(R.id.txt_step4_choose)
     TextView txtStep4Choose;
     @BindView(R.id.rg_step4_line1)
@@ -112,6 +128,9 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
     LinearLayout layoutTitleStep5;
     @BindView(R.id.img_step5)
     ImageView imgStep5;
+    @BindView(R.id.img_step5_add)
+    ImageView imgStep5Add;
+
     @BindView(R.id.txt_step5_choose)
     TextView txtStep5Choose;
     @BindView(R.id.rg_step5_line1)
@@ -151,6 +170,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
 
     private void initViews() {
 
+        txtAvatar.setText(mDataChoosed.get(mPosition).getName().substring(0, 1));
         txtName.setText(mDataChoosed.get(mPosition).getName());
         txtPhone.setText(mDataChoosed.get(mPosition).getPhone());
 
@@ -485,6 +505,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
         else {
             mPosition = position;
 
+            txtAvatar.setText(mDataChoosed.get(mPosition).getName().substring(0, 1));
             txtName.setText(mDataChoosed.get(mPosition).getName());
             txtPhone.setText(mDataChoosed.get(mPosition).getPhone());
 
@@ -497,6 +518,8 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep1.setVisibility(View.GONE);
             expandableLayoutStep1.collapse();
             imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+            imgStep1Add.setImageResource(R.drawable.ic_add);
+
             initListenerStep1Line1();
             initListenerStep1Line2();
 
@@ -506,6 +529,8 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep2.setVisibility(View.GONE);
             expandableLayoutStep2.collapse();
             imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+            imgStep2Add.setImageResource(R.drawable.ic_add);
+
             initListenerStep2Line1();
             initListenerStep2Line2();
 
@@ -515,6 +540,8 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep3.setVisibility(View.GONE);
             expandableLayoutStep3.collapse();
             imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+            imgStep3Add.setImageResource(R.drawable.ic_add);
+
             initListenerStep3Line1();
             initListenerStep3Line2();
 
@@ -524,6 +551,8 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep4.setVisibility(View.GONE);
             expandableLayoutStep4.collapse();
             imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+            imgStep4Add.setImageResource(R.drawable.ic_add);
+
             initListenerStep4Line1();
             initListenerStep4Line2();
 
@@ -533,6 +562,8 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep5.setVisibility(View.GONE);
             expandableLayoutStep5.collapse();
             imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+            imgStep5Add.setImageResource(R.drawable.ic_add);
+
             initListenerStep5Line1();
             initListenerStep5Line2();
 
@@ -566,16 +597,18 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     Animation out = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
                     layoutChooseStep1.startAnimation(out);
                     layoutChooseStep1.setVisibility(View.GONE);
-
                     imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    imgStep1Add.setImageResource(R.drawable.ic_sub);
                 } else {
                     expandableLayoutStep1.collapse(true);
                     if (!txtStep1Choose.getText().equals("choose")) {
                         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
                         layoutChooseStep1.startAnimation(in);
                         layoutChooseStep1.setVisibility(View.VISIBLE);
+                    } else {
+                        imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
                     }
-                    imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+                    imgStep1Add.setImageResource(R.drawable.ic_add);
                 }
                 break;
             }
@@ -588,14 +621,17 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     layoutChooseStep2.setVisibility(View.GONE);
 
                     imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    imgStep2Add.setImageResource(R.drawable.ic_sub);
                 } else {
                     expandableLayoutStep2.collapse(true);
                     if (!txtStep2Choose.getText().equals("choose")) {
                         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
                         layoutChooseStep2.startAnimation(in);
                         layoutChooseStep2.setVisibility(View.VISIBLE);
+                    } else {
+                        imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
                     }
-                    imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+                    imgStep2Add.setImageResource(R.drawable.ic_add);
                 }
                 break;
             }
@@ -608,14 +644,17 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     layoutChooseStep3.setVisibility(View.GONE);
 
                     imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    imgStep3Add.setImageResource(R.drawable.ic_sub);
                 } else {
                     expandableLayoutStep3.collapse(true);
                     if (!txtStep3Choose.getText().equals("choose")) {
                         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
                         layoutChooseStep3.startAnimation(in);
                         layoutChooseStep3.setVisibility(View.VISIBLE);
+                    }else {
+                        imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
                     }
-                    imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+                    imgStep3Add.setImageResource(R.drawable.ic_add);
                 }
                 break;
             }
@@ -628,14 +667,17 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     layoutChooseStep4.setVisibility(View.GONE);
 
                     imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    imgStep4Add.setImageResource(R.drawable.ic_sub);
                 } else {
                     expandableLayoutStep4.collapse(true);
                     if (!txtStep4Choose.getText().equals("choose")) {
                         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
                         layoutChooseStep4.startAnimation(in);
                         layoutChooseStep4.setVisibility(View.VISIBLE);
+                    }else {
+                        imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
                     }
-                    imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+                    imgStep4Add.setImageResource(R.drawable.ic_add);
                 }
                 break;
             }
@@ -648,14 +690,17 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     layoutChooseStep5.setVisibility(View.GONE);
 
                     imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    imgStep5Add.setImageResource(R.drawable.ic_sub);
                 } else {
                     expandableLayoutStep5.collapse(true);
                     if (!txtStep5Choose.getText().equals("choose")) {
                         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
                         layoutChooseStep5.startAnimation(in);
                         layoutChooseStep5.setVisibility(View.VISIBLE);
+                    }else {
+                        imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
                     }
-                    imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+                    imgStep5Add.setImageResource(R.drawable.ic_add);
                 }
                 break;
             }

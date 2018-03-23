@@ -50,11 +50,11 @@
 
                         <ImageView
                             android:id="@+id/img_row1"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:background="@color/colorPrimary" />
+                            android:src="@drawable/ic_arrow_right2" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -101,11 +101,11 @@
 
                         <ImageView
                             android:id="@+id/img_row2"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:background="@color/colorPrimary" />
+                            android:src="@drawable/ic_arrow_right2" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -151,11 +151,11 @@
 
                         <ImageView
                             android:id="@+id/img_row3"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:background="@color/colorPrimary" />
+                            android:src="@drawable/ic_arrow_right2" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -202,11 +202,11 @@
 
                         <ImageView
                             android:id="@+id/img_row4"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:background="@color/colorPrimary" />
+                            android:src="@drawable/ic_arrow_right2" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -252,11 +252,11 @@
 
                         <ImageView
                             android:id="@+id/img_row5"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:background="@color/colorPrimary" />
+                            android:src="@drawable/ic_arrow_right2" />
                     </RelativeLayout>
                 </LinearLayout>
 

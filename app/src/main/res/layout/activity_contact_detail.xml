@@ -69,14 +69,15 @@
                     android:layout_alignBottom="@+id/txt_actionbar_title"
                     android:layout_alignParentRight="true"
                     android:layout_alignTop="@+id/txt_actionbar_title"
-                    android:visibility="visible">
+                    android:visibility="visible"
+                    android:gravity="center_vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:src="@drawable/ic_back" />
+                        android:background="@drawable/ic_edit" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -134,33 +135,38 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/img_start1"
                 android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@color/colorPrimary" />
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_start_inactive" />
 
             <ImageView
+                android:id="@+id/img_start2"
                 android:layout_width="18dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="5dp"
-                android:background="@color/colorPrimary" />
+                android:src="@drawable/ic_start_inactive" />
 
             <ImageView
+                android:id="@+id/img_start3"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="5dp"
-                android:background="@color/colorPrimary" />
+                android:src="@drawable/ic_start_inactive" />
 
             <ImageView
+                android:id="@+id/img_start4"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="5dp"
-                android:background="@color/colorPrimary" />
+                android:src="@drawable/ic_start_inactive" />
 
             <ImageView
+                android:id="@+id/img_start5"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="5dp"
-                android:background="@color/colorPrimary" />
+                android:src="@drawable/ic_start_inactive" />
         </LinearLayout>
 
         <TextView

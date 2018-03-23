@@ -1,5 +1,6 @@
 package manulife.manulifesop.fragment.FAGroup.createPlane.step4;
 
+import manulife.manulifesop.api.ObjectResponse.CampaignForcastTarget;
 import manulife.manulifesop.base.BaseMVPView;
 
 
@@ -10,7 +11,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface CreatePlanStep4Contract {
 
     interface View extends BaseMVPView {
-
+        void showData(int income,CampaignForcastTarget data);
     }
 
     interface Action {

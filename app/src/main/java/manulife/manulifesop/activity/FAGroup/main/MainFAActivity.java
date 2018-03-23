@@ -70,10 +70,9 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         mActionListener = new MainFAPresenter(this, this);
         setupSupportForApp();
         setupMenuBot();
-        mIsgetCampaign = getIntent().getExtras()
-                .getBoolean("isGetCampaign", false);
-        /*mIsgetCampaign = true;
-        new DeviceInfo(this);*/
+        /*mIsgetCampaign = getIntent().getExtras()
+                .getBoolean("isGetCampaign", false);*/
+        mIsgetCampaign = true;
         mActionListener.checkIsGetCampaign(mIsgetCampaign);
 
     }

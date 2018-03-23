@@ -1,5 +1,6 @@
 package manulife.manulifesop.activity.FAGroup.createPlan;
 
+import manulife.manulifesop.api.ObjectResponse.CampaignForcastTarget;
 import manulife.manulifesop.base.BaseMVPView;
 
 /**
@@ -12,6 +13,7 @@ public interface CreatePlanContract {
         void showNextFragment(int contractNum,String startDate, String endDate,int income,int contractPrice, int profit);
         void showCreateCampaign();
         void showSuccessView(boolean isgotCampaign);
+        void showForcast(CampaignForcastTarget data);
     }
     interface Action{
         void createCampaign(String startDate, String endDate, long profit, long contractPrice, long inCome);

@@ -17,11 +17,13 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
-            android:background="@color/color_dashboard_introduce" />
+            android:src="@drawable/ic_search"/>
 
         <EditText
             android:id="@+id/edt_search"
@@ -48,12 +50,12 @@
             android:text="Khách hàng giới thiêu(0/50)"
             android:layout_centerVertical="true"/>
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@color/red_btn_bg_color"/>
+            android:src="@drawable/ic_arrow_down"/>
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcv_contact"

@@ -39,7 +39,7 @@
                     android:layout_height="25dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/agent_icon" />
+                    android:src="@drawable/ic_contact_phone" />
 
                 <TextView
                     android:id="@+id/txt_temp_84"

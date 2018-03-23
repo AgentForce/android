@@ -12,19 +12,33 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/img_step1"
+        <RelativeLayout
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/color_dashboard_introduce" />
+            android:layout_marginTop="10dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/img_step1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@color/color_dashboard_introduce"
+                android:scaleType="fitCenter"
+                app:riv_corner_radius="45dp"
+                app:riv_mutate_background="true" />
+            <ImageView
+                android:id="@+id/img_step1_add"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_add"/>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="15dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="100">
 
@@ -101,10 +115,10 @@
                         android:checked="false"
                         android:gravity="center_horizontal|center_vertical"
                         android:minHeight="40dp"
+                        android:tag="1"
                         android:text="Dưới hoặc bằng 25t"
                         android:textColor="@drawable/cus_radio_background_option"
-                        android:textSize="12sp"
-                        android:tag="1"/>
+                        android:textSize="12sp" />
 
                     <RadioButton
                         android:id="@+id/rb_step1_2"
@@ -117,10 +131,10 @@
                         android:checked="false"
                         android:gravity="center_horizontal|center_vertical"
                         android:minHeight="40dp"
+                        android:tag="3"
                         android:text="Từ 45t đến 64t"
                         android:textColor="@drawable/cus_radio_background_option"
-                        android:textSize="12sp"
-                        android:tag="3"/>
+                        android:textSize="12sp" />
                 </RadioGroup>
                 <!--line 2-->
                 <RadioGroup
@@ -141,10 +155,10 @@
                         android:checked="false"
                         android:gravity="center_horizontal|center_vertical"
                         android:minHeight="40dp"
+                        android:tag="2"
                         android:text="Từ 26t đến 44t"
                         android:textColor="@drawable/cus_radio_background_option"
-                        android:textSize="12sp"
-                        android:tag="2"/>
+                        android:textSize="12sp" />
 
                     <RadioButton
                         android:id="@+id/rb_step1_4"
@@ -157,10 +171,10 @@
                         android:checked="false"
                         android:gravity="center_horizontal|center_vertical"
                         android:minHeight="40dp"
+                        android:tag="4"
                         android:text="Từ 64t trở lên"
                         android:textColor="@drawable/cus_radio_background_option"
-                        android:textSize="12sp"
-                        android:tag="4"/>
+                        android:textSize="12sp" />
                 </RadioGroup>
             </LinearLayout>
         </LinearLayout>

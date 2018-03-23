@@ -7,17 +7,17 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:background="@color/colorPrimary" />
+            android:background="@drawable/ic_customer_infor_system" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -34,11 +34,11 @@
 
             <ImageView
                 android:id="@+id/img_row1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@color/colorPrimary" />
+                android:src="@drawable/ic_arrow_right2" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -55,13 +55,13 @@
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:background="@color/colorPrimary" />
+            android:background="@drawable/ic_customer_infor_introduce" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -78,11 +78,11 @@
 
             <ImageView
                 android:id="@+id/img_row2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@color/colorPrimary" />
+                android:src="@drawable/ic_arrow_right2" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -96,17 +96,17 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:background="@color/colorPrimary" />
+            android:background="@drawable/ic_customer_infor_support" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -123,11 +123,11 @@
 
             <ImageView
                 android:id="@+id/img_row3"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@color/colorPrimary" />
+                android:src="@drawable/ic_arrow_right2" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -143,13 +143,13 @@
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:background="@color/colorPrimary" />
+            android:background="@drawable/ic_customer_infor_exist" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -166,13 +166,14 @@
 
             <ImageView
                 android:id="@+id/img_row4"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@color/colorPrimary" />
+                android:src="@drawable/ic_arrow_right2" />
         </RelativeLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"

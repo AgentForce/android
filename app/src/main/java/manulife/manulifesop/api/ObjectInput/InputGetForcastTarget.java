@@ -17,10 +17,4 @@ public class InputGetForcastTarget {
     @SerializedName("CaseSize")
     @Expose
     public Integer caseSize;//độ lớn hợp đồng
-    @SerializedName("IsNewAgent")
-    @Expose
-    public Boolean isNewAgent;
-    @SerializedName("IsFc")
-    @Expose
-    public Boolean isFc;
 }

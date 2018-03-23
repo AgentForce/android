@@ -20,6 +20,7 @@ import chick.indicator.CircleIndicatorPager;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
+import manulife.manulifesop.api.ObjectResponse.CampaignForcastTarget;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
@@ -140,6 +141,11 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
 
             }
         });
+    }
+
+    @Override
+    public void showForcast(CampaignForcastTarget data) {
+        ((CreatePlanStep4Fragment) mAdapter.getItem(3)).showData(mIncome,data);
     }
 
     @OnClick({R.id.layout_btn_back,R.id.btn_goto_main})

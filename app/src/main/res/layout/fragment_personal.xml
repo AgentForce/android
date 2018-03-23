@@ -45,7 +45,7 @@
                 android:layout_height="30dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:background="@color/red_btn_bg_color" />
+                android:src="@drawable/ic_edit_personal" />
         </RelativeLayout>
 
         <LinearLayout

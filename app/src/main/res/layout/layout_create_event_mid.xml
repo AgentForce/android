@@ -5,15 +5,16 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/img_row1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
-            android:background="@color/colorPrimary" />
+            android:background="@drawable/ic_contact_introduce" />
 
         <TextView
             android:id="@+id/txt_type"
@@ -30,10 +31,10 @@
         <ImageView
             android:id="@+id/img_row1_right"
             android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:background="@color/colorPrimary" />
+            android:src="@drawable/ic_arrow_right" />
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
@@ -47,10 +48,10 @@
 
         <ImageView
             android:id="@+id/img_row2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
-            android:background="@color/colorPrimary" />
+            android:background="@drawable/ic_customer_infor_time"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -125,23 +126,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="23dp"
             android:layout_centerVertical="true"
-            android:background="@color/colorPrimary" />
+            android:background="@drawable/ic_gps" />
 
-        <!--<TextView
-            android:id="@+id/txt_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_row1"
-            android:text="Thêm địa điểm"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:textSize="@dimen/welcome_activity_content" />-->
         <EditText
             android:id="@+id/edt_location"
             android:layout_width="match_parent"
@@ -168,13 +161,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
-            android:background="@color/colorPrimary" />
+            android:background="@drawable/ic_system_notification" />
 
         <TextView
             android:id="@+id/txt_notification_time"
@@ -200,10 +194,10 @@
 
         <ImageView
             android:id="@+id/img_row7"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
-            android:background="@color/colorPrimary" />
+            android:src="@drawable/ic_customer_appointment" />
 
         <TextView
             android:layout_width="match_parent"

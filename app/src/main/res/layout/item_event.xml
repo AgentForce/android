@@ -78,14 +78,51 @@
 
         </LinearLayout>
 
-        <ImageButton
+        <!--<ImageButton
             android:id="@+id/menu_right"
             android:layout_width="10dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@color/colorAccent" />
+            android:background="@drawable/ic_threedots" />-->
+        <LinearLayout
+            android:id="@+id/menu_right"
+            android:layout_width="10dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@android:color/darker_gray"
+                android:scaleType="fitCenter"
+                app:riv_corner_radius="3dp"
+                app:riv_mutate_background="true" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@android:color/darker_gray"
+                android:scaleType="fitCenter"
+                app:riv_corner_radius="3dp"
+                app:riv_mutate_background="true" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:background="@android:color/darker_gray"
+                android:scaleType="fitCenter"
+                app:riv_corner_radius="3dp"
+                app:riv_mutate_background="true" />
+        </LinearLayout>
+
         <View
             android:id="@+id/layout_menu_right"
             android:layout_width="50dp"

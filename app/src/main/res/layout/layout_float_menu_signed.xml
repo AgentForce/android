@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_menu"
     android:visibility="visible">
 
@@ -34,11 +35,26 @@
             android:text="Khách hàng hoàn tất BHXH"
             android:textSize="14sp" />
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/colorPrimary" />
+            android:layout_marginRight="5dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimary"
+                android:scaleType="fitCenter"
+                app:riv_corner_radius="20dp"
+                app:riv_mutate_background="true" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_signed_finish" />
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -64,11 +80,26 @@
             android:text="Đã nộp hợp đồng"
             android:textSize="14sp" />
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/colorPrimary" />
+            android:layout_marginRight="5dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimary"
+                android:scaleType="fitCenter"
+                app:riv_corner_radius="20dp"
+                app:riv_mutate_background="true" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_signed_submitted" />
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -94,11 +125,26 @@
             android:text="Chờ thẩm định"
             android:textSize="14sp" />
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/colorPrimary" />
+            android:layout_marginRight="5dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimary"
+                android:scaleType="fitCenter"
+                app:riv_corner_radius="20dp"
+                app:riv_mutate_background="true" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_signed_waiting" />
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -124,11 +170,26 @@
             android:text="Hợp đồng đã được cấp"
             android:textSize="14sp" />
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/colorPrimary" />
+            android:layout_marginRight="5dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/colorPrimary"
+                android:scaleType="fitCenter"
+                app:riv_corner_radius="20dp"
+                app:riv_mutate_background="true" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_signed_granted" />
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

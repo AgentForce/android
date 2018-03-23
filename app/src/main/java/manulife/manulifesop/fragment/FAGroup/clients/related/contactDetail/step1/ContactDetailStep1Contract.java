@@ -11,6 +11,7 @@ public interface ContactDetailStep1Contract {
 
     interface View extends BaseMVPView {
         void initViews();
+        void showXLetter(boolean isShow);
     }
 
     interface Action {

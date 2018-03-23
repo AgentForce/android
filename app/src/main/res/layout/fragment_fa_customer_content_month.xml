@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <RelativeLayout
                 android:id="@+id/image_left"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -24,8 +25,22 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/color_dashboard_sign" />
+                android:layout_marginTop="20dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_dashboard_contact"
+                    android:scaleType="fitCenter"
+                    app:riv_corner_radius="5dp"
+                    app:riv_mutate_background="true" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_contact_white" />
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/image_right"
@@ -34,7 +49,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:background="@color/color_dashboard_sign" />
+                android:src="@drawable/ic_arrow_right2" />
 
             <TextView
                 android:id="@+id/txt_step1_result"
@@ -68,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <RelativeLayout
                 android:id="@+id/image_step2_left"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -76,8 +91,22 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/color_dashboard_sign" />
+                android:layout_marginTop="20dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_dashboard_meeting"
+                    android:scaleType="fitCenter"
+                    app:riv_corner_radius="5dp"
+                    app:riv_mutate_background="true" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_meeting_white" />
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/image_step2_right"
@@ -86,7 +115,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:background="@color/color_dashboard_sign" />
+                android:src="@drawable/ic_arrow_right2" />
 
             <TextView
                 android:id="@+id/txt_step2_result"
@@ -120,7 +149,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <RelativeLayout
                 android:id="@+id/image_step3_left"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -128,8 +157,22 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/color_dashboard_sign" />
+                android:layout_marginTop="20dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_dashboard_advisory"
+                    android:scaleType="fitCenter"
+                    app:riv_corner_radius="5dp"
+                    app:riv_mutate_background="true" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_consultant2" />
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/image_step3_right"
@@ -138,7 +181,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:background="@color/color_dashboard_sign" />
+                android:src="@drawable/ic_arrow_right2" />
 
             <TextView
                 android:id="@+id/txt_step3_result"
@@ -172,7 +215,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <RelativeLayout
                 android:id="@+id/image_step4_left"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -180,8 +223,22 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/color_dashboard_sign" />
+                android:layout_marginTop="20dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_dashboard_sign"
+                    android:scaleType="fitCenter"
+                    app:riv_corner_radius="5dp"
+                    app:riv_mutate_background="true" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_sign_white" />
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/image_step4_right"
@@ -190,7 +247,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:background="@color/color_dashboard_sign" />
+                android:src="@drawable/ic_arrow_right2" />
 
             <TextView
                 android:id="@+id/txt_step4_result"
@@ -224,7 +281,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <RelativeLayout
                 android:id="@+id/image_step5_left"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -232,8 +289,22 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/color_dashboard_sign" />
+                android:layout_marginTop="20dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_dashboard_introduce"
+                    android:scaleType="fitCenter"
+                    app:riv_corner_radius="5dp"
+                    app:riv_mutate_background="true" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_introduce_white" />
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/image_step5_right"
@@ -242,7 +313,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:background="@color/color_dashboard_sign" />
+                android:src="@drawable/ic_arrow_right2" />
 
             <TextView
                 android:id="@+id/txt_step5_result"

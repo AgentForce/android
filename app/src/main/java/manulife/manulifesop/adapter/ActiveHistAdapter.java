@@ -9,11 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -79,7 +76,7 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
         holder.layoutMenuRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popup = new PopupMenu(mContext, holder.menuRight);
+                PopupMenu popup = new PopupMenu(mContext, holder.layoutMenuRight);
                 popup.inflate(R.menu.option_menu_active_hist);
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -148,8 +145,6 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
         TextView txtTitle;
         @BindView(R.id.txt_content)
         TextView txtContent;
-        @BindView(R.id.menu_right)
-        ImageButton menuRight;
         @BindView(R.id.layout_menu_right)
         View layoutMenuRight;
         @BindView(R.id.layout_root)

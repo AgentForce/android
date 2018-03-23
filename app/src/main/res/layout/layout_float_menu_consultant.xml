@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_menu"
     android:visibility="visible">
 
@@ -32,13 +33,14 @@
             android:paddingRight="10dp"
             android:paddingTop="5dp"
             android:text="Chuyển sang ký hợp đồng"
+            android:layout_marginBottom="5dp"
             android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/colorPrimary" />
+            android:background="@drawable/ic_proccess_step_signed" />
     </LinearLayout>
 
     <LinearLayout
@@ -62,13 +64,30 @@
             android:paddingRight="10dp"
             android:paddingTop="5dp"
             android:text="Hẹn tư vấn"
+            android:layout_marginRight="5dp"
             android:textSize="14sp" />
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/colorPrimary" />
+            android:layout_marginRight="5dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/img_user_avatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/color_dashboard_meeting"
+                android:scaleType="fitCenter"
+                app:riv_corner_radius="20dp"
+                app:riv_mutate_background="true" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_location_white" />
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -92,13 +111,14 @@
             android:paddingRight="10dp"
             android:paddingTop="5dp"
             android:text="Cân nhắc/Gọi hệ lại"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:layout_marginBottom="3dp"/>
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/colorPrimary" />
+            android:background="@drawable/ic_proccess_step_callback" />
     </LinearLayout>
 
     <LinearLayout
@@ -122,13 +142,14 @@
             android:paddingRight="10dp"
             android:paddingTop="5dp"
             android:text="Từ chối"
+            android:layout_marginBottom="3dp"
             android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/colorPrimary" />
+            android:background="@drawable/ic_proccess_step_cancel" />
     </LinearLayout>
 
 </RelativeLayout>

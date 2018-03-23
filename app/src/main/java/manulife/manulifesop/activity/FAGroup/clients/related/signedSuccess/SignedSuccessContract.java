@@ -8,8 +8,11 @@ import manulife.manulifesop.base.BaseMVPView;
 
 public interface SignedSuccessContract {
     interface View extends BaseMVPView {
+        void finishSubmit();
+        boolean validateInput();
     }
 
     interface Action {
+        void submitContract(int leadID,int CommissionRate, int Revenue, int NumContract, int ProductType);
     }
 }
