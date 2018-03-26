@@ -47,6 +47,9 @@ public class ProjectApplication extends MultiDexApplication {
     //String for process step and status step
     private static HashMap<String,String> mStringProcessStatus;
 
+    //String for process status
+    private static HashMap<String,String> mStringProcessStatusName;
+
     //variable for campaign detail
     private CampaignMonth mDataCampaign;
     private int mCampaignWeekId;
@@ -117,6 +120,7 @@ public class ProjectApplication extends MultiDexApplication {
         new DeviceInfo(this);
         //new code
         setHashmapStringProcessStatus();
+        setHashmapStringProcessStatusName();
         setHashmapProcessStep();
         setHashmapIncome();
         setHashmapAge();
@@ -163,6 +167,31 @@ public class ProjectApplication extends MultiDexApplication {
 
     public String getStringProcessStatus(String keyProcessStatus){
         return mStringProcessStatus.get(keyProcessStatus);
+    }
+
+    public void setHashmapStringProcessStatusName(){
+        mStringProcessStatusName = new HashMap<>();
+        mStringProcessStatusName.put("11","Khách hàng liên hệ");
+        mStringProcessStatusName.put("12","Khách hàng từ chối");
+        mStringProcessStatusName.put("13","Khách hàng gọi lại");
+        mStringProcessStatusName.put("14","Khách hàng đã liên hệ");
+        mStringProcessStatusName.put("21","Khách hàng cần hẹn gặp");
+        mStringProcessStatusName.put("22","Khách hàng từ chối");
+        mStringProcessStatusName.put("23","Khách hàng gọi lại sau");
+        mStringProcessStatusName.put("24","Khách hàng đã gặp");
+        mStringProcessStatusName.put("31","Khách hàng tư vấn");
+        mStringProcessStatusName.put("32","Khách hàng từ chối");
+        mStringProcessStatusName.put("33","Khách hàng tư vấn");
+        mStringProcessStatusName.put("34","Khách hàng đã tư vấn");
+        mStringProcessStatusName.put("41","Khách hàng hứa nộp hồ sơ");
+        mStringProcessStatusName.put("42","Khách hàng tất hồ sơ BHXH");
+        mStringProcessStatusName.put("43","Khách hàng đã nộp hồ sơ");
+        mStringProcessStatusName.put("44","Khách hàng chờ duyệt hồ sơ");
+        mStringProcessStatusName.put("45","Khách hàng đã hoàn thành hợp đồng");
+    }
+
+    public String getStringProcessStatusName(String keyProcessStatus){
+        return mStringProcessStatusName.get(keyProcessStatus);
     }
 
     public HashMap<Integer,String> getHashmapProcessStep(){

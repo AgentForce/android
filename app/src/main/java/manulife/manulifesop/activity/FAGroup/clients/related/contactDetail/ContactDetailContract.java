@@ -10,6 +10,7 @@ public interface ContactDetailContract {
     interface View extends BaseMVPView
     {
         void showHideMenuAfterCall();
+        void showMenuOption();
         void initViewPager();
         void finishChangeStatus();
     }

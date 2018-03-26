@@ -122,7 +122,7 @@ public class AppointmentActivity extends BaseActivity<AppointmentPresenter> impl
 
     private void setupSupportForApp() {
         //txtActionbarTitle.setText(getResources().getString(R.string.activity_create_plan_title_actionbar));
-        txtActionbarTitle.setText("Danh sách liên hệ tháng 12");
+        txtActionbarTitle.setText("Danh sách hẹn gặp tháng 12");
         layoutBackButton.setVisibility(View.VISIBLE);
 
         int statusBarHeight = 0;

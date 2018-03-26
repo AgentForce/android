@@ -149,7 +149,7 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
             mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
                 @Override
                 public void onClickMenuRight(int position, int option) {
-                    Toast.makeText(mActivity, "vi tri " + position + " options " + option, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mActivity, "vi tri " + position + " options " + option, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

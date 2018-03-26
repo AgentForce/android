@@ -1,8 +1,10 @@
 package manulife.manulifesop.fragment.FAGroup.clients.signed;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +20,7 @@ import butterknife.BindView;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.ContactDetailActivity;
+import manulife.manulifesop.activity.FAGroup.clients.related.createEvent.CreateEventActivity;
 import manulife.manulifesop.activity.FAGroup.clients.signed.SignedPersonActivity;
 import manulife.manulifesop.adapter.ActiveHistAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
@@ -152,7 +155,26 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
         mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
             @Override
             public void onClickMenuRight(int position, int option) {
-                Toast.makeText(mActivity, "vi tri " + position + " options " + option, Toast.LENGTH_SHORT).show();
+                switch (option){
+                    case 0:{
+                        gotoConactDetail(mData.get(position).getId());
+                        break;
+                    }
+                    case 1:{
+                        String phone = "tel:" + mData.get(position).getContent();
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse(phone));
+                        startActivity(callIntent);
+                        break;
+                    }
+                    case 2:{
+                        Bundle data = new Bundle();
+                        data.putInt("typeInt", 1);
+                        data.putInt("contactID", mData.get(position).getId());
+                        mActivity.goNextScreen(CreateEventActivity.class, data);
+                        break;
+                    }
+                }
             }
 
             @Override

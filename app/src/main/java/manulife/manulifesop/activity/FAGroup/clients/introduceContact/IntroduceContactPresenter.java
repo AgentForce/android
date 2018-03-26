@@ -7,6 +7,7 @@ import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.api.ApiService;
+import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
@@ -33,6 +34,13 @@ public class IntroduceContactPresenter extends BasePresenter<IntroduceContactCon
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                 period,page,10)//khách hàng giới thiệu
+                .flatMap(usersList -> {
+                    ProjectApplication.getInstance().setIntroduce(usersList);
+                    return ApiService.getServer().campaignMonth(
+                            SOPSharedPreferences.getInstance(mContext).getAccessToken(),
+                            Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
+                            DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, period);
+                })
                 .subscribeOn(Schedulers.computation())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -43,13 +51,13 @@ public class IntroduceContactPresenter extends BasePresenter<IntroduceContactCon
         mPresenterView.finishLoading(throwable.getMessage(),false);
     }
 
-    private void handleResponse(UsersList usersList) {
-        if(usersList.statusCode == 1){
-            ProjectApplication.getInstance().setIntroduce(usersList);
+    private void handleResponse(CampaignMonth campaignMonth) {
+        if(campaignMonth.statusCode == 1){
+            ProjectApplication.getInstance().setCampaign(campaignMonth);
             mPresenterView.initViewPager();
             mPresenterView.finishLoading();
         }else{
-            mPresenterView.finishLoading(usersList.msg,false);
+            mPresenterView.finishLoading(campaignMonth.msg,false);
         }
     }
 }

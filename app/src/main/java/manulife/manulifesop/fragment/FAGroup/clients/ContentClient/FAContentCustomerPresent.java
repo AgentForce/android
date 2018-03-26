@@ -10,6 +10,7 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectInput.InputChangeCampaignWeek;
 import manulife.manulifesop.api.ObjectResponse.BaseResponse;
@@ -52,6 +53,7 @@ public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerCon
 
     private void handleResponseCampaignMonth(CampaignMonth data) {
         if (data.statusCode == 1) {
+            ProjectApplication.getInstance().setCampaign(data);
             mPresenterView.showCampaignsMonth(data);
             mPresenterView.finishLoading();
         } else {

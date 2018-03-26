@@ -130,7 +130,7 @@ public class ContactDetailStep1Fragment extends BaseFragment<ContactDetailActivi
     public void onResume() {
         super.onResume();
         if (isCalling) {
-            mActivity.showHideMenuAfterCall();
+            mActivity.showMenuOption();
             isCalling = false;
         }
     }

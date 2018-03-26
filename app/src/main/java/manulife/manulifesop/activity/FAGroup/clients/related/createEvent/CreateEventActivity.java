@@ -59,10 +59,6 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
     @BindView(R.id.txt_start_time)
     TextView txtStartTime;
 
-    @BindView(R.id.layout_end_date)
-    RelativeLayout layoutEndDate;
-    @BindView(R.id.txt_end_date)
-    TextView txtEndDate;
     @BindView(R.id.txt_end_time)
     TextView txtEndTime;
 
@@ -89,6 +85,8 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
     private int mContactID;
 
     private AlertDialog alertDialog;
+
+    private String selectedStartTime, selectedEndTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,9 +125,9 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
         txtStartDate.setText(currentDate);
         txtStartDate.setTag(currentDateSave);
         txtStartTime.setText(currentTime);
-        txtEndDate.setText(currentDate);
-        txtEndDate.setTag(currentDateSave);
+        txtStartTime.setTag(currentTime);
         txtEndTime.setText(currentTime);
+        txtEndTime.setTag(currentTime);
 
         txtType.setText(ProjectApplication.getInstance().getEventStringFromType(mTypeInt));
 
@@ -137,13 +135,11 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    Animation out = AnimationUtils.loadAnimation(CreateEventActivity.this, R.anim.fade_out);
-                    layoutEndDate.startAnimation(out);
-                    layoutEndDate.setVisibility(View.GONE);
+                    txtStartTime.setText("00:00");
+                    txtEndTime.setText("24:00");
                 } else {
-                    Animation in = AnimationUtils.loadAnimation(CreateEventActivity.this, R.anim.fade_in);
-                    layoutEndDate.startAnimation(in);
-                    layoutEndDate.setVisibility(View.VISIBLE);
+                    txtStartTime.setText(selectedStartTime);
+                    txtEndTime.setText(selectedStartTime);
                 }
             }
         });
@@ -213,8 +209,8 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
         }
     }
 
-    private void showDialogDateTimePicker(final String type) {
-        final View dialogView = View.inflate(this, R.layout.date_time_picker,
+    private void showDialogDateTimePicker() {
+        final View dialogView = View.inflate(this, R.layout.date_time_time_picker,
                 null);
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 
@@ -225,52 +221,49 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
 
                         DatePicker datePicker = (DatePicker) dialogView
                                 .findViewById(R.id.date_picker);
-                        TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+                        TimePicker startTimePicker = (TimePicker) dialogView.findViewById(R.id.time_picker_start);
+                        TimePicker endTimePicker = (TimePicker) dialogView.findViewById(R.id.time_picker_end);
 
                         int day = datePicker.getDayOfMonth();
                         int month = datePicker.getMonth();
                         int year = datePicker.getYear();
-                        int hour;
-                        if (Build.VERSION.SDK_INT >= 23)
-                            hour = timePicker.getHour();
-                        else
-                            hour = timePicker.getCurrentHour();
-
-                        int minute;
-                        if (Build.VERSION.SDK_INT >= 23)
-                            minute = timePicker.getMinute();
-                        else
-                            minute = timePicker.getCurrentMinute();
-
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.set(year, month, day, hour, minute);
-
-                        String selectDate = Utils.convertDateToString(calendar.getTime(), "dd/MM/yyyy");
-                        String selectTime = Utils.convertDateToString(calendar.getTime(), "HH:mm");
-                        String selectDateSave = Utils.convertDateToString(calendar.getTime(), "yyyy-MM-dd HH:mm:ss");
-
-                        if (type.equals("start")) {
-                            if (Utils.convertStringToDate(selectDateSave,"yyyy-MM-dd HH:mm:ss")
-                                    .before(Utils.convertStringToDate(txtEndDate.getTag().toString(), "yyyy-MM-dd HH:mm:ss"))) {
-                                txtStartDate.setText(selectDate);
-                                txtStartTime.setText(selectTime);
-                                txtStartDate.setTag(selectDateSave);
-                            } else {
-                                showMessage("Thông báo", "Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc!", SweetAlertDialog.WARNING_TYPE);
-                            }
+                        int hourStart, hourEnd;
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            hourStart = startTimePicker.getHour();
+                            hourEnd = endTimePicker.getHour();
                         } else {
-                            //check end date is larger than start date
-                            if (Utils.convertStringToDate(txtStartDate.getTag().toString(), "yyyy-MM-dd HH:mm:ss")
-                                    .before(Utils.convertStringToDate(selectDateSave,"yyyy-MM-dd HH:mm:ss"))) {
-                                txtEndDate.setText(selectDate);
-                                txtEndTime.setText(selectTime);
-                                txtEndDate.setTag(selectDateSave);
-                            } else
-                                showMessage("Thông báo", "Thời gian kết thúc phải lớn hơn thời gian bắt đầu!", SweetAlertDialog.WARNING_TYPE);
-
+                            hourStart = startTimePicker.getCurrentHour();
+                            hourEnd = endTimePicker.getCurrentHour();
                         }
-                        alertDialog.dismiss();
 
+
+                        int minuteStart, minuteEnd;
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            minuteStart = startTimePicker.getMinute();
+                            minuteEnd = endTimePicker.getMinute();
+                        } else {
+                            minuteStart = startTimePicker.getCurrentMinute();
+                            minuteEnd = endTimePicker.getCurrentMinute();
+                        }
+
+                        Calendar calendarStart = Calendar.getInstance();
+                        calendarStart.set(year, month, day, hourStart, minuteStart);
+
+                        Calendar calendarEnd = Calendar.getInstance();
+                        calendarEnd.set(year, month, day, hourEnd, minuteEnd);
+
+                        if(calendarStart.getTime().before(calendarEnd.getTime())){
+                            txtStartDate.setText(Utils.convertDateToString(calendarStart.getTime(), "dd/MM/yyyy"));
+                            txtStartTime.setText(Utils.convertDateToString(calendarStart.getTime(), "HH:mm"));
+                            txtStartDate.setTag(Utils.convertDateToString(calendarStart.getTime(), "dd/MM/yyyy HH:mm"));
+
+                            txtEndTime.setText(Utils.convertDateToString(calendarEnd.getTime(), "HH:mm"));
+                            txtEndTime.setTag(Utils.convertDateToString(calendarEnd.getTime(), "dd/MM/yyyy HH:mm"));
+                            alertDialog.dismiss();
+                        }
+                        else{
+                            showMessage("Thông báo", "Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc!", SweetAlertDialog.WARNING_TYPE);
+                        }
                     }
                 });
 
@@ -280,15 +273,28 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
-        datePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
+        datePicker.init(year, month, day, new DatePicker.OnDateChangedListener(){
             public void onDateChanged(DatePicker view, int year, int month,
                                       int day) {
                 NestedScrollView scroll = (NestedScrollView) dialogView.findViewById(R.id.scroll);
-                TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+                TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker_start);
                 //ObjectAnimator.ofInt(scroll, "scrollY",  timePicker.getBottom()).setDuration(1000).start();
-                Utils.smoothScrollViewToPosition(getApplicationContext(), scroll, timePicker.getBottom());
+                Utils.smoothScrollViewToPosition(getApplicationContext(), scroll, timePicker.getTop());
             }
         });
+
+        //autoscroll when choose start time
+        TimePicker startTimePicker = (TimePicker) dialogView.findViewById(R.id.time_picker_start);
+        startTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
+                NestedScrollView scroll = (NestedScrollView) dialogView.findViewById(R.id.scroll);
+                TimePicker endTimePicker = (TimePicker) dialogView.findViewById(R.id.time_picker_end);
+                //ObjectAnimator.ofInt(scroll, "scrollY",  timePicker.getBottom()).setDuration(1000).start();
+                Utils.smoothScrollViewToPosition(getApplicationContext(), scroll, endTimePicker.getBottom());
+            }
+        });
+
 
         alertDialog.setView(dialogView);
         alertDialog.show();
@@ -308,7 +314,7 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
         finish();
     }
 
-    @OnClick({R.id.layout_btn_back, R.id.txt_start_date, R.id.txt_end_date, R.id.layout_create,
+    @OnClick({R.id.layout_btn_back, R.id.layout_start_date, R.id.layout_create,
             R.id.txt_type})
     public void onClickView(View view) {
         int id = view.getId();
@@ -317,12 +323,8 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
                 onBackPressed();
                 break;
             }
-            case R.id.txt_start_date: {
-                showDialogDateTimePicker("start");
-                break;
-            }
-            case R.id.txt_end_date: {
-                showDialogDateTimePicker("end");
+            case R.id.layout_start_date: {
+                showDialogDateTimePicker();
                 break;
             }
             case R.id.layout_create: {
@@ -333,7 +335,7 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
                                 @Override
                                 public void DiaglogPositive() {
                                     mActionListener.createEvent(mContactID, mTypeInt, edtTitle.getText().toString(),
-                                            edtLocation.getText().toString(), (String) txtStartDate.getTag(), (String) txtEndDate.getTag(),
+                                            edtLocation.getText().toString(), (String) txtStartDate.getTag(), (String) txtEndTime.getTag(),
                                             edtNote.getText().toString(), switchAllday.isChecked(), 30, switchBoss.isChecked());
                                 }
 

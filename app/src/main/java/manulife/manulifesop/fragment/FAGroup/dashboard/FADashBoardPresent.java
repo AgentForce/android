@@ -6,6 +6,7 @@ import android.content.Context;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
@@ -13,6 +14,7 @@ import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -46,6 +48,13 @@ public class FADashBoardPresent extends BasePresenter<FADashBoardContract.View> 
                 })
                 .flatMap(dashboardResult -> {
                     this.mDataDashboardYear = dashboardResult;
+                    return ApiService.getServer().campaignMonth(
+                            SOPSharedPreferences.getInstance(mContext).getAccessToken(),
+                            Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
+                            DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, Utils.getCurrentMonth(mContext));
+                })
+                .flatMap(campaignMonth -> {
+                    ProjectApplication.getInstance().setCampaign(campaignMonth);
                     return ApiService.getServer().activitiesDashboard(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,

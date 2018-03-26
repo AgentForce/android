@@ -12,12 +12,11 @@ public interface CreatePlanContract {
     {
         void showNextFragment(int contractNum,String startDate, String endDate,int income,int contractPrice, int profit);
         void showCreateCampaign();
-        void showSuccessView(boolean isgotCampaign);
+        void showSuccessView();
         void showForcast(CampaignForcastTarget data);
     }
     interface Action{
         void createCampaign(String startDate, String endDate, long profit, long contractPrice, long inCome);
-        void checkCampaign();
         void getCampaignForcast(int income,int profit,int contractPrice);
     }
 }

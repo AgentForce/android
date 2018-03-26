@@ -15,6 +15,7 @@ public interface FADashBoardContract {
         void showDataDashboard(DashboardResult dataWeekMonth, DashboardResult dataYear, ActivitiHist activities);
         void showACtivities(ActivitiHist activities);
         void updateData();
+        void showMenuCreateEvent();
     }
 
     interface Action {

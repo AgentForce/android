@@ -124,7 +124,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
             LayoutInflater inflater = this.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.dialog_edit_contract_week, null);
 
-            mData.data.currentWeek = 1;
+            //mData.data.currentWeek = 1;
             calculatePerCentContractPerWeek(mData);
 
             initAllViewsDialog(dialogView);

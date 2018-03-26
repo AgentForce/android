@@ -65,7 +65,6 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     @BindView(R.id.txt_contract_num)
     TextView txtContractNum;
 
-    private boolean mIsGotCampaing = false;
     private boolean mIsShowSuccessView = false;
 
     private int mContractNum = 0;
@@ -157,9 +156,7 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
                 break;
             }
             case R.id.btn_goto_main: {
-                Bundle data = new Bundle();
-                data.putBoolean("isGetCampaign",mIsGotCampaing);
-                goNextScreen(MainFAActivity.class,data);
+                goNextScreen(MainFAActivity.class);
                 break;
             }
         }
@@ -215,9 +212,9 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     }
 
     @Override
-    public void showSuccessView(boolean isgotCampaign) {
-        this.mIsGotCampaing = isgotCampaign;
+    public void showSuccessView() {
         this.mIsShowSuccessView = true;
+        layoutBackButton.setVisibility(View.GONE);
 
         Animation in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         Animation out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
@@ -225,6 +222,5 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
         layoutStep.setVisibility(View.GONE);
         layoutSuccess.startAnimation(in);
         layoutSuccess.setVisibility(View.VISIBLE);
-
     }
 }

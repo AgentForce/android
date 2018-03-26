@@ -62,7 +62,7 @@ public class SignedPersonActivity extends BaseActivity<SignedPersonPresenter> im
 
     private void setupSupportForApp() {
 
-        txtActionbarTitle.setText("KH ký hợp đồng T12");
+        txtActionbarTitle.setText("Danh sách ký hợp đồng T12");
         layoutBackButton.setVisibility(View.VISIBLE);
 
         int statusBarHeight = 0;

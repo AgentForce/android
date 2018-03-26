@@ -19,6 +19,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import manulife.manulifesop.R;
+import manulife.manulifesop.activity.FAGroup.clients.introduceContact.IntroduceContactActivity;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 
@@ -70,13 +71,22 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
                     object.getTitle().substring(0,1)
             );
         }
+        //visible menu right for introduce contact
+        if(mContext instanceof IntroduceContactActivity){
+            holder.layoutMenuRightClick.setVisibility(View.GONE);
+            holder.layoutMenuRightView.setAlpha(0);
+        }else{
+            holder.layoutMenuRightClick.setVisibility(View.VISIBLE);
+            holder.layoutMenuRightView.setAlpha(1f);
+        }
+
         holder.txtTitle.setText(object.getTitle());
         holder.txtContent.setText(object.getContent());
         holder.userAvatar.setBorderColor(mContext.getResources().getColor(R.color.colorSecond));
-        holder.layoutMenuRight.setOnClickListener(new View.OnClickListener() {
+        holder.layoutMenuRightClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popup = new PopupMenu(mContext, holder.layoutMenuRight);
+                PopupMenu popup = new PopupMenu(mContext, holder.layoutMenuRightClick);
                 popup.inflate(R.menu.option_menu_active_hist);
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -84,20 +94,20 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.menu1:
+                            case R.id.menu_detail:
                                 //handle menu1 click
                                 //Toast.makeText(mContext, "menu 1", Toast.LENGTH_SHORT).show();
                                 mCallback.onClickMenuRight(position,0);
                                 break;
-                            case R.id.menu2:
+                            case R.id.menu_call:
                                 //handle menu2 click
                                 //Toast.makeText(mContext, "menu 2", Toast.LENGTH_SHORT).show();
                                 mCallback.onClickMenuRight(position,1);
                                 break;
-                            case R.id.menu3:
+                            case R.id.menu_create_event:
                                 //Toast.makeText(mContext, "menu 3", Toast.LENGTH_SHORT).show();
                                 //handle menu3 click
-                                mCallback.onClickMenuRight(position,1);
+                                mCallback.onClickMenuRight(position,2);
                                 break;
                         }
                         return false;
@@ -146,7 +156,9 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
         @BindView(R.id.txt_content)
         TextView txtContent;
         @BindView(R.id.layout_menu_right)
-        View layoutMenuRight;
+        View layoutMenuRightClick;
+        @BindView(R.id.menu_right)
+        LinearLayout layoutMenuRightView;
         @BindView(R.id.layout_root)
         LinearLayout layoutRoot;
 

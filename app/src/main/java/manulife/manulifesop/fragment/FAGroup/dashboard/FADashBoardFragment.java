@@ -1,14 +1,23 @@
 package manulife.manulifesop.fragment.FAGroup.dashboard;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,18 +28,29 @@ import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
+import manulife.manulifesop.activity.FAGroup.clients.appointment.AppointmentActivity;
+import manulife.manulifesop.activity.FAGroup.clients.consultant.ConsultantActivity;
+import manulife.manulifesop.activity.FAGroup.clients.contact.ContactPersonActivity;
+import manulife.manulifesop.activity.FAGroup.clients.introduceContact.IntroduceContactActivity;
+import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.ContactDetailActivity;
+import manulife.manulifesop.activity.FAGroup.clients.related.createEvent.CreateEventActivity;
+import manulife.manulifesop.activity.FAGroup.clients.signed.SignedPersonActivity;
+import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
 import manulife.manulifesop.adapter.ActiveHistAdapter;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
+import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 import manulife.manulifesop.fragment.FAGroup.dashboard.campaignPercent.CampaignPercentFragment;
+import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
 import manulife.manulifesop.util.Utils;
 
@@ -38,7 +58,8 @@ import manulife.manulifesop.util.Utils;
  * Created by Chick on 10/27/2017.
  */
 
-public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoardPresent> implements FADashBoardContract.View {
+public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoardPresent> implements FADashBoardContract.View,
+        View.OnClickListener{
 
     @BindView(R.id.txt_title)
     TextView txtTitle;
@@ -70,6 +91,11 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
     private List<ActiveHistFA> mDataActiveHist;
     private LinearLayoutManager mLayoutManager;
 
+    //variable for click event in dashboard
+    private int targetStep1 = 0, targetStep2 = 0, targetStep3 = 0, targetStep4 = 0, targetStep5 = 0;
+    private int mMonth;
+    private AlertDialog alertDialog;
+    private int mContactID;
 
     public static FADashBoardFragment newInstance() {
         Bundle args = new Bundle();
@@ -105,9 +131,13 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
         mActivity.showHideActionbar(true);
         mActivity.updateActionbarTitle("Trang chủ");
         initView();
+        //mActionListener.getDataDashboard();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mActionListener.getDataDashboard();
-        //initViewPager();
-        //initActiHistList();
     }
 
     @Override
@@ -116,21 +146,32 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
     }
 
     private void initView() {
+        mMonth = Utils.getCurrentMonth(getContext());
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         //init data
         mDataActiveHist = new ArrayList<>();
-        txtTitle.setText("Khách hàng tháng " +(Calendar.getInstance().get(Calendar.MONTH) + 1));
+        txtTitle.setText("Khách hàng tháng " + (Calendar.getInstance().get(Calendar.MONTH) + 1));
     }
+
 
     @Override
     public void showDataDashboard(DashboardResult dataWeekMonth, DashboardResult dataYear, ActivitiHist activities) {
         int step1 = 0, step2 = 0, step3 = 0, step4 = 0, step5 = 0;
         if (dataWeekMonth.statusCode == 1) {
             for (int i = 0; i < dataWeekMonth.data.campaign.size(); i++) {
+                targetStep1 += dataWeekMonth.data.campaign.get(i).targetCallSale;
                 step1 += dataWeekMonth.data.campaign.get(i).currentCallSale;
+
+                targetStep2 += dataWeekMonth.data.campaign.get(i).targetMetting;
                 step2 += dataWeekMonth.data.campaign.get(i).currentMetting;
+
+                targetStep3 += dataWeekMonth.data.campaign.get(i).targetPresentation;
                 step3 += dataWeekMonth.data.campaign.get(i).currentPresentation;
+
+                targetStep4 += dataWeekMonth.data.campaign.get(i).targetContractSale;
                 step4 += dataWeekMonth.data.campaign.get(i).currentContract;
+
+                targetStep5 += dataWeekMonth.data.campaign.get(i).targetReLead;
                 step5 += dataWeekMonth.data.campaign.get(i).currentReLead;
             }
         }
@@ -222,9 +263,9 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
             percentYear.add(percentTemp);
 
             mListFragment = new ArrayList<>();
-            mListFragment.add(CampaignPercentFragment.newInstance("week", percentCurrentWeek,dataWeekMonth));
-            mListFragment.add(CampaignPercentFragment.newInstance("month", percentMonth,dataWeekMonth));
-            mListFragment.add(CampaignPercentFragment.newInstance("year", percentYear,dataWeekMonth));
+            mListFragment.add(CampaignPercentFragment.newInstance("week", percentCurrentWeek, dataWeekMonth));
+            mListFragment.add(CampaignPercentFragment.newInstance("month", percentMonth, dataWeekMonth));
+            mListFragment.add(CampaignPercentFragment.newInstance("year", percentYear, dataWeekMonth));
 
             mTabTitles = new ArrayList<>();
             mTabTitles.add("Tuần này");
@@ -250,23 +291,56 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
             dateCreated = Utils.convertStringDateToStringDate(activities.data.rows.get(i).updatedAt,
                     "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "dd-MM-yyyy HH:mm:ss");
 
+
             temp.setAvatar("avatar " + i);
             temp.setTitle(activities.data.rows.get(i).name);
             temp.setContent(ProjectApplication.getInstance().getStringProcessStatus(
                     activities.data.rows.get(i).processStep + "" + activities.data.rows.get(i).statusProcessStep
             ));
+            temp.setPhone(activities.data.rows.get(i).phone);
+            temp.setProcessStatusName(ProjectApplication.getInstance().getStringProcessStatusName(
+                    activities.data.rows.get(i).processStep + "" + activities.data.rows.get(i).statusProcessStep
+            ));
+            temp.setProcessStep(activities.data.rows.get(i).processStep);
+            temp.setId(activities.data.rows.get(i).id);
             mDataActiveHist.add(temp);
         }
         if (mAdapterActiveHist == null) {
             mAdapterActiveHist = new ActiveHistAdapter(getContext(), mDataActiveHist, new CallBackClickContact() {
                 @Override
                 public void onClickMenuRight(int position, int option) {
-                    Toast.makeText(mActivity, "Vi tri " + position + " option " + option, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mActivity, "Vi tri " + position + " option " + option, Toast.LENGTH_SHORT).show();
+                    switch (option) {
+                        case 0: {
+                            Bundle data = new Bundle();
+                            data.putString("type", mDataActiveHist.get(position).getProcessStatusName());
+                            data.putString("type_menu", getTypeMenu(mDataActiveHist.get(position).getProcessStep()));
+                            data.putInt("id", mDataActiveHist.get(position).getId());
+                            mActivity.goNextScreen(ContactDetailActivity.class, data, Contants.CONTACT_DETAIL);
+                            break;
+                        }
+                        case 1: {
+                            String phone = "tel:" + mDataActiveHist.get(position).getPhone();
+                            Intent callIntent = new Intent(Intent.ACTION_CALL);
+                            callIntent.setData(Uri.parse(phone));
+                            startActivity(callIntent);
+                            break;
+                        }
+                        case 2: {
+                            mContactID = mDataActiveHist.get(position).getId();
+                            showMenuCreateEvent();
+                            break;
+                        }
+                    }
                 }
 
                 @Override
                 public void onClickMainContent(int position) {
-                    Toast.makeText(mActivity, mDataActiveHist.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                    Bundle data = new Bundle();
+                    data.putString("type", mDataActiveHist.get(position).getProcessStatusName());
+                    data.putString("type_menu", getTypeMenu(mDataActiveHist.get(position).getProcessStep()));
+                    data.putInt("id", mDataActiveHist.get(position).getId());
+                    mActivity.goNextScreen(ContactDetailActivity.class, data, Contants.CONTACT_DETAIL);
                 }
             });
             listActiHist.setAdapter(mAdapterActiveHist);
@@ -290,22 +364,152 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
 
         listActiHist.clearOnScrollListeners();
         listActiHist.addOnScrollListener(new EndlessScrollListenerRecyclerView(
-                activities.data.page, Utils.genLastPage(activities.data.count,activities.data.limit),
+                activities.data.page, Utils.genLastPage(activities.data.count, activities.data.limit),
                 new onLoadingMoreDataTask(), mLayoutManager));
     }
 
-    /*@OnClick(R.id.btn_start)
-    public void onClick(View view)
-    {
+    private String getTypeMenu(int processStep) {
+        String rs;
+        switch (processStep) {
+            case 1: {
+                rs = Contants.CONTACT_MENU;
+                break;
+            }
+            case 2: {
+                rs = Contants.APPOINTMENT_MENU;
+                break;
+            }
+            case 3: {
+                rs = Contants.CONSULTANT_MENU;
+                break;
+            }
+            case 4: {
+                rs = Contants.SIGNED_MENU;
+                break;
+            }
+            case 5: {
+                rs = Contants.INTRODUCE_MENU;
+                break;
+            }
+            default:
+                rs = Contants.CONTACT_MENU;
+        }
+        return rs;
+    }
+
+    @Override
+    public void showMenuCreateEvent() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_create_event_contact, null);
+
+        initDialogEvent(dialogView);
+
+        dialogBuilder.setView(dialogView);
+
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(true);
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+
+        alertDialog.show();
+    }
+
+    private void initDialogEvent(View view) {
+        view.findViewById(R.id.txt_first_meet).setOnClickListener(this);
+        view.findViewById(R.id.txt_advisory).setOnClickListener(this);
+        view.findViewById(R.id.txt_sign).setOnClickListener(this);
+        view.findViewById(R.id.txt_different).setOnClickListener(this);
+        view.findViewById(R.id.btn_cancel).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
         int id = view.getId();
-        switch (id)
-        {
-            case R.id.btn_start:
-            {
-                mActivity.goNextScreen(CreatePlanActivity.class);
+        switch (id) {
+            case R.id.txt_first_meet: {
+                Bundle data = new Bundle();
+                data.putInt("typeInt",1);
+                data.putInt("contactID",mContactID);
+                alertDialog.dismiss();
+                goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
+                break;
+            }
+            case R.id.txt_advisory: {
+                Bundle data = new Bundle();
+                data.putInt("typeInt",2);
+                data.putInt("contactID",mContactID);
+                alertDialog.dismiss();
+                goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
+                break;
+            }
+            case R.id.txt_sign: {
+                Bundle data = new Bundle();
+                data.putInt("typeInt",3);
+                data.putInt("contactID",mContactID);
+                alertDialog.dismiss();
+                goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
+                break;
+            }
+            case R.id.txt_different: {
+                Bundle data = new Bundle();
+                data.putInt("typeInt",4);
+                data.putInt("contactID",mContactID);
+                alertDialog.dismiss();
+                goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
+                break;
+            }
+            case R.id.btn_cancel: {
+                alertDialog.dismiss();
                 break;
             }
         }
-    }*/
+    }
+
+    @OnClick({R.id.layout_step1, R.id.layout_step2, R.id.layout_step3, R.id.layout_step4, R.id.layout_step5})
+    public void onClickView(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.layout_step1: {
+                Bundle data = new Bundle();
+                data.putInt("month", mMonth);
+                data.putInt("target", targetStep1);
+                data.putInt("targetIntroduce", targetStep5);
+                mActivity.goNextScreen(ContactPersonActivity.class, data);
+                break;
+            }
+            case R.id.layout_step2: {
+                Bundle data = new Bundle();
+                data.putInt("month", mMonth);
+                data.putInt("target", targetStep2);
+                mActivity.goNextScreen(AppointmentActivity.class, data);
+                break;
+            }
+            case R.id.layout_step3: {
+                Bundle data = new Bundle();
+                data.putInt("month", mMonth);
+                data.putInt("target", targetStep3);
+                mActivity.goNextScreen(ConsultantActivity.class, data);
+                break;
+            }
+            case R.id.layout_step4: {
+                Bundle data = new Bundle();
+                data.putInt("month", mMonth);
+                data.putInt("target", targetStep4);
+                mActivity.goNextScreen(SignedPersonActivity.class, data);
+                break;
+            }
+            case R.id.layout_step5: {
+                Bundle data = new Bundle();
+                data.putInt("month", mMonth);
+                data.putInt("target", targetStep5);
+                mActivity.goNextScreen(IntroduceContactActivity.class, data);
+                break;
+            }
+        }
+    }
 
 }

@@ -4,7 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 import manulife.manulifesop.ProjectApplication;
+import manulife.manulifesop.adapter.ObjectData.ContactPerson;
 
 /**
  * Created by ADMIN on 1/12/2018.
@@ -12,9 +20,11 @@ import manulife.manulifesop.ProjectApplication;
 
 public class SOPSharedPreferences {
 
-    private static final String EXTRA_FIRST_USING_KEY = "extra_first_using_key";
-    private static final String EXTRA_ACCESS_TOKEN_KEY = "extra_access_token_key";
-    private static final String EXTRA_REFRESH_TOKEN_KEY = "extra_refresh_token_key";
+    private final String EXTRA_FIRST_USING_KEY = "extra_first_using_key";
+    private final String EXTRA_ACCESS_TOKEN_KEY = "extra_access_token_key";
+    private final String EXTRA_REFRESH_TOKEN_KEY = "extra_refresh_token_key";
+
+    private final String EXTRA_ADDED_CONTACT = "extra_added_contact";
 
 
     private SharedPreferences mPreferences;
@@ -61,4 +71,24 @@ public class SOPSharedPreferences {
         return mPreferences.getString(EXTRA_REFRESH_TOKEN_KEY,"");
     }
 
+    public void saveAddedPhone(String phone){
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<String>>() {}.getType();
+        String json = mPreferences.getString(EXTRA_ADDED_CONTACT, "");
+        List<String> data = gson.fromJson(json, listType);
+        if(data == null) data = new ArrayList<>();
+        data.add(phone);
+
+        String jsonSave = gson.toJson(data,listType);
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString(EXTRA_ADDED_CONTACT,jsonSave);
+        editor.commit();
+    }
+    public List<String> getListAddedPhone(){
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<String>>() {}.getType();
+        String json = mPreferences.getString(EXTRA_ADDED_CONTACT, "");
+        List<String> data = gson.fromJson(json, listType);
+        return data;
+    }
 }

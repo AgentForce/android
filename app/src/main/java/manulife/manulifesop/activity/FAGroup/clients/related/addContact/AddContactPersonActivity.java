@@ -32,6 +32,7 @@ import manulife.manulifesop.adapter.ObjectData.ContactPerson;
 import manulife.manulifesop.api.ObjectResponse.ContactDetail;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.util.Contants;
+import manulife.manulifesop.util.SOPSharedPreferences;
 
 
 public class AddContactPersonActivity extends BaseActivity<AddContactPersonPresenter> implements AddContactPersonContract.View {
@@ -74,10 +75,16 @@ public class AddContactPersonActivity extends BaseActivity<AddContactPersonPrese
         mActionListener = new AddContactPersonPresenter(this, this);
         setupSupportForApp();
         initViews();
-        mActionListener.readAllContacts();
+        //mActionListener.readAllContacts();
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        txtActionbarTitle.setText("Thêm liên hệ (0/10)");
+        mDataChoosed = new ArrayList<>();
+        mActionListener.readAllContacts();
+    }
 
     private void initViews() {
 
@@ -130,8 +137,6 @@ public class AddContactPersonActivity extends BaseActivity<AddContactPersonPrese
     }
 
     private void setupSupportForApp() {
-        //txtActionbarTitle.setText(getResources().getString(R.string.activity_create_plan_title_actionbar));
-        txtActionbarTitle.setText("Thêm liên hệ (0/10)");
         layoutBackButton.setVisibility(View.VISIBLE);
 
         int statusBarHeight = 0;
@@ -150,12 +155,17 @@ public class AddContactPersonActivity extends BaseActivity<AddContactPersonPrese
         mDataAll = new ArrayList<>();
         mDataAll.addAll(data);
 
-        if (adapter == null) {
+        if (adapter == null)
+        {
             adapter = new ContactPersonAdapter(this, mDataAll);
             decor = new StickyHeaderDecoration(adapter);
             listContact.setAdapter(adapter);
             listContact.addItemDecoration(decor);
         } else {
+            adapter.setData(mDataAll);
+            listContact.removeItemDecoration(decor);
+            decor = new StickyHeaderDecoration(adapter);
+            listContact.addItemDecoration(decor);
             adapter.notifyDataSetChanged();
         }
     }

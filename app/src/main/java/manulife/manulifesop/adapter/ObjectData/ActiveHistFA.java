@@ -10,6 +10,34 @@ public class ActiveHistFA {
     private String title;
     private String content;
 
+    private String phone;
+    private String processStatusName;
+    private int processStep;
+
+    public int getProcessStep() {
+        return processStep;
+    }
+
+    public void setProcessStep(int processStep) {
+        this.processStep = processStep;
+    }
+
+    public String getProcessStatusName() {
+        return processStatusName;
+    }
+
+    public void setProcessStatusName(String processStatusName) {
+        this.processStatusName = processStatusName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public int getId() {
         return id;
     }

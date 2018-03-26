@@ -38,6 +38,10 @@ public class ContactPersonAdapter extends RecyclerView.Adapter<ContactPersonAdap
         inflater = LayoutInflater.from(context);
     }
 
+    public void setData(List<ContactPerson> mData){
+        this.mData = mData;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = inflater.inflate(R.layout.item_contact_person, parent, false);

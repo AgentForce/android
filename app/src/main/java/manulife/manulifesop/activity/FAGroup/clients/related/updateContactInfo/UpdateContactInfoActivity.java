@@ -30,6 +30,9 @@ import manulife.manulifesop.util.Utils;
 
 public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPresenter> implements UpdateContactInfoContract.View {
 
+    @BindView(R.id.layout_root)
+    LinearLayout layoutRoot;
+
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
 
@@ -157,9 +160,9 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact_update_info);
+        hideKeyboardOutside(layoutRoot);
         mActionListener = new UpdateContactInfoPresenter(this, this);
         mDataChoosed = (List<ContactPerson>) getIntent().getSerializableExtra("data");
-
         //get data for change relead to contact
         mIsChangeToContact = getIntent().getBooleanExtra("isChangeToContact", false);
         mReleadID = getIntent().getIntExtra("idRelead", 0);
@@ -182,6 +185,12 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     RadioButton tmp = findViewById(checkedId);
                     txtStep1Choose.setText(tmp.getText());
                     txtStep1Choose.setTag(tmp.getTag());
+
+                    imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    expandableLayoutStep1.collapse(true);
+                    imgStep1Add.setImageResource(R.drawable.ic_add);
+                    layoutChooseStep1.setVisibility(View.VISIBLE);
+
                     initListenerStep1Line2();
                 }
             }
@@ -194,6 +203,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     RadioButton tmp = findViewById(checkedId);
                     txtStep1Choose.setText(tmp.getText());
                     txtStep1Choose.setTag(tmp.getTag());
+                    imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    expandableLayoutStep1.collapse(true);
+                    imgStep1Add.setImageResource(R.drawable.ic_add);
+                    layoutChooseStep1.setVisibility(View.VISIBLE);
                     initListenerStep1Line1();
                 }
             }
@@ -207,6 +220,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     RadioButton tmp = findViewById(checkedId);
                     txtStep2Choose.setText(tmp.getText());
                     txtStep2Choose.setTag(tmp.getTag());
+                    imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    expandableLayoutStep2.collapse(true);
+                    imgStep2Add.setImageResource(R.drawable.ic_add);
+                    layoutChooseStep2.setVisibility(View.VISIBLE);
                     initListenerStep2Line2();
                 }
             }
@@ -219,6 +236,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     RadioButton tmp = findViewById(checkedId);
                     txtStep2Choose.setText(tmp.getText());
                     txtStep2Choose.setTag(tmp.getTag());
+                    imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    expandableLayoutStep2.collapse(true);
+                    imgStep2Add.setImageResource(R.drawable.ic_add);
+                    layoutChooseStep2.setVisibility(View.VISIBLE);
                     initListenerStep2Line1();
                 }
             }
@@ -232,6 +253,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     RadioButton tmp = findViewById(checkedId);
                     txtStep3Choose.setText(tmp.getText());
                     txtStep3Choose.setTag(tmp.getTag());
+                    imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    expandableLayoutStep3.collapse(true);
+                    imgStep3Add.setImageResource(R.drawable.ic_add);
+                    layoutChooseStep3.setVisibility(View.VISIBLE);
                     initListenerStep3Line2();
                 }
             }
@@ -244,6 +269,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     RadioButton tmp = findViewById(checkedId);
                     txtStep3Choose.setText(tmp.getText());
                     txtStep3Choose.setTag(tmp.getTag());
+                    imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    expandableLayoutStep3.collapse(true);
+                    imgStep3Add.setImageResource(R.drawable.ic_add);
+                    layoutChooseStep3.setVisibility(View.VISIBLE);
                     initListenerStep3Line1();
                 }
             }
@@ -257,6 +286,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     RadioButton tmp = findViewById(checkedId);
                     txtStep4Choose.setText(tmp.getText());
                     txtStep4Choose.setTag(tmp.getTag());
+                    imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    expandableLayoutStep4.collapse(true);
+                    imgStep4Add.setImageResource(R.drawable.ic_add);
+                    layoutChooseStep4.setVisibility(View.VISIBLE);
                     initListenerStep4Line2();
                 }
             }
@@ -269,6 +302,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     RadioButton tmp = findViewById(checkedId);
                     txtStep4Choose.setText(tmp.getText());
                     txtStep4Choose.setTag(tmp.getTag());
+                    imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    expandableLayoutStep4.collapse(true);
+                    imgStep4Add.setImageResource(R.drawable.ic_add);
+                    layoutChooseStep4.setVisibility(View.VISIBLE);
                     initListenerStep4Line1();
                 }
             }
@@ -282,6 +319,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     RadioButton tmp = findViewById(checkedId);
                     txtStep5Choose.setText(tmp.getText());
                     txtStep5Choose.setTag(tmp.getTag());
+                    imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    expandableLayoutStep5.collapse(true);
+                    imgStep5Add.setImageResource(R.drawable.ic_add);
+                    layoutChooseStep5.setVisibility(View.VISIBLE);
                     initListenerStep5Line2();
                 }
             }
@@ -294,6 +335,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     RadioButton tmp = findViewById(checkedId);
                     txtStep5Choose.setText(tmp.getText());
                     txtStep5Choose.setTag(tmp.getTag());
+                    imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                    expandableLayoutStep5.collapse(true);
+                    imgStep5Add.setImageResource(R.drawable.ic_add);
+                    layoutChooseStep5.setVisibility(View.VISIBLE);
                     initListenerStep5Line1();
                 }
             }
@@ -310,6 +355,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 RadioButton tmp = findViewById(checkedId);
                 txtStep1Choose.setText(tmp.getText());
                 txtStep1Choose.setTag(tmp.getTag());
+                imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                expandableLayoutStep1.collapse(true);
+                imgStep1Add.setImageResource(R.drawable.ic_add);
+                layoutChooseStep1.setVisibility(View.VISIBLE);
                 initListenerStep1Line2();
             }
         });
@@ -325,6 +374,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 RadioButton tmp = findViewById(checkedId);
                 txtStep1Choose.setText(tmp.getText());
                 txtStep1Choose.setTag(tmp.getTag());
+                imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                expandableLayoutStep1.collapse(true);
+                imgStep1Add.setImageResource(R.drawable.ic_add);
+                layoutChooseStep1.setVisibility(View.VISIBLE);
                 initListenerStep1Line1();
             }
         });
@@ -340,6 +393,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 RadioButton tmp = findViewById(checkedId);
                 txtStep2Choose.setText(tmp.getText());
                 txtStep2Choose.setTag(tmp.getTag());
+                imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                expandableLayoutStep2.collapse(true);
+                imgStep2Add.setImageResource(R.drawable.ic_add);
+                layoutChooseStep2.setVisibility(View.VISIBLE);
                 initListenerStep2Line2();
             }
         });
@@ -355,6 +412,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 RadioButton tmp = findViewById(checkedId);
                 txtStep2Choose.setText(tmp.getText());
                 txtStep2Choose.setTag(tmp.getTag());
+                imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                expandableLayoutStep2.collapse(true);
+                imgStep2Add.setImageResource(R.drawable.ic_add);
+                layoutChooseStep2.setVisibility(View.VISIBLE);
                 initListenerStep2Line1();
             }
         });
@@ -370,6 +431,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 RadioButton tmp = findViewById(checkedId);
                 txtStep3Choose.setText(tmp.getText());
                 txtStep3Choose.setTag(tmp.getTag());
+                imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                expandableLayoutStep3.collapse(true);
+                imgStep3Add.setImageResource(R.drawable.ic_add);
+                layoutChooseStep3.setVisibility(View.VISIBLE);
                 initListenerStep3Line2();
             }
         });
@@ -385,6 +450,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 RadioButton tmp = findViewById(checkedId);
                 txtStep3Choose.setText(tmp.getText());
                 txtStep3Choose.setTag(tmp.getTag());
+                imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                expandableLayoutStep3.collapse(true);
+                imgStep3Add.setImageResource(R.drawable.ic_add);
+                layoutChooseStep3.setVisibility(View.VISIBLE);
                 initListenerStep3Line1();
             }
         });
@@ -400,6 +469,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 RadioButton tmp = findViewById(checkedId);
                 txtStep4Choose.setText(tmp.getText());
                 txtStep4Choose.setTag(tmp.getTag());
+                imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                expandableLayoutStep4.collapse(true);
+                imgStep4Add.setImageResource(R.drawable.ic_add);
+                layoutChooseStep4.setVisibility(View.VISIBLE);
                 initListenerStep4Line2();
             }
         });
@@ -415,6 +488,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 RadioButton tmp = findViewById(checkedId);
                 txtStep4Choose.setText(tmp.getText());
                 txtStep4Choose.setTag(tmp.getTag());
+                imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                expandableLayoutStep4.collapse(true);
+                imgStep4Add.setImageResource(R.drawable.ic_add);
+                layoutChooseStep4.setVisibility(View.VISIBLE);
                 initListenerStep4Line1();
             }
         });
@@ -430,6 +507,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 RadioButton tmp = findViewById(checkedId);
                 txtStep5Choose.setText(tmp.getText());
                 txtStep5Choose.setTag(tmp.getTag());
+                imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                expandableLayoutStep5.collapse(true);
+                imgStep5Add.setImageResource(R.drawable.ic_add);
+                layoutChooseStep5.setVisibility(View.VISIBLE);
                 initListenerStep5Line2();
             }
         });
@@ -445,6 +526,10 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 RadioButton tmp = findViewById(checkedId);
                 txtStep5Choose.setText(tmp.getText());
                 txtStep5Choose.setTag(tmp.getTag());
+                imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+                expandableLayoutStep5.collapse(true);
+                imgStep5Add.setImageResource(R.drawable.ic_add);
+                layoutChooseStep5.setVisibility(View.VISIBLE);
                 initListenerStep5Line1();
             }
         });
@@ -599,6 +684,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     layoutChooseStep1.setVisibility(View.GONE);
                     imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
                     imgStep1Add.setImageResource(R.drawable.ic_sub);
+                    //Utils.smoothScrollViewToPosition(getApplicationContext(),scrollView,layoutTitleStep2.getBottom());
                 } else {
                     expandableLayoutStep1.collapse(true);
                     if (!txtStep1Choose.getText().equals("choose")) {
@@ -622,6 +708,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
 
                     imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
                     imgStep2Add.setImageResource(R.drawable.ic_sub);
+                    //Utils.smoothScrollViewToPosition(getApplicationContext(),scrollView,layoutTitleStep3.getBottom());
                 } else {
                     expandableLayoutStep2.collapse(true);
                     if (!txtStep2Choose.getText().equals("choose")) {
@@ -645,6 +732,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
 
                     imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
                     imgStep3Add.setImageResource(R.drawable.ic_sub);
+                    //Utils.smoothScrollViewToPosition(getApplicationContext(),scrollView,layoutTitleStep4.getBottom());
                 } else {
                     expandableLayoutStep3.collapse(true);
                     if (!txtStep3Choose.getText().equals("choose")) {
@@ -668,6 +756,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
 
                     imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
                     imgStep4Add.setImageResource(R.drawable.ic_sub);
+                    //Utils.smoothScrollViewToPosition(getApplicationContext(),scrollView,layoutTitleStep5.getBottom());
                 } else {
                     expandableLayoutStep4.collapse(true);
                     if (!txtStep4Choose.getText().equals("choose")) {
@@ -684,13 +773,14 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             case R.id.layout_title_step5: {
                 if (!expandableLayoutStep5.isExpanded()) {
                     expandableLayoutStep5.expand(true);
-
                     Animation out = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
                     layoutChooseStep5.startAnimation(out);
                     layoutChooseStep5.setVisibility(View.GONE);
-
                     imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
                     imgStep5Add.setImageResource(R.drawable.ic_sub);
+
+                    Utils.smoothScrollViewToPosition(getApplicationContext(),scrollView,edtNote.getBottom());
+
                 } else {
                     expandableLayoutStep5.collapse(true);
                     if (!txtStep5Choose.getText().equals("choose")) {

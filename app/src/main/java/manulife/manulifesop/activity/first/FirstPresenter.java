@@ -18,6 +18,9 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
@@ -33,7 +36,8 @@ import static java.lang.Thread.sleep;
 public class FirstPresenter extends BasePresenter<FirstContract.View> implements FirstContract.Action {
 
     private Context mContext;
-    public FirstPresenter(FirstContract.View presenterView,Context context) {
+
+    public FirstPresenter(FirstContract.View presenterView, Context context) {
         super(presenterView);
         this.mContext = context;
     }
@@ -42,16 +46,30 @@ public class FirstPresenter extends BasePresenter<FirstContract.View> implements
     @Override
     public void checkInternetViaPingServer() {
         if (Utils.isConnectedToNetwork()) {
-            new TestInternet().execute(5000);
-            //checkFirstUserLoading();
-        }/*else{
+            //new TestInternet().execute(5000);
+            waitForScreemLoad().observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .unsubscribeOn(Schedulers.io())
+                    .subscribe(aBoolean -> {
+                        checkFirstUserLoading();
+                    });
+        } else {
             mPresenterView.showInform("Thông báo", "Kiểm tra lại kết nối mạng.", "Thử lại", SweetAlertDialog.WARNING_TYPE, new CallBackInformDialog() {
                 @Override
                 public void DiaglogPositive() {
 
                 }
             });
-        }*/
+        }
+    }
+
+    private Observable<Boolean> waitForScreemLoad() {
+        final Observable<Boolean> rs = Observable.create(e -> {
+            Thread.sleep(1000);
+            e.onNext(true);
+            e.onComplete();
+        });
+        return rs;
     }
 
     @Override
@@ -61,13 +79,22 @@ public class FirstPresenter extends BasePresenter<FirstContract.View> implements
     }
 
     public void checkFirstUserLoading() {
-        if(!SOPSharedPreferences.getInstance(mContext).isFirstUsing())
-        {
+        if (!SOPSharedPreferences.getInstance(mContext).isFirstUsing()) {
             mPresenterView.showWelcome();
-        }else
-        {
-            mPresenterView.showLogin();
+        } else {
+            if (checkLogined()) {
+                mPresenterView.showFaMainBoard();
+            } else {
+                mPresenterView.showLogin();
+            }
         }
+    }
+
+    @Override
+    public boolean checkLogined() {
+        if (SOPSharedPreferences.getInstance(mContext).getAccessToken().length() > 1)
+            return true;
+        return false;
     }
 
     class TestInternet extends AsyncTask<Integer, Void, Boolean> {

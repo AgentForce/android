@@ -50,9 +50,7 @@ public class ConfirmCreatePlanActivity extends BaseActivity<ConfirmCreatePlanPre
                 break;
             }
             case R.id.txt_go_main:{
-                Bundle data = new Bundle();
-                data.putBoolean("isGetCampaign",false);
-                goNextScreen(MainFAActivity.class,data);
+                goNextScreen(MainFAActivity.class);
                 break;
             }
         }

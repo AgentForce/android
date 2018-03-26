@@ -19,6 +19,6 @@ public interface MainFAContract {
         void updateActionbarTitle(String title);
     }
     interface Action{
-        void checkIsGetCampaign(boolean isGetCampaign);
+        void chekCampaign();
     }
 }

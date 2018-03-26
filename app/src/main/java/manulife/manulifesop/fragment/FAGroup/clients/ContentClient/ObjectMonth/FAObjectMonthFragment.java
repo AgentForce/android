@@ -125,7 +125,6 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
                 data.putInt("month",mMonth);
                 data.putInt("target",targetStep1);
                 data.putInt("targetIntroduce",targetStep5);
-                ProjectApplication.getInstance().setCampaign(nData);
                 mActivity.goNextScreen(ContactPersonActivity.class,data);
                 break;
             }
@@ -158,7 +157,6 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
                 Bundle data = new Bundle();
                 data.putInt("month",mMonth);
                 data.putInt("target",targetStep5);
-                ProjectApplication.getInstance().setCampaign(nData);
                 mActivity.goNextScreen(IntroduceContactActivity.class,data);
                 break;
             }

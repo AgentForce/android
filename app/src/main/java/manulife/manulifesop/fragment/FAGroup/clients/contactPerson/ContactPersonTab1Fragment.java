@@ -3,11 +3,13 @@ package manulife.manulifesop.fragment.FAGroup.clients.contactPerson;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +35,7 @@ import manulife.manulifesop.activity.FAGroup.clients.contact.ContactPersonActivi
 import manulife.manulifesop.activity.FAGroup.clients.introduceContact.IntroduceContactActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.addContact.AddContactPersonActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.ContactDetailActivity;
+import manulife.manulifesop.activity.FAGroup.clients.related.createEvent.CreateEventActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.updateContactInfo.UpdateContactInfoActivity;
 import manulife.manulifesop.adapter.ActiveHistAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
@@ -50,7 +53,7 @@ import manulife.manulifesop.util.Utils;
  */
 
 public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivity, ContactPersonTab1Present> implements ContactPersonTab1Contract.View,
-View.OnClickListener{
+        View.OnClickListener {
 
     @BindView(R.id.rcv_contact)
     RecyclerView listContact;
@@ -80,12 +83,12 @@ View.OnClickListener{
     private CampaignMonth mCampaignMonth;
     private boolean misAddFromPhone = false;
 
-    public static ContactPersonTab1Fragment newInstance(int type,String typeString,UsersList usersList,int month, int targetIntroduce) {
+    public static ContactPersonTab1Fragment newInstance(int type, String typeString, UsersList usersList, int month, int targetIntroduce) {
         Bundle args = new Bundle();
-        args.putInt("type",type);
-        args.putString("typeString",typeString);
-        args.putSerializable("data",usersList);
-        args.putInt("month",month);
+        args.putInt("type", type);
+        args.putString("typeString", typeString);
+        args.putSerializable("data", usersList);
+        args.putInt("month", month);
         args.putInt("targetIntroduce", targetIntroduce);
         ContactPersonTab1Fragment fragment = new ContactPersonTab1Fragment();
         fragment.setArguments(args);
@@ -97,7 +100,7 @@ View.OnClickListener{
 
         @Override
         public void onApiLoadMoreTask(int page) {
-            mActionListener.getUserListProcess(mMonth,mType,page);
+            mActionListener.getUserListProcess(mMonth, mType, page);
         }
     }
 
@@ -108,16 +111,16 @@ View.OnClickListener{
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new ContactPersonTab1Present(this,getContext());
+        mActionListener = new ContactPersonTab1Present(this, getContext());
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mType = getArguments().getInt("type",1);
-        mTypeString = getArguments().getString("typeString","");
-        mMonth = getArguments().getInt("month",0);
-        mTargetIntroduce = getArguments().getInt("targetIntroduce",0);
+        mType = getArguments().getInt("type", 1);
+        mTypeString = getArguments().getString("typeString", "");
+        mMonth = getArguments().getInt("month", 0);
+        mTargetIntroduce = getArguments().getInt("targetIntroduce", 0);
         initViews();
         //loadDataContact();
         UsersList data = (UsersList) getArguments().getSerializable("data");
@@ -126,11 +129,11 @@ View.OnClickListener{
 
     private void initViews() {
         //type = contact, calllater
-        if(mType==Contants.USER_CONTACT){
+        if (mType == Contants.USER_CONTACT) {
             txtTitle.setText("Liên hệ");
-        }else if(mType==Contants.USER_CALLLATER){
+        } else if (mType == Contants.USER_CALLLATER) {
             txtTitle.setText("Gọi lại sau");
-        }else{
+        } else {
             txtTitle.setText("Từ chối");
         }
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -149,24 +152,38 @@ View.OnClickListener{
             temp.setContent(data.data.rows.get(i).phone);
             mData.add(temp);
         }
-        //if (mAdapterActiveHist == null)
-        {
-            mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
-                @Override
-                public void onClickMenuRight(int position, int option) {
-                    Toast.makeText(mActivity, "vi tri " + position + " options " + option, Toast.LENGTH_SHORT).show();
+        mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
+            @Override
+            public void onClickMenuRight(int position, int option) {
+                switch (option){
+                    case 0:{
+                        gotoContactDetail(mData.get(position).getId());
+                        break;
+                    }
+                    case 1:{
+                        String phone = "tel:" + mData.get(position).getContent();
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse(phone));
+                        startActivity(callIntent);
+                        break;
+                    }
+                    case 2:{
+                        Bundle data = new Bundle();
+                        data.putInt("typeInt", 1);
+                        data.putInt("contactID", mData.get(position).getId());
+                        mActivity.goNextScreen(CreateEventActivity.class, data);
+                        break;
+                    }
                 }
+            }
 
-                @Override
-                public void onClickMainContent(int position) {
-                    gotoContactDetail(mData.get(position).getId());
-                }
-            });
-            listContact.setAdapter(mAdapterActiveHist);
-        }
-        /*else {
-            mAdapterActiveHist.notifyDataSetChanged();
-        }*/
+            @Override
+            public void onClickMainContent(int position) {
+                gotoContactDetail(mData.get(position).getId());
+            }
+        });
+        listContact.setAdapter(mAdapterActiveHist);
+
 
         //set space between two items
         int[] ATTRS = new int[]{android.R.attr.listDivider};
@@ -193,11 +210,11 @@ View.OnClickListener{
     @Override
     public void gotoContactDetail(int id) {
         Bundle data = new Bundle();
-        data.putString("type",mTypeString);
-        data.putString("type_menu",Contants.CONTACT_MENU);
-        data.putInt("id",id);
+        data.putString("type", mTypeString);
+        data.putString("type_menu", Contants.CONTACT_MENU);
+        data.putInt("id", id);
         //data.putString("type_menu",Contants.SIGNED_MENU);
-        mActivity.goNextScreen(ContactDetailActivity.class,data,Contants.CONTACT_DETAIL);
+        mActivity.goNextScreen(ContactDetailActivity.class, data, Contants.CONTACT_DETAIL);
     }
 
     private void showpDialogAddNew() {
@@ -207,7 +224,7 @@ View.OnClickListener{
         View dialogView = inflater.inflate(R.layout.dialog_add_new_contact, null);
 
         initDialogEvent(dialogView);
-        hideKeyboardOutside(dialogView,mActivity);
+        hideKeyboardOutside(dialogView, mActivity);
         dialogBuilder.setView(dialogView);
 
         alertDialog = dialogBuilder.create();
@@ -249,86 +266,81 @@ View.OnClickListener{
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
             //create event
-            case R.id.txt_cancel:{
+            case R.id.txt_cancel: {
                 alertDialog.dismiss();
                 break;
             }
-            case R.id.txt_add:{
-                if(validateInputAddContact()){
+            case R.id.txt_add: {
+                if (validateInputAddContact()) {
                     List<ContactPerson> dataInput = new ArrayList<>();
-                    dataInput.add(new ContactPerson(false,"",
-                            edtNameAlert.getText().toString(),edtPhoneAlert.getText().toString(),0));
+                    dataInput.add(new ContactPerson(false, "",
+                            edtNameAlert.getText().toString(), edtPhoneAlert.getText().toString(), 0));
                     Bundle data = new Bundle();
                     data.putSerializable("data", (Serializable) dataInput);
-                    mActivity.goNextScreen(UpdateContactInfoActivity.class,data,Contants.ADD_CONTACT);
+                    mActivity.goNextScreen(UpdateContactInfoActivity.class, data, Contants.ADD_CONTACT);
                     alertDialog.dismiss();
                 }
                 break;
             }
 
             //choose week add contact
-            case R.id.btn_cancel:
-            {
+            case R.id.btn_cancel: {
                 alertDialog.dismiss();
                 break;
             }
-            case R.id.txt_week1:{
+            case R.id.txt_week1: {
                 ProjectApplication.getInstance().setCampaignWeekId(
                         mCampaignMonth.data.campaigns.get(0).id
                 );
-                if(misAddFromPhone) {
+                if (misAddFromPhone) {
                     alertDialog.dismiss();
                     //mActivity.goNextScreen(AddContactPersonActivity.class);
-                    mActivity.goNextScreen(AddContactPersonActivity.class,Contants.ADD_CONTACT);
-                }else
-                {
+                    mActivity.goNextScreen(AddContactPersonActivity.class, Contants.ADD_CONTACT);
+                } else {
                     alertDialog.dismiss();
                     showpDialogAddNew();
                 }
                 break;
             }
-            case R.id.txt_week2:{
+            case R.id.txt_week2: {
                 ProjectApplication.getInstance().setCampaignWeekId(
                         mCampaignMonth.data.campaigns.get(1).id
                 );
-                if(misAddFromPhone) {
+                if (misAddFromPhone) {
                     alertDialog.dismiss();
                     //mActivity.goNextScreen(AddContactPersonActivity.class);
-                    mActivity.goNextScreen(AddContactPersonActivity.class,Contants.ADD_CONTACT);
-                }else
-                {
+                    mActivity.goNextScreen(AddContactPersonActivity.class, Contants.ADD_CONTACT);
+                } else {
                     alertDialog.dismiss();
                     showpDialogAddNew();
                 }
                 break;
             }
-            case R.id.txt_week3:{
+            case R.id.txt_week3: {
                 ProjectApplication.getInstance().setCampaignWeekId(
                         mCampaignMonth.data.campaigns.get(2).id
                 );
-                if(misAddFromPhone) {
+                if (misAddFromPhone) {
                     alertDialog.dismiss();
                     //mActivity.goNextScreen(AddContactPersonActivity.class);
-                    mActivity.goNextScreen(AddContactPersonActivity.class,Contants.ADD_CONTACT);
-                }else
-                {
+                    mActivity.goNextScreen(AddContactPersonActivity.class, Contants.ADD_CONTACT);
+                } else {
                     alertDialog.dismiss();
                     showpDialogAddNew();
                 }
                 break;
             }
-            case R.id.txt_week4:{
+            case R.id.txt_week4: {
                 ProjectApplication.getInstance().setCampaignWeekId(
                         mCampaignMonth.data.campaigns.get(3).id
                 );
-                if(misAddFromPhone) {
+                if (misAddFromPhone) {
                     alertDialog.dismiss();
                     //mActivity.goNextScreen(AddContactPersonActivity.class);
-                    mActivity.goNextScreen(AddContactPersonActivity.class,Contants.ADD_CONTACT);
-                }else
-                {
+                    mActivity.goNextScreen(AddContactPersonActivity.class, Contants.ADD_CONTACT);
+                } else {
                     alertDialog.dismiss();
                     showpDialogAddNew();
                 }
@@ -347,12 +359,12 @@ View.OnClickListener{
         }
     }*/
 
-    private boolean validateInputAddContact(){
-        if(edtPhoneAlert.getText().length() <= 0){
+    private boolean validateInputAddContact() {
+        if (edtPhoneAlert.getText().length() <= 0) {
             edtPhoneAlert.setError("Nhập số điện thoại");
             return false;
         }
-        if(edtNameAlert.getText().length() <= 0){
+        if (edtNameAlert.getText().length() <= 0) {
             edtNameAlert.setError("Nhập họ tên");
             return false;
         }
@@ -379,11 +391,11 @@ View.OnClickListener{
             }
             case R.id.txt_add_from_introduce: {
                 Bundle data = new Bundle();
-                data.putInt("target",mTargetIntroduce);
-                data.putInt("month",mMonth);
-                data.putBoolean("isFromContact",true);
+                data.putInt("target", mTargetIntroduce);
+                data.putInt("month", mMonth);
+                data.putBoolean("isFromContact", true);
                 //mActivity.goNextScreen(IntroduceContactActivity.class,data);
-                mActivity.goNextScreen(IntroduceContactActivity.class,data,Contants.ADD_INTRODUCE_FROM_CONTACT);
+                mActivity.goNextScreen(IntroduceContactActivity.class, data, Contants.ADD_INTRODUCE_FROM_CONTACT);
                 break;
             }
         }
@@ -408,26 +420,27 @@ View.OnClickListener{
         //alertDialog.getWindow().setGravity(Gravity.BOTTOM);
         alertDialog.show();
     }
-    private void initDialogEventAddContact(View view){
+
+    private void initDialogEventAddContact(View view) {
         view.findViewById(R.id.btn_cancel).setOnClickListener(this);
         view.findViewById(R.id.txt_week1).setOnClickListener(this);
         view.findViewById(R.id.txt_week2).setOnClickListener(this);
         view.findViewById(R.id.txt_week3).setOnClickListener(this);
         view.findViewById(R.id.txt_week4).setOnClickListener(this);
 
-        if(mCampaignMonth.data.currentWeek == 4){
+        if (mCampaignMonth.data.currentWeek == 4) {
             view.findViewById(R.id.txt_week1).setAlpha(0.5f);
             view.findViewById(R.id.txt_week1).setClickable(false);
             view.findViewById(R.id.txt_week2).setAlpha(0.5f);
             view.findViewById(R.id.txt_week2).setClickable(false);
             view.findViewById(R.id.txt_week3).setAlpha(0.5f);
             view.findViewById(R.id.txt_week3).setClickable(false);
-        }else if(mCampaignMonth.data.currentWeek == 3){
+        } else if (mCampaignMonth.data.currentWeek == 3) {
             view.findViewById(R.id.txt_week1).setAlpha(0.5f);
             view.findViewById(R.id.txt_week1).setClickable(false);
             view.findViewById(R.id.txt_week2).setAlpha(0.5f);
             view.findViewById(R.id.txt_week2).setClickable(false);
-        }else if(mCampaignMonth.data.currentWeek == 2){
+        } else if (mCampaignMonth.data.currentWeek == 2) {
             view.findViewById(R.id.txt_week1).setAlpha(0.5f);
             view.findViewById(R.id.txt_week1).setClickable(false);
         }

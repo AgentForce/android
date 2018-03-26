@@ -13,10 +13,12 @@ public interface FirstContract {
     {
         void showWelcome();
         void showLogin();
+        void showFaMainBoard();
     }
     interface Action{
         void checkInternetViaPingServer();
         void clickAgreeButton();
         void checkPermissionGranted();
+        boolean checkLogined();
     }
 }

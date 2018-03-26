@@ -67,30 +67,10 @@ public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> 
 
     private void handleResponse(VerifyOTP rs) {
         if (rs.statusCode == 1) {
-            checkCampaign();
+            mPresenterView.showSuccessView();
+            mPresenterView.finishLoading();
         } else {
             mPresenterView.finishLoading(rs.msg, false);
-        }
-    }
-
-    @Override
-    public void checkCampaign() {
-        getCompositeDisposable().add(ApiService.getServer().checkCampaign(
-                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
-                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
-                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(this::handleResponseCheckCampaign, this::handleError));
-    }
-
-    private void handleResponseCheckCampaign(VerifyOTP rs) {
-        mPresenterView.finishLoading();
-        if (rs.statusCode == 1) {
-            mPresenterView.showSuccessView(true);
-        } else {
-            mPresenterView.showSuccessView(false);
         }
     }
 

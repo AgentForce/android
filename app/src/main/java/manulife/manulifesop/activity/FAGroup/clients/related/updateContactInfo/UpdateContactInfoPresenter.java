@@ -27,6 +27,7 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
 
     private Context mContext;
     private int mPosition;
+    private String mPhone;
 
     public UpdateContactInfoPresenter(UpdateContactInfoContract.View presenterView, Context context) {
         super(presenterView);
@@ -38,13 +39,16 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
                                   int income, int marital, int relationship,
                                   int source, String description) {
         mPosition = position;
+        mPhone = phone.trim().replace("-","").replace("+","")
+                .replace(" ","");
 
         mPresenterView.showLoading("Cập nhật thông tin người thứ" + (position + 1));
         //create checksum
         String checksum = "12345";
         InputAddContact data = new InputAddContact();
         data.campId = ProjectApplication.getInstance().getCampaignWeekId();
-        data.phone = phone.trim().replace("-","").replace("+","");
+        data.phone = phone.trim().replace("-","").replace("+","")
+        .replace(" ","");
         data.name = name;
         data.age = age;
         data.gender = gender;
@@ -72,6 +76,7 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
     private void handleResponse(BaseResponse baseResponse) {
         if(baseResponse.statusCode == 1){
             mPresenterView.finishLoading();
+            SOPSharedPreferences.getInstance(mContext).saveAddedPhone(mPhone);
             mPresenterView.loadNextContact(mPosition + 1);
         }else
         {

@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
+import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
 import manulife.manulifesop.activity.login.LoginActivity;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
@@ -49,6 +50,11 @@ public class FirstActivity extends BaseActivity<FirstPresenter> implements First
     @Override
     public void showLogin() {
         goNextScreen(LoginActivity.class);
+    }
+
+    @Override
+    public void showFaMainBoard() {
+        goNextScreen(MainFAActivity.class);
     }
 
     @OnClick({R.id.btn_agree,R.id.layout_permission})

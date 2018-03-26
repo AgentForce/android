@@ -1,9 +1,11 @@
 package manulife.manulifesop.activity.FAGroup.main;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,6 +21,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
@@ -57,6 +60,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
     FrameLayout frameLayout;
 
     private boolean mIsgetCampaign = false;
+    private boolean firstBackPressed = false;
 
     AHBottomNavigationAdapter mNavigationAdapter;
 
@@ -70,11 +74,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         mActionListener = new MainFAPresenter(this, this);
         setupSupportForApp();
         setupMenuBot();
-        /*mIsgetCampaign = getIntent().getExtras()
-                .getBoolean("isGetCampaign", false);*/
-        mIsgetCampaign = true;
-        mActionListener.checkIsGetCampaign(mIsgetCampaign);
-
+        mActionListener.chekCampaign();
     }
 
     private void setupSupportForApp() {
@@ -174,6 +174,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
     @Override
     public void showFragmentConfirmCreatePlan(String title) {
+        mIsgetCampaign = false;
         layoutNotification.setVisibility(View.GONE);
         layoutEdit.setVisibility(View.GONE);
         mFragmentTran = getSupportFragmentManager().beginTransaction();
@@ -185,6 +186,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
     @Override
     public void showDashBoard() {
+        mIsgetCampaign = true;
         layoutNotification.setVisibility(View.VISIBLE);
         layoutEdit.setVisibility(View.GONE);
 
@@ -242,4 +244,29 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!firstBackPressed) {
+            firstBackPressed = true;
+            SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
+            sweetAlertDialog.setTitleText("Xác nhận");
+            sweetAlertDialog.setContentText("Nhấn lần nửa để thoát ứng dụng");
+            sweetAlertDialog.setCanceledOnTouchOutside(true);
+            sweetAlertDialog.setOnCancelListener(dialog -> {
+                firstBackPressed = false;
+            });
+            sweetAlertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                @Override
+                public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        dialog.dismiss();
+                        moveTaskToBack(true);
+                        MainFAActivity.super.onBackPressed();
+                    }
+                    return false;
+                }
+            });
+            sweetAlertDialog.show();
+        }
+    }
 }

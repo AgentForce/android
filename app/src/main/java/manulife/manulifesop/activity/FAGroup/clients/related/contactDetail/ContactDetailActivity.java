@@ -186,14 +186,11 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /*if(resultCode == RESULT_OK &&
-                (requestCode == Contants.ADD_EVENT || requestCode == Contants.SIGN_SUCCESS)){
-            mActionListener.getContactDetail(mUserId);
-        }*/
+
         if (resultCode == RESULT_OK) {
             if (requestCode == Contants.ADD_EVENT) {
                 mActionListener.getContactDetail(mUserId);
-            } else {
+            } else if(requestCode == Contants.SIGN_SUCCESS){
                 finishChangeStatus();
             }
         }
@@ -266,6 +263,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                     Bundle data = new Bundle();
                     data.putInt("typeInt", 1);
                     data.putInt("contactID", mUserId);
+                    showHideMenuAfterCall();
                     goNextScreen(CreateEventActivity.class, data, Contants.ADD_EVENT);
                     break;
                 }
@@ -373,6 +371,18 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
             viewPager.setAdapter(mAdapterViewPager);
             tabMenu.setupWithViewPager(viewPager);
         }
+    }
+
+    @Override
+    public void showMenuOption() {
+        Animation in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        layoutMenuBot.startAnimation(in);
+        layoutMenuBot.setVisibility(View.VISIBLE);
+        if(mAdapterViewPager.getItem(0) instanceof ContactDetailStep1Fragment)
+        {
+            ((ContactDetailStep1Fragment) mAdapterViewPager.getItem(0)).showXLetter(true);
+        }
+        enableViewTop(false);
     }
 
     @Override

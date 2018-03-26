@@ -3,9 +3,12 @@ package manulife.manulifesop.fragment.FAGroup.personal;
 import android.os.Bundle;
 import android.view.View;
 
+import butterknife.OnClick;
 import manulife.manulifesop.R;
+import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
 import manulife.manulifesop.base.BaseFragment;
+import manulife.manulifesop.util.SOPSharedPreferences;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -37,18 +40,19 @@ public class FAPersonalFragment extends BaseFragment<MainFAActivity, FAPersonalP
         mActivity.showHideActionbar(false);
     }
 
-    /*@OnClick(R.id.btn_start)
+    @OnClick(R.id.txt_logout)
     public void onClick(View view)
     {
         int id = view.getId();
         switch (id)
         {
-            case R.id.btn_start:
+            case R.id.txt_logout:
             {
-                mActivity.goNextScreen(CreatePlanActivity.class);
+                SOPSharedPreferences.getInstance(getContext()).saveToken("","");
+                mActivity.onBackPressed();
                 break;
             }
         }
-    }*/
+    }
 
 }

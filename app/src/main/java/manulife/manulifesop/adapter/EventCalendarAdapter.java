@@ -90,17 +90,17 @@ public class EventCalendarAdapter extends RecyclerView.Adapter<EventCalendarAdap
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.menu1:
+                            case R.id.menu_detail:
                                 //handle menu1 click
                                 //Toast.makeText(mContext, "menu 1", Toast.LENGTH_SHORT).show();
                                 mCallback.onClickMenuRight(position,0);
                                 break;
-                            case R.id.menu2:
+                            case R.id.menu_call:
                                 //handle menu2 click
                                 //Toast.makeText(mContext, "menu 2", Toast.LENGTH_SHORT).show();
                                 mCallback.onClickMenuRight(position,1);
                                 break;
-                            case R.id.menu3:
+                            case R.id.menu_create_event:
                                 //Toast.makeText(mContext, "menu 3", Toast.LENGTH_SHORT).show();
                                 //handle menu3 click
                                 mCallback.onClickMenuRight(position,1);

@@ -49,7 +49,7 @@ public class ContactDetailStep3Fragment extends BaseFragment<ContactDetailActivi
         @Override
         public void onApiLoadMoreTask(int page) {
             //Toast.makeText(mActivity, "Load more", Toast.LENGTH_SHORT).show();
-            mActionListener.getContactHistory(mData.get(0).getId(),page);
+            mActionListener.getContactHistory(mData.get(0).getId(), page);
         }
     }
 
@@ -60,7 +60,7 @@ public class ContactDetailStep3Fragment extends BaseFragment<ContactDetailActivi
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new ContactDetailStep3Present(this,getContext());
+        mActionListener = new ContactDetailStep3Present(this, getContext());
     }
 
     @Override
@@ -92,13 +92,8 @@ public class ContactDetailStep3Fragment extends BaseFragment<ContactDetailActivi
             ));
             mData.add(temp);
         }
-
-        if (mAdapter == null) {
-            mAdapter = new ContactHistAdapter(getContext(), mData);
-            listData.setAdapter(mAdapter);
-        } else {
-            mAdapter.notifyDataSetChanged();
-        }
+        mAdapter = new ContactHistAdapter(getContext(), mData);
+        listData.setAdapter(mAdapter);
 
         listData.clearOnScrollListeners();
         /*listData.addOnScrollListener(new EndlessScrollListenerRecyclerView(
