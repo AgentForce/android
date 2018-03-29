@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
 import manulife.manulifesop.base.BaseFragment;
+import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
 import manulife.manulifesop.util.SOPSharedPreferences;
 
 /**
@@ -48,8 +50,21 @@ public class FAPersonalFragment extends BaseFragment<MainFAActivity, FAPersonalP
         {
             case R.id.txt_logout:
             {
-                SOPSharedPreferences.getInstance(getContext()).saveToken("","");
-                mActivity.onBackPressed();
+                showConfirm("Xác nhận", "Đăng xuất khỏi tài khoản?", "Đồng ý",
+                        "Hủy", SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
+                            @Override
+                            public void DiaglogPositive() {
+                                SOPSharedPreferences.getInstance(getContext()).saveToken("","");
+                                //mActivity.logoutProcess();
+                                mActivity.backToPrevious(new Bundle());
+                            }
+
+                            @Override
+                            public void DiaglogNegative() {
+
+                            }
+                        });
+
                 break;
             }
         }

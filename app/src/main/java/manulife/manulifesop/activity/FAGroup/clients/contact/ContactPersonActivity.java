@@ -55,10 +55,10 @@ public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> 
         setContentView(R.layout.activity_contact_person);
         mActionListener = new ContactPersonPresenter(this, this);
         hideKeyboardOutside(layoutRoot);
-        setupSupportForApp();
         mTarget = getIntent().getIntExtra("target", 0);
         mTargetIntroduce = getIntent().getIntExtra("targetIntroduce", 0);
         mMonth = getIntent().getIntExtra("month", 0);
+        setupSupportForApp();
         mActionListener.getAllContactPerson(mMonth, 1);
     }
 
@@ -93,7 +93,7 @@ public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> 
 
     private void setupSupportForApp() {
         //txtActionbarTitle.setText(getResources().getString(R.string.activity_create_plan_title_actionbar));
-        txtActionbarTitle.setText("Danh sách liên hệ tháng 12");
+        txtActionbarTitle.setText("Danh sách liên hệ tháng " + mMonth);
         layoutBackButton.setVisibility(View.VISIBLE);
 
         int statusBarHeight = 0;

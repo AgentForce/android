@@ -29,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.appointment.AppointmentActivity;
@@ -49,6 +50,7 @@ import manulife.manulifesop.api.ObjectResponse.DashboardResult;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
+import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
 import manulife.manulifesop.fragment.FAGroup.dashboard.campaignPercent.CampaignPercentFragment;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
@@ -183,6 +185,21 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
 
         initViewPager(dataWeekMonth, dataYear);
         showACtivities(activities);
+        //check active campaign in this month
+        if(dataWeekMonth.data.isRequestActive == 1){
+            showConfirm("Thông báo", "Đồng ý kích hoạt mục tiêu tháng " + mMonth, "Đồng ý",
+                    "Hủy", SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
+                        @Override
+                        public void DiaglogPositive() {
+                            Toast.makeText(mActivity, "Gọi api active", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void DiaglogNegative() {
+
+                        }
+                    });
+        }
     }
 
     private void initViewPager(DashboardResult dataWeekMonth, DashboardResult dataYear) {
@@ -282,15 +299,11 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
 
     @Override
     public void showACtivities(ActivitiHist activities) {
+        mDataActiveHist.clear();
         listActiHist.setLayoutManager(mLayoutManager);
-        String dateCreated;
 
         for (int i = 0; i < activities.data.rows.size(); i++) {
             ActiveHistFA temp = new ActiveHistFA();
-
-            dateCreated = Utils.convertStringDateToStringDate(activities.data.rows.get(i).updatedAt,
-                    "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "dd-MM-yyyy HH:mm:ss");
-
 
             temp.setAvatar("avatar " + i);
             temp.setTitle(activities.data.rows.get(i).name);

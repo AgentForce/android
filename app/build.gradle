@@ -27,34 +27,34 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile 'com.android.support:multidex:1.0.1'
+    implementation 'com.android.support:multidex:1.0.1'
     //lib for sweet alert
-    compile 'com.pnikosis:materialish-progress:1.0'
+    implementation 'com.pnikosis:materialish-progress:1.0'
     implementation project(':sweet-alert-dialog')
     //round image view
-    compile 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
     //check null
-    compile 'com.google.guava:guava:18.0'
-    compile 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.google.guava:guava:18.0'
+    implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.2.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     implementation project(':indicator')
-    compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
-    compile 'com.github.warkiz.widget:indicatorseekbar:1.2.5'
-    compile 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
+    implementation 'com.github.warkiz.widget:indicatorseekbar:1.2.5'
+    implementation 'org.greenrobot:eventbus:3.1.1'
     implementation project(':circular_progress_bar')
     implementation project(':cirleCheckbox')
-    compile 'ca.barrenechea.header-decor:header-decor:0.2.8'
-    compile 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+    implementation 'ca.barrenechea.header-decor:header-decor:0.2.8'
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
     implementation project(':calendar_events')
 }

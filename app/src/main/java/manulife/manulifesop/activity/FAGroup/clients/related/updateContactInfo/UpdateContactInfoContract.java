@@ -15,12 +15,15 @@ public interface UpdateContactInfoContract {
         void finishChangeToContact();
     }
     interface Action{
-        void updateContactInfo(int position, String name, String phone,int age, int gender,
+        void addContactInfo(int position, String name, String phone,int age, int gender,
                                int income, int marital, int relationship,
                                int source, String description);
         void changeReleadToContact(int releadID, int campaignID, int age, int gender,
                                    int income, int marital, int relationship,
                                    int source, String description);
+        void updateContactInfo(int releadID, String name, int age, int gender,
+                               int income, int marital, int relationship,
+                               int source, String description);
 
     }
 }

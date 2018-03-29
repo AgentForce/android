@@ -13,6 +13,7 @@ import manulife.manulifesop.BuildConfig;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectInput.InputChangeCampaignWeek;
+import manulife.manulifesop.api.ObjectInput.InputIncreaseContact;
 import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.base.BasePresenter;
@@ -53,15 +54,16 @@ public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerCon
 
     private void handleResponseCampaignMonth(CampaignMonth data) {
         if (data.statusCode == 1) {
-            ProjectApplication.getInstance().setCampaign(data);
-            mPresenterView.showCampaignsMonth(data);
-            mPresenterView.finishLoading();
-        } else {
-            if (data.statusCode == 2) {
+            if (data.data.isRequestActive == 0) {
+                ProjectApplication.getInstance().setCampaign(data);
+                mPresenterView.showCampaignsMonth(data);
+            } else {
                 mPresenterView.showConfirmAcvitveCampaign();
-            } else
-                mPresenterView.finishLoading(data.msg, false);
-        }
+            }
+            mPresenterView.finishLoading();
+
+        } else
+            mPresenterView.finishLoading(data.msg, false);
     }
 
     @Override
@@ -74,12 +76,12 @@ public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerCon
         dataList.add(contractW4);
 
         InputChangeCampaignWeek data = new InputChangeCampaignWeek();
-        data.target =dataList;
+        data.target = dataList;
         getCompositeDisposable().add(ApiService.getServer().changeCampaignWeek(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                 DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, "checksum",
-                month,data)
+                month, data)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -88,12 +90,38 @@ public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerCon
     }
 
     private void handleResponseChangeCampaignWeek(BaseResponse baseResponse) {
-        if(baseResponse.statusCode == 1)
-        {
+        if (baseResponse.statusCode == 1) {
             mPresenterView.finishLoading();
             mPresenterView.updateData();
-        }else{
-            mPresenterView.finishLoading(baseResponse.msg,false);
+        } else {
+            mPresenterView.finishLoading(baseResponse.msg, false);
+        }
+    }
+
+    @Override
+    public void increaseContactCampaign(int month, int increaseNumber) {
+        mPresenterView.showLoading("Xử lý dữ liệu");
+
+        InputIncreaseContact data = new InputIncreaseContact();
+        data.incrementContract = increaseNumber;
+        getCompositeDisposable().add(ApiService.getServer().increaseContactCampaign(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
+                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
+                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, "checksum",
+                month, data)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseIncreaseContact, this::handleError)
+        );
+    }
+
+    private void handleResponseIncreaseContact(BaseResponse baseResponse) {
+        if (baseResponse.statusCode == 1) {
+            mPresenterView.finishLoading();
+            mPresenterView.updateData();
+        } else {
+            mPresenterView.finishLoading(baseResponse.msg, false);
         }
     }
 }

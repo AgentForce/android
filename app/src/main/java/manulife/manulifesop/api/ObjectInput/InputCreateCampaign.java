@@ -11,6 +11,9 @@ public class InputCreateCampaign {
     @SerializedName("StartDate")
     @Expose
     private String startDate;
+    @SerializedName("EndDate")
+    @Expose
+    private String endDate;
     @SerializedName("CaseSize")
     @Expose
     private Long caseSize;
@@ -20,6 +23,14 @@ public class InputCreateCampaign {
     @SerializedName("CommissionRate")
     @Expose
     private Long commissionRate;
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
     public String getStartDate() {
         return startDate;

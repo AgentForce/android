@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:circular="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="90">
+
+        <LinearLayout
+            android:id="@+id/layout_column1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="30"
+            android:orientation="vertical">
+
+            <chick.circular_progress_bar.CircularProgressBar
+                android:id="@+id/circular_progress_step1"
+                style="@style/Widget.ProgressBar.Holo.CircularProgressBar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                app:cpb_progressColor="#F63D2B"
+                app:cpb_backgroundColor="@color/color_dashboard_contact"
+                app:cpb_strokeWidth="15"
+                app:cpb_titleColor="#FFFFFF"
+                app:cpb_subtitleColor="#FFFFFF"
+                circular:cpb_subtitle="subtitle"
+                circular:cpb_title="Title" />
+
+            <chick.circular_progress_bar.CircularProgressBar
+                android:id="@+id/circular_progress_step2"
+                style="@style/Widget.ProgressBar.Holo.CircularProgressBar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                app:cpb_progressColor="#F63D2B"
+                app:cpb_strokeWidth="15"
+                app:cpb_backgroundColor="@color/color_dashboard_meeting"
+                app:cpb_titleColor="#FFFFFF"
+                app:cpb_subtitleColor="#FFFFFF"
+                circular:cpb_subtitle="subtitle"
+                circular:cpb_title="Title" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_column2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/layout_column1"
+            android:layout_weight="30"
+            android:orientation="vertical">
+
+            <chick.circular_progress_bar.CircularProgressBar
+                android:id="@+id/circular_progress_step3"
+                style="@style/Widget.ProgressBar.Holo.CircularProgressBar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                app:cpb_progressColor="#F63D2B"
+                app:cpb_strokeWidth="15"
+                android:progress="50"
+                app:cpb_backgroundColor="@color/color_dashboard_advisory"
+                app:cpb_titleColor="#FFFFFF"
+                app:cpb_subtitleColor="#FFFFFF"
+                circular:cpb_subtitle="subtitle"
+                circular:cpb_title="Title" />
+
+            <chick.circular_progress_bar.CircularProgressBar
+                android:id="@+id/circular_progress_step4"
+                style="@style/Widget.ProgressBar.Holo.CircularProgressBar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                app:cpb_progressColor="#F63D2B"
+                app:cpb_strokeWidth="15"
+                app:cpb_backgroundColor="@color/color_dashboard_sign"
+                app:cpb_titleColor="#FFFFFF"
+                app:cpb_subtitleColor="#FFFFFF"
+                circular:cpb_subtitle="subtitle"
+                circular:cpb_title="Title" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/layout_column1"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/layout_column2"
+            android:layout_weight="30">
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:clickable="true"
+                android:text="Sửa số lượng liên hệ"
+                android:textColor="@drawable/text_color_blue" />
+
+            <chick.circular_progress_bar.CircularProgressBar
+                android:id="@+id/circular_progress_step5"
+                style="@style/Widget.ProgressBar.Holo.CircularProgressBar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                app:cpb_progressColor="#F63D2B"
+                app:cpb_strokeWidth="15"
+                app:cpb_backgroundColor="@color/color_dashboard_introduce"
+                app:cpb_titleColor="#FFFFFF"
+                app:cpb_subtitleColor="#FFFFFF"
+                circular:cpb_subtitle="subtitle"
+                circular:cpb_title="Title" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

@@ -35,12 +35,12 @@
     </string-array>
 
 
-    <string name="activity_login_welcome_title">Bắt đầu lập kế hoạch kinh doanh</string>
-    <string name="activity_login_welcome_content">Lập kết hoạch kinh doanh để quản lý &amp; và theo dõi công việc của bạn</string>
+    <string name="activity_login_welcome_title">Thiết lập mục tiêu thu nhập</string>
+    <string name="activity_login_welcome_content">\" Hành trình vạn dặm được bắt đầu bằng những bước đầu tiên \"</string>
 
     <!--activity_create_plan-->
     <string name="activity_create_plan_title_actionbar">Thiết lập kế hoạch kinh doanh</string>
-    <string name="activity_create_plan_title_step1">Vui lòng nhập ngày bắt đầu</string>
+    <string name="activity_create_plan_title_step1">Thiết lập thời gian mục tiêu</string>
     <string name="activity_create_plan_title_step2">Thu nhập mong muốn</string>
     <string name="activity_create_plan_title_step3">Kết quả 1/2: Khách hàng dự kiến</string>
     <string name="activity_create_plan_title_step4">Kết quả 2/2: Thu nhập đạt được</string>

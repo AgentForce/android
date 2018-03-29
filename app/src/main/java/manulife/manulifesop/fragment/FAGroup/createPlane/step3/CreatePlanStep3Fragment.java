@@ -35,6 +35,9 @@ public class CreatePlanStep3Fragment extends BaseFragment<CreatePlanActivity, Cr
     TextView txtAppointmentNum;
     @BindView(R.id.txt_cus_num)
     TextView txtCusNum;
+    @BindView(R.id.txt_introduce_num)
+    TextView txtIntroduceNum;
+
 
     @BindView(R.id.rb_month_year)
     RadioGroup rbMonthYear;
@@ -83,6 +86,7 @@ public class CreatePlanStep3Fragment extends BaseFragment<CreatePlanActivity, Cr
         txtMeetNum.setText((contractNum * 3) + "");
         txtAppointmentNum.setText((contractNum * 5) + "");
         txtCusNum.setText((contractNum * 10) + "");
+        txtIntroduceNum.setText((contractNum * 8) + "");
     }
 
 

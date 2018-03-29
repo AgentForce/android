@@ -21,6 +21,7 @@ import manulife.manulifesop.activity.FAGroup.clients.signed.SignedPersonActivity
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.base.BaseFragment;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -57,11 +58,10 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
     private int targetStep1 = 0, targetStep2 = 0, targetStep3 = 0, targetStep4 = 0, targetStep5 = 0;
 
 
-
-    public static FAObjectMonthFragment newInstance(CampaignMonth data,int month) {
+    public static FAObjectMonthFragment newInstance(CampaignMonth data, int month) {
         Bundle args = new Bundle();
         args.putSerializable("data", data);
-        args.putInt("month",month);
+        args.putInt("month", month);
         FAObjectMonthFragment fragment = new FAObjectMonthFragment();
         fragment.setArguments(args);
         return fragment;
@@ -81,8 +81,8 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         nData = (CampaignMonth) getArguments().getSerializable("data");
+        mMonth = getArguments().getInt("month", 0);
         initViews(nData);
-        mMonth = getArguments().getInt("month",0);
     }
 
     private void initViews(CampaignMonth data) {
@@ -120,44 +120,49 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
         int id = view.getId();
         switch (id) {
             case R.id.layout_contact: {
-                //Toast.makeText(mActivity, "layout_contact", Toast.LENGTH_SHORT).show();
-                Bundle data = new Bundle();
-                data.putInt("month",mMonth);
-                data.putInt("target",targetStep1);
-                data.putInt("targetIntroduce",targetStep5);
-                mActivity.goNextScreen(ContactPersonActivity.class,data);
+                if (Utils.getCurrentMonth(getContext()) == mMonth) {
+                    Bundle data = new Bundle();
+                    data.putInt("month", mMonth);
+                    data.putInt("target", targetStep1);
+                    data.putInt("targetIntroduce", targetStep5);
+                    mActivity.goNextScreen(ContactPersonActivity.class, data);
+                }
                 break;
             }
             case R.id.layout_meeting: {
-                //Toast.makeText(mActivity, "layout_meeting", Toast.LENGTH_SHORT).show();
-                Bundle data = new Bundle();
-                data.putInt("month",mMonth);
-                data.putInt("target",targetStep2);
-                mActivity.goNextScreen(AppointmentActivity.class,data);
+                if (Utils.getCurrentMonth(getContext()) == mMonth) {
+                    Bundle data = new Bundle();
+                    data.putInt("month", mMonth);
+                    data.putInt("target", targetStep2);
+                    mActivity.goNextScreen(AppointmentActivity.class, data);
+                }
                 break;
             }
             case R.id.layout_advisory: {
-                //Toast.makeText(mActivity, "layout_advisory", Toast.LENGTH_SHORT).show();
-                Bundle data = new Bundle();
-                data.putInt("month",mMonth);
-                data.putInt("target",targetStep3);
-                mActivity.goNextScreen(ConsultantActivity.class,data);
+                if (Utils.getCurrentMonth(getContext()) == mMonth) {
+                    Bundle data = new Bundle();
+                    data.putInt("month", mMonth);
+                    data.putInt("target", targetStep3);
+                    mActivity.goNextScreen(ConsultantActivity.class, data);
+                }
                 break;
             }
             case R.id.layout_sign: {
-                //Toast.makeText(mActivity, "layout_sign", Toast.LENGTH_SHORT).show();
-                Bundle data = new Bundle();
-                data.putInt("month",mMonth);
-                data.putInt("target",targetStep4);
-                mActivity.goNextScreen(SignedPersonActivity.class,data);
+                if (Utils.getCurrentMonth(getContext()) == mMonth) {
+                    Bundle data = new Bundle();
+                    data.putInt("month", mMonth);
+                    data.putInt("target", targetStep4);
+                    mActivity.goNextScreen(SignedPersonActivity.class, data);
+                }
                 break;
             }
             case R.id.layout_introduce: {
-                //Toast.makeText(mActivity, "layout_introduce", Toast.LENGTH_SHORT).show();
-                Bundle data = new Bundle();
-                data.putInt("month",mMonth);
-                data.putInt("target",targetStep5);
-                mActivity.goNextScreen(IntroduceContactActivity.class,data);
+                if (Utils.getCurrentMonth(getContext()) == mMonth) {
+                    Bundle data = new Bundle();
+                    data.putInt("month", mMonth);
+                    data.putInt("target", targetStep5);
+                    mActivity.goNextScreen(IntroduceContactActivity.class, data);
+                }
                 break;
             }
 

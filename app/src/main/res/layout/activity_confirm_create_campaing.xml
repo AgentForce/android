@@ -4,157 +4,213 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
-        android:id="@+id/status_bar"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@drawable/statusbar_header_bg" />
-    <!--layout top-->
-    <RelativeLayout
+    <include
         android:id="@+id/layout_top"
+        layout="@layout/actionbar_custom"
         android:layout_width="match_parent"
-        android:layout_below="@+id/status_bar"
-        android:layout_height="140dp">
+        android:layout_height="wrap_content" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:background="@drawable/login_header_bg" />
-
-            <TextView
-                android:id="@+id/txt_actionbar_title"
-                style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="Chào mừng"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/img_user_avatar"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:background="@color/gray_btn_bg_color"
-                android:scaleType="fitCenter"
-                app:riv_corner_radius="45dp"
-                app:riv_mutate_background="true" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal|center_vertical"
-                android:text="m"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:textSize="50sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/txt_user_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <!--infor user-->
+    <ScrollView
         android:layout_below="@+id/layout_top"
-        android:gravity="center_horizontal"
-        android:text="Nguyễn Cao Minh"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <LinearLayout
+        android:layout_above="@+id/layout_welcome"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txt_user_name"
-        android:layout_marginTop="5dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txt_user_id"
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="M98483773"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
-            android:layout_marginTop="20dp"
-            android:background="@android:color/black" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
-
-            <LinearLayout
-                android:id="@+id/layout_user_job"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_work" />
-
-                <TextView
-                    android:id="@+id/txt_user_job"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="Chuyên viên tư vấn" />
-            </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/img_title"
+                android:layout_margin="20dp"
+                android:layout_width="60dp"
+                android:layout_height="80dp"
+                android:src="@drawable/image_medals_gold"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layout_user_job"
-                android:layout_marginTop="5dp"
+                android:orientation="vertical"
                 android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_location" />
-
-                <TextView
-                    android:id="@+id/txt_user_address"
-                    android:layout_width="wrap_content"
+                android:layout_marginTop="20dp">
+                <!--user name-->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="Hồ Chí Minh, Việt Nam" />
-            </LinearLayout>
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_username"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tên"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/txt_user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nguyễn Cao Minh"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <!--agent number-->
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_agency_code"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mã đại lý"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/txt_agent_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2556146"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <!--chức danh-->
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-        </RelativeLayout>
-    </LinearLayout>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_title_user" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chức danh"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/txt_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Đại lý mới"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <!--danh hiệu-->
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_customer_infor_title" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Danh hiệu"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/txt_title_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Finalcial Consultant"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <!--Khu vực-->
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_gps" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Khu vực"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/txt_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hồ Chí Minh Việt Nam"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <!--bottom layout-->
-
     <LinearLayout
         android:id="@+id/layout_welcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -182,7 +238,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/cus_button_events"
             android:text="Bắt đầu"
             android:textColor="@android:color/white"
@@ -191,15 +247,15 @@
         <TextView
             android:id="@+id/txt_go_main"
             android:layout_width="match_parent"
-            android:padding="10dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:clickable="true"
             android:gravity="center_horizontal"
+            android:padding="10dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:text="Vào trang chủ"
             android:textColor="@drawable/text_color"
-            android:clickable="true"
             android:textSize="@dimen/welcome_activity_content" />
 
     </LinearLayout>

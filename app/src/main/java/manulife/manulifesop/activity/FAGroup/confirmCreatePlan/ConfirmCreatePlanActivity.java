@@ -19,6 +19,7 @@ import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanContract;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanPresenter;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
+import manulife.manulifesop.api.ObjectResponse.UserProfile;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step1.CreatePlanStep1Fragment;
@@ -26,10 +27,25 @@ import manulife.manulifesop.fragment.FAGroup.createPlane.step1.CreatePlanStep1Fr
 
 public class ConfirmCreatePlanActivity extends BaseActivity<ConfirmCreatePlanPresenter> implements ConfirmCreatePlanContract.View {
 
+    @BindView(R.id.txt_actionbar_title)
+    TextView txtActionbarTitle;
+
     @BindView(R.id.btn_start)
     Button btnStart;
     @BindView(R.id.txt_go_main)
     TextView txtGoMain;
+
+    @BindView(R.id.txt_user_name)
+    TextView txtUserName;
+    @BindView(R.id.txt_agent_number)
+    TextView txtAgentNumber;
+    @BindView(R.id.txt_title)
+    TextView txtTitle;
+    @BindView(R.id.txt_title_info)
+    TextView txtTitleInfo;
+    @BindView(R.id.txt_location)
+    TextView txtLocation;
+
 
 
     @Override
@@ -37,6 +53,14 @@ public class ConfirmCreatePlanActivity extends BaseActivity<ConfirmCreatePlanPre
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_create_campaing);
         mActionListener = new ConfirmCreatePlanPresenter(this,this);
+        txtActionbarTitle.setText("Chào mừng bạn");
+        mActionListener.getUserProfile(getIntent().getStringExtra("userName"));
+    }
+
+    @Override
+    public void showData(UserProfile data) {
+        txtUserName.setText(data.data.fullName);
+        txtAgentNumber.setText(String.valueOf(data.data.id));
     }
 
     @OnClick({R.id.btn_start, R.id.txt_go_main})

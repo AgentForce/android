@@ -40,6 +40,7 @@ public class ContactDetailPresenter extends BasePresenter<ContactDetailContract.
                 id)
                 .subscribeOn(Schedulers.computation())
                 .flatMap(contactDetail -> {
+                    //String temp = SOPSharedPreferences.getInstance(mContext).getAccessToken();
                     ProjectApplication.getInstance().setContactDetail(contactDetail);
                     return ApiService.getServer().getContactActivity(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),

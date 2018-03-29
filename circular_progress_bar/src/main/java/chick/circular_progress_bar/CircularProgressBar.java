@@ -49,6 +49,8 @@ public class CircularProgressBar extends ProgressBar{
 	private int mStrokeWidth = STROKE_WIDTH;
 
 	private final RectF mCircleBounds = new RectF();
+	//new code
+	private final RectF mCircleBounds2 = new RectF();
 
 	private final Paint mProgressColorPaint = new Paint();
 	private final Paint mBackgroundColorPaint = new Paint();
@@ -134,10 +136,13 @@ public class CircularProgressBar extends ProgressBar{
 		mProgressColorPaint.setStrokeWidth(mStrokeWidth);
 
 		mBackgroundColorPaint.setAntiAlias(true);
-		mBackgroundColorPaint.setStyle(Style.STROKE);
+		//mBackgroundColorPaint.setStyle(Style.STROKE);
 		//mBackgroundColorPaint.setStrokeWidth(mStrokeWidth);
 		//new code
 		mBackgroundColorPaint.setStrokeWidth(mStrokeWidth/2);
+		//new code
+		mBackgroundColorPaint.setStyle(Style.FILL_AND_STROKE);
+
 
 		//new code
 		//mTitlePaint.setTextSize(60);
@@ -156,7 +161,7 @@ public class CircularProgressBar extends ProgressBar{
 
 	@Override
 	protected synchronized void onDraw(Canvas canvas) {
-		canvas.drawArc(mCircleBounds, 0, 360 , false, mBackgroundColorPaint);
+		canvas.drawArc(mCircleBounds2, 0, 360 , false, mBackgroundColorPaint);
 
 		int prog = getProgress();
 		float scale = getMax() > 0 ? (float)prog/getMax() *360: 0;
@@ -193,6 +198,8 @@ public class CircularProgressBar extends ProgressBar{
 		setMeasuredDimension(min+2*STROKE_WIDTH, min+2*STROKE_WIDTH);
 
 		mCircleBounds.set(STROKE_WIDTH, STROKE_WIDTH, min+STROKE_WIDTH, min+STROKE_WIDTH);
+		//new code
+		mCircleBounds2.set(STROKE_WIDTH*2, STROKE_WIDTH*2, min , min );
 	}
 
 	@Override

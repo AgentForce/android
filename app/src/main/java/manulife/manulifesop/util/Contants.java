@@ -40,6 +40,7 @@ public class Contants {
     public static final int CONTACT_DETAIL = 104;
     public static final int ADD_EVENT = 105;
     public static final int SIGN_SUCCESS = 106;
+    public static final int UPDATE_CONTACT = 107;
 
     //variable for contact
     public static final int USER_CONTACT = 1;

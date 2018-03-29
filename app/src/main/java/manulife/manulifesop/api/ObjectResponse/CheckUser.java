@@ -28,6 +28,9 @@ public class CheckUser {
         @SerializedName("status")
         @Expose
         public Integer status;
+        @SerializedName("token")
+        @Expose
+        public String token;
     }
 
 

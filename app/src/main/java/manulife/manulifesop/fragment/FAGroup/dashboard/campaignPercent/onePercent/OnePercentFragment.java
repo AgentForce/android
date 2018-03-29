@@ -33,17 +33,19 @@ public class OnePercentFragment extends BaseFragment<MainFAActivity,OnePercentPr
     CircularProgressBar circularProgressBar;
 
     @BindView(R.id.txt_title)
-    TextView txtEditNum;
+    TextView txtTitle;
 
     private int mPercent;
     private String mSubTitle;
     private int mColor;
+    private String mType;//week,month,year
 
 
-    public static OnePercentFragment newInstance(String subTitle,int percent,int color) {
+    public static OnePercentFragment newInstance(String subTitle,int percent,int color, String type) {
         Bundle args = new Bundle();
         args.putInt("percent",percent);
         args.putString("subtitle",subTitle);
+        args.putString("type",type);
         args.putInt("color",color);
         OnePercentFragment fragment = new OnePercentFragment();
         fragment.setArguments(args);
@@ -67,13 +69,25 @@ public class OnePercentFragment extends BaseFragment<MainFAActivity,OnePercentPr
         mPercent = getArguments().getInt("percent",0);
         mSubTitle = getArguments().getString("subtitle","");
         mColor = getArguments().getInt("color", Color.parseColor("#bada55"));
+        mType = getArguments().getString("type","week");
 
         circularProgressBar.setTitle(mPercent + "%");
         circularProgressBar.setSubTitle(mSubTitle);
         circularProgressBar.setProgress(mPercent);
         circularProgressBar.setProgressColor(mColor);
+
+        initViews();
     }
 
+    private void initViews(){
+        if(mType.equals("week")){
+            txtTitle.setText("Sửa số lượng liên hệ");
+        }else if(mType.equals("month")){
+            txtTitle.setText("Thêm mục tiêu tháng");
+        }else{
+            txtTitle.setVisibility(View.GONE);
+        }
+    }
     @OnClick(R.id.txt_title)
     public void onClick(View view)
     {

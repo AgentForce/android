@@ -24,6 +24,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -120,14 +121,13 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
         Calendar calendar = Calendar.getInstance();
         String currentDate = Utils.convertDateToString(calendar.getTime(), "dd/MM/yyyy");
         String currentTime = Utils.convertDateToString(calendar.getTime(), "HH:mm");
-        String currentDateSave = Utils.convertDateToString(calendar.getTime(), "yyyy-MM-dd HH:mm");
 
         txtStartDate.setText(currentDate);
-        txtStartDate.setTag(currentDateSave);
         txtStartTime.setText(currentTime);
-        txtStartTime.setTag(currentTime);
         txtEndTime.setText(currentTime);
-        txtEndTime.setTag(currentTime);
+
+        selectedStartTime = currentTime;
+        selectedEndTime = currentTime;
 
         txtType.setText(ProjectApplication.getInstance().getEventStringFromType(mTypeInt));
 
@@ -137,6 +137,7 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
                 if (isChecked) {
                     txtStartTime.setText("00:00");
                     txtEndTime.setText("24:00");
+
                 } else {
                     txtStartTime.setText(selectedStartTime);
                     txtEndTime.setText(selectedStartTime);
@@ -252,16 +253,14 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
                         Calendar calendarEnd = Calendar.getInstance();
                         calendarEnd.set(year, month, day, hourEnd, minuteEnd);
 
-                        if(calendarStart.getTime().before(calendarEnd.getTime())){
+                        if (calendarStart.getTime().before(calendarEnd.getTime())) {
                             txtStartDate.setText(Utils.convertDateToString(calendarStart.getTime(), "dd/MM/yyyy"));
                             txtStartTime.setText(Utils.convertDateToString(calendarStart.getTime(), "HH:mm"));
-                            txtStartDate.setTag(Utils.convertDateToString(calendarStart.getTime(), "dd/MM/yyyy HH:mm"));
 
                             txtEndTime.setText(Utils.convertDateToString(calendarEnd.getTime(), "HH:mm"));
                             txtEndTime.setTag(Utils.convertDateToString(calendarEnd.getTime(), "dd/MM/yyyy HH:mm"));
                             alertDialog.dismiss();
-                        }
-                        else{
+                        } else {
                             showMessage("Thông báo", "Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc!", SweetAlertDialog.WARNING_TYPE);
                         }
                     }
@@ -273,7 +272,7 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
-        datePicker.init(year, month, day, new DatePicker.OnDateChangedListener(){
+        datePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
             public void onDateChanged(DatePicker view, int year, int month,
                                       int day) {
                 NestedScrollView scroll = (NestedScrollView) dialogView.findViewById(R.id.scroll);
@@ -285,13 +284,22 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
 
         //autoscroll when choose start time
         TimePicker startTimePicker = (TimePicker) dialogView.findViewById(R.id.time_picker_start);
+        int currentMinute;
+        if (Build.VERSION.SDK_INT >= 23) {
+            currentMinute = startTimePicker.getMinute();
+        } else {
+            currentMinute = startTimePicker.getCurrentMinute();
+        }
         startTimePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
-            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                NestedScrollView scroll = (NestedScrollView) dialogView.findViewById(R.id.scroll);
-                TimePicker endTimePicker = (TimePicker) dialogView.findViewById(R.id.time_picker_end);
-                //ObjectAnimator.ofInt(scroll, "scrollY",  timePicker.getBottom()).setDuration(1000).start();
-                Utils.smoothScrollViewToPosition(getApplicationContext(), scroll, endTimePicker.getBottom());
+            public void onTimeChanged(TimePicker timePicker, int hourse, int minute) {
+
+                if (minute != currentMinute) {
+                    NestedScrollView scroll = (NestedScrollView) dialogView.findViewById(R.id.scroll);
+                    TimePicker endTimePicker = (TimePicker) dialogView.findViewById(R.id.time_picker_end);
+                    //ObjectAnimator.ofInt(scroll, "scrollY",  timePicker.getBottom()).setDuration(1000).start();
+                    Utils.smoothScrollViewToPosition(getApplicationContext(), scroll, endTimePicker.getBottom());
+                }
             }
         });
 
@@ -334,8 +342,16 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
                             "Hủy", SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
                                 @Override
                                 public void DiaglogPositive() {
+                                    String startTimeInput = Utils.convertStringDateToStringDate(
+                                            txtStartDate.getText().toString() + " " + txtStartTime.getText().toString(), "dd/MM/yyyy HH:mm",
+                                            "yyyy-MM-dd HH:mm"
+                                    );
+                                    String endTimeInput = Utils.convertStringDateToStringDate(
+                                            txtStartDate.getText().toString() + " " + txtEndTime.getText().toString(), "dd/MM/yyyy HH:mm",
+                                            "yyyy-MM-dd HH:mm"
+                                    );
                                     mActionListener.createEvent(mContactID, mTypeInt, edtTitle.getText().toString(),
-                                            edtLocation.getText().toString(), (String) txtStartDate.getTag(), (String) txtEndTime.getTag(),
+                                            edtLocation.getText().toString(), startTimeInput, endTimeInput,
                                             edtNote.getText().toString(), switchAllday.isChecked(), 30, switchBoss.isChecked());
                                 }
 

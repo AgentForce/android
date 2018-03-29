@@ -43,7 +43,7 @@ public class PhoneFragment extends BaseFragment<LoginActivity, PhonePresent> imp
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new PhonePresent(this);
+        mActionListener = new PhonePresent(this,getContext());
     }
 
     @Override

@@ -32,6 +32,9 @@ public class DashboardResult implements Serializable{
         @SerializedName("currentWeek")
         @Expose
         public Integer currentWeek;
+        @SerializedName("isRequestActive")
+        @Expose
+        public Integer isRequestActive;
         @SerializedName("campaigns")
         @Expose
         public List<Campaign> campaign = null;

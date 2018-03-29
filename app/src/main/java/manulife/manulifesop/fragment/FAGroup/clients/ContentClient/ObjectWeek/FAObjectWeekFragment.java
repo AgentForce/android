@@ -219,10 +219,12 @@ public class FAObjectWeekFragment extends BaseFragment<MainFAActivity, FAObjectW
     @BindView(R.id.layout_introduce_step4)
     LinearLayout layoutaIntroduceStep4;
 
+    private int mMonth;
 
-    public static FAObjectWeekFragment newInstance(CampaignMonth data) {
+    public static FAObjectWeekFragment newInstance(CampaignMonth data,int month) {
         Bundle args = new Bundle();
         args.putSerializable("data", data);
+        args.putInt("month",month);
         FAObjectWeekFragment fragment = new FAObjectWeekFragment();
         fragment.setArguments(args);
         return fragment;
@@ -242,6 +244,7 @@ public class FAObjectWeekFragment extends BaseFragment<MainFAActivity, FAObjectW
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         CampaignMonth data = (CampaignMonth) getArguments().getSerializable("data");
+        mMonth = getArguments().getInt("month",0);
         initViews(data);
     }
     private void initViews(CampaignMonth data) {

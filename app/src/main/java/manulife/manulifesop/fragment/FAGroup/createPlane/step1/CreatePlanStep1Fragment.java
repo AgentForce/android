@@ -4,12 +4,18 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatSpinner;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,6 +29,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
+import manulife.manulifesop.adapter.ObjectData.SpinnerObject;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Fragment;
@@ -36,11 +43,15 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
 
     @BindView(R.id.btn_next)
     Button btnNext;
+    @BindView(R.id.spinner_type)
+    Spinner spinnerStype;
+    @BindView(R.id.spinner_choose_time)
+    Spinner spinnerChooseTime;
+
+    @BindView(R.id.txt_en_date)
+    TextView txtEndDate;
     @BindView(R.id.edt_start_date)
     EditText edtStartDate;
-    @BindView(R.id.edt_end_date)
-    EditText edtEndDate;
-
 
     public static CreatePlanStep1Fragment newInstance() {
         Bundle args = new Bundle();
@@ -62,12 +73,111 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initViews();
+    }
+
+    private void initViews() {
+        edtStartDate.setText(Utils.convertDateToString(Calendar.getInstance().getTime(),"dd/MM/yyyy"));
+
+        List<SpinnerObject> dataspinner = new ArrayList<>();
+        dataspinner.add(new SpinnerObject("0", "Theo tháng"));
+        dataspinner.add(new SpinnerObject("1", "Theo quý"));
+
+        ArrayAdapter<SpinnerObject> adapterSpinner = new ArrayAdapter<>(getContext(), R.layout.textview_spinner, dataspinner);
+        adapterSpinner.setDropDownViewResource(R.layout.row_one_spinner_item);
+
+        spinnerStype.setAdapter(adapterSpinner);
+        spinnerStype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                setDataForSpinnerChoose(((SpinnerObject) adapterView.getSelectedItem()).getKey());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void setDataForSpinnerChoose(String style) {
+        if (style.equals("0")) {//theo tháng
+            List<SpinnerObject> dataspinner = new ArrayList<>();
+            int selectedMonth = Integer.valueOf(Utils.convertStringDateToStringDate(
+                    edtStartDate.getText().toString(),"dd/MM/yyyy", "MM"));
+            for (int i = selectedMonth -1 ; i < 12; i++) {
+                dataspinner.add(new SpinnerObject(String.valueOf(i), "Tháng " + (i+1)));
+            }
+            ArrayAdapter<SpinnerObject> adapterSpinner = new ArrayAdapter<>(getContext(), R.layout.textview_spinner, dataspinner);
+            adapterSpinner.setDropDownViewResource(R.layout.row_one_spinner_item);
+            spinnerChooseTime.setAdapter(adapterSpinner);
+            spinnerChooseTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.MONTH,Integer.valueOf(((SpinnerObject)adapterView.getSelectedItem()).getKey()));
+                    calendar.set(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+                    txtEndDate.setText(Utils.convertDateToString(calendar.getTime(),"dd/MM/yyyy"));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+        } else {//theo quý
+            List<SpinnerObject> dataspinner = new ArrayList<>();
+            int currentMonth = Integer.valueOf(Utils.convertStringDateToStringDate(
+                    edtStartDate.getText().toString(),"dd/MM/yyyy", "MM"));
+            if(currentMonth < 3) {
+                dataspinner.add(new SpinnerObject("2", "Quý 1"));
+                dataspinner.add(new SpinnerObject("5", "Quý 2"));
+                dataspinner.add(new SpinnerObject("8", "Quý 3"));
+                dataspinner.add(new SpinnerObject("11", "Quý 4"));
+            }else if(currentMonth < 6)
+            {
+                dataspinner.add(new SpinnerObject("5", "Quý 2"));
+                dataspinner.add(new SpinnerObject("8", "Quý 3"));
+                dataspinner.add(new SpinnerObject("11", "Quý 4"));
+            }else if(currentMonth < 9){
+                dataspinner.add(new SpinnerObject("8", "Quý 3"));
+                dataspinner.add(new SpinnerObject("11", "Quý 4"));
+            } else if(currentMonth <= 12){
+                dataspinner.add(new SpinnerObject("11", "Quý 4"));
+            }
+
+            ArrayAdapter<SpinnerObject> adapterSpinner = new ArrayAdapter<>(getContext(), R.layout.textview_spinner, dataspinner);
+            adapterSpinner.setDropDownViewResource(R.layout.row_one_spinner_item);
+            spinnerChooseTime.setAdapter(adapterSpinner);
+            spinnerChooseTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.MONTH,Integer.valueOf(((SpinnerObject)adapterView.getSelectedItem()).getKey()));
+                    calendar.set(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+                    txtEndDate.setText(Utils.convertDateToString(calendar.getTime(),"dd/MM/yyyy"));
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+        }
     }
 
     @Override
-    public void showDatePicker(final String type) {
+    public void showDatePicker(String type) {
         final View dialogView = View.inflate(getContext(), R.layout.date_picker, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+
+        //set max min date for date picker
+        Calendar currentCalendar = Calendar.getInstance();
+        currentCalendar.set(Calendar.MONTH,0);
+        ((DatePicker) dialogView.findViewById(R.id.date_picker)).setMinDate(currentCalendar.getTimeInMillis());
+        currentCalendar.set(Calendar.MONTH,11);
+        ((DatePicker) dialogView.findViewById(R.id.date_picker)).setMaxDate(currentCalendar.getTimeInMillis());
 
         dialogView.findViewById(R.id.btn_date_time_set).setOnClickListener(
                 new View.OnClickListener() {
@@ -88,72 +198,31 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
                         Calendar calendarNextOneDay = Calendar.getInstance();
                         calendarNextOneDay.add(Calendar.DAY_OF_YEAR, -1);
 
-                        if (type.equals("start")) {
-                            if (calendar.getTime().after(calendarNextOneDay.getTime()))
-                                if (edtEndDate.getText().length() > 1) {
-                                    if (Utils.convertStringToDate(selectDate, "dd/MM/yyyy").before(Utils.convertStringToDate(edtEndDate.getText().toString(), "dd/MM/yyyy")))
-                                        edtStartDate.setText(selectDate);
-                                    else
-                                        showMessage("Thông báo", "Ngày bắt đầu phải nhỏ hơn ngày kết thúc!", SweetAlertDialog.WARNING_TYPE);
-                                } else {
-                                    edtStartDate.setText(selectDate);
-                                }
-                            else
-                                showMessage("Thông báo", "Ngày bắt đầu phải lớn hơn ngày hiện tại!", SweetAlertDialog.WARNING_TYPE);
-
-                        } else {
-                            //check end date is larger than start date
-                            if (calendar.getTime().after(calendarNextOneDay.getTime())) {
-                                if (edtStartDate.getText().length() > 1) {
-                                    if (Utils.convertStringToDate(edtStartDate.getText().toString(), "dd/MM/yyyy").before(Utils.convertStringToDate(selectDate, "dd/MM/yyyy")))
-                                        edtEndDate.setText(selectDate);
-                                    else
-                                        showMessage("Thông báo", "Ngày kết thúc phải lớn hơn ngày bắt đầu!", SweetAlertDialog.WARNING_TYPE);
-                                } else {
-                                    showMessage("Thông báo", "Chưa chọn ngày bắt đầu!", SweetAlertDialog.WARNING_TYPE);
-                                }
-                            } else {
-                                showMessage("Thông báo", "Ngày kết thúc phải lớn hơn ngày hiện tại!", SweetAlertDialog.WARNING_TYPE);
-                            }
+                        if (calendar.getTime().after(calendarNextOneDay.getTime())){
+                            edtStartDate.setText(selectDate);
+                            setDataForSpinnerChoose(((SpinnerObject)spinnerStype.getSelectedItem()).getKey());
                         }
-                        alertDialog.dismiss();
+                        else
+                            showMessage("Thông báo", "Ngày bắt đầu phải lớn hơn ngày hiện tại!", SweetAlertDialog.WARNING_TYPE);
 
+                        alertDialog.dismiss();
                     }
                 });
         alertDialog.setView(dialogView);
         alertDialog.show();
     }
 
-    @Override
-    public boolean checkValidateInput() {
-        if (edtStartDate.getText().length() < 1) {
-            showMessage("Thông báo", "Nhập ngày bắt đầu!", SweetAlertDialog.WARNING_TYPE);
-            return false;
-        }
-        if (edtEndDate.getText().length() < 1) {
-            showMessage("Thông báo", "Nhập ngày kết thúc!", SweetAlertDialog.WARNING_TYPE);
-            return false;
-        }
-        return true;
-    }
-
-    @OnClick({R.id.btn_next, R.id.edt_start_date, R.id.edt_end_date})
+    @OnClick({R.id.btn_next, R.id.edt_start_date})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.btn_next: {
-                if (checkValidateInput()) {
                     mActivity.showNextFragment(0, edtStartDate.getText().toString(),
-                            edtEndDate.getText().toString(), 0, 0, 0);
-                }
+                            txtEndDate.getText().toString(), 0, 0, 0);
                 break;
             }
             case R.id.edt_start_date: {
                 showDatePicker("start");
-                break;
-            }
-            case R.id.edt_end_date: {
-                showDatePicker("end");
                 break;
             }
         }

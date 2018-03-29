@@ -21,5 +21,6 @@ public interface FAContentCustomerContract {
     interface Action {
         void getCampaignMonth(int month);
         void updateCampaignWeek(int month,int contractW1,int contractW2,int contractW3,int contractW4);
+        void increaseContactCampaign(int month, int increaseNumber);
     }
 }

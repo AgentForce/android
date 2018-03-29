@@ -17,7 +17,6 @@ public interface CreatePlanStep1Contract {
 
     interface View extends BaseMVPView {
         void showDatePicker(final String type);
-        boolean checkValidateInput();
     }
 
     interface Action {

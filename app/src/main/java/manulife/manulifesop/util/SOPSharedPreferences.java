@@ -23,6 +23,7 @@ public class SOPSharedPreferences {
     private final String EXTRA_FIRST_USING_KEY = "extra_first_using_key";
     private final String EXTRA_ACCESS_TOKEN_KEY = "extra_access_token_key";
     private final String EXTRA_REFRESH_TOKEN_KEY = "extra_refresh_token_key";
+    private final String EXTRA_TOKEN_BEFORE_LOGIN_KEY = "extra_token_before_login_key";
 
     private final String EXTRA_ADDED_CONTACT = "extra_added_contact";
 
@@ -69,6 +70,13 @@ public class SOPSharedPreferences {
     public String getRefreshToken()
     {
         return mPreferences.getString(EXTRA_REFRESH_TOKEN_KEY,"");
+    }
+
+    public void saveAccessToken(String accessToken)
+    {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString(EXTRA_ACCESS_TOKEN_KEY,accessToken);
+        editor.commit();
     }
 
     public void saveAddedPhone(String phone){

@@ -12,6 +12,7 @@ import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectInput.InputAddContact;
 import manulife.manulifesop.api.ObjectInput.InputChangeRelead;
+import manulife.manulifesop.api.ObjectInput.InputUpdateContact;
 import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
@@ -35,7 +36,7 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
     }
 
     @Override
-    public void updateContactInfo(int position, String name, String phone,int age, int gender,
+    public void addContactInfo(int position, String name, String phone,int age, int gender,
                                   int income, int marital, int relationship,
                                   int source, String description) {
         mPosition = position;
@@ -115,6 +116,40 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         if(baseResponse.statusCode == 1){
             mPresenterView.finishChangeToContact();
             mPresenterView.finishLoading();
+        }else{
+            mPresenterView.finishLoading(baseResponse.msg,false);
+        }
+    }
+
+    @Override
+    public void updateContactInfo(int releadID, String name, int age, int gender, int income, int marital, int relationship, int source, String description) {
+        mPresenterView.showLoading("Cập nhật thông tin");
+        //create checksum
+        String checksum = "12345";
+        InputUpdateContact data = new InputUpdateContact();
+        data.name = name;
+        data.age = age;
+        data.gender = gender;
+        data.incomeMonthly = income;
+        data.maritalStatus = marital;
+        data.relationship = relationship;
+        data.source = source;
+        data.description = description;
+
+        getCompositeDisposable().add(ApiService.getServer().updateContact(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
+                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
+                checksum,releadID, data)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseUpdateInfo, this::handleError));
+    }
+
+    private void handleResponseUpdateInfo(BaseResponse baseResponse) {
+        if(baseResponse.statusCode == 1){
+            mPresenterView.finishLoading();
+            mPresenterView.finishChangeToContact();
         }else{
             mPresenterView.finishLoading(baseResponse.msg,false);
         }

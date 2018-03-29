@@ -97,7 +97,7 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
 
     private void handleResponseLogin(LoginResult data) {
         if (data.getStatus() == 1) {
-            SOPSharedPreferences.getInstance(mContext).saveToken(data.getData().getAccessToken(),
+            SOPSharedPreferences.getInstance(mContext).saveToken("Bearer "+data.getData().getAccessToken(),
                     data.getData().getRefreshToken());
             chekCampaign();
 

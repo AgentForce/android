@@ -23,6 +23,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.adapter.ObjectData.ContactPerson;
+import manulife.manulifesop.api.ObjectResponse.ContactDetail;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
 import manulife.manulifesop.util.Utils;
@@ -153,6 +154,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
     private int mPosition = 0;
 
     //variable for change relead to contact
+    private boolean mIsUpdateContact;
     private boolean mIsChangeToContact;
     private int mReleadID;
 
@@ -165,10 +167,45 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
         mDataChoosed = (List<ContactPerson>) getIntent().getSerializableExtra("data");
         //get data for change relead to contact
         mIsChangeToContact = getIntent().getBooleanExtra("isChangeToContact", false);
+        mIsUpdateContact = getIntent().getBooleanExtra("isUpdateContact", false);
         mReleadID = getIntent().getIntExtra("idRelead", 0);
-
         setupSupportForApp();
         initViews();
+
+        if(mIsUpdateContact){
+            initViewsUpdate();
+        }
+    }
+
+    private void initViewsUpdate(){
+        ContactDetail data = ProjectApplication.getInstance().getContactDetail();
+        txtStep1Choose.setText(ProjectApplication.getInstance().getAgeString(data.data.age));
+        txtStep1Choose.setTag(data.data.age);
+        imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+        layoutChooseStep1.setVisibility(View.VISIBLE);
+
+        txtStep2Choose.setText(ProjectApplication.getInstance().getIncomeString(data.data.incomeMonthly));
+        txtStep2Choose.setTag(data.data.incomeMonthly);
+        imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+        layoutChooseStep2.setVisibility(View.VISIBLE);
+
+        txtStep3Choose.setText(ProjectApplication.getInstance().getMarriageString(data.data.maritalStatus));
+        txtStep3Choose.setTag(data.data.maritalStatus);
+        imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+        layoutChooseStep3.setVisibility(View.VISIBLE);
+
+        txtStep4Choose.setText(ProjectApplication.getInstance().getRelationshipString(data.data.relationship));
+        txtStep4Choose.setTag(data.data.relationship);
+        imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+        layoutChooseStep4.setVisibility(View.VISIBLE);
+
+        txtStep5Choose.setText(ProjectApplication.getInstance().getRelationshipString(data.data.source));
+        txtStep5Choose.setTag(data.data.source);
+        imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
+        layoutChooseStep5.setVisibility(View.VISIBLE);
+
+        edtNote.setText(data.data.description);
+
     }
 
     private void initViews() {
@@ -797,17 +834,22 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             case R.id.btn_ok: {
                 if (validateInput()) {
                     //check if is process for add contact or change relead to contact
-                    if (!mIsChangeToContact) {
-                        mActionListener.updateContactInfo(mPosition, txtName.getText().toString(), txtPhone.getText().toString(), Integer.valueOf(txtStep1Choose.getTag().toString()),
-                                0, Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
-                                Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
-                    } else {
+                    if (mIsChangeToContact) {
                         mActionListener.changeReleadToContact(mReleadID, ProjectApplication.getInstance().getCampaignWeekId(),
                                 Integer.valueOf(txtStep1Choose.getTag().toString()), 0, Integer.valueOf(txtStep2Choose.getTag().toString()),
                                 Integer.valueOf(txtStep3Choose.getTag().toString()),
                                 Integer.valueOf(txtStep4Choose.getTag().toString()),
                                 Integer.valueOf(txtStep5Choose.getTag().toString()),
                                 edtNote.getText().toString());
+                    } else if(mIsUpdateContact){
+                        mActionListener.updateContactInfo(mReleadID,txtName.getText().toString(),Integer.valueOf(txtStep1Choose.getTag().toString()),
+                                0,Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
+                                Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
+                    }
+                    else{
+                        mActionListener.addContactInfo(mPosition, txtName.getText().toString(), txtPhone.getText().toString(), Integer.valueOf(txtStep1Choose.getTag().toString()),
+                                0, Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
+                                Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
                     }
                 }
                 break;

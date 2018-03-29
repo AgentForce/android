@@ -487,7 +487,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
 
         List<BaseFragment> mListFragment = new ArrayList<>();
         mListFragment.add(FAObjectMonthFragment.newInstance(data, mMonth));
-        mListFragment.add(FAObjectWeekFragment.newInstance(data));
+        mListFragment.add(FAObjectWeekFragment.newInstance(data,mMonth));
 
         mAdapter = new CustomViewPagerAdapter(getChildFragmentManager(),
                 mListFragment, tabTitles);
@@ -512,7 +512,6 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
 
     @Override
     public void showConfirmAcvitveCampaign() {
-        //Toast.makeText(mActivity, "Hiển thị dialog đồng ý active", Toast.LENGTH_SHORT).show();
         showConfirm("Thông báo", "Đồng ý kích hoạt mục tiêu tháng " + mMonth, "Đồng ý",
                 "Hủy", SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
                     @Override
@@ -531,28 +530,38 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
     //dialog edit campaign month
     public void showDialogEditObjectMonth() {
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+        int currentMonth = Utils.getCurrentMonth(getContext());
+        if(mMonth >= currentMonth
+                && mMonth < (currentMonth + 3)) {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+            LayoutInflater inflater = this.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_edit_object_month, null);
 
-        LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_edit_object_month, null);
+            initAllViewsMonth(dialogView);
+            initViewMonthStep1(dialogView);
+            initViewMonthStep2(dialogView);
+            initViewMonthStep3(dialogView);
+            initViewMonthStep4(dialogView);
+            initViewMonthStep5(dialogView);
 
-        initAllViewsMonth(dialogView);
-        initViewMonthStep1(dialogView);
-        initViewMonthStep2(dialogView);
-        initViewMonthStep3(dialogView);
-        initViewMonthStep4(dialogView);
-        initViewMonthStep5(dialogView);
+            dialogBuilder.setView(dialogView);
 
-        dialogBuilder.setView(dialogView);
-
-        alertDialog = dialogBuilder.create();
-        alertDialog.setCancelable(true);
-        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        alertDialog.show();
+            alertDialog = dialogBuilder.create();
+            alertDialog.setCancelable(true);
+            alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            alertDialog.show();
+        }else{
+            showMessage("Thông báo","Chỉ được thay đổi mục tiêu 3 tháng gần nhất!",
+                    SweetAlertDialog.WARNING_TYPE);
+        }
     }
 
     private void initAllViewsMonth(View view) {
+        ((TextView)view.findViewById(R.id.txt_title)).setText(
+                "Chỉnh sửa mục tiêu KH tháng " + mMonth
+        );
+
         sbMonthStep1 = view.findViewById(R.id.sb_contract);
         sbMonthStep2 = view.findViewById(R.id.sb_meeting);
         sbMonthStep3 = view.findViewById(R.id.sb_advisory);
@@ -563,7 +572,21 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
         txtMonthOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Gọi api update", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Gọi api update", Toast.LENGTH_SHORT).show();
+                showConfirm("Xác nhận", "Đồng ý tăng số lượng liên hệ?", "Đồng ý", "Hủy",
+                        SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
+                            @Override
+                            public void DiaglogPositive() {
+                                alertDialog.dismiss();
+                                int increaseNum =  sbMonthStep4.getProgress() - mListMonthTarget.get(3);
+                                mActionListener.increaseContactCampaign(mMonth,increaseNum);
+                            }
+
+                            @Override
+                            public void DiaglogNegative() {
+
+                            }
+                        });
             }
         });
 

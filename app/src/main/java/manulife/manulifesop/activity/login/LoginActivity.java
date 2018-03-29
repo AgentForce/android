@@ -239,7 +239,9 @@ public class LoginActivity extends BaseActivity<LoginPresent>
 
     @Override
     public void showConfirmCreatePlan() {
-        goNextScreen(ConfirmCreatePlanActivity.class);
+        Bundle data = new Bundle();
+        data.putString("userName",mAgencyID);
+        goNextScreen(ConfirmCreatePlanActivity.class,data);
     }
 
     @OnClick({R.id.layout_btn_back})

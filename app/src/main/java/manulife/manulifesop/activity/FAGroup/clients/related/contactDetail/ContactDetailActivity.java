@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,9 @@ import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.related.createEvent.CreateEventActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.signedSuccess.SignedSuccessActivity;
+import manulife.manulifesop.activity.FAGroup.clients.related.updateContactInfo.UpdateContactInfoActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
+import manulife.manulifesop.adapter.ObjectData.ContactPerson;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
@@ -48,6 +51,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     View viewStatusBar;
     @BindView(R.id.img_top_background)
     ImageView imageTop;
+
 
     @BindView(R.id.img_start1)
     ImageView imageStart1;
@@ -188,7 +192,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            if (requestCode == Contants.ADD_EVENT) {
+            if (requestCode == Contants.ADD_EVENT || requestCode == Contants.UPDATE_CONTACT) {
                 mActionListener.getContactDetail(mUserId);
             } else if(requestCode == Contants.SIGN_SUCCESS){
                 finishChangeStatus();
@@ -426,12 +430,23 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         }
     }
 
-    @OnClick({R.id.layout_btn_back})
+    @OnClick({R.id.layout_btn_back,R.id.layout_btn_edit})
     public void onClickView(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.layout_btn_back: {
                 onBackPressed();
+                break;
+            }
+            case R.id.layout_btn_edit:{
+                List<ContactPerson> dataInput = new ArrayList<>();
+                dataInput.add(new ContactPerson(false, "",
+                        ProjectApplication.getInstance().getContactDetail().data.name, ProjectApplication.getInstance().getContactDetail().data.phone, 0));
+                Bundle data = new Bundle();
+                data.putSerializable("data", (Serializable) dataInput);
+                data.putInt("idRelead", mUserId);
+                data.putBoolean("isUpdateContact",true);
+                goNextScreen(UpdateContactInfoActivity.class, data, Contants.UPDATE_CONTACT);
                 break;
             }
         }

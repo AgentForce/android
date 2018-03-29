@@ -48,6 +48,7 @@ public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> 
         InputCreateCampaign data = new InputCreateCampaign();
 
         data.setStartDate(Utils.convertStringDateToStringDate(startDate, "dd/MM/yyyy", "yyyy-MM-dd"));
+        data.setEndDate(Utils.convertStringDateToStringDate(endDate, "dd/MM/yyyy", "yyyy-MM-dd"));
         data.setCaseSize(contractPrice * 1000000);
         data.setCommissionRate(profit);
         data.setIncomeMonthly(inCome * 1000000);

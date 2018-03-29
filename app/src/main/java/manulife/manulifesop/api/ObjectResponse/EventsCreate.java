@@ -13,11 +13,19 @@ public class EventsCreate {
     public Integer statusCode;
     @SerializedName("data")
     @Expose
-    public Integer data;
+    public Data data;
     @SerializedName("msg")
     @Expose
     public String msg;
     @SerializedName("msgCode")
     @Expose
     public String msgCode;
+
+    public class Data {
+
+        @SerializedName("Id")
+        @Expose
+        public Integer id;
+
+    }
 }

@@ -29,6 +29,12 @@ public class CampaignMonth implements Serializable{
         @SerializedName("currentWeek")
         @Expose
         public Integer currentWeek;
+        @SerializedName("isRequestActive")
+        @Expose
+        public Integer isRequestActive;
+        @SerializedName("period")
+        @Expose
+        public Integer period;
         @SerializedName("campaigns")
         @Expose
         public List<Campaign> campaigns = null;

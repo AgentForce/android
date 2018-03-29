@@ -115,11 +115,11 @@ public class CampaignPercentFragment extends BaseFragment<MainFAActivity, Campai
 
     private void initViewpager() {
         mListFragment = new ArrayList<>();
-        mListFragment.add(OnePercentFragment.newInstance("Liên hệ", mListPercent.get(0), getResources().getColor(R.color.color_dashboard_contact)));
-        mListFragment.add(OnePercentFragment.newInstance("Hẹn gặp", mListPercent.get(1), getResources().getColor(R.color.color_dashboard_meeting)));
-        mListFragment.add(OnePercentFragment.newInstance("Tư vấn", mListPercent.get(2), getResources().getColor(R.color.color_dashboard_advisory)));
-        mListFragment.add(OnePercentFragment.newInstance("Ký hợp đồng", mListPercent.get(3), getResources().getColor(R.color.color_dashboard_sign)));
-        mListFragment.add(OnePercentFragment.newInstance("Giới thiệu", mListPercent.get(4), getResources().getColor(R.color.color_dashboard_introduce)));
+        mListFragment.add(OnePercentFragment.newInstance("Liên hệ", mListPercent.get(0), getResources().getColor(R.color.color_dashboard_contact),mPercentFragmentType));
+        mListFragment.add(OnePercentFragment.newInstance("Hẹn gặp", mListPercent.get(1), getResources().getColor(R.color.color_dashboard_meeting),mPercentFragmentType));
+        mListFragment.add(OnePercentFragment.newInstance("Tư vấn", mListPercent.get(2), getResources().getColor(R.color.color_dashboard_advisory),mPercentFragmentType));
+        mListFragment.add(OnePercentFragment.newInstance("Ký hợp đồng", mListPercent.get(3), getResources().getColor(R.color.color_dashboard_sign),mPercentFragmentType));
+        mListFragment.add(OnePercentFragment.newInstance("Giới thiệu", mListPercent.get(4), getResources().getColor(R.color.color_dashboard_introduce),mPercentFragmentType));
 
         //create list color indicator
         List<Integer> listBackground = new ArrayList<>();
@@ -546,6 +546,10 @@ public class CampaignPercentFragment extends BaseFragment<MainFAActivity, Campai
     }
 
     private void initAllViewsMonth(View view) {
+        ((TextView)view.findViewById(R.id.txt_title)).setText(
+                "Chỉnh sửa mục tiêu KH tháng " + Utils.getCurrentMonth(getContext())
+        );
+
         sbMonthStep1 = view.findViewById(R.id.sb_contract);
         sbMonthStep2 = view.findViewById(R.id.sb_meeting);
         sbMonthStep3 = view.findViewById(R.id.sb_advisory);

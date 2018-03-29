@@ -108,7 +108,7 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
                     data.data.get(i).type
             ));
             temp.setDateTime(Utils.convertStringDateToStringDate(data.data.get(i).startDate,
-                    "yyyy-MM-dd'T'HH:mm:ss.sss'Z'","dd/MM/yyyy HH:mm:ss"));
+                    "yyyy-MM-dd'T'HH:mm:ss.sss'Z'","dd/MM/yyyy"));
             mData.add(temp);
         }
         if (mAdapter == null) {
