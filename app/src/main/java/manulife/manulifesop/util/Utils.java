@@ -13,12 +13,15 @@ import android.widget.ScrollView;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import manulife.manulifesop.ProjectApplication;
 
@@ -52,17 +55,16 @@ public class Utils {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    public static String getSignature(String data)
-    {
+    public static String getSignature(String data) {
         String base64 = Base64(data) + SECRETKEY;
         String md5 = MD5(base64);
         return md5.toLowerCase(Locale.getDefault());
     }
 
-    private static String Base64(String data)
-    {
-        return android.util.Base64.encodeToString(data.getBytes(),android.util.Base64.NO_WRAP);
+    private static String Base64(String data) {
+        return android.util.Base64.encodeToString(data.getBytes(), android.util.Base64.NO_WRAP);
     }
+
     private static final String MD5(final String s) {
         final String MD5 = "MD5";
         try {
@@ -87,7 +89,7 @@ public class Utils {
         return "";
     }
 
-    public static Date convertStringToDate(String strDate,String inputFormat) {
+    public static Date convertStringToDate(String strDate, String inputFormat) {
         Date convertDate = new Date();
         SimpleDateFormat df = new SimpleDateFormat(inputFormat);
         try {
@@ -98,7 +100,7 @@ public class Utils {
         return convertDate;
     }
 
-    public static String convertDateToString(Date date,String outputFormat) {
+    public static String convertDateToString(Date date, String outputFormat) {
         String convertString = "";
         SimpleDateFormat df = new SimpleDateFormat(outputFormat);
         try {
@@ -123,20 +125,48 @@ public class Utils {
         return result;
     }
 
-    public static void smoothScrollViewToPosition(final Context context, final NestedScrollView scrollView, final int Yposition){
-        ObjectAnimator.ofInt(scrollView, "scrollY",  Yposition).setDuration(1000).start();
+    public static String convertStringTimeZoneDateToStringDate(String inputDate, String inputTimzoneFormat, String outputFormat) {
+        String result = "";
+        try {
+            TimeZone tz = TimeZone.getTimeZone("UTC");
+            DateFormat df = new SimpleDateFormat(inputTimzoneFormat);
+            df.setTimeZone(tz);
+            result = convertDateToString(df.parse(inputDate), outputFormat);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
-    public static int getCurrentMonth(final Context context){
-       return (Calendar.getInstance().get(Calendar.MONTH) +1);
+    public static void smoothScrollViewToPosition(final Context context, final NestedScrollView scrollView, final int Yposition) {
+        ObjectAnimator.ofInt(scrollView, "scrollY", Yposition).setDuration(1000).start();
     }
 
-    public static int genLastPage(int count, int limit){
+    public static int getCurrentMonth(final Context context) {
+        return (Calendar.getInstance().get(Calendar.MONTH) + 1);
+    }
+
+    public static int getMonthFromStringDate(String inputDate, String inputFormat) {
+        int result = 0;
+        Date converDate = new Date();
+        SimpleDateFormat df = new SimpleDateFormat(inputFormat);
+        try {
+            converDate = df.parse(inputDate);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(converDate);
+            result = calendar.get(Calendar.MONTH);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static int genLastPage(int count, int limit) {
         int rs;
-        if(count%limit > 0){
-            rs = (count/limit) + 1;
-        }else{
-            rs = count/limit;
+        if (count % limit > 0) {
+            rs = (count / limit) + 1;
+        } else {
+            rs = count / limit;
         }
         return rs;
     }
@@ -150,7 +180,7 @@ public class Utils {
     public static String integerTypeTextFormat(int integerNumber) {
         DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.getDefault());
         otherSymbols.setGroupingSeparator(',');
-        DecimalFormat df = new DecimalFormat("#,##0",otherSymbols);
+        DecimalFormat df = new DecimalFormat("#,##0", otherSymbols);
         return df.format(integerNumber);
     }
 
@@ -163,7 +193,9 @@ public class Utils {
     public static String longTypeTextFormat(long longNumber) {
         DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.getDefault());
         otherSymbols.setGroupingSeparator(',');
-        DecimalFormat df = new DecimalFormat("#,##0",otherSymbols);
+        DecimalFormat df = new DecimalFormat("#,##0", otherSymbols);
         return df.format(longNumber);
     }
+
+
 }

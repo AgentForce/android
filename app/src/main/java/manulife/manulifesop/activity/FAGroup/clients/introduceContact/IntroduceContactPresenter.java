@@ -28,12 +28,12 @@ public class IntroduceContactPresenter extends BasePresenter<IntroduceContactCon
     }
 
     @Override
-    public void getAllIntroduces(int period, int page) {
+    public void getAllIntroduces(String search,int period, int page) {
         mPresenterView.showLoading("Xử lý dữ liệu");
         getCompositeDisposable().add(ApiService.getServer().getIntorduceUserList(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                period,page,10)//khách hàng giới thiệu
+                period,page,10,search)//khách hàng giới thiệu
                 .flatMap(usersList -> {
                     ProjectApplication.getInstance().setIntroduce(usersList);
                     return ApiService.getServer().campaignMonth(

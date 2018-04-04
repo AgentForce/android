@@ -204,7 +204,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tổng thu nhập năm"
+            android:text="Tổng thu nhập"
             android:layout_marginTop="15dp"
             android:gravity="center_horizontal"
             android:textSize="@dimen/welcome_activity_note"/>

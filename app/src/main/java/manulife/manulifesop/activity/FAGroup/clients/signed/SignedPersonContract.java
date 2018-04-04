@@ -9,6 +9,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface SignedPersonContract {
     interface View extends BaseMVPView {
         void initViewPager();
+        int getSelectedType();
     }
 
     interface Action {

@@ -118,6 +118,29 @@ public class SignedPersonActivity extends BaseActivity<SignedPersonPresenter> im
         }
     }
 
+    @Override
+    public int getSelectedType() {
+        int index = viewPager.getCurrentItem();
+        switch (index){
+            case 0:{
+                return Contants.SIGNED_NOT_APPLIED;
+            }
+            case 1:{
+                return Contants.SIGNED_BHXH;
+            }
+            case 2:{
+                return Contants.SIGNED_APPLIED;
+            }
+            case 3:{
+                return Contants.SIGNED_WAIT_APPROVE;
+            }
+            case 4:{
+                return Contants.SIGNED_SUCCESS;
+            }
+        }
+        return Contants.SIGNED_NOT_APPLIED;
+    }
+
     @OnClick({R.id.layout_btn_back})
     public void onClick(View view)
     {

@@ -8,9 +8,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.appointment.AppointmentActivity;
@@ -52,7 +58,7 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
     @BindView(R.id.txt_step5_result)
     TextView txtStep5;
 
-    private CampaignMonth nData;
+    private CampaignMonth mData;
     private int mMonth;
 
     private int targetStep1 = 0, targetStep2 = 0, targetStep3 = 0, targetStep4 = 0, targetStep5 = 0;
@@ -80,38 +86,54 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        nData = (CampaignMonth) getArguments().getSerializable("data");
+        mData = (CampaignMonth) getArguments().getSerializable("data");
         mMonth = getArguments().getInt("month", 0);
-        initViews(nData);
+        initViews(mData);
     }
 
     private void initViews(CampaignMonth data) {
 
-        if (data != null) {
-            //int targetStep1 = 0, targetStep2 = 0, targetStep3 = 0, targetStep4 = 0, targetStep5 = 0;
-            int currentStep1 = 0, currentStep2 = 0, currentStep3 = 0, currentStep4 = 0, currentStep5 = 0;
-            for (int i = 0; i < data.data.campaigns.size(); i++) {
-                targetStep1 += data.data.campaigns.get(i).targetCallSale;
-                currentStep1 += data.data.campaigns.get(i).currentCallSale;
+        if (data != null && data.statusCode == 1) {
+            //int currentStep1 = 0, currentStep2 = 0, currentStep3 = 0, currentStep4 = 0, currentStep5 = 0;
+            io.reactivex.Observable.just(data)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.newThread())
+                    .map(CampaignMonth -> {
+                        List<Integer> dataRS = new ArrayList<>();
+                        dataRS.add(0);
+                        dataRS.add(0);
+                        dataRS.add(0);
+                        dataRS.add(0);
+                        dataRS.add(0);
+                        for (int i = 0; i < data.data.campaigns.size(); i++) {
+                            targetStep1 += data.data.campaigns.get(i).targetCallSale;
+                            //currentStep1 += data.data.campaigns.get(i).currentCallSale;
+                            dataRS.set(0, dataRS.get(0) + data.data.campaigns.get(i).currentCallSale);
 
-                targetStep2 += data.data.campaigns.get(i).targetMetting;
-                currentStep2 += data.data.campaigns.get(i).currentMetting;
+                            targetStep2 += data.data.campaigns.get(i).targetMetting;
+                            //currentStep2 += data.data.campaigns.get(i).currentMetting;
+                            dataRS.set(1, dataRS.get(1) + data.data.campaigns.get(i).currentMetting);
 
-                targetStep3 += data.data.campaigns.get(i).targetPresentation;
-                currentStep3 += data.data.campaigns.get(i).currentPresentation;
+                            targetStep3 += data.data.campaigns.get(i).targetPresentation;
+                            //currentStep3 += data.data.campaigns.get(i).currentPresentation;
+                            dataRS.set(2, dataRS.get(2) + data.data.campaigns.get(i).currentPresentation);
 
-                targetStep4 += data.data.campaigns.get(i).targetContractSale;
-                currentStep4 += data.data.campaigns.get(i).currentContract;
+                            targetStep4 += data.data.campaigns.get(i).targetContractSale;
+                            //currentStep4 += data.data.campaigns.get(i).currentContract;
+                            dataRS.set(3, dataRS.get(3) + data.data.campaigns.get(i).currentContract);
 
-                targetStep5 += data.data.campaigns.get(i).targetReLead;
-                currentStep5 += data.data.campaigns.get(i).currentReLead;
-            }
-
-            txtStep1.setText(currentStep1 + "/" + targetStep1);
-            txtStep2.setText(currentStep2 + "/" + targetStep2);
-            txtStep3.setText(currentStep3 + "/" + targetStep3);
-            txtStep4.setText(currentStep4 + "/" + targetStep4);
-            txtStep5.setText(currentStep5 + "/" + targetStep5);
+                            targetStep5 += data.data.campaigns.get(i).targetReLead;
+                            //currentStep5 += data.data.campaigns.get(i).currentReLead;
+                            dataRS.set(4, dataRS.get(4) + data.data.campaigns.get(i).currentReLead);
+                        }
+                        return dataRS;
+                    }).subscribe(integers -> {
+                txtStep1.setText(integers.get(0) + "/" + targetStep1);
+                txtStep2.setText(integers.get(1) + "/" + targetStep2);
+                txtStep3.setText(integers.get(2) + "/" + targetStep3);
+                txtStep4.setText(integers.get(3) + "/" + targetStep4);
+                txtStep5.setText(integers.get(4) + "/" + targetStep5);
+            });
         }
     }
 

@@ -9,6 +9,7 @@ import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectResponse.ActivityDetail;
 import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.base.BasePresenter;
+import manulife.manulifesop.util.CalendarEvents;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
@@ -52,7 +53,7 @@ public class EventDetailPresenter extends BasePresenter<EventDetailContract.View
     }
 
     @Override
-    public void deleteEvent(int eventID) {
+    public void deleteEvent(int eventID,String eventName) {
         mPresenterView.showLoading("Lấy dữ liệu");
         getCompositeDisposable().add(ApiService.getServer().deleteEvent(SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
@@ -60,6 +61,12 @@ public class EventDetailPresenter extends BasePresenter<EventDetailContract.View
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
+                .map(baseResponse -> {
+                    if(baseResponse.statusCode == 1){
+                        CalendarEvents.deleteEvent(mContext,eventID,eventName);
+                    }
+                    return baseResponse;
+                })
                 .subscribe(this::handleResponseDelete, this::handleError));
     }
 

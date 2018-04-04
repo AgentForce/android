@@ -13,15 +13,25 @@ public class ContactPerson implements Serializable{
     private String avatar;
     private String name;
     private String phone;
+    private boolean isAdded;
 
     private int headerGroup;
 
-    public ContactPerson(boolean isChecked, String avatar, String name, String phone, int headerGroup) {
+    public ContactPerson(boolean isChecked, String avatar, String name, String phone, int headerGroup, boolean isAdded) {
         this.isChecked = isChecked;
         this.avatar = avatar;
         this.name = name;
         this.phone = phone;
         this.headerGroup = headerGroup;
+        this.isAdded = isAdded;
+    }
+
+    public boolean isAdded() {
+        return isAdded;
+    }
+
+    public void setAdded(boolean added) {
+        isAdded = added;
     }
 
     public void setChecked(boolean checked) {

@@ -58,7 +58,7 @@ public class FACampaignPercentPresent extends BasePresenter<FACampaignPercentCon
 
     private void handleResponseChangeCampaignWeek(BaseResponse baseResponse) {
         if (baseResponse.statusCode == 1) {
-            mPresenterView.finishLoading();
+            //mPresenterView.finishLoading();
             mPresenterView.updateData();
         } else {
             mPresenterView.finishLoading(baseResponse.msg, false);
@@ -85,7 +85,7 @@ public class FACampaignPercentPresent extends BasePresenter<FACampaignPercentCon
 
     private void handleResponseIncreaseContact(BaseResponse baseResponse) {
         if (baseResponse.statusCode == 1) {
-            mPresenterView.finishLoading();
+            //mPresenterView.finishLoading();
             mPresenterView.updateData();
         } else {
             mPresenterView.finishLoading(baseResponse.msg, false);

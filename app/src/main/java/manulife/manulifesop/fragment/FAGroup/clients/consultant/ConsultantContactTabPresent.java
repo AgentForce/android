@@ -28,12 +28,12 @@ public class ConsultantContactTabPresent extends BasePresenter<ConsultantContact
     }
 
     @Override
-    public void getContact(int period, int status, int page) {
+    public void getContact(int period, int status, int page, String search) {
         mPresenterView.showLoading("Lấy dữ liệu");
         getCompositeDisposable().add(ApiService.getServer().getUserList(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                period, 3,status,page,10)
+                period, 3,status,page,10,search)
                 .subscribeOn(Schedulers.computation())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

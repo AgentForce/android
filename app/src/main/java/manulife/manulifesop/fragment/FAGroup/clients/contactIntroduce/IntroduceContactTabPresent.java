@@ -28,12 +28,12 @@ public class IntroduceContactTabPresent extends BasePresenter<IntroduceContactTa
     }
 
     @Override
-    public void getUserListProcess(int period, int page) {
+    public void getUserListProcess(String search,int period, int page) {
         mPresenterView.showLoading("Lấy dữ liệu");
         getCompositeDisposable().add(ApiService.getServer().getIntorduceUserList(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                period, page, 10)//khách hàng giới thiệu
+                period,page, 10,search)//khách hàng giới thiệu
                 .subscribeOn(Schedulers.computation())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

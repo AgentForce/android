@@ -1,6 +1,7 @@
 package manulife.manulifesop.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +51,14 @@ public class ContactPersonAdapter extends RecyclerView.Adapter<ContactPersonAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.txtAvatar.setText(mData.get(position).getName().substring(0,1));
+        if(mData.get(position).isAdded()){
+            holder.userAvatar.setBorderColor(Color.parseColor("#F63D2B"));
+        }else{
+            holder.userAvatar.setBorderColor(Color.parseColor("#099D53"));
+        }
+
+
         holder.smoothCheckBox.setClickable(false);
         holder.smoothCheckBox.setChecked(mData.get(position).isChecked());
         holder.txtName.setText(mData.get(position).getName());
@@ -102,6 +111,8 @@ public class ContactPersonAdapter extends RecyclerView.Adapter<ContactPersonAdap
         SmoothCheckBox smoothCheckBox;
         @BindView(R.id.img_user_avatar)
         RoundedImageView userAvatar;
+        @BindView(R.id.txt_avatar)
+        TextView txtAvatar;
         @BindView(R.id.txt_name)
         TextView txtName;
         @BindView(R.id.txt_phone)

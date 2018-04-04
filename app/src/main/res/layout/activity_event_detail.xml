@@ -10,106 +10,141 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <ScrollView
         android:layout_below="@+id/layout_top"
         android:layout_above="@+id/layout_call"
-        android:orientation="vertical">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/backgroundGrey" />
-
-        <TextView
-            android:id="@+id/txt_title_tyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Gọi điện thoại"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/welcome_activity_note"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/backgroundGrey" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_customer_infor_time" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/backgroundGrey" />
 
             <TextView
-                android:id="@+id/txt_all_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="Cả ngày"
-                android:textSize="@dimen/welcome_activity_content" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/txt_event_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="1/12/2017 - 13:00"
-            android:layout_marginLeft="55dp"
-            android:textSize="@dimen/welcome_activity_content" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/backgroundGrey" />
-
-        <RelativeLayout
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/img_row7"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_customer_appointment" />
-
-            <TextView
+                android:id="@+id/txt_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/img_row7"
-                android:layout_toLeftOf="@+id/txt_contact_name"
-                android:text="Khách hàng"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:textSize="@dimen/welcome_activity_content" />
-            <TextView
-                android:id="@+id/txt_contact_name"
-                android:layout_width="wrap_content"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
+                android:text="title"
+                android:textSize="@dimen/welcome_activity_content"/>
+
+            <!--<EditText
+                android:id="@+id/edt_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nguyễn Cao Minh"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:textSize="@dimen/welcome_activity_content" />
-        </RelativeLayout>
-    </LinearLayout>
+                android:background="@android:color/transparent"
+                android:hint="Nhập tiêu đề"
+                android:padding="10dp"
+                android:textSize="@dimen/welcome_activity_content" />-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/backgroundGrey" />
+
+            <include
+                layout="@layout/layout_detail_event_mid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/backgroundGrey" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <ImageView
+                    android:id="@+id/img_row8"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_mark"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toLeftOf="@+id/switch_boss"
+                    android:layout_toRightOf="@+id/img_row8"
+                    android:text="Mời xếp hỗ trợ"
+                    android:textSize="@dimen/welcome_activity_content" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switch_boss"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/backgroundGrey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_contact_note" />
+
+                <TextView
+                    android:id="@+id/txt_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="20dp"
+                    android:gravity="top"
+                    android:minHeight="50dp"
+                    android:text=""
+                    android:textSize="@dimen/welcome_activity_content" />
+
+                <!--<EditText
+                    android:id="@+id/edt_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="Thêm ghi chú"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="20dp"
+                    android:gravity="top"
+                    android:minHeight="50dp"
+                    android:textSize="@dimen/welcome_activity_content" />-->
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/layout_delete"
@@ -120,6 +155,7 @@
         android:clickable="true"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

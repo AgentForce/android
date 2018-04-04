@@ -31,6 +31,12 @@ public class ContactActivity {
         @SerializedName("Status")
         @Expose
         public Boolean status;
+        @SerializedName("Name")
+        @Expose
+        public String name;
+        @SerializedName("Location")
+        @Expose
+        public String location;
         @SerializedName("CreatedAt")
         @Expose
         public String createDate;

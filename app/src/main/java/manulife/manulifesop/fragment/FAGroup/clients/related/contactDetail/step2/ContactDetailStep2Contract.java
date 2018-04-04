@@ -13,9 +13,11 @@ public interface ContactDetailStep2Contract {
     interface View extends BaseMVPView {
         void showMenuCreateEvent();
         void loadContactActivities(ContactActivity data);
+        void updateData();
     }
 
     interface Action {
         void getEvents(int leadID);
+        void updateEventDone(int eventID);
     }
 }

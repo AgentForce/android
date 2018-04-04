@@ -33,7 +33,7 @@ public class SignedPersonPresenter extends BasePresenter<SignedPersonContract.Vi
         getCompositeDisposable().add(ApiService.getServer().getUserList(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                period, 4,Contants.SIGNED_NOT_APPLIED,1,10)//khách hàng chưa nộp hồ sơ
+                period, 4,Contants.SIGNED_NOT_APPLIED,1,10,"")//khách hàng chưa nộp hồ sơ
                 .subscribeOn(Schedulers.computation())
                 .unsubscribeOn(Schedulers.io())
                 .flatMap(usersList -> {
@@ -41,28 +41,28 @@ public class SignedPersonPresenter extends BasePresenter<SignedPersonContract.Vi
                     return ApiService.getServer().getUserList(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 4,Contants.SIGNED_BHXH,1,10);// khách hàng hoàn tất BHXH
+                            period, 4,Contants.SIGNED_BHXH,1,10,"");// khách hàng hoàn tất BHXH
                 })
                 .flatMap(usersList -> {
                     ProjectApplication.getInstance().setSignBHXH(usersList);
                     return ApiService.getServer().getUserList(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 4,Contants.SIGNED_APPLIED,1,10);// khách hàng đã nộp hồ sơ
+                            period, 4,Contants.SIGNED_APPLIED,1,10,"");// khách hàng đã nộp hồ sơ
                 })
                 .flatMap(usersList -> {
                     ProjectApplication.getInstance().setSignApplied(usersList);
                     return ApiService.getServer().getUserList(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 4,Contants.SIGNED_WAIT_APPROVE,1,10);// khách hàng chờ duyệt hồ sơ
+                            period, 4,Contants.SIGNED_WAIT_APPROVE,1,10,"");// khách hàng chờ duyệt hồ sơ
                 })
                 .flatMap(usersList -> {
                     ProjectApplication.getInstance().setSignWaitApprove(usersList);
                     return ApiService.getServer().getUserList(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 4,Contants.SIGNED_SUCCESS,1,10);// khách hàng ký thành công
+                            period, 4,Contants.SIGNED_SUCCESS,1,10,"");// khách hàng ký thành công
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleResponse, this::handleError));

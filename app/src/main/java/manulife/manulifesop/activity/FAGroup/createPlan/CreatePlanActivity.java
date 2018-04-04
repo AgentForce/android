@@ -28,6 +28,7 @@ import manulife.manulifesop.fragment.FAGroup.createPlane.step1.CreatePlanStep1Fr
 import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Fragment;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step3.CreatePlanStep3Fragment;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step4.CreatePlanStep4Fragment;
+import manulife.manulifesop.util.Utils;
 
 
 public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implements CreatePlanContract.View {
@@ -68,11 +69,12 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     private boolean mIsShowSuccessView = false;
 
     private int mContractNum = 0;
-    private int mIncome =0;
+    private int mIncome = 0;
     private int mContractPrice = 0;
     private int mProfit;
     private String mStartDate = "";
     private String mEndDate = "";
+    private int mMonthNum = 0;
 
 
     private List<BaseFragment> mListFragment;
@@ -128,10 +130,10 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 2)
-                    ((CreatePlanStep3Fragment) mAdapter.getItem(position)).updateDate(mContractNum);
-                else if(position == 3){
-                    mActionListener.getCampaignForcast(mIncome,mProfit,mContractPrice);
+                if (position == 2) {
+                    ((CreatePlanStep3Fragment) mAdapter.getItem(position)).updateDate(mContractNum, mMonthNum);
+                } else if (position == 3) {
+                    mActionListener.getCampaignForcast(mIncome, mProfit, mContractPrice);
                 }
             }
 
@@ -144,10 +146,10 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
 
     @Override
     public void showForcast(CampaignForcastTarget data) {
-        ((CreatePlanStep4Fragment) mAdapter.getItem(3)).showData(mIncome,data);
+        ((CreatePlanStep4Fragment) mAdapter.getItem(3)).showData(mIncome, data,mMonthNum);
     }
 
-    @OnClick({R.id.layout_btn_back,R.id.btn_goto_main})
+    @OnClick({R.id.layout_btn_back, R.id.btn_goto_main})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -178,27 +180,30 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     }
 
     @Override
-    public void showNextFragment(int contractNum,String startDate, String endDate,int income,int contractPrice, int profit) {
+    public void showNextFragment(int contractNum, String startDate, String endDate, int income, int contractPrice, int profit) {
         if (contractNum > 0) {
             this.mContractNum = contractNum;
             txtContractNum.setText(String.valueOf(contractNum));
         }
-        if(startDate.length() > 0){
+        if (startDate.length() > 0) {
             this.mStartDate = startDate;
             txtStartDate.setText(startDate);
         }
-        if(endDate.length() > 0){
+        if (endDate.length() > 0) {
             this.mEndDate = endDate;
             txtEndDate.setText(endDate);
+            this.mMonthNum = (Utils.getMonthFromStringDate(mEndDate,"dd/MM/yyyy")
+                    - Utils.getMonthFromStringDate(mStartDate,"dd/MM/yyyy")) + 1;
+
         }
-        if(income > 0){
+        if (income > 0) {
             this.mIncome = income;
             txtIncome.setText(String.valueOf(income));
         }
-        if(contractPrice > 0){
+        if (contractPrice > 0) {
             this.mContractPrice = contractPrice;
         }
-        if(profit > 0){
+        if (profit > 0) {
             this.mProfit = profit;
         }
 
@@ -208,7 +213,7 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     @Override
     public void showCreateCampaign() {
         showLoading("Xử lý dữ liệu!");
-        mActionListener.createCampaign(mStartDate,mEndDate,mProfit,mContractPrice,mIncome);
+        mActionListener.createCampaign(mStartDate, mEndDate, mProfit, mContractPrice, mIncome);
     }
 
     @Override

@@ -15,6 +15,6 @@ public interface EventDetailContract {
 
     interface Action {
         void getActivityDetail(int id);
-        void deleteEvent(int eventID);
+        void deleteEvent(int eventID,String eventName);
     }
 }

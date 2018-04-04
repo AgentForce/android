@@ -114,6 +114,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
     private int mMonth;
     private AlertDialog alertDialog;
     private int mContactID;
+    private String mName;
 
     public static FADashBoardFragment newInstance() {
         Bundle args = new Bundle();
@@ -202,6 +203,12 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
 
     @Override
     public void showDataDashboard(DashboardResult dataWeekMonth, DashboardResult dataYear, ActivitiHist activities) {
+        targetStep1 = 0;
+        targetStep2 = 0;
+        targetStep3 = 0;
+        targetStep4 = 0;
+        targetStep5 = 0;
+
         int step1 = 0, step2 = 0, step3 = 0, step4 = 0, step5 = 0;
         if (dataWeekMonth.statusCode == 1) {
             for (int i = 0; i < dataWeekMonth.data.campaign.size(); i++) {
@@ -235,7 +242,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
                     "Hủy", SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
                         @Override
                         public void DiaglogPositive() {
-                            Toast.makeText(mActivity, "Gọi api active", Toast.LENGTH_SHORT).show();
+                            mActionListener.forwardCampaign();
                         }
 
                         @Override
@@ -385,6 +392,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
                         }
                         case 2: {
                             mContactID = mDataActiveHist.get(position).getId();
+                            mName = mDataActiveHist.get(position).getTitle();
                             showMenuCreateEvent();
                             break;
                         }
@@ -491,6 +499,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
                 Bundle data = new Bundle();
                 data.putInt("typeInt",1);
                 data.putInt("contactID",mContactID);
+                data.putString("name",mName);
                 alertDialog.dismiss();
                 goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
                 break;
@@ -499,6 +508,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
                 Bundle data = new Bundle();
                 data.putInt("typeInt",2);
                 data.putInt("contactID",mContactID);
+                data.putString("name",mName);
                 alertDialog.dismiss();
                 goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
                 break;
@@ -507,6 +517,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
                 Bundle data = new Bundle();
                 data.putInt("typeInt",3);
                 data.putInt("contactID",mContactID);
+                data.putString("name",mName);
                 alertDialog.dismiss();
                 goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
                 break;
@@ -515,6 +526,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
                 Bundle data = new Bundle();
                 data.putInt("typeInt",4);
                 data.putInt("contactID",mContactID);
+                data.putString("name",mName);
                 alertDialog.dismiss();
                 goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
                 break;

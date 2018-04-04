@@ -10,6 +10,7 @@ public interface AppointmentContract {
     interface View extends BaseMVPView
     {
         void initViewPager();
+        int getSelectedType();
     }
     interface Action{
         void loadAllData(int period);

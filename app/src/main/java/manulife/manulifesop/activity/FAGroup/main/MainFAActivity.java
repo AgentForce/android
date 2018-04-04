@@ -103,6 +103,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
     private void setupMenuBot() {
         int[] tabColors = getApplicationContext().getResources().getIntArray(R.array.tab_colors);
+        //mNavigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bot_sm);
         mNavigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bot);
         mNavigationAdapter.setupWithBottomNavigation(bottomNavigation, tabColors);
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
@@ -140,6 +141,10 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
                     }
                     case 3: {
                         showPersonal();
+                        break;
+                    }
+                    case 4: {
+                        Toast.makeText(MainFAActivity.this, "Khác", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }

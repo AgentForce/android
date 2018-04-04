@@ -20,10 +20,12 @@ public interface FAEventsContract {
     interface View extends BaseMVPView {
         void addEventToDate(Date date, List<String> colors);
         void showDataEvents(List<EventCalendar> data);
+        void updateData();
     }
 
     interface Action {
         void getAllActivitisInMonth(int month);
         void getEventsOneDay(Date date);
+        void updateEventDone(int eventID);
     }
 }

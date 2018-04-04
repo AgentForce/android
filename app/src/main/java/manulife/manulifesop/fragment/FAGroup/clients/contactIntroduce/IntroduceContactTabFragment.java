@@ -10,9 +10,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +32,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.introduceContact.IntroduceContactActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.updateContactInfo.UpdateContactInfoActivity;
 import manulife.manulifesop.adapter.ActiveHistAdapter;
+import manulife.manulifesop.adapter.ContactPersonAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.adapter.ObjectData.ContactPerson;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
@@ -54,6 +60,8 @@ import static android.app.Activity.RESULT_OK;
 public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactActivity, IntroduceContactTabPresent> implements IntroduceContactTabContract.View,
         View.OnClickListener {
 
+    @BindView(R.id.edt_search)
+    EditText edtSearch;
     @BindView(R.id.rcv_contact)
     RecyclerView listContact;
     @BindView(R.id.txt_add_new)
@@ -75,15 +83,13 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
     private CampaignMonth mCampaignMonth;
 
     private boolean mIsChangeUserToContact = false;
-    private boolean mIsFromContact = false;
 
     private int mPositionChange;
 
-    public static IntroduceContactTabFragment newInstance(String type, int month, boolean isfromContact) {
+    public static IntroduceContactTabFragment newInstance(String type, int month) {
         Bundle args = new Bundle();
         args.putString("type", type);
         args.putInt("month", month);
-        args.putBoolean("isFromContact", isfromContact);
         IntroduceContactTabFragment fragment = new IntroduceContactTabFragment();
         fragment.setArguments(args);
         return fragment;
@@ -94,7 +100,8 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
 
         @Override
         public void onApiLoadMoreTask(int page) {
-            mActionListener.getUserListProcess(mMonth, page);
+            String search = edtSearch.getText().toString();
+            mActionListener.getUserListProcess(search,mMonth, page);
         }
     }
 
@@ -113,7 +120,6 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
         super.onViewCreated(view, savedInstanceState);
         mType = getArguments().getString("type", "");
         mMonth = getArguments().getInt("month", 0);
-        mIsFromContact = getArguments().getBoolean("isFromContact", false);
         initViews();
         loadContactList(ProjectApplication.getInstance().getIntroduce());
     }
@@ -123,6 +129,40 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
         if (!mType.equals("") && mType.equals(Contants.INTRODURE)) {
             txtTitle.setText("Khách hàng giới thiệu");
         }
+        //get text after 2 seconds
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                handler.removeCallbacks(workRunnable);
+                workRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        doSmth(edtSearch.getText().toString());
+                    }
+                };
+                handler.postDelayed(workRunnable, 2000 /*delay*/);
+            }
+
+            Handler handler = new Handler(Looper.getMainLooper() /*UI thread*/);
+            Runnable workRunnable;
+
+
+            private final void doSmth(String str) {
+                mData.clear();
+                mActionListener.getUserListProcess(str,mMonth,1);
+            }
+        });
+
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mData = new ArrayList<>();
         mCampaignMonth = ProjectApplication.getInstance().getCampaign();
@@ -308,7 +348,7 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
                     public void DiaglogPositive() {
                         List<ContactPerson> dataInput = new ArrayList<>();
                         dataInput.add(new ContactPerson(false, "",
-                                mData.get(mPositionChange).getTitle(), mData.get(mPositionChange).getContent(), 0));
+                                mData.get(mPositionChange).getTitle(), mData.get(mPositionChange).getContent(), 0,false));
                         Bundle data = new Bundle();
                         data.putSerializable("data", (Serializable) dataInput);
                         data.putBoolean("isChangeToContact", true);

@@ -17,6 +17,7 @@ import manulife.manulifesop.BuildConfig;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.adapter.ObjectData.EventCalendar;
 import manulife.manulifesop.api.ApiService;
+import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
 import manulife.manulifesop.api.ObjectResponse.EventsMonth;
 import manulife.manulifesop.api.ObjectResponse.EventsOneDay;
@@ -42,6 +43,9 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
 
     @Override
     public void getAllActivitisInMonth(int month) {
+
+        mPresenterView.showLoading("Lấy dữ liệu tháng");
+
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH,1);
         String firstDay = Utils.convertDateToString(calendar.getTime(),"yyyy-MM-dd");
@@ -69,6 +73,7 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
                     if(j>3)break;
                 }
                 mPresenterView.addEventToDate(Utils.convertStringToDate(data.data.get(i).date,"yyyy-MM-dd"),colors);
+                getEventsOneDay(Calendar.getInstance().getTime());
             }
 
         }else{
@@ -78,7 +83,7 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
 
     @Override
     public void getEventsOneDay(Date date) {
-        mPresenterView.showLoading("Lấy dữ liệu");
+        mPresenterView.showLoading("Lấy dữ liệu ngày");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         getCompositeDisposable().add(ApiService.getServer().getEventsDay(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
@@ -100,11 +105,12 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
             EventCalendar tmp;
             for(int i=0;i<data.data.size();i++)
             {
-                tmp = new EventCalendar("",data.data.get(i).manulifeLead.name,
+                tmp = new EventCalendar(data.data.get(i).id,"",
+                        data.data.get(i).manulifeLead.name + " - " + data.data.get(i).name,
                         data.data.get(i).processStep,
-                        Utils.convertStringDateToStringDate(data.data.get(i).startDate,
-                                "yyyy-MM-dd'T'HH:mm:ss.sss'Z'","dd-MM-yyyy HH:mm:ss"),
-                        "Location");
+                        Utils.convertStringTimeZoneDateToStringDate(data.data.get(i).startDate,
+                                "yyyy-MM-dd'T'HH:mm:ss.sss'Z'","dd-MM-yyyy HH:mm"),
+                        data.data.get(i).location,data.data.get(i).status);
                 dataList.add(tmp);
             }
             mPresenterView.showDataEvents(dataList);
@@ -112,6 +118,29 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
         }else
         {
             mPresenterView.finishLoading(data.msg,false);
+        }
+    }
+
+    @Override
+    public void updateEventDone(int eventID) {
+        mPresenterView.showLoading("Cập nhật sự kiện");
+
+        getCompositeDisposable().add(ApiService.getServer().updateEventDone(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
+                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
+                "check sum",eventID)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseUpdateEventDone, this::handleError));
+    }
+
+    private void handleResponseUpdateEventDone(BaseResponse rs) {
+        if(rs.statusCode == 1){
+            mPresenterView.updateData();
+            mPresenterView.finishLoading();
+        }else{
+            mPresenterView.finishLoading(rs.msg,false);
         }
     }
 }

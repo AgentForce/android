@@ -71,6 +71,11 @@ public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> 
     }
 
     @Override
+    public void reloadData() {
+        mActionListener.getAllContactPerson(mMonth, 1);
+    }
+
+    @Override
     public void initViewPager(UsersList contact, UsersList callLater,UsersList refuse) {
 
         viewPager.setSaveFromParentEnabled(false);
@@ -88,7 +93,23 @@ public class ContactPersonActivity extends BaseActivity<ContactPersonPresenter> 
         mAdapterViewPager = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment, mTabTitles);
         viewPager.setAdapter(mAdapterViewPager);
         tabLayout.setupWithViewPager(viewPager);
+    }
 
+    @Override
+    public int getSelectedType() {
+        int index = viewPager.getCurrentItem();
+        switch (index){
+            case 0:{
+                return Contants.USER_CONTACT;
+            }
+            case 1:{
+                return Contants.USER_CALLLATER;
+            }
+            case 2:{
+                return Contants.USER_REFUSE;
+            }
+        }
+        return Contants.USER_CONTACT;
     }
 
     private void setupSupportForApp() {

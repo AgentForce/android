@@ -13,6 +13,15 @@ public class EventData implements Serializable{
     private String dateTime;
     private int processStep;
     private int eventID;
+    private boolean status;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public String getAvatar() {
         return avatar;

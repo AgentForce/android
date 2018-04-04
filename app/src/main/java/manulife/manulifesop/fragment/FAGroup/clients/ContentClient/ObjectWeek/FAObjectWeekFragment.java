@@ -23,7 +23,6 @@ import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.FAContentCustomerFragment;
-import manulife.manulifesop.fragment.FAGroup.dashboard.campaignPercent.CampaignPercentFragment;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -221,10 +220,10 @@ public class FAObjectWeekFragment extends BaseFragment<MainFAActivity, FAObjectW
 
     private int mMonth;
 
-    public static FAObjectWeekFragment newInstance(CampaignMonth data,int month) {
+    public static FAObjectWeekFragment newInstance(CampaignMonth data, int month) {
         Bundle args = new Bundle();
         args.putSerializable("data", data);
-        args.putInt("month",month);
+        args.putInt("month", month);
         FAObjectWeekFragment fragment = new FAObjectWeekFragment();
         fragment.setArguments(args);
         return fragment;
@@ -244,9 +243,10 @@ public class FAObjectWeekFragment extends BaseFragment<MainFAActivity, FAObjectW
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         CampaignMonth data = (CampaignMonth) getArguments().getSerializable("data");
-        mMonth = getArguments().getInt("month",0);
+        mMonth = getArguments().getInt("month", 0);
         initViews(data);
     }
+
     private void initViews(CampaignMonth data) {
         layoutContactStep1.post(new Runnable() {
             @Override
@@ -635,7 +635,8 @@ public class FAObjectWeekFragment extends BaseFragment<MainFAActivity, FAObjectW
         int id = view.getId();
         switch (id) {
             case R.id.txt_edit_week: {
-                ((FAContentCustomerFragment)this.getParentFragment()).showDialogEditObjectMonth();
+                //((FAContentCustomerFragment)this.getParentFragment()).showDialogEditObjectMonth();
+                ((FAContentCustomerFragment) this.getParentFragment()).showDialogEditCampaign();
                 break;
             }
         }

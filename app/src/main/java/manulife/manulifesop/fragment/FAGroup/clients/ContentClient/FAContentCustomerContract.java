@@ -1,6 +1,9 @@
 package manulife.manulifesop.fragment.FAGroup.clients.ContentClient;
 
+import java.util.List;
+
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
+import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.base.BaseMVPView;
 
 
@@ -11,7 +14,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface FAContentCustomerContract {
 
     interface View extends BaseMVPView {
-        void showCampaignsMonth(CampaignMonth data);
+        void showCampaignsMonth(CampaignMonth data, List<BaseFragment> fragmentList);
         void showConfirmAcvitveCampaign();
 
         void showDialogEditCampaign();

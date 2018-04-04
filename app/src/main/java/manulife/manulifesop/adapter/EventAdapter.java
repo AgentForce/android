@@ -67,38 +67,38 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         final EventData object = mListObject.get(position);
 
+        if(object.isStatus()){
+            holder.userAvatar.setBorderColor(Color.parseColor("#099D53"));
+        }else{
+            holder.userAvatar.setBorderColor(Color.parseColor("#F63D2B"));
+        }
+
         holder.txtAvatar.setText(object.getName().substring(0,1));
         holder.txtName.setText(object.getName());
         holder.txtTitleType.setText(object.getTypeEvent());
         holder.txtDateTime.setText(object.getDateTime());
-        holder.userAvatar.setBorderColor(
+        /*holder.userAvatar.setBorderColor(
                 Color.parseColor(ProjectApplication.getInstance().getProcessStepColor(
                    object.getProcessStep() - 1
-                )));
+                )));*/
         holder.layoutMenuRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PopupMenu popup = new PopupMenu(mContext, holder.layoutMenuRight);
-                popup.inflate(R.menu.option_menu_active_hist);
+                popup.inflate(R.menu.option_menu_event);
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.menu_detail:
-                                //handle menu1 click
-                                //Toast.makeText(mContext, "menu 1", Toast.LENGTH_SHORT).show();
                                 mCallback.onClickMenuRight(position,0);
                                 break;
-                            case R.id.menu_call:
-                                //handle menu2 click
-                                //Toast.makeText(mContext, "menu 2", Toast.LENGTH_SHORT).show();
+                            case R.id.menu_edit:
                                 mCallback.onClickMenuRight(position,1);
                                 break;
-                            case R.id.menu_create_event:
-                                //Toast.makeText(mContext, "menu 3", Toast.LENGTH_SHORT).show();
-                                //handle menu3 click
-                                mCallback.onClickMenuRight(position,1);
+                            case R.id.menu_done:
+                                mCallback.onClickMenuRight(position,2);
                                 break;
                         }
                         return false;

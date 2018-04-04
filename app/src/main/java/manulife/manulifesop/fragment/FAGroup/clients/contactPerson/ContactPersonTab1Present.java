@@ -27,12 +27,12 @@ public class ContactPersonTab1Present extends BasePresenter<ContactPersonTab1Con
     }
 
     @Override
-    public void getUserListProcess(int period, int status, int page) {
+    public void getUserListProcess(int period, int status, int page, String search) {
         mPresenterView.showLoading("Lấy dữ liệu");
         getCompositeDisposable().add(ApiService.getServer().getUserList(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                period, 1,status,page,10)//khách hàng liên hệ
+                period, 1,status,page,10,search)//khách hàng liên hệ
                 .subscribeOn(Schedulers.computation())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

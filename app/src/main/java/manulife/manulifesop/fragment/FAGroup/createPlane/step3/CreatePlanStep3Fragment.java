@@ -5,17 +5,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
 import manulife.manulifesop.base.BaseFragment;
-import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Contract;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Present;
 
 
 /**
@@ -43,6 +38,7 @@ public class CreatePlanStep3Fragment extends BaseFragment<CreatePlanActivity, Cr
     RadioGroup rbMonthYear;
 
     private int mContract;
+    private int mMonthNum;
 
 
     public static CreatePlanStep3Fragment newInstance() {
@@ -72,15 +68,16 @@ public class CreatePlanStep3Fragment extends BaseFragment<CreatePlanActivity, Cr
         rbMonthYear.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                updateDate(mContract);
+                updateDate(mContract,mMonthNum);
             }
         });
     }
 
-    public void updateDate(int contractNum) {
+    public void updateDate(int contractNum,int monthNum) {
         this.mContract = contractNum;
-        if (rbMonthYear.getCheckedRadioButtonId() == R.id.rbn_year) {
-            contractNum = contractNum * 12;
+        this.mMonthNum = monthNum;
+        if (rbMonthYear.getCheckedRadioButtonId() == R.id.rbn_campaign) {
+            contractNum = contractNum * monthNum;
         }
         txtContractNum.setText(contractNum + "");
         txtMeetNum.setText((contractNum * 3) + "");

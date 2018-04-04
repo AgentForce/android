@@ -58,7 +58,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@+id/image_right"
-                android:text="10/20"
+                android:text="0/0"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/welcome_activity_content"
                 android:textStyle="bold" />
@@ -124,7 +124,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@+id/image_step2_right"
-                android:text="10/20"
+                android:text="0/0"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/welcome_activity_content"
                 android:textStyle="bold" />
@@ -190,7 +190,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@+id/image_step3_right"
-                android:text="10/20"
+                android:text="0/0"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/welcome_activity_content"
                 android:textStyle="bold" />
@@ -256,7 +256,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@+id/image_step4_right"
-                android:text="10/20"
+                android:text="0/0"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/welcome_activity_content"
                 android:textStyle="bold" />
@@ -322,7 +322,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@+id/image_step5_right"
-                android:text="10/20"
+                android:text="0/0"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/welcome_activity_content"
                 android:textStyle="bold" />

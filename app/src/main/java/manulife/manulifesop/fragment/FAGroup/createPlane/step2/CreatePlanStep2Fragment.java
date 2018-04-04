@@ -85,30 +85,13 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
     private void initEventsSeekBar() {
         seekBarIncome.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
 
+            int currentProcess = seekBarIncome.getProgress();
+
             @Override
             public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
-
-                /*if (fromUserTouch) {
-                    float min = seekBar.getMin();
-                    float max = seekBar.getMax();
-                    if (progress == max) {
-                        int minNew = (min == 10) ? 100 : (int) (min + 100);
-
-                        txtIncomeMin.setText((int) (minNew) + "tr");
-                        txtIncomeMax.setText((int) (max + 100) + "tr");
-                        seekBarIncome.setMax(max + 100);
-                        seekBarIncome.setMin(minNew);
-
-                    } else if (progress == min && min > 10) {
-
-                        int minNew = ((min - 100) > 10) ? (int) (min - 100) : 10;
-                        txtIncomeMin.setText(minNew + "tr");
-                        txtIncomeMax.setText((int) (max - 100) + "tr");
-                        seekBarIncome.setMax(max - 100);
-                        seekBarIncome.setMin(minNew);
-
-                    }
-                }*/
+                if (fromUserTouch) {
+                    currentProcess = progress;
+                }
             }
 
             @Override
@@ -123,8 +106,18 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+                //set progress step
+                if (currentProcess % 5 > 0) {
+                    if (currentProcess % 5 > 5) {
+                        seekBar.setProgress(((currentProcess / 5) * 5) + 5);
+                    } else {
+                        seekBar.setProgress(((currentProcess / 5) * 5));
+                    }
+                }
+
                 float min = seekBar.getMin();
                 float max = seekBar.getMax();
+                int temp = seekBar.getProgress();
                 if (seekBar.getProgress() == max) {
                     int minNew = (min == 10) ? 100 : (int) (min + 100);
 

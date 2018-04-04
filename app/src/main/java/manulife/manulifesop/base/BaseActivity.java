@@ -217,28 +217,41 @@ public class BaseActivity<P extends BasePresenter> extends AppCompatActivity imp
 
     @Override
     public void showLoading(String message) {
-        pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setTitleText(message);
-        pDialog.setCancelable(false);
-        pDialog.show();
+        if(!isFinishing()) {
+            if (pDialog == null || !pDialog.isShowing()) {
+                pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+                pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                pDialog.setTitleText(message);
+                pDialog.setCancelable(false);
+                pDialog.show();
+            } else {
+                pDialog.setTitleText(message);
+            }
+        }
     }
 
     @Override
     public void finishLoading(String message, boolean isSuccess) {
-        pDialog.setCanceledOnTouchOutside(true);
-        pDialog.setTitleText(message);
-        pDialog.setConfirmText("OK");
-        if(isSuccess) {
-            pDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-        }else
-        {
-            pDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
+        if(!isFinishing()) {
+            if (pDialog.isShowing()) {
+                pDialog.setCanceledOnTouchOutside(true);
+                pDialog.setTitleText(message);
+                pDialog.setConfirmText("OK");
+                if (isSuccess) {
+                    pDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                } else {
+                    pDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                }
+            }
         }
     }
 
     @Override
     public void finishLoading() {
-        pDialog.dismissWithAnimation();
+        if(!isFinishing()) {
+            if (pDialog.isShowing()) {
+                pDialog.dismissWithAnimation();
+            }
+        }
     }
 }

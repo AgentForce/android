@@ -17,6 +17,6 @@ public interface ContactPersonTab1Contract {
     }
 
     interface Action {
-        void getUserListProcess(int period, int status, int page);
+        void getUserListProcess(int period, int status, int page,String search);
     }
 }

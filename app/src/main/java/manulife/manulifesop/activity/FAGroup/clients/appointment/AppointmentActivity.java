@@ -99,26 +99,26 @@ public class AppointmentActivity extends BaseActivity<AppointmentPresenter> impl
         }
     }
 
-    /*private void initViewPager(){
-        mListFragment = new ArrayList<>();
-        //type = appointment, seen, calllater, refuse
-        mListFragment.add(AppointmentContactTabFragment.newInstance(Contants.APPOINTMENT));
-        mListFragment.add(AppointmentContactTabFragment.newInstance(Contants.SEEN));
-        mListFragment.add(AppointmentContactTabFragment.newInstance(Contants.CALLLATER));
-        mListFragment.add(AppointmentContactTabFragment.newInstance(Contants.REFUSE));
+    @Override
+    public int getSelectedType() {
 
-        mTabTitles = new ArrayList<>();
-        mTabTitles.add("Hẹn gặp");
-        mTabTitles.add("Đã hẹn gặp");
-        mTabTitles.add("Liên hệ sau");
-        mTabTitles.add("Từ chối");
-
-        mAdapterViewPager = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment, mTabTitles);
-        if (viewPager != null) {
-            viewPager.setAdapter(mAdapterViewPager);
-            tabLayout.setupWithViewPager(viewPager);
+        int index = viewPager.getCurrentItem();
+        switch (index){
+            case 0:{
+                return Contants.APPOINTMENT_NEED;
+            }
+            case 1:{
+                return Contants.APPOINTMENT_SEEN;
+            }
+            case 2:{
+                return Contants.APPOINTMENT_CALLLATER;
+            }
+            case 3:{
+                return Contants.APPOINTMENT_REFUSE;
+            }
         }
-    }*/
+        return Contants.APPOINTMENT_NEED;
+    }
 
     private void setupSupportForApp() {
         //txtActionbarTitle.setText(getResources().getString(R.string.activity_create_plan_title_actionbar));

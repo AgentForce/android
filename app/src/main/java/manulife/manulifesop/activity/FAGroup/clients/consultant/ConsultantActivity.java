@@ -99,6 +99,27 @@ public class ConsultantActivity extends BaseActivity<ConsultantPresenter> implem
         }
     }
 
+    @Override
+    public int getSelectedType() {
+
+        int index = viewPager.getCurrentItem();
+        switch (index){
+            case 0:{
+                return Contants.CONSULTANT_NEED;
+            }
+            case 1:{
+                return Contants.CONSULTANT_SEEN;
+            }
+            case 2:{
+                return Contants.CONSULTANT_CALLLATER;
+            }
+            case 3:{
+                return Contants.CONSULTANT_REFUSE;
+            }
+        }
+        return Contants.CONSULTANT_NEED;
+    }
+
     private void setupSupportForApp() {
         //txtActionbarTitle.setText(getResources().getString(R.string.activity_create_plan_title_actionbar));
         txtActionbarTitle.setText("Danh sách tư vấn tháng 12");

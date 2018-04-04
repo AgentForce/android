@@ -190,7 +190,6 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK) {
             if (requestCode == Contants.ADD_EVENT || requestCode == Contants.UPDATE_CONTACT) {
                 mActionListener.getContactDetail(mUserId);
@@ -237,6 +236,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                     Bundle data = new Bundle();
                     data.putInt("typeInt", 1);
                     data.putInt("contactID", mUserId);
+                    data.putString("name",txtUserName.getText().toString());
                     showHideMenuAfterCall();
                     goNextScreen(CreateEventActivity.class, data, Contants.ADD_EVENT);
                     break;
@@ -267,6 +267,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                     Bundle data = new Bundle();
                     data.putInt("typeInt", 1);
                     data.putInt("contactID", mUserId);
+                    data.putString("name",txtUserName.getText().toString());
                     showHideMenuAfterCall();
                     goNextScreen(CreateEventActivity.class, data, Contants.ADD_EVENT);
                     break;
@@ -441,7 +442,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
             case R.id.layout_btn_edit:{
                 List<ContactPerson> dataInput = new ArrayList<>();
                 dataInput.add(new ContactPerson(false, "",
-                        ProjectApplication.getInstance().getContactDetail().data.name, ProjectApplication.getInstance().getContactDetail().data.phone, 0));
+                        ProjectApplication.getInstance().getContactDetail().data.name, ProjectApplication.getInstance().getContactDetail().data.phone, 0,false));
                 Bundle data = new Bundle();
                 data.putSerializable("data", (Serializable) dataInput);
                 data.putInt("idRelead", mUserId);

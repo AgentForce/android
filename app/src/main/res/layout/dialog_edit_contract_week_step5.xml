@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Giai đoạn 2"
+            android:text="Giai đoạn 5"
             android:textSize="@dimen/welcome_activity_content"
             android:textStyle="bold" />
         <TextView

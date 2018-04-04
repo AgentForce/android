@@ -59,30 +59,33 @@ public class IntroduceContactActivity extends BaseActivity<IntroduceContactPrese
         hideKeyboardOutside(layoutRoot);
         mTarget = getIntent().getIntExtra("target", 0);
         mMonth = getIntent().getIntExtra("month", 0);
-
         //variable is open from contact activity
         mIsFromContactActivity = getIntent().getBooleanExtra("isFromContact",false);
-
         setupSupportForApp();
-        mActionListener.getAllIntroduces(mMonth, 1);
+        mActionListener.getAllIntroduces("",mMonth, 1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            mActionListener.getAllIntroduces(mMonth, 1);
+            if(mIsFromContactActivity){
+                setResult(RESULT_OK);
+                finish();
+            }else{
+                mActionListener.getAllIntroduces("",mMonth, 1);
+            }
         }
     }
 
     @Override
     public void reloadData() {
-        mActionListener.getAllIntroduces(mMonth, 1);
+        mActionListener.getAllIntroduces("",mMonth, 1);
     }
 
     public void initViewPager() {
         mListFragment = new ArrayList<>();
-        mListFragment.add(IntroduceContactTabFragment.newInstance(Contants.INTRODURE, 3, mIsFromContactActivity));
+        mListFragment.add(IntroduceContactTabFragment.newInstance(Contants.INTRODURE, mMonth));
 
         mTabTitles = new ArrayList<>();
         mTabTitles.add("KH giới thiệu(" +

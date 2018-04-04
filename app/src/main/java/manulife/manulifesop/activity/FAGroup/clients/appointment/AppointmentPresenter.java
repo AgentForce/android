@@ -32,7 +32,7 @@ public class AppointmentPresenter extends BasePresenter<AppointmentContract.View
         getCompositeDisposable().add(ApiService.getServer().getUserList(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                period, 2,Contants.APPOINTMENT_NEED,1,10)//khách hàng cần hẹn gặp
+                period, 2,Contants.APPOINTMENT_NEED,1,10,"")//khách hàng cần hẹn gặp
                 .subscribeOn(Schedulers.computation())
                 .unsubscribeOn(Schedulers.io())
                 .flatMap(usersList -> {
@@ -40,21 +40,21 @@ public class AppointmentPresenter extends BasePresenter<AppointmentContract.View
                     return ApiService.getServer().getUserList(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 2,Contants.APPOINTMENT_REFUSE,1,10);// khách hàng từ chối
+                            period, 2,Contants.APPOINTMENT_REFUSE,1,10,"");// khách hàng từ chối
                 })
                 .flatMap(usersList -> {
                     ProjectApplication.getInstance().setAppointMentRefuse(usersList);
                     return ApiService.getServer().getUserList(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 2,Contants.APPOINTMENT_CALLLATER,1,10);// khách hàng gọi lại sau
+                            period, 2,Contants.APPOINTMENT_CALLLATER,1,10,"");// khách hàng gọi lại sau
                 })
                 .flatMap(usersList -> {
                     ProjectApplication.getInstance().setAppointMentCallLater(usersList);
                     return ApiService.getServer().getUserList(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 2,Contants.APPOINTMENT_SEEN,1,10);// khách hàng đã gặp
+                            period, 2,Contants.APPOINTMENT_SEEN,1,10,"");// khách hàng đã gặp
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleResponse, this::handleError));

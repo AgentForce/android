@@ -14,6 +14,6 @@ public interface IntroduceContactContract {
         void reloadData();
     }
     interface Action{
-        void getAllIntroduces(int period, int page);
+        void getAllIntroduces(String search,int period, int page);
     }
 }

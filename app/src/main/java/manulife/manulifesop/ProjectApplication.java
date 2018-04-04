@@ -158,7 +158,7 @@ public class ProjectApplication extends MultiDexApplication {
         mStringProcessStatus.put("32","Đã chuyển sang từ chối");
         mStringProcessStatus.put("33","Đã chuyển sang tư vấn");
         mStringProcessStatus.put("34","Đã tư vấn");
-        mStringProcessStatus.put("41","Đã chuyển sang hứa nộp hồ sơ");
+        mStringProcessStatus.put("41","Đã chuyển sang nộp hồ sơ");
         mStringProcessStatus.put("42","Đã hoàn tất hồ sơ BHXH");
         mStringProcessStatus.put("43","Đã nộp hồ sơ");
         mStringProcessStatus.put("44","Chờ duyệt hồ sơ");

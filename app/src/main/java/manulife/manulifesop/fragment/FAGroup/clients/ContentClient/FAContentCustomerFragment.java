@@ -72,7 +72,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
             txtsignStep4, txtintroduceStep4;
     LinearLayout layoutRoot4;
 
-    private int mCurrentProcessStep1,mCurrentProcessStep2,mCurrentProcessStep3;
+    private int mCurrentProcessStep1, mCurrentProcessStep2, mCurrentProcessStep3;
 
     //variable for edit month
     IndicatorSeekBar sbMonthStep1, sbMonthStep2, sbMonthStep3, sbMonthStep4, sbMonthStep5;
@@ -118,7 +118,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
 
     @Override
     public void showDialogEditCampaign() {
-        if(mMonth == Utils.getCurrentMonth(getContext())) {
+        if (mMonth == Utils.getCurrentMonth(getContext())) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
 
             LayoutInflater inflater = this.getLayoutInflater();
@@ -177,8 +177,8 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
             alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             alertDialog.show();
-        }else{
-            showMessage("Thông báo","Chỉ được thay đổi mục tiêu của tuàn hiện tại!",
+        } else {
+            showMessage("Thông báo", "Chỉ được thay đổi mục tiêu của tuần hiện tại!",
                     SweetAlertDialog.WARNING_TYPE);
         }
     }
@@ -217,9 +217,9 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
         txtintroduceStep4 = dialogView.findViewById(R.id.txt_step4_introduce);
     }
 
-    private void reloadViewsWeek1(){
+    private void reloadViewsWeek1() {
         int newContract = mListContractWeek.get(0);
-        int newPercent = Math.round((float)  newContract/ mTotalContract * 100);
+        int newPercent = Math.round((float) newContract / mTotalContract * 100);
         sbStep1.setProgress(newPercent);
 
         mCurrentProcessStep1 = newPercent;
@@ -231,9 +231,9 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
         txtintroduceStep1.setText(String.valueOf(newContract * 8));
     }
 
-    private void reloadViewsWeek2(){
+    private void reloadViewsWeek2() {
         int newContract = mListContractWeek.get(1);
-        int newPercent = Math.round((float)  newContract/ mTotalContract * 100);
+        int newPercent = Math.round((float) newContract / mTotalContract * 100);
         sbStep2.setProgress(newPercent);
         mCurrentProcessStep2 = newPercent;
 
@@ -243,9 +243,10 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
         txtsignStep2.setText(String.valueOf(newContract));
         txtintroduceStep2.setText(String.valueOf(newContract * 8));
     }
-    private void reloadViewsWeek3(){
+
+    private void reloadViewsWeek3() {
         int newContract = mListContractWeek.get(2);
-        int newPercent = Math.round((float)  newContract/ mTotalContract * 100);
+        int newPercent = Math.round((float) newContract / mTotalContract * 100);
         sbStep3.setProgress(newPercent);
         mCurrentProcessStep3 = newPercent;
 
@@ -255,9 +256,10 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
         txtsignStep3.setText(String.valueOf(newContract));
         txtintroduceStep3.setText(String.valueOf(newContract * 8));
     }
-    private void reloadViewsWeek4(){
+
+    private void reloadViewsWeek4() {
         int newContract = mListContractWeek.get(3);
-        int newPercent = Math.round((float)  newContract/ mTotalContract * 100);
+        int newPercent = Math.round((float) newContract / mTotalContract * 100);
         sbStep4.setProgress(newPercent);
 
         txtcontractStep4.setText(String.valueOf(newContract * 10));
@@ -292,7 +294,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
                     txtcontractStep1.setText(String.valueOf(intTemp));*/
                     newContract = Math.round((float) progress * mTotalContract / 100);
                     temp = mTotalContract - newContract;
-                    if (newContract != mListContractWeek.get(0) && temp >= 0){
+                    if (newContract != mListContractWeek.get(0) && temp >= 0) {
                         //10:5:3:1:8
                         txtcontractStep1.setText(String.valueOf(newContract * 10));
                         txtmeetingStep1.setText(String.valueOf(newContract * 5));
@@ -301,17 +303,16 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
                         txtintroduceStep1.setText(String.valueOf(newContract * 8));
 
                         //change percent week 2 - 3 - 4
-                        mListContractWeek.set(0,newContract);
-                        temp = temp/3;
-                        for(int i=1;i<mListContractWeek.size();i++)
-                        {
-                            mListContractWeek.set(i,temp);
+                        mListContractWeek.set(0, newContract);
+                        temp = temp / 3;
+                        for (int i = 1; i < mListContractWeek.size(); i++) {
+                            mListContractWeek.set(i, temp);
                         }
 
-                        temp = (mTotalContract - newContract)%3;
+                        temp = (mTotalContract - newContract) % 3;
                         if (temp == 1) {
                             mListContractWeek.set(3, mListContractWeek.get(3) + 1);
-                        } else if(temp == 2){
+                        } else if (temp == 2) {
                             mListContractWeek.set(2, mListContractWeek.get(2) + 1);
                             mListContractWeek.set(3, mListContractWeek.get(3) + 1);
                         }
@@ -356,6 +357,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
         sbStep2.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
             int newContract;
             int temp;
+
             @Override
             public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
                 if (fromUserTouch) {
@@ -372,13 +374,12 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
                         txtsignStep2.setText(String.valueOf(newContract));
                         txtintroduceStep2.setText(String.valueOf(newContract * 8));
                         //change percent week 3 - 4
-                        mListContractWeek.set(1,newContract);
-                        temp = (mTotalContract - newContract - mListContractWeek.get(0))/2;
-                        for(int i=2;i<mListContractWeek.size();i++)
-                        {
-                            mListContractWeek.set(i,temp);
+                        mListContractWeek.set(1, newContract);
+                        temp = (mTotalContract - newContract - mListContractWeek.get(0)) / 2;
+                        for (int i = 2; i < mListContractWeek.size(); i++) {
+                            mListContractWeek.set(i, temp);
                         }
-                        temp = (mTotalContract - newContract - mListContractWeek.get(0))%2;
+                        temp = (mTotalContract - newContract - mListContractWeek.get(0)) % 2;
                         if (temp == 1) {
                             mListContractWeek.set(3, mListContractWeek.get(3) + 1);
                         }
@@ -439,8 +440,8 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
                         txtsignStep3.setText(String.valueOf(newContract));
                         txtintroduceStep3.setText(String.valueOf(newContract * 8));
                         //change percent week 4
-                        mListContractWeek.set(2,newContract);
-                        mListContractWeek.set(3,temp);
+                        mListContractWeek.set(2, newContract);
+                        mListContractWeek.set(3, temp);
                         reloadViewsWeek4();
                         mCurrentProcessStep3 = progress;
                     }
@@ -477,26 +478,27 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
     }
 
     @Override
-    public void showCampaignsMonth(CampaignMonth data) {
+    public void showCampaignsMonth(CampaignMonth data, List<BaseFragment> fragmentList) {
 
         this.mData = data;
-
         List<String> tabTitles = new ArrayList<>();
         tabTitles.add("Mục tiêu tháng");
         tabTitles.add("Mục tiêu theo tuần");
 
-        List<BaseFragment> mListFragment = new ArrayList<>();
-        mListFragment.add(FAObjectMonthFragment.newInstance(data, mMonth));
-        mListFragment.add(FAObjectWeekFragment.newInstance(data,mMonth));
-
         mAdapter = new CustomViewPagerAdapter(getChildFragmentManager(),
-                mListFragment, tabTitles);
+                fragmentList, tabTitles);
 
         if (viewPager != null) {
             viewPager.setAdapter(mAdapter);
         }
-
         tabLayoutOptions.setupWithViewPager(viewPager);
+
+        //check request forward campaign
+        if (data != null && data.statusCode == 1) {
+            if (data.data.isRequestActive == 1) {
+                showConfirmAcvitveCampaign();
+            }
+        }
     }
 
     private void calculatePerCentContractPerWeek(CampaignMonth data) {
@@ -531,7 +533,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
     public void showDialogEditObjectMonth() {
 
         int currentMonth = Utils.getCurrentMonth(getContext());
-        if(mMonth >= currentMonth
+        if (mMonth >= currentMonth
                 && mMonth < (currentMonth + 3)) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
             LayoutInflater inflater = this.getLayoutInflater();
@@ -551,14 +553,14 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
             alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             alertDialog.show();
-        }else{
-            showMessage("Thông báo","Chỉ được thay đổi mục tiêu 3 tháng gần nhất!",
+        } else {
+            showMessage("Thông báo", "Chỉ được thay đổi mục tiêu 3 tháng gần nhất!",
                     SweetAlertDialog.WARNING_TYPE);
         }
     }
 
     private void initAllViewsMonth(View view) {
-        ((TextView)view.findViewById(R.id.txt_title)).setText(
+        ((TextView) view.findViewById(R.id.txt_title)).setText(
                 "Chỉnh sửa mục tiêu KH tháng " + mMonth
         );
 
@@ -578,8 +580,8 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
                             @Override
                             public void DiaglogPositive() {
                                 alertDialog.dismiss();
-                                int increaseNum =  sbMonthStep4.getProgress() - mListMonthTarget.get(3);
-                                mActionListener.increaseContactCampaign(mMonth,increaseNum);
+                                int increaseNum = sbMonthStep4.getProgress() - mListMonthTarget.get(3);
+                                mActionListener.increaseContactCampaign(mMonth, increaseNum);
                             }
 
                             @Override
@@ -641,7 +643,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
                         sbMonthStep1.setProgress(((currentProcess / 10) * 10));
                     }
                 }
-                reloadAllStepMonth(sbMonthStep1.getProgress() / 10,1);
+                reloadAllStepMonth(sbMonthStep1.getProgress() / 10, 1);
             }
         });
         sbMonthStep1.setMin(mListMonthTarget.get(0));
@@ -681,7 +683,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
                         sbMonthStep2.setProgress(((currentProcess / 5) * 5));
                     }
                 }
-                reloadAllStepMonth(sbMonthStep2.getProgress() / 5,2);
+                reloadAllStepMonth(sbMonthStep2.getProgress() / 5, 2);
             }
         });
     }
@@ -720,7 +722,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
                         sbMonthStep3.setProgress(((currentProcess / 3) * 3));
                     }
                 }
-                reloadAllStepMonth(sbMonthStep3.getProgress() / 3,3);
+                reloadAllStepMonth(sbMonthStep3.getProgress() / 3, 3);
             }
         });
     }
@@ -753,7 +755,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
 
-                reloadAllStepMonth(sbMonthStep4.getProgress(),4);
+                reloadAllStepMonth(sbMonthStep4.getProgress(), 4);
             }
         });
     }
@@ -792,7 +794,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
                         sbMonthStep5.setProgress(((currentProcess / 8) * 8));
                     }
                 }
-                reloadAllStepMonth(sbMonthStep5.getProgress() / 8,5);
+                reloadAllStepMonth(sbMonthStep5.getProgress() / 8, 5);
             }
         });
     }

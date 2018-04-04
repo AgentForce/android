@@ -8,6 +8,8 @@ import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanContract;
 import manulife.manulifesop.api.ApiService;
+import manulife.manulifesop.api.ObjectInput.InputRefreshToken;
+import manulife.manulifesop.api.ObjectResponse.RefreshToken;
 import manulife.manulifesop.api.ObjectResponse.VerifyOTP;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
@@ -29,6 +31,7 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
 
     @Override
     public void chekCampaign() {
+        mPresenterView.showLoading("Lấy dữ liệu");
         getCompositeDisposable().add(ApiService.getServer().checkCampaign(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
@@ -48,9 +51,39 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
             } else {
                 mPresenterView.showFragmentConfirmCreatePlan("Trang chủ");
             }
+            mPresenterView.finishLoading();
+        }else if(data.statusCode == -1){
+            //refresh token
+            refreshAccessToken();
+        }else{
+            mPresenterView.finishLoading(data.msg,false);
         }
     }
 
     private void handleError(Throwable throwable) {
+        mPresenterView.finishLoading(throwable.getMessage(),false);
+    }
+
+    @Override
+    public void refreshAccessToken() {
+        InputRefreshToken data = new InputRefreshToken();
+        data.refreshToken = SOPSharedPreferences.getInstance(mContext).getRefreshToken();
+        getCompositeDisposable().add(ApiService.getServer().refreshToken(
+                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
+                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,"checksum",
+                data)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseRefreshToken, this::handleError));
+    }
+
+    private void handleResponseRefreshToken(RefreshToken rs) {
+        if(rs.statusCode == 1){
+            SOPSharedPreferences.getInstance(mContext).saveToken(rs.data.accessToken,rs.data.refreshToken);
+            chekCampaign();
+        }else{
+            mPresenterView.finishLoading(rs.msg,false);
+        }
     }
 }

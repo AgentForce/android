@@ -35,10 +35,11 @@ public class ContactPersonPresenter extends BasePresenter<ContactPersonContract.
     @Override
     public void getAllContactPerson(int period, final int page) {
         mPresenterView.showLoading("Xử lý dữ liệu");
+        //String tmp = SOPSharedPreferences.getInstance(mContext).getAccessToken();
         getCompositeDisposable().add(ApiService.getServer().getUserList(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                period, 1,Contants.USER_CONTACT,page,10)//khách hàng liên hệ
+                period, 1,Contants.USER_CONTACT,page,10,"")//khách hàng liên hệ
                 .subscribeOn(Schedulers.computation())
                 .unsubscribeOn(Schedulers.io())
                 .flatMap(usersList -> {
@@ -46,14 +47,14 @@ public class ContactPersonPresenter extends BasePresenter<ContactPersonContract.
                     return ApiService.getServer().getUserList(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 1,Contants.USER_CALLLATER,page,10);// khách hàng gọi lại sau
+                            period, 1,Contants.USER_CALLLATER,page,10,"");// khách hàng gọi lại sau
                 })
                 .flatMap(usersList -> {
                     this.mCallater = usersList;
                     return ApiService.getServer().getUserList(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 1,Contants.USER_REFUSE,page,10);// khách hàng từ chối
+                            period, 1,Contants.USER_REFUSE,page,10,"");// khách hàng từ chối
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleResponse, this::handleError));

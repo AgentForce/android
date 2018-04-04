@@ -17,7 +17,7 @@ public interface IntroduceContactTabContract {
     }
 
     interface Action {
-        void getUserListProcess(int period, int page);
+        void getUserListProcess(String search,int period, int page);
         void addIntroduceContact(String phone, String name, int campaignID);
     }
 }

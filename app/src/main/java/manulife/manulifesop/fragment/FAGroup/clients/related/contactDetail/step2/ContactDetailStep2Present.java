@@ -7,6 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
 import manulife.manulifesop.api.ApiService;
+import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.ContactActivity;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
@@ -48,6 +49,29 @@ public class ContactDetailStep2Present extends BasePresenter<ContactDetailStep2C
         }else
         {
             mPresenterView.finishLoading(contactActivity.msg,false);
+        }
+    }
+
+    @Override
+    public void updateEventDone(int eventID) {
+        mPresenterView.showLoading("Cập nhật sự kiện");
+
+        getCompositeDisposable().add(ApiService.getServer().updateEventDone(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
+                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
+                "check sum",eventID)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseUpdateEventDone, this::handleError));
+    }
+
+    private void handleResponseUpdateEventDone(BaseResponse rs) {
+        if(rs.statusCode == 1){
+            mPresenterView.updateData();
+            mPresenterView.finishLoading();
+        }else{
+            mPresenterView.finishLoading(rs.msg,false);
         }
     }
 }

@@ -56,7 +56,7 @@
                 android:textColor="@drawable/cus_radio_background" />
 
             <RadioButton
-                android:id="@+id/rbn_year"
+                android:id="@+id/rbn_campaign"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="30"
@@ -64,7 +64,7 @@
                 android:button="@null"
                 android:checked="false"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="Theo năm"
+                android:text="Theo kế hoạch"
                 android:textColor="@drawable/cus_radio_background" />
         </RadioGroup>
     </LinearLayout>

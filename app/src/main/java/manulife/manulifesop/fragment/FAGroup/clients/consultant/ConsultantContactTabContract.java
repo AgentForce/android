@@ -16,6 +16,6 @@ public interface ConsultantContactTabContract {
     }
 
     interface Action {
-        void getContact(int period, int status, int page);
+        void getContact(int period, int status, int page,String search);
     }
 }

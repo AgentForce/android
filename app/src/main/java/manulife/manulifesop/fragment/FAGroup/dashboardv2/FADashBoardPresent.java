@@ -9,6 +9,7 @@ import manulife.manulifesop.BuildConfig;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
+import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
@@ -33,7 +34,7 @@ public class FADashBoardPresent extends BasePresenter<FADashBoardContract.View> 
 
     @Override
     public void getDataDashboard() {
-        mPresenterView.showLoading("Xử lý dữ liệu!");
+        mPresenterView.showLoading("Lấy dữ liệu");
         getCompositeDisposable().add(ApiService.getServer().dashBoard(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
@@ -97,6 +98,28 @@ public class FADashBoardPresent extends BasePresenter<FADashBoardContract.View> 
             mPresenterView.finishLoading();
         }else{
             mPresenterView.finishLoading(activitiHist.msg, false);
+        }
+    }
+
+    @Override
+    public void forwardCampaign() {
+        mPresenterView.showLoading("Xử lý dữ liệu!");
+        getCompositeDisposable().add(ApiService.getServer().forwardTarget(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
+                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
+                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseForwardStarget, this::handleError)
+        );
+    }
+
+    private void handleResponseForwardStarget(BaseResponse baseResponse) {
+        if(baseResponse.statusCode == 1){
+            mPresenterView.finishLoading("Chuyển mục tiêu thành công",true);
+        }else{
+            mPresenterView.finishLoading(baseResponse.msg,false);
         }
     }
 }

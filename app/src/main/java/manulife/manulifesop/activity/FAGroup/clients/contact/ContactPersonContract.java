@@ -11,6 +11,8 @@ public interface ContactPersonContract {
     interface View extends BaseMVPView
     {
         void initViewPager(UsersList contact,UsersList callLater,UsersList refuse);
+        void reloadData();
+        int getSelectedType();
     }
     interface Action{
         void getAllContactPerson(int period, int page);

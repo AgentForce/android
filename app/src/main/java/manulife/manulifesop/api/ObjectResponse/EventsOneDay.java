@@ -25,12 +25,21 @@ public class EventsOneDay {
 
     public class Data {
 
+        @SerializedName("Id")
+        @Expose
+        public Integer id;
         @SerializedName("Status")
         @Expose
         public Boolean status;
+        @SerializedName("Name")
+        @Expose
+        public String name;
         @SerializedName("StartDate")
         @Expose
         public String startDate;
+        @SerializedName("Location")
+        @Expose
+        public String location;
         @SerializedName("ProcessStep")
         @Expose
         public Integer processStep;

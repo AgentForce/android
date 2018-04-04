@@ -6,10 +6,15 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +42,8 @@ import manulife.manulifesop.util.Utils;
 
 public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity, SignedContactTabPresent> implements SignedContactTabContract.View {
 
+    @BindView(R.id.edt_search)
+    EditText edtSearch;
     @BindView(R.id.rcv_contact)
     RecyclerView listContact;
     @BindView(R.id.txt_title)
@@ -52,6 +59,7 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
     private List<ActiveHistFA> mData;
     private LinearLayoutManager mLayoutManager;
 
+    private TextWatcher mTextWatcher;
 
     public static SignedContactTabFragment newInstance(int type, String typeString, int target, int month) {
         Bundle args = new Bundle();
@@ -69,7 +77,8 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
 
         @Override
         public void onApiLoadMoreTask(int page) {
-            mActionListener.getContact(mMonth,mType,page);
+            String search = edtSearch.getText().toString();
+            mActionListener.getContact(mMonth,mType,page,search);
         }
     }
 
@@ -109,6 +118,51 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
 
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mData = new ArrayList<>();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        edtSearch.setText("", TextView.BufferType.EDITABLE);
+
+        if (mTextWatcher != null) {
+            edtSearch.removeTextChangedListener(mTextWatcher);
+        }
+        mTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                handler.removeCallbacks(workRunnable);
+                workRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        doSmth(edtSearch.getText().toString());
+                    }
+                };
+                handler.postDelayed(workRunnable, 2000 /*delay*/);
+            }
+
+            Handler handler = new Handler(Looper.getMainLooper() /*UI thread*/);
+            Runnable workRunnable;
+
+            private final void doSmth(String str) {
+                if (mActivity.getSelectedType() == mType) {
+                    mData.clear();
+                    mActionListener.getContact(mMonth,mType,1,str);
+                }
+            }
+        };
+        //get text after 2 seconds
+        edtSearch.addTextChangedListener(mTextWatcher);
     }
 
     private UsersList getFirstData() {
@@ -171,6 +225,7 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
                         Bundle data = new Bundle();
                         data.putInt("typeInt", 1);
                         data.putInt("contactID", mData.get(position).getId());
+                        data.putString("name",mData.get(position).getTitle());
                         mActivity.goNextScreen(CreateEventActivity.class, data);
                         break;
                     }

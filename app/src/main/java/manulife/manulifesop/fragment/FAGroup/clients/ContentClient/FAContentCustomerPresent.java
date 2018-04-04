@@ -7,6 +7,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
@@ -16,7 +17,10 @@ import manulife.manulifesop.api.ObjectInput.InputChangeCampaignWeek;
 import manulife.manulifesop.api.ObjectInput.InputIncreaseContact;
 import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
+import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.base.BasePresenter;
+import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ObjectMonth.FAObjectMonthFragment;
+import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ObjectWeek.FAObjectWeekFragment;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
@@ -28,6 +32,7 @@ import manulife.manulifesop.util.SOPSharedPreferences;
 public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerContract.View> implements FAContentCustomerContract.Action {
 
     private Context mContext;
+    private int mMonth;
 
     public FAContentCustomerPresent(FAContentCustomerContract.View presenterView, Context context) {
         super(presenterView);
@@ -36,7 +41,8 @@ public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerCon
 
     @Override
     public void getCampaignMonth(int month) {
-        mPresenterView.showLoading("Lấy dữ liệu");
+        this.mMonth = month;
+        mPresenterView.showLoading("Lấy thông tin chiến dịch");
         getCompositeDisposable().add(ApiService.getServer().campaignMonth(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
@@ -48,22 +54,34 @@ public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerCon
         );
     }
 
+
     private void handleError(Throwable throwable) {
         mPresenterView.finishLoading(throwable.getMessage(), false);
     }
 
     private void handleResponseCampaignMonth(CampaignMonth data) {
-        if (data.statusCode == 1) {
-            if (data.data.isRequestActive == 0) {
-                ProjectApplication.getInstance().setCampaign(data);
-                mPresenterView.showCampaignsMonth(data);
-            } else {
-                mPresenterView.showConfirmAcvitveCampaign();
-            }
-            mPresenterView.finishLoading();
+        ProjectApplication.getInstance().setCampaign(data);
+        createDataCampaignMonth(data,mMonth);
+    }
 
-        } else
-            mPresenterView.finishLoading(data.msg, false);
+    //create fragment for show data
+    private void createDataCampaignMonth(CampaignMonth data,int month){
+        Observable.just(data).map(CampaignMonth ->
+        {
+            List<BaseFragment> mListFragment = new ArrayList<>();
+            mListFragment.add(FAObjectMonthFragment.newInstance(data, month));
+            mListFragment.add(FAObjectWeekFragment.newInstance(data, month));
+            return mListFragment;
+        }).subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(baseFragments -> {
+           mPresenterView.showCampaignsMonth(data,baseFragments);
+           if(data.statusCode == 1){
+               mPresenterView.finishLoading();
+           }else{
+               mPresenterView.finishLoading(data.msg,false);
+           }
+        });
     }
 
     @Override
@@ -91,7 +109,7 @@ public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerCon
 
     private void handleResponseChangeCampaignWeek(BaseResponse baseResponse) {
         if (baseResponse.statusCode == 1) {
-            mPresenterView.finishLoading();
+            //mPresenterView.finishLoading();
             mPresenterView.updateData();
         } else {
             mPresenterView.finishLoading(baseResponse.msg, false);
@@ -101,7 +119,6 @@ public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerCon
     @Override
     public void increaseContactCampaign(int month, int increaseNumber) {
         mPresenterView.showLoading("Xử lý dữ liệu");
-
         InputIncreaseContact data = new InputIncreaseContact();
         data.incrementContract = increaseNumber;
         getCompositeDisposable().add(ApiService.getServer().increaseContactCampaign(
@@ -118,7 +135,7 @@ public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerCon
 
     private void handleResponseIncreaseContact(BaseResponse baseResponse) {
         if (baseResponse.statusCode == 1) {
-            mPresenterView.finishLoading();
+            //mPresenterView.finishLoading();
             mPresenterView.updateData();
         } else {
             mPresenterView.finishLoading(baseResponse.msg, false);

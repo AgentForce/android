@@ -39,24 +39,25 @@ public class AddContactPersonPresenter extends BasePresenter<AddContactPersonCon
                 });
     }
 
-    private boolean isContainInList(List<String> data, String input){
-        input = input.trim().replace("-","").replace("+","")
-                .replace(" ","");
+    private boolean isContainInList(List<String> data, String input) {
+        input = input.trim().replace("-", "").replace("+", "")
+                .replace(" ", "");
         boolean rs = false;
-        for(int i=0;i< data.size();i++){
-            if(data.get(i).equals(input)) {
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).equals(input)) {
                 rs = true;
                 break;
             }
         }
         return rs;
     }
+
     private Observable<List<ContactPerson>> getContacts() {
         final Observable<List<ContactPerson>> getContactsObservable = Observable.create(emitter -> {
 
             //saved phone
             List<String> addedPhone = SOPSharedPreferences.getInstance(mContext).getListAddedPhone();
-            if(addedPhone == null) addedPhone = new ArrayList<>();
+            if (addedPhone == null) addedPhone = new ArrayList<>();
 
             List<ContactPerson> dataContacts = new ArrayList<>();
             List<String> groupFirstCharacter = new ArrayList<>();
@@ -66,18 +67,19 @@ public class AddContactPersonPresenter extends BasePresenter<AddContactPersonCon
             while (phones.moveToNext()) {
                 String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                 String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                boolean isAdded = isContainInList(addedPhone, phoneNumber);
 
-                if (!isContainInList(addedPhone,phoneNumber)) {
-                    if (dataContacts.size() > 0) {
-                        if (!groupFirstCharacter.contains(name.substring(0, 1).toLowerCase())) {
-                            groupFirstCharacter.add(name.substring(0, 1).toLowerCase());
-                        }
-                        dataContacts.add(new ContactPerson(false, "", name, phoneNumber, groupFirstCharacter.indexOf(name.substring(0, 1).toLowerCase())));
-                    } else {
-                        dataContacts.add(new ContactPerson(false, "", name, phoneNumber, 0));
+                if (dataContacts.size() > 0) {
+                    if (!groupFirstCharacter.contains(name.substring(0, 1).toLowerCase())) {
                         groupFirstCharacter.add(name.substring(0, 1).toLowerCase());
                     }
+                    dataContacts.add(new ContactPerson(false, "", name, phoneNumber,
+                            groupFirstCharacter.indexOf(name.substring(0, 1).toLowerCase()),isAdded));
+                } else {
+                    dataContacts.add(new ContactPerson(false, "", name, phoneNumber, 0,isAdded));
+                    groupFirstCharacter.add(name.substring(0, 1).toLowerCase());
                 }
+
             }
             phones.close();
             //short group

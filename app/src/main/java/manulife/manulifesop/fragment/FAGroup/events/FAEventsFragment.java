@@ -1,37 +1,31 @@
 package manulife.manulifesop.fragment.FAGroup.events;
 
-import android.content.res.TypedArray;
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import manulife.manulifesop.R;
+import manulife.manulifesop.activity.FAGroup.clients.related.createEvent.CreateEventActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.eventDetail.EventDetailActivity;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
-import manulife.manulifesop.adapter.EventAdapter;
 import manulife.manulifesop.adapter.EventCalendarAdapter;
 import manulife.manulifesop.adapter.ObjectData.EventCalendar;
-import manulife.manulifesop.adapter.ObjectData.EventData;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
-import manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step2.ContactDetailStep2Fragment;
-import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
+import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.Utils;
 
 /**
@@ -48,6 +42,7 @@ public class FAEventsFragment extends BaseFragment<MainFAActivity, FAEventsPrese
     private EventCalendarAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
 
+    private Date mCurrentDate;
     public static FAEventsFragment newInstance() {
         Bundle args = new Bundle();
         FAEventsFragment fragment = new FAEventsFragment();
@@ -75,7 +70,8 @@ public class FAEventsFragment extends BaseFragment<MainFAActivity, FAEventsPrese
         initCalendarEvents();
         //addEventToDate(null);
         mActionListener.getAllActivitisInMonth(Utils.getCurrentMonth(getContext()));
-        mActionListener.getEventsOneDay(Calendar.getInstance().getTime());
+        mCurrentDate = Calendar.getInstance().getTime();
+        //mActionListener.getEventsOneDay(mCurrentDate);
     }
 
     private void initViews() {
@@ -96,6 +92,7 @@ public class FAEventsFragment extends BaseFragment<MainFAActivity, FAEventsPrese
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
+                mCurrentDate = dateClicked;
                 mActionListener.getEventsOneDay(dateClicked);
             }
 
@@ -104,8 +101,6 @@ public class FAEventsFragment extends BaseFragment<MainFAActivity, FAEventsPrese
                 setTitleFromDate(firstDayOfNewMonth);
             }
         });
-
-
     }
 
     @Override
@@ -116,20 +111,53 @@ public class FAEventsFragment extends BaseFragment<MainFAActivity, FAEventsPrese
     }
 
     @Override
-    public void showDataEvents(List<EventCalendar> data) {
+    public void updateData() {
+        mActionListener.getEventsOneDay(mCurrentDate);
+    }
+
+    @Override
+    public void showDataEvents(List<EventCalendar> dataEvent) {
         listEvent.setLayoutManager(mLayoutManager);
-        mAdapter = new EventCalendarAdapter(getContext(), data, new CallBackClickContact() {
+        mAdapter = new EventCalendarAdapter(getContext(), dataEvent, new CallBackClickContact() {
             @Override
             public void onClickMenuRight(int position, int option) {
-                Toast.makeText(mActivity, "vi tri " + position + " options " + option, Toast.LENGTH_SHORT).show();
+                switch (option){
+                    case 0:{
+                        Bundle data = new Bundle();
+                        data.putInt("eventID",dataEvent.get(position).getId());
+                        goNextScreenFragment(EventDetailActivity.class,data, Contants.EVENT_DETAIL);
+                        break;
+                    }
+                    case 1:{
+                        Bundle data = new Bundle();
+                        data.putSerializable("eventID",dataEvent.get(position).getId());
+                        goNextScreenFragment(CreateEventActivity.class, data, Contants.UPDATE_EVENT);
+                        break;
+                    }
+                    case 2:{
+                        mActionListener.updateEventDone(dataEvent.get(position).getId());
+                        break;
+                    }
+                }
             }
 
             @Override
             public void onClickMainContent(int position) {
-                Toast.makeText(mActivity, "Main click", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mActivity, "Main click", Toast.LENGTH_SHORT).show();
+                Bundle data = new Bundle();
+                data.putInt("eventID",dataEvent.get(position).getId());
+                goNextScreenFragment(EventDetailActivity.class,data, Contants.EVENT_DETAIL);
             }
         });
         listEvent.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK && requestCode == Contants.EVENT_DETAIL){
+            mActionListener.getEventsOneDay(mCurrentDate);
+        }
     }
 
     /*@OnClick(R.id.btn_start)

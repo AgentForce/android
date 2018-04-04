@@ -11,7 +11,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface CreatePlanStep4Contract {
 
     interface View extends BaseMVPView {
-        void showData(int income,CampaignForcastTarget data);
+        void showData(int income,CampaignForcastTarget data,int monthNum);
     }
 
     interface Action {

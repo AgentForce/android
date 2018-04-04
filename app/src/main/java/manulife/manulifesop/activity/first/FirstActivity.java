@@ -78,7 +78,28 @@ public class FirstActivity extends BaseActivity<FirstPresenter> implements First
         switch (requestCode) {
 
             case 2: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                boolean isAllAllowed = true;
+                for(int i=0;i<grantResults.length;i++){
+                    if(grantResults[i] == PackageManager.PERMISSION_DENIED){
+                        isAllAllowed = false;
+                        break;
+                    }
+                }
+                if(isAllAllowed){
+                    mActionListener.clickAgreeButton();
+                }else{
+                    showInform("Thông báo", "Không đủ quyền để chạy chương trình", "OK", SweetAlertDialog.ERROR_TYPE, new CallBackInformDialog() {
+                        @Override
+                        public void DiaglogPositive() {
+                            Intent startMain = new Intent(Intent.ACTION_MAIN);
+                            startMain.addCategory(Intent.CATEGORY_HOME);
+                            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(startMain);
+                            System.exit(1);
+                        }
+                    });
+                }
+                /*if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     mActionListener.clickAgreeButton();
                 } else {
                     showInform("Thông báo", "Không đủ quyền để chạy chương trình", "OK", SweetAlertDialog.ERROR_TYPE, new CallBackInformDialog() {
@@ -91,7 +112,7 @@ public class FirstActivity extends BaseActivity<FirstPresenter> implements First
                             System.exit(1);
                         }
                     });
-                }
+                }*/
                 return;
             }
         }

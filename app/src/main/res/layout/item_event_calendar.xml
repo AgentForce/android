@@ -28,6 +28,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp">
 
                 <com.makeramen.roundedimageview.RoundedImageView
@@ -58,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/img_location"
+                android:layout_toLeftOf="@+id/layout_location"
                 android:layout_toRightOf="@+id/layout_image"
                 android:orientation="vertical">
 
@@ -82,26 +83,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Time"
-                    android:textSize="@dimen/welcome_activity_content"/>
+                    android:textSize="@dimen/welcome_activity_content" />
 
             </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/img_location"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
+            <LinearLayout
+                android:id="@+id/layout_location"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_toLeftOf="@+id/layout_menu_right"
-                android:background="@drawable/ic_location_red" />
+                android:layout_centerVertical="true">
 
-            <!--<ImageButton
-                android:id="@+id/menu_right"
-                android:layout_width="10dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@color/colorAccent" />-->
+                <ImageButton
+                    android:id="@+id/img_location"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/ic_location_red" />
+                <TextView
+                    android:id="@+id/txt_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/welcome_activity_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="location"
+                    android:maxWidth="50dp"/>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="10dp"
                 android:layout_height="30dp"

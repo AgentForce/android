@@ -173,8 +173,11 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/img_row1"
             android:text="Báo trước 30 phút"
+            android:tag="30"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="20dp"
+            android:clickable="true"
+            android:textColor="@drawable/text_color_grey"
             android:textSize="@dimen/welcome_activity_content" />
     </LinearLayout>
 

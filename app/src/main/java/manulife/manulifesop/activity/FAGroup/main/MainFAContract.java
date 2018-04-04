@@ -20,5 +20,6 @@ public interface MainFAContract {
     }
     interface Action{
         void chekCampaign();
+        void refreshAccessToken();
     }
 }

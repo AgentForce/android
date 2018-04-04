@@ -12,9 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.ProjectApplication;
+import manulife.manulifesop.adapter.ObjectData.ContactPerson;
 import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
 import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
 
@@ -60,19 +66,20 @@ public abstract class BaseFragment<T extends BaseActivity, P extends BasePresent
         super.onStop();
     }
 
-    public <T extends Activity> void goNextScreenFragment(Class<T> clazz,Bundle bun,int requestCode){
+    public <T extends Activity> void goNextScreenFragment(Class<T> clazz, Bundle bun, int requestCode) {
         Intent intent = new Intent(getContext(), clazz);
         intent.putExtras(bun);
         startActivityForResult(intent, requestCode);
         mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
-    public <T extends Activity> void goNextScreenFragment(Class<T> clazz,int requestCode){
+
+    public <T extends Activity> void goNextScreenFragment(Class<T> clazz, int requestCode) {
         Intent intent = new Intent(getContext(), clazz);
         startActivityForResult(intent, requestCode);
         mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
-    public void showMessage(String title,String message,int messageType) {
+    public void showMessage(String title, String message, int messageType) {
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(mActivity, messageType);
         sweetAlertDialog.setTitleText("Thông báo");
         sweetAlertDialog.setContentText(message);
@@ -82,7 +89,7 @@ public abstract class BaseFragment<T extends BaseActivity, P extends BasePresent
     }
 
     public void showInform(String title, String message, String text_button, int msgType, CallBackInformDialog callback) {
-        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(mActivity,msgType);
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(mActivity, msgType);
         sweetAlertDialog.setTitleText(title);
         sweetAlertDialog.setContentText(message);
         sweetAlertDialog.setConfirmText(text_button);
@@ -98,7 +105,7 @@ public abstract class BaseFragment<T extends BaseActivity, P extends BasePresent
     }
 
     public void showConfirm(String title, String message, String text_pos, String text_neg, int msgType, CallBackConfirmDialog callback) {
-        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(mActivity,msgType);
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(mActivity, msgType);
         sweetAlertDialog.setTitleText(title);
         sweetAlertDialog.setContentText(message);
         sweetAlertDialog.setConfirmText(text_pos);
@@ -130,26 +137,14 @@ public abstract class BaseFragment<T extends BaseActivity, P extends BasePresent
     }
 
     public void showLoading(String message) {
-        pDialog = new SweetAlertDialog(mActivity, SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setTitleText(message);
-        pDialog.setCancelable(false);
-        pDialog.show();
+        mActivity.showLoading(message);
     }
 
     public void finishLoading(String message, boolean isSuccess) {
-        pDialog.setCanceledOnTouchOutside(true);
-        pDialog.setTitleText(message);
-        pDialog.setConfirmText("OK");
-        if(isSuccess) {
-            pDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-        }else
-        {
-            pDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
-        }
+        mActivity.finishLoading(message,isSuccess);
     }
 
     public void finishLoading() {
-        pDialog.dismissWithAnimation();
+        mActivity.finishLoading();
     }
 }

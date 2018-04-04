@@ -21,5 +21,6 @@ public interface FADashBoardContract {
     interface Action {
         void getDataDashboard();
         void getActivities(int page);
+        void forwardCampaign();
     }
 }

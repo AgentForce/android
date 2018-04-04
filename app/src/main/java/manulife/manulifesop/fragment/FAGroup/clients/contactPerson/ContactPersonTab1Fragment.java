@@ -11,9 +11,14 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,12 +53,17 @@ import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
 import manulife.manulifesop.util.Utils;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by Chick on 10/27/2017.
  */
 
 public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivity, ContactPersonTab1Present> implements ContactPersonTab1Contract.View,
         View.OnClickListener {
+
+    @BindView(R.id.edt_search)
+    EditText edtSearch;
 
     @BindView(R.id.rcv_contact)
     RecyclerView listContact;
@@ -83,6 +93,8 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
     private CampaignMonth mCampaignMonth;
     private boolean misAddFromPhone = false;
 
+    private TextWatcher mTextWatcher;
+
     public static ContactPersonTab1Fragment newInstance(int type, String typeString, UsersList usersList, int month, int targetIntroduce) {
         Bundle args = new Bundle();
         args.putInt("type", type);
@@ -100,7 +112,8 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
 
         @Override
         public void onApiLoadMoreTask(int page) {
-            mActionListener.getUserListProcess(mMonth, mType, page);
+            String search = edtSearch.getText().toString();
+            mActionListener.getUserListProcess(mMonth, mType, page, search);
         }
     }
 
@@ -127,6 +140,14 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
         loadContactList(data);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            mActivity.reloadData();
+        }
+    }
+
     private void initViews() {
         //type = contact, calllater
         if (mType == Contants.USER_CONTACT) {
@@ -138,6 +159,51 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
         }
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mData = new ArrayList<>();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        edtSearch.setText("", TextView.BufferType.EDITABLE);
+
+        if (mTextWatcher != null) {
+            edtSearch.removeTextChangedListener(mTextWatcher);
+        }
+        mTextWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                handler.removeCallbacks(workRunnable);
+                workRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        doSmth(edtSearch.getText().toString());
+                    }
+                };
+                handler.postDelayed(workRunnable, 2000 /*delay*/);
+            }
+
+            Handler handler = new Handler(Looper.getMainLooper() /*UI thread*/);
+            Runnable workRunnable;
+
+            private final void doSmth(String str) {
+                if (mActivity.getSelectedType() == mType) {
+                    mData.clear();
+                    mActionListener.getUserListProcess(mMonth, mType, 1, str);
+                }
+            }
+        };
+        //get text after 2 seconds
+        edtSearch.addTextChangedListener(mTextWatcher);
     }
 
     @Override
@@ -155,22 +221,23 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
         mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
             @Override
             public void onClickMenuRight(int position, int option) {
-                switch (option){
-                    case 0:{
+                switch (option) {
+                    case 0: {
                         gotoContactDetail(mData.get(position).getId());
                         break;
                     }
-                    case 1:{
+                    case 1: {
                         String phone = "tel:" + mData.get(position).getContent();
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
                         callIntent.setData(Uri.parse(phone));
                         startActivity(callIntent);
                         break;
                     }
-                    case 2:{
+                    case 2: {
                         Bundle data = new Bundle();
                         data.putInt("typeInt", 1);
                         data.putInt("contactID", mData.get(position).getId());
+                        data.putString("name", mData.get(position).getTitle());
                         mActivity.goNextScreen(CreateEventActivity.class, data);
                         break;
                     }
@@ -276,7 +343,7 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
                 if (validateInputAddContact()) {
                     List<ContactPerson> dataInput = new ArrayList<>();
                     dataInput.add(new ContactPerson(false, "",
-                            edtNameAlert.getText().toString(), edtPhoneAlert.getText().toString(), 0));
+                            edtNameAlert.getText().toString(), edtPhoneAlert.getText().toString(), 0, false));
                     Bundle data = new Bundle();
                     data.putSerializable("data", (Serializable) dataInput);
                     mActivity.goNextScreen(UpdateContactInfoActivity.class, data, Contants.ADD_CONTACT);
