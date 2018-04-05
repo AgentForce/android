@@ -1,45 +1,34 @@
-package manulife.manulifesop.fragment.FAGroup.createPlane.step1;
+package manulife.manulifesop.fragment.ManagerGroup.SMCreateCampaign.step1;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.AppCompatSpinner;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
-
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
-import manulife.manulifesop.adapter.CustomViewPagerAdapter;
+import manulife.manulifesop.activity.ManagerGroup.SMCreatePlan.SMCreatePlanActivity;
 import manulife.manulifesop.adapter.ObjectData.SpinnerObject;
 import manulife.manulifesop.base.BaseFragment;
-import manulife.manulifesop.element.CustomViewPager;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Fragment;
 import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
  */
 
-public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, CreatePlanStep1Present> implements CreatePlanStep1Contract.View {
+public class SMCreatePlanStep1Fragment extends BaseFragment<SMCreatePlanActivity, SMCreatePlanStep1Present> implements SMCreatePlanStep1Contract.View {
 
     @BindView(R.id.btn_next)
     Button btnNext;
@@ -53,9 +42,9 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
     @BindView(R.id.edt_start_date)
     EditText edtStartDate;
 
-    public static CreatePlanStep1Fragment newInstance() {
+    public static SMCreatePlanStep1Fragment newInstance() {
         Bundle args = new Bundle();
-        CreatePlanStep1Fragment fragment = new CreatePlanStep1Fragment();
+        SMCreatePlanStep1Fragment fragment = new SMCreatePlanStep1Fragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,7 +56,7 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new CreatePlanStep1Present(this);
+        mActionListener = new SMCreatePlanStep1Present(this);
     }
 
     @Override
@@ -77,7 +66,7 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
     }
 
     private void initViews() {
-        edtStartDate.setText(Utils.convertDateToString(Calendar.getInstance().getTime(),"dd/MM/yyyy"));
+        edtStartDate.setText(Utils.convertDateToString(Calendar.getInstance().getTime(), "dd/MM/yyyy"));
 
         List<SpinnerObject> dataspinner = new ArrayList<>();
         dataspinner.add(new SpinnerObject("0", "Theo tháng"));
@@ -173,7 +162,7 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
                 });
                 break;
             }
-            case "2":{
+            case "2": {
                 spinnerChooseTime.setAlpha(0);
                 spinnerChooseTime.setEnabled(false);
                 Calendar calendar = Calendar.getInstance();
@@ -192,9 +181,9 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
 
         //set max min date for date picker
         Calendar currentCalendar = Calendar.getInstance();
-        currentCalendar.set(Calendar.MONTH,0);
+        currentCalendar.set(Calendar.MONTH, 0);
         ((DatePicker) dialogView.findViewById(R.id.date_picker)).setMinDate(currentCalendar.getTimeInMillis());
-        currentCalendar.set(Calendar.MONTH,11);
+        currentCalendar.set(Calendar.MONTH, 11);
         ((DatePicker) dialogView.findViewById(R.id.date_picker)).setMaxDate(currentCalendar.getTimeInMillis());
 
         dialogView.findViewById(R.id.btn_date_time_set).setOnClickListener(
@@ -216,11 +205,10 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
                         Calendar calendarNextOneDay = Calendar.getInstance();
                         calendarNextOneDay.add(Calendar.DAY_OF_YEAR, -1);
 
-                        if (calendar.getTime().after(calendarNextOneDay.getTime())){
+                        if (calendar.getTime().after(calendarNextOneDay.getTime())) {
                             edtStartDate.setText(selectDate);
-                            setDataForSpinnerChoose(((SpinnerObject)spinnerStype.getSelectedItem()).getKey());
-                        }
-                        else
+                            setDataForSpinnerChoose(((SpinnerObject) spinnerStype.getSelectedItem()).getKey());
+                        } else
                             showMessage("Thông báo", "Ngày bắt đầu phải lớn hơn ngày hiện tại!", SweetAlertDialog.WARNING_TYPE);
 
                         alertDialog.dismiss();
@@ -235,8 +223,8 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
         int id = view.getId();
         switch (id) {
             case R.id.btn_next: {
-                    mActivity.showNextFragment(0, edtStartDate.getText().toString(),
-                            txtEndDate.getText().toString(), 0, 0, 0);
+                mActivity.showNextFragment(edtStartDate.getText().toString(),
+                        txtEndDate.getText().toString());
                 break;
             }
             case R.id.edt_start_date: {

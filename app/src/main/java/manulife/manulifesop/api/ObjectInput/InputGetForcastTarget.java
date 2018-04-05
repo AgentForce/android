@@ -17,4 +17,10 @@ public class InputGetForcastTarget {
     @SerializedName("CaseSize")
     @Expose
     public Integer caseSize;//độ lớn hợp đồng
+    @SerializedName("StartDate")
+    @Expose
+    public String startDate;
+    @SerializedName("EndDate")
+    @Expose
+    public String endDate;
 }

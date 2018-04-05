@@ -26,6 +26,7 @@ public class SOPSharedPreferences {
     private final String EXTRA_TOKEN_BEFORE_LOGIN_KEY = "extra_token_before_login_key";
 
     private final String EXTRA_ADDED_CONTACT = "extra_added_contact";
+    private final String EXTRA_IS_FA = "extra_is_fa";
 
 
     private SharedPreferences mPreferences;
@@ -52,6 +53,18 @@ public class SOPSharedPreferences {
     public boolean isFirstUsing()
     {
         return mPreferences.getBoolean(EXTRA_FIRST_USING_KEY,false);
+    }
+
+    public void saveIsFA(boolean isFA)
+    {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putBoolean(EXTRA_IS_FA,isFA);
+        editor.commit();
+    }
+
+    public boolean getIsFA()
+    {
+        return mPreferences.getBoolean(EXTRA_IS_FA,false);
     }
 
     public void saveToken(String accessToken, String refreshToken)

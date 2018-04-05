@@ -76,13 +76,15 @@ public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> 
     }
 
     @Override
-    public void getCampaignForcast(int income, int profit, int contractPrice) {
+    public void getCampaignForcast(int income, int profit, int contractPrice,String startDate, String endDate) {
         mPresenterView.showLoading("Xử lý dữ liệu");
         String checksum = "adfadf";
         InputGetForcastTarget data = new InputGetForcastTarget();
         data.fyc = income * 1000000;
         data.rate = profit;
         data.caseSize = contractPrice * 1000000;
+        data.startDate = Utils.convertStringDateToStringDate(startDate, "dd/MM/yyyy", "yyyy-MM-dd");
+        data.endDate = Utils.convertStringDateToStringDate(endDate, "dd/MM/yyyy", "yyyy-MM-dd");
 
         getCompositeDisposable().add(ApiService.getServer().getCampaignForcast(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),

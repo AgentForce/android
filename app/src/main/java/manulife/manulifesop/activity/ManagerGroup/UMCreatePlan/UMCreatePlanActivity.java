@@ -1,10 +1,8 @@
-package manulife.manulifesop.activity.FAGroup.createPlan;
+package manulife.manulifesop.activity.ManagerGroup.UMCreatePlan;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,19 +17,21 @@ import butterknife.OnClick;
 import chick.indicator.CircleIndicatorPager;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
+import manulife.manulifesop.activity.ManagerGroup.SMCreatePlan.SMCreatePlanContract;
+import manulife.manulifesop.activity.ManagerGroup.SMCreatePlan.SMCreatePlanPresenter;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
-import manulife.manulifesop.api.ObjectResponse.CampaignForcastTarget;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step1.CreatePlanStep1Fragment;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Fragment;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step3.CreatePlanStep3Fragment;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step4.CreatePlanStep4Fragment;
+import manulife.manulifesop.fragment.ManagerGroup.SMCreateCampaign.step1.SMCreatePlanStep1Fragment;
+import manulife.manulifesop.fragment.ManagerGroup.SMCreateCampaign.step2.SMCreatePlanStep2Fragment;
+import manulife.manulifesop.fragment.ManagerGroup.SMCreateCampaign.step3.SMCreatePlanStep3Fragment;
+import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step1.UMCreatePlanStep1Fragment;
+import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step2.UMCreatePlanStep2Fragment;
 import manulife.manulifesop.util.Utils;
 
 
-public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implements CreatePlanContract.View {
+public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> implements UMCreatePlanContract.View {
     @BindView(R.id.txt_actionbar_title)
     TextView txtActionbarTitle;
     @BindView(R.id.layout_btn_back)
@@ -68,10 +68,7 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
 
     private boolean mIsShowSuccessView = false;
 
-    private int mContractNum = 0;
-    private int mIncome = 0;
-    private int mContractPrice = 0;
-    private int mProfit;
+    private int mSupportMoney;
     private String mStartDate = "";
     private String mEndDate = "";
     private int mMonthNum = 0;
@@ -85,7 +82,7 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
         hideKeyboardOutside(layoutRoot);
-        mActionListener = new CreatePlanPresenter(this, this);
+        mActionListener = new UMCreatePlanPresenter(this, this);
         setupSupportForApp();
         initViewPager();
     }
@@ -109,10 +106,8 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
         viewPager.setSwipe(false);
 
         mListFragment = new ArrayList<>();
-        mListFragment.add(CreatePlanStep1Fragment.newInstance());
-        mListFragment.add(CreatePlanStep2Fragment.newInstance());
-        mListFragment.add(CreatePlanStep3Fragment.newInstance());
-        mListFragment.add(CreatePlanStep4Fragment.newInstance());
+        mListFragment.add(UMCreatePlanStep1Fragment.newInstance());
+        mListFragment.add(UMCreatePlanStep2Fragment.newInstance());
 
         mAdapter = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment);
         if (viewPager != null) {
@@ -130,10 +125,9 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 2) {
-                    ((CreatePlanStep3Fragment) mAdapter.getItem(position)).updateDate(mContractNum, mMonthNum);
-                } else if (position == 3) {
-                    mActionListener.getCampaignForcast(mIncome, mProfit, mContractPrice,mStartDate,mEndDate);
+                if (position == 1) {
+                    Toast.makeText(UMCreatePlanActivity.this, "call api", Toast.LENGTH_SHORT).show();
+                    //((CreatePlanStep3Fragment) mAdapter.getItem(position)).updateDate(mContractNum, mMonthNum);
                 }
             }
 
@@ -142,11 +136,6 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
 
             }
         });
-    }
-
-    @Override
-    public void showForcast(CampaignForcastTarget data) {
-        ((CreatePlanStep4Fragment) mAdapter.getItem(3)).showData(mIncome, data,mMonthNum);
     }
 
     @OnClick({R.id.layout_btn_back, R.id.btn_goto_main})
@@ -175,16 +164,11 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         processBackPressed();
     }
 
     @Override
-    public void showNextFragment(int contractNum, String startDate, String endDate, int income, int contractPrice, int profit) {
-        if (contractNum > 0) {
-            this.mContractNum = contractNum;
-            txtContractNum.setText(String.valueOf(contractNum));
-        }
+    public void showNextFragment(String startDate, String endDate) {
         if (startDate.length() > 0) {
             this.mStartDate = startDate;
             txtStartDate.setText(startDate);
@@ -194,38 +178,7 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
             txtEndDate.setText(endDate);
             this.mMonthNum = (Utils.getMonthFromStringDate(mEndDate,"dd/MM/yyyy")
                     - Utils.getMonthFromStringDate(mStartDate,"dd/MM/yyyy")) + 1;
-
         }
-        if (income > 0) {
-            this.mIncome = income;
-            txtIncome.setText(String.valueOf(income));
-        }
-        if (contractPrice > 0) {
-            this.mContractPrice = contractPrice;
-        }
-        if (profit > 0) {
-            this.mProfit = profit;
-        }
-
         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
-    }
-
-    @Override
-    public void showCreateCampaign() {
-        showLoading("Xử lý dữ liệu!");
-        mActionListener.createCampaign(mStartDate, mEndDate, mProfit, mContractPrice, mIncome);
-    }
-
-    @Override
-    public void showSuccessView() {
-        this.mIsShowSuccessView = true;
-        layoutBackButton.setVisibility(View.GONE);
-
-        Animation in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        Animation out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
-        layoutStep.startAnimation(out);
-        layoutStep.setVisibility(View.GONE);
-        layoutSuccess.startAnimation(in);
-        layoutSuccess.setVisibility(View.VISIBLE);
     }
 }

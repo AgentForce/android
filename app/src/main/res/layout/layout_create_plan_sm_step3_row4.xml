@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/cus_border_grey"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:text="Hỗ trợ cố định hàng tháng" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/gray_seedbar_background"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <com.warkiz.widget.IndicatorSeekBar
+            android:id="@+id/sb_money_support"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:isb_indicator_color="@android:color/transparent"
+            app:isb_indicator_custom_top_content_layout="@layout/custom_seekbar_top_money_rect"
+            app:isb_indicator_stay="true"
+            app:isb_indicator_text_size="16sp"
+            app:isb_max="10"
+            app:isb_min="2"
+            app:isb_progress="5"
+            app:isb_seek_bar_type="continuous"
+            app:isb_show_indicator="true"
+            app:isb_text_color="@color/colorSecond"
+            app:isb_thumb_color="@color/colorSecond"
+            app:isb_tick_num="9"
+            app:isb_track_background_bar_color="@color/colorSecond"
+            app:isb_track_background_bar_size="5dp"
+            app:isb_track_progress_bar_color="@color/colorSecond"
+            app:isb_track_progress_bar_size="5dp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2tr"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="10tr"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</LinearLayout>

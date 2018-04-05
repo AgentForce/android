@@ -48,6 +48,10 @@
     <string name="activity_create_plan_title_seekbar2_step2">Trung bình hợp đồng (Triệu đồng)</string>
     <string name="activity_create_plan_title_seekbar3_step2">Thu nhập mong muốn hàng tháng (Triệu đồng)</string>
 
+    <!--activity_create_plan_SM-->
+    <string name="activity_create_plan_SM_title_step2">Kế hoạch dự kiến</string>
+    <string name="activity_create_plan_SM_title_step3">Kế hoạch kinh doanh SM</string>
+
     <!--activity_signed_success-->
     <string name="activity_signed_success_title">Vui lòng nhập vài thông tin dưới đây để hoàn tất hợp đồng</string>
     <string name="activity_signed_success_hint_1">Nhập doanh thu bảo hiểm 1 năm</string>

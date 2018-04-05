@@ -15,6 +15,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +67,7 @@ import manulife.manulifesop.util.Utils;
  */
 
 public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoardPresent> implements FADashBoardContract.View,
-        View.OnClickListener{
+        View.OnClickListener {
 
     @BindView(R.id.txt_title)
     TextView txtTitle;
@@ -88,6 +89,11 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
     TextView txtStep4;
     @BindView(R.id.txt_step5)
     TextView txtStep5;
+
+    @BindView(R.id.layout_top)
+    LinearLayout layoutTop;
+    @BindView(R.id.layout_title_bot)
+    LinearLayout layoutTitleBot;
 
     @BindView(R.id.expandable_layout_mid)
     ExpandableLayout layoutMid;
@@ -146,11 +152,9 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //mActionListener.getDataDashboard();
-        mActivity.showHideActionbar(true);
-        mActivity.updateActionbarTitle("Trang chủ");
+        //mActivity.showHideActionbar(true);
+        //mActivity.updateActionbarTitle("Trang chủ");
         initView();
-        //mActionListener.getDataDashboard();
     }
 
     @Override
@@ -171,15 +175,6 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
         mDataActiveHist = new ArrayList<>();
         txtTitle.setText("Khách hàng tháng " + (Calendar.getInstance().get(Calendar.MONTH) + 1));
 
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-
-        //set min height for lisview
-        int heightScreem = (displaymetrics.heightPixels * 2)/3;
-        FrameLayout.LayoutParams layoutParams =
-                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, heightScreem);
-        listActiHist.setLayoutParams(layoutParams);
-
         //set margin bottom for viewpager percent
         if (getView() != null) {
             final ViewTreeObserver observer = layoutBot.getViewTreeObserver();
@@ -192,8 +187,13 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
                         observer.removeOnGlobalLayoutListener(this);
                         RelativeLayout.LayoutParams layoutParams =
                                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-                        layoutParams.setMargins(0,0,0,layoutBot.getHeight());
+                        layoutParams.setMargins(0, 0, 0, layoutBot.getHeight());
                         layoutMid.setLayoutParams(layoutParams);
+                        //set min height for lisview
+                        FrameLayout.LayoutParams layoutParams2 =
+                                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, layoutMid.getHeight() - layoutTitleBot.getHeight());
+                        listActiHist.setLayoutParams(layoutParams2);
+                        //Log.d("test"," set margin " + (layoutMid.getHeight() - layoutTitleBot.getHeight()));
                     }
                 });
             }
@@ -237,7 +237,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
         initViewPager(dataWeekMonth, dataYear);
         showACtivities(activities);
         //check active campaign in this month
-        if(dataWeekMonth.data.isRequestActive == 1){
+        if (dataWeekMonth.data.isRequestActive == 1) {
             showConfirm("Thông báo", "Đồng ý kích hoạt mục tiêu tháng " + mMonth, "Đồng ý",
                     "Hủy", SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
                         @Override
@@ -331,9 +331,9 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
             percentYear.add(percentTemp);
 
             mListFragment = new ArrayList<>();
-            mListFragment.add(FACampaignPercentFragment.newInstance(percentCurrentWeek,"week",mMonth,dataWeekMonth));
-            mListFragment.add(FACampaignPercentFragment.newInstance(percentMonth,"month",mMonth,dataWeekMonth));
-            mListFragment.add(FACampaignPercentFragment.newInstance(percentYear,"year",mMonth,dataWeekMonth));
+            mListFragment.add(FACampaignPercentFragment.newInstance(percentCurrentWeek, "week", mMonth, dataWeekMonth));
+            mListFragment.add(FACampaignPercentFragment.newInstance(percentMonth, "month", mMonth, dataWeekMonth));
+            mListFragment.add(FACampaignPercentFragment.newInstance(percentYear, "year", mMonth, dataWeekMonth));
 
             mTabTitles = new ArrayList<>();
             mTabTitles.add("Tuần này");
@@ -497,38 +497,38 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
         switch (id) {
             case R.id.txt_first_meet: {
                 Bundle data = new Bundle();
-                data.putInt("typeInt",1);
-                data.putInt("contactID",mContactID);
-                data.putString("name",mName);
+                data.putInt("typeInt", 1);
+                data.putInt("contactID", mContactID);
+                data.putString("name", mName);
                 alertDialog.dismiss();
-                goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
+                goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
                 break;
             }
             case R.id.txt_advisory: {
                 Bundle data = new Bundle();
-                data.putInt("typeInt",2);
-                data.putInt("contactID",mContactID);
-                data.putString("name",mName);
+                data.putInt("typeInt", 2);
+                data.putInt("contactID", mContactID);
+                data.putString("name", mName);
                 alertDialog.dismiss();
-                goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
+                goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
                 break;
             }
             case R.id.txt_sign: {
                 Bundle data = new Bundle();
-                data.putInt("typeInt",3);
-                data.putInt("contactID",mContactID);
-                data.putString("name",mName);
+                data.putInt("typeInt", 3);
+                data.putInt("contactID", mContactID);
+                data.putString("name", mName);
                 alertDialog.dismiss();
-                goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
+                goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
                 break;
             }
             case R.id.txt_different: {
                 Bundle data = new Bundle();
-                data.putInt("typeInt",4);
-                data.putInt("contactID",mContactID);
-                data.putString("name",mName);
+                data.putInt("typeInt", 4);
+                data.putInt("contactID", mContactID);
+                data.putString("name", mName);
                 alertDialog.dismiss();
-                goNextScreenFragment(CreateEventActivity.class, data,Contants.ADD_EVENT);
+                goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
                 break;
             }
             case R.id.btn_cancel: {
@@ -539,7 +539,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
     }
 
     @OnClick({R.id.layout_step1, R.id.layout_step2, R.id.layout_step3, R.id.layout_step4, R.id.layout_step5,
-    R.id.layout_bot})
+            R.id.layout_bot})
     public void onClickView(View view) {
         int id = view.getId();
         switch (id) {
@@ -579,12 +579,12 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
                 mActivity.goNextScreen(IntroduceContactActivity.class, data);
                 break;
             }
-            case R.id.layout_bot:{
-                if(layoutMid.isExpanded()) {
+            case R.id.layout_bot: {
+                if (layoutMid.isExpanded()) {
                     layoutMid.collapse(true);
                     layoutList.expand(true);
                     imgShowActivities.setBackgroundResource(R.drawable.ic_arrow_down);
-                }else{
+                } else {
                     layoutMid.expand(true);
                     layoutList.collapse(true);
                     imgShowActivities.setBackgroundResource(R.drawable.ic_arrow_up);

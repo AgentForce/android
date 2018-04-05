@@ -2,263 +2,268 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp">
-
-    <TextView
-        android:id="@+id/txt_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Khách hàng tháng 12"
-        android:textSize="@dimen/welcome_activity_note"
-        android:textStyle="bold" />
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/layout_top"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_title"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:weightSum="100">
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Khách hàng tháng 12"
+            android:textSize="@dimen/welcome_activity_note"
+            android:textStyle="bold" />
 
-        <!--Liên hệ-->
         <LinearLayout
-            android:id="@+id/layout_step1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="20"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_title"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
 
-            <RelativeLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp">
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerInParent="true"
-                    android:background="@color/color_dashboard_contact"
-                    android:scaleType="fitCenter"
-                    app:riv_corner_radius="5dp"
-                    app:riv_mutate_background="true" />
-
-                <TextView
-                    android:id="@+id/txt_step1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="60"
-                    android:textColor="@android:color/white"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:text="Liên hệ"
-                android:textSize="@dimen/welcome_activity_content" />
-        </LinearLayout>
-
-        <!--Hẹn gặp-->
-        <LinearLayout
-            android:id="@+id/layout_step2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="20"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp">
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerInParent="true"
-                    android:background="@color/color_dashboard_meeting"
-                    android:scaleType="fitCenter"
-                    app:riv_corner_radius="5dp"
-                    app:riv_mutate_background="true" />
-
-                <TextView
-                    android:id="@+id/txt_step2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="30"
-                    android:textColor="@android:color/white"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:text="Hẹn gặp"
-                android:textSize="@dimen/welcome_activity_content" />
-        </LinearLayout>
-
-        <!--Tư vấn-->
-        <LinearLayout
-            android:id="@+id/layout_step3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="20"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp">
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerInParent="true"
-                    android:background="@color/color_dashboard_advisory"
-                    android:scaleType="fitCenter"
-                    app:riv_corner_radius="5dp"
-                    app:riv_mutate_background="true" />
-
-                <TextView
-                    android:id="@+id/txt_step3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="10"
-                    android:textColor="@android:color/white"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:text="Tư vấn"
-                android:textSize="@dimen/welcome_activity_content" />
-        </LinearLayout>
-
-        <!--Ký hợp dồng-->
-        <LinearLayout
-            android:id="@+id/layout_step4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="20"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="40dp"
-                android:layout_height="40dp">
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerInParent="true"
-                    android:background="@color/color_dashboard_sign"
-                    android:scaleType="fitCenter"
-                    app:riv_corner_radius="5dp"
-                    app:riv_mutate_background="true" />
-
-                <TextView
-                    android:id="@+id/txt_step4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="5"
-                    android:textColor="@android:color/white"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:text="Ký hợp đồng"
-                android:textSize="@dimen/welcome_activity_content" />
-        </LinearLayout>
-
-        <!--Giới thiệu-->
-        <LinearLayout
-            android:id="@+id/layout_step5"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="20"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
+            <!--Liên hệ-->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="40dp"
-                    android:background="@android:color/darker_gray" />
+                android:id="@+id/layout_step1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="20"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_horizontal">
+                    android:layout_width="40dp"
+                    android:layout_height="40dp">
 
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_alignParentBottom="true"
                         android:layout_centerInParent="true"
-                        android:background="@color/color_dashboard_introduce"
+                        android:background="@color/color_dashboard_contact"
                         android:scaleType="fitCenter"
                         app:riv_corner_radius="5dp"
                         app:riv_mutate_background="true" />
 
                     <TextView
-                        android:id="@+id/txt_step5"
+                        android:id="@+id/txt_step1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="0"
+                        android:text="60"
                         android:textColor="@android:color/white"
                         android:textSize="17sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:text="Liên hệ"
+                    android:textSize="@dimen/welcome_activity_content" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
+            <!--Hẹn gặp-->
+            <LinearLayout
+                android:id="@+id/layout_step2"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_weight="20"
                 android:gravity="center_horizontal"
-                android:text="Giới thiệu"
-                android:textSize="@dimen/welcome_activity_content" />
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:background="@color/color_dashboard_meeting"
+                        android:scaleType="fitCenter"
+                        app:riv_corner_radius="5dp"
+                        app:riv_mutate_background="true" />
+
+                    <TextView
+                        android:id="@+id/txt_step2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="30"
+                        android:textColor="@android:color/white"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:text="Hẹn gặp"
+                    android:textSize="@dimen/welcome_activity_content" />
+            </LinearLayout>
+
+            <!--Tư vấn-->
+            <LinearLayout
+                android:id="@+id/layout_step3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="20"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:background="@color/color_dashboard_advisory"
+                        android:scaleType="fitCenter"
+                        app:riv_corner_radius="5dp"
+                        app:riv_mutate_background="true" />
+
+                    <TextView
+                        android:id="@+id/txt_step3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="10"
+                        android:textColor="@android:color/white"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:text="Tư vấn"
+                    android:textSize="@dimen/welcome_activity_content" />
+            </LinearLayout>
+
+            <!--Ký hợp dồng-->
+            <LinearLayout
+                android:id="@+id/layout_step4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="20"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="40dp"
+                    android:layout_height="40dp">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:background="@color/color_dashboard_sign"
+                        android:scaleType="fitCenter"
+                        app:riv_corner_radius="5dp"
+                        app:riv_mutate_background="true" />
+
+                    <TextView
+                        android:id="@+id/txt_step4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="5"
+                        android:textColor="@android:color/white"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:text="Ký hợp đồng"
+                    android:textSize="@dimen/welcome_activity_content" />
+            </LinearLayout>
+
+            <!--Giới thiệu-->
+            <LinearLayout
+                android:id="@+id/layout_step5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="20"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="40dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_horizontal">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerInParent="true"
+                            android:background="@color/color_dashboard_introduce"
+                            android:scaleType="fitCenter"
+                            app:riv_corner_radius="5dp"
+                            app:riv_mutate_background="true" />
+
+                        <TextView
+                            android:id="@+id/txt_step5"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:text="0"
+                            android:textColor="@android:color/white"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:text="Giới thiệu"
+                    android:textSize="@dimen/welcome_activity_content" />
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/layout_top"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginTop="5dp">
 
         <net.cachapa.expandablelayout.ExpandableLayout
             android:id="@+id/expandable_layout_mid"
@@ -296,6 +301,7 @@
             android:orientation="vertical">
             <!--nhật ký hoạt động-->
             <LinearLayout
+                android:id="@+id/layout_title_bot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/cus_border_edittext_no_corner"
@@ -312,6 +318,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right">
+
                     <ImageView
                         android:id="@+id/img_show_activities"
                         android:layout_width="20dp"

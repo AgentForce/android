@@ -8,8 +8,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,12 +22,13 @@ import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
 import manulife.manulifesop.base.BaseActivity;
-import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
 import manulife.manulifesop.fragment.FAGroup.clients.FACustomerFragment;
+import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
 import manulife.manulifesop.fragment.FAGroup.dashboardv2.FADashBoardFragment;
 import manulife.manulifesop.fragment.FAGroup.events.FAEventsFragment;
 import manulife.manulifesop.fragment.FAGroup.personal.FAPersonalFragment;
-import manulife.manulifesop.util.DeviceInfo;
+import manulife.manulifesop.fragment.dashboard.DashboardFragment;
+import manulife.manulifesop.util.SOPSharedPreferences;
 import manulife.manulifesop.util.Utils;
 
 /**
@@ -61,6 +60,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
     private boolean mIsgetCampaign = false;
     private boolean firstBackPressed = false;
+    private boolean mIsFA;
 
     AHBottomNavigationAdapter mNavigationAdapter;
 
@@ -72,6 +72,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_fa);
         mActionListener = new MainFAPresenter(this, this);
+        mIsFA = SOPSharedPreferences.getInstance(this).getIsFA();
         setupSupportForApp();
         setupMenuBot();
     }
@@ -79,7 +80,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
     @Override
     protected void onResume() {
         super.onResume();
-        if(!mIsgetCampaign){
+        if (!mIsgetCampaign) {
             mActionListener.chekCampaign();
         }
     }
@@ -103,8 +104,12 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
     private void setupMenuBot() {
         int[] tabColors = getApplicationContext().getResources().getIntArray(R.array.tab_colors);
-        //mNavigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bot_sm);
-        mNavigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bot);
+
+        if (mIsFA)
+            mNavigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bot);
+        else
+            mNavigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bot_sm);
+
         mNavigationAdapter.setupWithBottomNavigation(bottomNavigation, tabColors);
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         bottomNavigation.setAccentColor(getResources().getColor(R.color.colorPrimary));
@@ -200,7 +205,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
             mFragmentTran = getSupportFragmentManager().beginTransaction();
             mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-            mFragmentTran.replace(R.id.frame_container, FADashBoardFragment.newInstance());
+            mFragmentTran.replace(R.id.frame_container, DashboardFragment.newInstance(mIsFA));
             mFragmentTran.commit();
         }
     }
