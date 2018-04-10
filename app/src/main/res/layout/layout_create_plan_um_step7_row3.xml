@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/cus_border_grey">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:text="Danh hiệu" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal">
+        <TextView
+            android:id="@+id/txt_step7_user_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chọn danh hiệu"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimary"/>
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_arrow_down_blue"/>
+    </LinearLayout>
+</LinearLayout>

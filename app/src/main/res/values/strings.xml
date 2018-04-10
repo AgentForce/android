@@ -64,6 +64,8 @@
     <string name="activity_create_plan_UM_title_step3">Tuyển dụng đại lý mới</string>
     <string name="activity_create_plan_UM_title_step4">Đại lý hiện hữu</string>
     <string name="activity_create_plan_UM_title_step5">Phát triển UM mới</string>
+    <string name="activity_create_plan_UM_title_step7">Sản xuất cá nhân</string>
+    <string name="activity_create_plan_UM_title_step8">Sản xuất cá nhân</string>
 
     <!--activity_signed_success-->
     <string name="activity_signed_success_title">Vui lòng nhập vài thông tin dưới đây để hoàn tất hợp đồng</string>

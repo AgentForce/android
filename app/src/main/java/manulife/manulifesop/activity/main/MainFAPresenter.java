@@ -81,7 +81,8 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
             SOPSharedPreferences.getInstance(mContext).saveToken(rs.data.accessToken,rs.data.refreshToken);
             chekCampaign();
         }else{
-            mPresenterView.finishLoading(rs.msg,false);
+            mPresenterView.finishLoading();
+            mPresenterView.showLogin();
         }
     }
 }

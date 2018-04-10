@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:text="@string/activity_create_plan_UM_title_step4"
+            android:text="@string/activity_create_plan_UM_title_step7"
             android:textSize="@dimen/welcome_activity_note"
             android:textStyle="bold" />
     </LinearLayout>
@@ -52,22 +52,27 @@
             <include
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/layout_create_plan_um_step4_row1"/>
+                layout="@layout/layout_create_plan_um_step7_row1"/>
             <include
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                layout="@layout/layout_create_plan_um_step4_row2"/>
+                layout="@layout/layout_create_plan_um_step7_row2"/>
             <include
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                layout="@layout/layout_create_plan_um_step4_row3"/>
+                layout="@layout/layout_create_plan_um_step7_row3"/>
             <include
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                layout="@layout/layout_create_plan_um_step4_row4"/>
+                layout="@layout/layout_create_plan_um_step7_row4"/>
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                layout="@layout/layout_create_plan_um_step7_row5"/>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

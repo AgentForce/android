@@ -22,6 +22,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
+import manulife.manulifesop.activity.first.FirstActivity;
+import manulife.manulifesop.activity.login.LoginActivity;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.fragment.FAGroup.clients.FACustomerFragment;
 import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
@@ -79,7 +81,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         mActionListener = new MainFAPresenter(this, this);
         mIsFA = SOPSharedPreferences.getInstance(this).getIsFA();
         //test
-        mIsFA = true;
+        mIsFA = false;
         setupSupportForApp();
         setupMenuBot();
     }
@@ -295,6 +297,11 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
             });
             sweetAlertDialog.show();
         }
+    }
+
+    @Override
+    public void showLogin() {
+        goNextScreen(LoginActivity.class);
     }
 
     @Override

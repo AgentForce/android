@@ -27,6 +27,8 @@ import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step3.UMCreat
 import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step4.UMCreatePlanStep4Fragment;
 import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step5.UMCreatePlanStep5Fragment;
 import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step6.UMCreatePlanStep6Fragment;
+import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step7.UMCreatePlanStep7Fragment;
+import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step8.UMCreatePlanStep8Fragment;
 import manulife.manulifesop.util.Utils;
 
 
@@ -111,6 +113,8 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
         mListFragment.add(UMCreatePlanStep4Fragment.newInstance());
         mListFragment.add(UMCreatePlanStep5Fragment.newInstance());
         mListFragment.add(UMCreatePlanStep6Fragment.newInstance());
+        mListFragment.add(UMCreatePlanStep7Fragment.newInstance());
+        mListFragment.add(UMCreatePlanStep8Fragment.newInstance());
 
         mAdapter = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment);
         if (viewPager != null) {
