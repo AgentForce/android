@@ -23,8 +23,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -59,6 +62,11 @@ import static android.app.Activity.RESULT_OK;
 
 public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactActivity, IntroduceContactTabPresent> implements IntroduceContactTabContract.View,
         View.OnClickListener {
+
+    @BindView(R.id.expandable_layout_top)
+    ExpandableLayout expandableLayout;
+    @BindView(R.id.img_show_add)
+    ImageView imgShowAdd;
 
     @BindView(R.id.edt_search)
     EditText edtSearch;
@@ -150,7 +158,7 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
                         doSmth(edtSearch.getText().toString());
                     }
                 };
-                handler.postDelayed(workRunnable, 2000 /*delay*/);
+                handler.postDelayed(workRunnable, 1000 /*delay*/);
             }
 
             Handler handler = new Handler(Looper.getMainLooper() /*UI thread*/);
@@ -363,20 +371,6 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
                 });
     }
 
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Contants.CHANGE_TO_CONTACT && resultCode == RESULT_OK) {
-            if (!mIsFromContact) {
-                mData.clear();
-                mActionListener.getUserListProcess(mMonth, 1);
-            } else {
-                mActivity.setResult(RESULT_OK);
-                mActivity.finish();
-            }
-        }
-    }*/
-
     private boolean validateInputAddContact() {
         if (edtPhoneAlert.getText().length() <= 0) {
             edtPhoneAlert.setError("Nhập số điện thoại");
@@ -389,12 +383,22 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
         return true;
     }
 
-    @OnClick({R.id.txt_add_new})
+    @OnClick({R.id.txt_add_new,R.id.layout_show_add})
     public void onClickEvent(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.txt_add_new: {
                 showDialogChooseWeek(false);
+                break;
+            }
+            case R.id.layout_show_add:{
+                if(expandableLayout.isExpanded()){
+                    expandableLayout.collapse(true);
+                    imgShowAdd.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_down));
+                }else{
+                    expandableLayout.expand(true);
+                    imgShowAdd.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_up));
+                }
                 break;
             }
         }

@@ -1,10 +1,14 @@
 package manulife.manulifesop.fragment.FAGroup.clients.ContentClient;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,14 +25,13 @@ import java.util.List;
 import butterknife.BindView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
+import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
-import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ObjectMonth.FAObjectMonthFragment;
-import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ObjectWeek.FAObjectWeekFragment;
+import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ContactMonth.FAContactMonthFragment;
 import manulife.manulifesop.util.Utils;
 
 /**
@@ -108,7 +111,9 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
     @Override
     public void onResume() {
         super.onResume();
-        mActionListener.getCampaignMonth(mMonth);
+        if(viewPager.getCurrentItem()!=2) {
+            mActionListener.getCampaignMonth(mMonth);
+        }
     }
 
     @Override
@@ -484,6 +489,7 @@ public class FAContentCustomerFragment extends BaseFragment<MainFAActivity, FACo
         List<String> tabTitles = new ArrayList<>();
         tabTitles.add("Mục tiêu tháng");
         tabTitles.add("Mục tiêu theo tuần");
+        tabTitles.add("Khách hàng T" + mMonth);
 
         mAdapter = new CustomViewPagerAdapter(getChildFragmentManager(),
                 fragmentList, tabTitles);

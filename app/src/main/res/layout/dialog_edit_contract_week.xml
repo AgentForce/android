@@ -16,7 +16,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:text="Sửa số lượng liên hệ"
+            android:text="Phân bổ kế hoạch làm việc"
             android:textStyle="bold"
             android:textSize="@dimen/welcome_activity_note" />
 

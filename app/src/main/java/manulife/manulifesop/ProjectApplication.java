@@ -11,6 +11,7 @@ import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.api.ObjectResponse.ContactActivity;
 import manulife.manulifesop.api.ObjectResponse.ContactDetail;
 import manulife.manulifesop.api.ObjectResponse.ContactHistory;
+import manulife.manulifesop.api.ObjectResponse.ContactMonth;
 import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.util.DeviceInfo;
 
@@ -53,6 +54,7 @@ public class ProjectApplication extends MultiDexApplication {
     //variable for campaign detail
     private CampaignMonth mDataCampaign;
     private int mCampaignWeekId;
+    private ContactMonth mDataContactMonth;
 
     //variable for contact detail;
     private ContactDetail mContactDetail;
@@ -172,16 +174,16 @@ public class ProjectApplication extends MultiDexApplication {
     public void setHashmapStringProcessStatusName(){
         mStringProcessStatusName = new HashMap<>();
         mStringProcessStatusName.put("11","Khách hàng liên hệ");
-        mStringProcessStatusName.put("12","Khách hàng từ chối");
-        mStringProcessStatusName.put("13","Khách hàng gọi lại");
+        mStringProcessStatusName.put("12","Khách hàng từ chối(Liên hệ)");
+        mStringProcessStatusName.put("13","Khách hàng gọi lại sau((Liên hệ))");
         mStringProcessStatusName.put("14","Khách hàng đã liên hệ");
         mStringProcessStatusName.put("21","Khách hàng cần hẹn gặp");
-        mStringProcessStatusName.put("22","Khách hàng từ chối");
-        mStringProcessStatusName.put("23","Khách hàng gọi lại sau");
+        mStringProcessStatusName.put("22","Khách hàng từ chối(Hẹn gặp)");
+        mStringProcessStatusName.put("23","Khách hàng gọi lại sau((Hẹn gặp))");
         mStringProcessStatusName.put("24","Khách hàng đã gặp");
         mStringProcessStatusName.put("31","Khách hàng tư vấn");
-        mStringProcessStatusName.put("32","Khách hàng từ chối");
-        mStringProcessStatusName.put("33","Khách hàng tư vấn");
+        mStringProcessStatusName.put("32","Khách hàng từ chối(Tư vấn)");
+        mStringProcessStatusName.put("33","Khách hàng liên hệ sau(Tư vấn)");
         mStringProcessStatusName.put("34","Khách hàng đã tư vấn");
         mStringProcessStatusName.put("41","Khách hàng hứa nộp hồ sơ");
         mStringProcessStatusName.put("42","Khách hàng tất hồ sơ BHXH");
@@ -207,12 +209,14 @@ public class ProjectApplication extends MultiDexApplication {
         mProcessStepValue.put(1,"Hẹn gặp khách hàng");
         mProcessStepValue.put(2,"Tư vấn khách hàng");
         mProcessStepValue.put(3,"Ký hợp đồng");
+        mProcessStepValue.put(4,"Giới thiệu");
 
         mProcessStepColor = new HashMap<>();
         mProcessStepColor.put(0,"#f44236");
         mProcessStepColor.put(1,"#ffb200");
         mProcessStepColor.put(2,"#1d89e5");
         mProcessStepColor.put(3,"#4caf52");
+        mProcessStepColor.put(4,"#fe7537");
     }
     public String getIncomeString(int value){
         return mIncomeMonth.get(value);
@@ -279,6 +283,14 @@ public class ProjectApplication extends MultiDexApplication {
 
         CalligraphyConfig.initDefault(config);
     }*/
+
+    //init for all contact in month
+    public void setContactMonth(ContactMonth data){
+        this.mDataContactMonth = data;
+    }
+    public ContactMonth getContactMonth(){
+        return mDataContactMonth;
+    }
 
     //init for campaign detail in client month
     public void setCampaign(CampaignMonth data){

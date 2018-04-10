@@ -82,6 +82,19 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
         initEventsSeekBar();
     }
 
+    @Override
+    public void setProgressIncome(float value) {
+        if(value > 100){
+            int minProgress = (int)(value/100)*100;
+            seekBarIncome.setMin(minProgress);
+            seekBarIncome.setMax(minProgress + 100);
+
+            txtIncomeMin.setText(minProgress + "tr");
+            txtIncomeMax.setText(minProgress + 100 + "tr");
+        }
+        seekBarIncome.setProgress(value);
+    }
+
     private void initEventsSeekBar() {
         seekBarIncome.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
 
@@ -117,7 +130,6 @@ public class CreatePlanStep2Fragment extends BaseFragment<CreatePlanActivity, Cr
 
                 float min = seekBar.getMin();
                 float max = seekBar.getMax();
-                int temp = seekBar.getProgress();
                 if (seekBar.getProgress() == max) {
                     int minNew = (min == 10) ? 100 : (int) (min + 100);
 

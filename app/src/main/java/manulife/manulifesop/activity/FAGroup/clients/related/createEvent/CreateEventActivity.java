@@ -418,11 +418,11 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
 
         //autoscroll when choose start time
         TimePicker startTimePicker = (TimePicker) dialogView.findViewById(R.id.time_picker_start);
-        int currentMinute;
+        int[] currentMinute = new int[1];
         if (Build.VERSION.SDK_INT >= 23) {
-            currentMinute = startTimePicker.getMinute();
+            currentMinute[0] = startTimePicker.getMinute();
         } else {
-            currentMinute = startTimePicker.getCurrentMinute();
+            currentMinute[0] = startTimePicker.getCurrentMinute();
         }
         if(mIsUpdate){
             //set time for start
@@ -451,11 +451,22 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
             @Override
             public void onTimeChanged(TimePicker timePicker, int hourse, int minute) {
 
-                if (minute != currentMinute) {
+                if (minute != currentMinute[0]) {
                     NestedScrollView scroll = (NestedScrollView) dialogView.findViewById(R.id.scroll);
                     TimePicker endTimePicker = (TimePicker) dialogView.findViewById(R.id.time_picker_end);
                     //ObjectAnimator.ofInt(scroll, "scrollY",  timePicker.getBottom()).setDuration(1000).start();
                     Utils.smoothScrollViewToPosition(getApplicationContext(), scroll, endTimePicker.getBottom());
+
+                    //set time end
+                    if (Build.VERSION.SDK_INT >= 23){
+                        endTimePicker.setHour(hourse);
+                        endTimePicker.setMinute(minute);
+                    }else{
+                        endTimePicker.setCurrentHour(hourse);
+                        endTimePicker.setCurrentMinute(minute);
+                    }
+
+                    currentMinute[0] = minute;
                 }
             }
         });

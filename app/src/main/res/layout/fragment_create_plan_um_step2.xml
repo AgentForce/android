@@ -28,24 +28,25 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
-            android:text="@string/activity_create_plan_SM_title_step2"
+            android:text="@string/activity_create_plan_UM_title_step2"
             android:textSize="@dimen/welcome_activity_note"
             android:textStyle="bold" />
 
         <!--thời gian bắt đầu-->
         <RelativeLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Bắt đầu:"
-                android:textSize="@dimen/welcome_activity_note"
+                android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/txt_start_date"
-                android:layout_centerVertical="true"/>
+                android:text="Bắt đầu:"
+                android:textSize="@dimen/welcome_activity_note" />
 
             <TextView
                 android:id="@+id/txt_start_date"
@@ -53,26 +54,27 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="05/05/2018"
                 android:layout_marginLeft="20dp"
+                android:text="05/05/2018"
                 android:textSize="@dimen/welcome_activity_note"
                 android:textStyle="bold" />
         </RelativeLayout>
 
         <!--thời gian kết thúc-->
         <RelativeLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Kết thúc:"
-                android:textSize="@dimen/welcome_activity_note"
+                android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/txt_end_date"
-                android:layout_centerVertical="true"/>
+                android:text="Kết thúc:"
+                android:textSize="@dimen/welcome_activity_note" />
 
             <TextView
                 android:id="@+id/txt_end_date"
@@ -80,11 +82,91 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="05/05/2018"
                 android:layout_marginLeft="20dp"
+                android:text="05/05/2018"
                 android:textSize="@dimen/welcome_activity_note"
                 android:textStyle="bold" />
         </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:layout_marginRight="3dp"
+                android:background="@color/backgroundGrey"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="Đã lập kế hoạch"
+                    android:textSize="@dimen/welcome_activity_note"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_planed_agent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="2 Đại lý"
+                    android:textSize="@dimen/welcome_activity_note" />
+
+                <TextView
+                    android:id="@+id/txt_planed_manager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="1 Quản lý"
+                    android:textSize="@dimen/welcome_activity_note" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:layout_marginLeft="3dp"
+                android:background="@color/backgroundGrey"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="Chưa lập kế hoạch"
+                    android:textSize="@dimen/welcome_activity_note"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_not_planed_agent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="2 Đại lý"
+                    android:textSize="@dimen/welcome_activity_note" />
+
+                <TextView
+                    android:id="@+id/txt_not_planed_manager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center_horizontal"
+                    android:text="1 Quản lý"
+                    android:textSize="@dimen/welcome_activity_note" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <RadioGroup
             android:id="@+id/rb_month_year"
@@ -149,17 +231,18 @@
 
             <!--tuyển mới-->
             <RelativeLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/txt_new_recruitment"
                     android:text="Tuyển mới"
                     android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold"
-                    android:layout_toLeftOf="@+id/txt_new_recruitment"
-                    android:layout_centerVertical="true"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txt_new_recruitment"
@@ -167,30 +250,31 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="36 ĐL"
                     android:layout_marginLeft="20dp"
-                    android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"
+                    android:background="@drawable/cus_radio_checked"
                     android:paddingBottom="3dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:paddingTop="3dp"
-                    android:background="@drawable/cus_radio_checked"/>
+                    android:text="36 ĐL"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/welcome_activity_note"
+                    android:textStyle="bold" />
             </RelativeLayout>
             <!--nghỉ việc-->
             <RelativeLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/txt_quit_job"
                     android:text="Nghỉ việc"
                     android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold"
-                    android:layout_toLeftOf="@+id/txt_quit_job"
-                    android:layout_centerVertical="true"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txt_quit_job"
@@ -198,30 +282,31 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="1 ĐL"
                     android:layout_marginLeft="20dp"
-                    android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"
+                    android:background="@drawable/cus_radio_checked"
                     android:paddingBottom="3dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:paddingTop="3dp"
-                    android:background="@drawable/cus_radio_checked"/>
+                    android:text="1 ĐL"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/welcome_activity_note"
+                    android:textStyle="bold" />
             </RelativeLayout>
             <!--đại lý tăng trưởng-->
             <RelativeLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/txt_increase_agent"
                     android:text="Đại lý tăng trưởng"
                     android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold"
-                    android:layout_toLeftOf="@+id/txt_increase_agent"
-                    android:layout_centerVertical="true"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txt_increase_agent"
@@ -229,30 +314,31 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="12 ĐL + 2 ĐL/tháng"
                     android:layout_marginLeft="20dp"
-                    android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"
+                    android:background="@drawable/cus_radio_checked"
                     android:paddingBottom="3dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:paddingTop="3dp"
-                    android:background="@drawable/cus_radio_checked"/>
+                    android:text="12 ĐL + 2 ĐL/tháng"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/welcome_activity_note"
+                    android:textStyle="bold" />
             </RelativeLayout>
             <!--Hợp đồng tăng trưởng-->
             <RelativeLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/txt_increase_contract"
                     android:text="Hợp đồng tăng trưởng"
                     android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold"
-                    android:layout_toLeftOf="@+id/txt_increase_contract"
-                    android:layout_centerVertical="true"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txt_increase_contract"
@@ -260,49 +346,17 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/cus_radio_checked"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="3dp"
                     android:text="30 ĐL + 5 ĐL/tháng"
-                    android:layout_marginLeft="20dp"
-                    android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold"
                     android:textColor="@android:color/white"
-                    android:paddingBottom="3dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="3dp"
-                    android:background="@drawable/cus_radio_checked"/>
-            </RelativeLayout>
-            <!--Doanh thu tăng trưởng-->
-            <RelativeLayout
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Doanh thu (FYP) tăng trưởng"
                     android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold"
-                    android:layout_toLeftOf="@+id/txt_increase_profit"
-                    android:layout_centerVertical="true"/>
-
-                <TextView
-                    android:id="@+id/txt_increase_profit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="300 triệu + 50 triệu/tháng"
-                    android:layout_marginLeft="20dp"
-                    android:textSize="@dimen/welcome_activity_note"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"
-                    android:paddingBottom="3dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="3dp"
-                    android:background="@drawable/cus_radio_checked"/>
+                    android:textStyle="bold" />
             </RelativeLayout>
-
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

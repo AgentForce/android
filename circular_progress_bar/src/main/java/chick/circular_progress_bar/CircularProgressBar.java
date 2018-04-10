@@ -38,267 +38,324 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ProgressBar;
 
-public class CircularProgressBar extends ProgressBar{
-	private static final String TAG = "CircularProgressBar";
+public class CircularProgressBar extends ProgressBar {
+    private static final String TAG = "CircularProgressBar";
 
-	private static final int STROKE_WIDTH = 20;
+    private static final int STROKE_WIDTH = 20;
 
-	private String mTitle = "";		
-	private String mSubTitle = "";
+    private String mTitle = "";
+    private String mSubTitle = "";
 
-	private int mStrokeWidth = STROKE_WIDTH;
+    private int mStrokeWidth = STROKE_WIDTH;
+    //new code
+    private int mStrokeWidthLine2 = 5;
 
-	private final RectF mCircleBounds = new RectF();
-	//new code
-	private final RectF mCircleBounds2 = new RectF();
+    private final RectF mCircleBounds = new RectF();
+    //new code
+    private final RectF mCircleBoundsBackground = new RectF();
+    private final RectF mCircleBounds2 = new RectF();
+    private int mProgressLine2 = 0;
 
-	private final Paint mProgressColorPaint = new Paint();
-	private final Paint mBackgroundColorPaint = new Paint();
-	private final Paint mTitlePaint = new Paint(); 
-	private final Paint mSubtitlePaint = new Paint();
+    private final Paint mProgressColorPaint = new Paint();
+    private final Paint mProgressColorPaintLine1 = new Paint();
+    private final Paint mProgressColorPaintLine2 = new Paint();
+    private final Paint mBackgroundColorPaint = new Paint();
+    private final Paint mTitlePaint = new Paint();
+    private final Paint mSubtitlePaint = new Paint();
 
-	private boolean mHasShadow = true;
-	private int mShadowColor = Color.BLACK;
+    private boolean mHasShadow = true;
+    private int mShadowColor = Color.BLACK;
 
-	public interface ProgressAnimationListener{
-		public void onAnimationStart();
-		public void onAnimationFinish();
-		public void onAnimationProgress(int progress);
-	}
+    //new code
+    private boolean mShowLine2 = false;
 
-	public CircularProgressBar(Context context) {
-		super(context);
-		init(null, 0);
-	}
+    public interface ProgressAnimationListener {
+        public void onAnimationStart();
 
-	public CircularProgressBar(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		init(attrs, 0);
-	}
+        public void onAnimationFinish();
 
-	public CircularProgressBar(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		init(attrs, defStyle);
-	}
+        public void onAnimationProgress(int progress);
+    }
 
-	public void init(AttributeSet attrs, int style){
-		//so that shadow shows up properly for lines and arcs
-		setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+    public CircularProgressBar(Context context) {
+        super(context);
+        init(null, 0);
+    }
 
-		TypedArray a = getContext().obtainStyledAttributes(attrs,
-				R.styleable.CircularProgressBar, style, 0);
+    public CircularProgressBar(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(attrs, 0);
+    }
 
-		String color;
-		Resources res = getResources();
+    public CircularProgressBar(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(attrs, defStyle);
+    }
 
-		this.mHasShadow = a.getBoolean(R.styleable.CircularProgressBar_cpb_hasShadow, true);
+    public void init(AttributeSet attrs, int style) {
+        //so that shadow shows up properly for lines and arcs
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-		color = a.getString(R.styleable.CircularProgressBar_cpb_progressColor);
-		if(color==null)
-			mProgressColorPaint.setColor(res.getColor(R.color.circular_progress_default_progress));
-		else
-			mProgressColorPaint.setColor(Color.parseColor(color));
+        TypedArray a = getContext().obtainStyledAttributes(attrs,
+                R.styleable.CircularProgressBar, style, 0);
 
-		color = a.getString(R.styleable.CircularProgressBar_cpb_backgroundColor);
-		if(color==null)
-			mBackgroundColorPaint.setColor(res.getColor(R.color.circular_progress_default_background));
-		else
-			mBackgroundColorPaint.setColor(Color.parseColor(color));
+        String color,color2;
+        Resources res = getResources();
 
-		color = a.getString(R.styleable.CircularProgressBar_cpb_titleColor);
-		if(color==null)
-			mTitlePaint.setColor(res.getColor(R.color.circular_progress_default_title));
-		else
-			mTitlePaint.setColor(Color.parseColor(color));
+        this.mHasShadow = a.getBoolean(R.styleable.CircularProgressBar_cpb_hasShadow, true);
+        //new code
+        this.mShowLine2 = a.getBoolean(R.styleable.CircularProgressBar_cpb_show_line2, false);
 
-		color = a.getString(R.styleable.CircularProgressBar_cpb_subtitleColor);
-		if(color==null)
-			mSubtitlePaint.setColor(res.getColor(R.color.circular_progress_default_subtitle));
-		else
-			mSubtitlePaint.setColor(Color.parseColor(color));
+        color = a.getString(R.styleable.CircularProgressBar_cpb_progressColor);
+        color2 = a.getString(R.styleable.CircularProgressBar_cpb_progressColorLine2);
+        if (color == null){
+            mProgressColorPaint.setColor(res.getColor(R.color.circular_progress_default_progress));
+            mProgressColorPaintLine1.setColor(res.getColor(R.color.circular_progress_default_progress));
+            mProgressColorPaintLine2.setColor(res.getColor(R.color.circular_progress_default_progress));
+        }
+        else {
+            mProgressColorPaint.setColor(Color.parseColor(color));
+            mProgressColorPaintLine1.setColor(Color.parseColor(color));
+            mProgressColorPaintLine2.setColor(Color.parseColor(color2));
+        }
 
+        color = a.getString(R.styleable.CircularProgressBar_cpb_backgroundColor);
+        if (color == null)
+            mBackgroundColorPaint.setColor(res.getColor(R.color.circular_progress_default_background));
+        else
+            mBackgroundColorPaint.setColor(Color.parseColor(color));
 
-		String t = a.getString(R.styleable.CircularProgressBar_cpb_title);
-		if(t!=null)
-			mTitle = t;
+        color = a.getString(R.styleable.CircularProgressBar_cpb_titleColor);
+        if (color == null)
+            mTitlePaint.setColor(res.getColor(R.color.circular_progress_default_title));
+        else
+            mTitlePaint.setColor(Color.parseColor(color));
 
-		t = a.getString(R.styleable.CircularProgressBar_cpb_subtitle);
-		if(t!=null)
-			mSubTitle = t;
-
-		mStrokeWidth = a.getInt(R.styleable.CircularProgressBar_cpb_strokeWidth, STROKE_WIDTH);
-
-		a.recycle();
-
-
-		mProgressColorPaint.setAntiAlias(true);
-		mProgressColorPaint.setStyle(Style.STROKE);
-		mProgressColorPaint.setStrokeWidth(mStrokeWidth);
-
-		mBackgroundColorPaint.setAntiAlias(true);
-		//mBackgroundColorPaint.setStyle(Style.STROKE);
-		//mBackgroundColorPaint.setStrokeWidth(mStrokeWidth);
-		//new code
-		mBackgroundColorPaint.setStrokeWidth(mStrokeWidth/2);
-		//new code
-		mBackgroundColorPaint.setStyle(Style.FILL_AND_STROKE);
+        color = a.getString(R.styleable.CircularProgressBar_cpb_subtitleColor);
+        if (color == null)
+            mSubtitlePaint.setColor(res.getColor(R.color.circular_progress_default_subtitle));
+        else
+            mSubtitlePaint.setColor(Color.parseColor(color));
 
 
-		//new code
-		//mTitlePaint.setTextSize(60);
-		mTitlePaint.setTextSize(40);
-		mTitlePaint.setStyle(Style.FILL);
-		mTitlePaint.setAntiAlias(true);
-		mTitlePaint.setTypeface(Typeface.create("Roboto-Thin", Typeface.NORMAL));
-		mTitlePaint.setShadowLayer(0.1f, 0, 1, Color.GRAY);
+        String t = a.getString(R.styleable.CircularProgressBar_cpb_title);
+        if (t != null)
+            mTitle = t;
 
-		mSubtitlePaint.setTextSize(20); 
-		mSubtitlePaint.setStyle(Style.FILL);
-		mSubtitlePaint.setAntiAlias(true);
-		mSubtitlePaint.setTypeface(Typeface.create("Roboto-Thin", Typeface.BOLD));
-		//		mSubtitlePaint.setShadowLayer(0.1f, 0, 1, Color.GRAY);
-	}
+        t = a.getString(R.styleable.CircularProgressBar_cpb_subtitle);
+        if (t != null)
+            mSubTitle = t;
 
-	@Override
-	protected synchronized void onDraw(Canvas canvas) {
-		canvas.drawArc(mCircleBounds2, 0, 360 , false, mBackgroundColorPaint);
-
-		int prog = getProgress();
-		float scale = getMax() > 0 ? (float)prog/getMax() *360: 0;
-
-		if(mHasShadow)
-			mProgressColorPaint.setShadowLayer(	3, 0, 1, mShadowColor);
-		canvas.drawArc(mCircleBounds, 270, scale , false, mProgressColorPaint);
+        mStrokeWidth = a.getInt(R.styleable.CircularProgressBar_cpb_strokeWidth, STROKE_WIDTH);
+        //new code
+        mStrokeWidthLine2 = a.getInt(R.styleable.CircularProgressBar_cpb_strokeWidthLine2, STROKE_WIDTH/4);
+        a.recycle();
 
 
-		if(!TextUtils.isEmpty(mTitle)){
-			int xPos =  (int)(getMeasuredWidth()/2 - mTitlePaint.measureText(mTitle) / 2);
-			int yPos = (int) (getMeasuredHeight()/2);
+        mProgressColorPaint.setAntiAlias(true);
+        mProgressColorPaint.setStyle(Style.STROKE);
+        mProgressColorPaint.setStrokeWidth(mStrokeWidth);
+        //new code
+        mProgressColorPaintLine1.setAntiAlias(true);
+        mProgressColorPaintLine1.setStyle(Style.STROKE);
+        mProgressColorPaintLine1.setStrokeWidth(mStrokeWidthLine2);
 
-			float titleHeight = Math.abs(mTitlePaint.descent() + mTitlePaint.ascent());
-			if(TextUtils.isEmpty(mSubTitle)){
-				yPos += titleHeight/2;
-			}
-			canvas.drawText(mTitle, xPos, yPos, mTitlePaint); 
+        mProgressColorPaintLine2.setAntiAlias(true);
+        mProgressColorPaintLine2.setStyle(Style.STROKE);
+        mProgressColorPaintLine2.setStrokeWidth(mStrokeWidthLine2);
 
-			yPos += titleHeight;
-			xPos = (int)(getMeasuredWidth()/2 - mSubtitlePaint.measureText(mSubTitle) / 2);
+        mBackgroundColorPaint.setAntiAlias(true);
+        //mBackgroundColorPaint.setStyle(Style.STROKE);
+        //mBackgroundColorPaint.setStrokeWidth(mStrokeWidth);
+        //new code
+        mBackgroundColorPaint.setStrokeWidth(mStrokeWidth / 2);
+        //new code
+        mBackgroundColorPaint.setStyle(Style.FILL_AND_STROKE);
 
-			canvas.drawText(mSubTitle, xPos, yPos, mSubtitlePaint);
-		}		
 
-		super.onDraw(canvas);
-	}
+        //new code
+        //mTitlePaint.setTextSize(60);
+        mTitlePaint.setTextSize(40);
+        mTitlePaint.setStyle(Style.FILL);
+        mTitlePaint.setAntiAlias(true);
+        mTitlePaint.setTypeface(Typeface.create("Roboto-Thin", Typeface.NORMAL));
+        mTitlePaint.setShadowLayer(0.1f, 0, 1, Color.GRAY);
 
-	@Override
-	protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
-		final int height = getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec);
-		final int width = getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec);
-		final int min = Math.min(width, height);
-		setMeasuredDimension(min+2*STROKE_WIDTH, min+2*STROKE_WIDTH);
+        mSubtitlePaint.setTextSize(20);
+        mSubtitlePaint.setStyle(Style.FILL);
+        mSubtitlePaint.setAntiAlias(true);
+        mSubtitlePaint.setTypeface(Typeface.create("Roboto-Thin", Typeface.BOLD));
+        //		mSubtitlePaint.setShadowLayer(0.1f, 0, 1, Color.GRAY);
+    }
 
-		mCircleBounds.set(STROKE_WIDTH, STROKE_WIDTH, min+STROKE_WIDTH, min+STROKE_WIDTH);
-		//new code
-		mCircleBounds2.set(STROKE_WIDTH*2, STROKE_WIDTH*2, min , min );
-	}
+    @Override
+    protected synchronized void onDraw(Canvas canvas) {
+        canvas.drawArc(mCircleBoundsBackground, 0, 360, false, mBackgroundColorPaint);
+        //canvas.drawArc(mCircleBounds2, 0, 360 , false, mBackgroundColorPaint);
 
-	@Override
-	public synchronized void setProgress(int progress) {
-		super.setProgress(progress);
+        if (mHasShadow)
+            mProgressColorPaint.setShadowLayer(3, 0, 1, mShadowColor);
+        //new code
+        if (mShowLine2) {
+            int prog = mProgressLine2;
+            float scale = getMax() > 0 ? (float) prog / getMax() * 360 : 0;
+            canvas.drawArc(mCircleBounds, 270, scale, false, mProgressColorPaintLine2);
 
-		// the setProgress super will not change the details of the progress bar
-		// anymore so we need to force an update to redraw the progress bar
-		invalidate();
-	}
+            prog = getProgress();
+            scale = getMax() > 0 ? (float) prog / getMax() * 360 : 0;
+            canvas.drawArc(mCircleBounds2, 270, scale, false, mProgressColorPaintLine1);
+        }else
+        {
+            int prog = getProgress();
+            float scale = getMax() > 0 ? (float) prog / getMax() * 360 : 0;
+            canvas.drawArc(mCircleBounds, 270, scale, false, mProgressColorPaint);
+        }
 
-	public void animateProgressTo(final int start, final int end, final ProgressAnimationListener listener){
-		if(start!=0)
-			setProgress(start);
 
-		@SuppressLint("ObjectAnimatorBinding") final ObjectAnimator progressBarAnimator = ObjectAnimator.ofFloat(this, "animateProgress", start, end);
-		progressBarAnimator.setDuration(1500);
-		//		progressBarAnimator.setInterpolator(new AnticipateOvershootInterpolator(2f, 1.5f));
-		progressBarAnimator.setInterpolator(new LinearInterpolator());
+        if (!TextUtils.isEmpty(mTitle)) {
+            int xPos = (int) (getMeasuredWidth() / 2 - mTitlePaint.measureText(mTitle) / 2);
+            int yPos = (int) (getMeasuredHeight() / 2);
 
-		progressBarAnimator.addListener(new AnimatorListener() {
-			@Override
-			public void onAnimationCancel(final Animator animation) {
-			}
+            float titleHeight = Math.abs(mTitlePaint.descent() + mTitlePaint.ascent());
+            if (TextUtils.isEmpty(mSubTitle)) {
+                yPos += titleHeight / 2;
+            }
+            canvas.drawText(mTitle, xPos, yPos, mTitlePaint);
 
-			@Override
-			public void onAnimationEnd(final Animator animation) {
-				CircularProgressBar.this.setProgress(end);
-				if(listener!=null)
-					listener.onAnimationFinish();
-			}
+            yPos += titleHeight;
+            xPos = (int) (getMeasuredWidth() / 2 - mSubtitlePaint.measureText(mSubTitle) / 2);
 
-			@Override
-			public void onAnimationRepeat(final Animator animation) {
-			}
+            canvas.drawText(mSubTitle, xPos, yPos, mSubtitlePaint);
+        }
 
-			@Override
-			public void onAnimationStart(final Animator animation) {
-				if(listener!=null)
-					listener.onAnimationStart();
-			}
-		});
+        super.onDraw(canvas);
+    }
 
-		progressBarAnimator.addUpdateListener(new AnimatorUpdateListener() {
-			@Override
-			public void onAnimationUpdate(final ValueAnimator animation) {
-				int progress = ((Float) animation.getAnimatedValue()).intValue();
-				if(progress!=CircularProgressBar.this.getProgress()){
-					Log.d(TAG, progress + "");
-					CircularProgressBar.this.setProgress(progress);
-					if(listener!=null)
-						listener.onAnimationProgress(progress);					
-				}
-			}
-		});
-		progressBarAnimator.start();
-	}
+    @Override
+    protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
+        final int height = getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec);
+        final int width = getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec);
+        final int min = Math.min(width, height);
+        setMeasuredDimension(min + 2 * STROKE_WIDTH, min + 2 * STROKE_WIDTH);
 
-	public synchronized void setTitle(String title){
-		this.mTitle = title;
-		invalidate();
-	}
+        mCircleBounds.set(STROKE_WIDTH, STROKE_WIDTH, min + STROKE_WIDTH, min + STROKE_WIDTH);
+        mCircleBounds2.set(STROKE_WIDTH + STROKE_WIDTH / 2, STROKE_WIDTH + STROKE_WIDTH / 2, min + STROKE_WIDTH - STROKE_WIDTH / 2, min + STROKE_WIDTH - STROKE_WIDTH / 2);
+        //new code
+        mCircleBoundsBackground.set(STROKE_WIDTH * 2, STROKE_WIDTH * 2, min, min);
+    }
 
-	public synchronized void setSubTitle(String subtitle){
-		this.mSubTitle = subtitle;
-		invalidate();
-	}
+    @Override
+    public synchronized void setProgress(int progress) {
+        super.setProgress(progress);
 
-	public synchronized void setSubTitleColor(int color){
-		mSubtitlePaint.setColor(color);
-		invalidate();
-	}
+        // the setProgress super will not change the details of the progress bar
+        // anymore so we need to force an update to redraw the progress bar
+        invalidate();
+    }
 
-	public synchronized void setTitleColor(int color){
-		mTitlePaint.setColor(color);
-		invalidate();
-	}
+    public void animateProgressTo(final int start, final int end, final ProgressAnimationListener listener) {
+        if (start != 0)
+            setProgress(start);
 
-	public synchronized void setHasShadow(boolean flag){
-		this.mHasShadow = flag;
-		invalidate();
-	}
+        @SuppressLint("ObjectAnimatorBinding") final ObjectAnimator progressBarAnimator = ObjectAnimator.ofFloat(this, "animateProgress", start, end);
+        progressBarAnimator.setDuration(1500);
+        //		progressBarAnimator.setInterpolator(new AnticipateOvershootInterpolator(2f, 1.5f));
+        progressBarAnimator.setInterpolator(new LinearInterpolator());
 
-	public synchronized void setShadow(int color){
-		this.mShadowColor = color;
-		invalidate();
-	}
+        progressBarAnimator.addListener(new AnimatorListener() {
+            @Override
+            public void onAnimationCancel(final Animator animation) {
+            }
 
-	//new code
-	public synchronized  void setProgressColor(int color){
-		mProgressColorPaint.setColor(color);
-		invalidate();
-	}
+            @Override
+            public void onAnimationEnd(final Animator animation) {
+                CircularProgressBar.this.setProgress(end);
+                if (listener != null)
+                    listener.onAnimationFinish();
+            }
 
-	public String getTitle(){
-		return mTitle;
-	}
+            @Override
+            public void onAnimationRepeat(final Animator animation) {
+            }
 
-	public boolean getHasShadow(){
-		return mHasShadow;
-	}
+            @Override
+            public void onAnimationStart(final Animator animation) {
+                if (listener != null)
+                    listener.onAnimationStart();
+            }
+        });
+
+        progressBarAnimator.addUpdateListener(new AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(final ValueAnimator animation) {
+                int progress = ((Float) animation.getAnimatedValue()).intValue();
+                if (progress != CircularProgressBar.this.getProgress()) {
+                    Log.d(TAG, progress + "");
+                    CircularProgressBar.this.setProgress(progress);
+                    if (listener != null)
+                        listener.onAnimationProgress(progress);
+                }
+            }
+        });
+        progressBarAnimator.start();
+    }
+
+    public synchronized void setTitle(String title) {
+        this.mTitle = title;
+        invalidate();
+    }
+
+    public synchronized void setSubTitle(String subtitle) {
+        this.mSubTitle = subtitle;
+        invalidate();
+    }
+
+    public synchronized void setSubTitleColor(int color) {
+        mSubtitlePaint.setColor(color);
+        invalidate();
+    }
+
+    public synchronized void setTitleColor(int color) {
+        mTitlePaint.setColor(color);
+        invalidate();
+    }
+
+    public synchronized void setHasShadow(boolean flag) {
+        this.mHasShadow = flag;
+        invalidate();
+    }
+
+    public synchronized void setShadow(int color) {
+        this.mShadowColor = color;
+        invalidate();
+    }
+
+    //new code
+    public synchronized void setProgressColor(int color) {
+        mProgressColorPaint.setColor(color);
+        mProgressColorPaintLine1.setColor(color);
+        invalidate();
+    }
+    public synchronized void setProgressColorLine2(int color){
+        mProgressColorPaintLine2.setColor(color);
+        invalidate();
+    }
+    //new code
+    public synchronized void setShowline2(boolean showLine2) {
+        mShowLine2 = showLine2;
+        invalidate();
+    }
+
+    public synchronized void setProgressLine2(int progress) {
+        mProgressLine2 = progress;
+        invalidate();
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public boolean getHasShadow() {
+        return mHasShadow;
+    }
 }

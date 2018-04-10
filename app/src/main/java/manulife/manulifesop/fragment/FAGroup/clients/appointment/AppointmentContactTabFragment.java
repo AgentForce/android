@@ -2,6 +2,7 @@ package manulife.manulifesop.fragment.FAGroup.clients.appointment;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
@@ -14,7 +15,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +45,9 @@ import manulife.manulifesop.util.Utils;
 
 public class AppointmentContactTabFragment extends BaseFragment<AppointmentActivity, AppointmentContactTabPresent> implements AppointmentContactTabContract.View {
 
+    @BindView(R.id.layout_root)
+    LinearLayout layoutRoot;
+
     @BindView(R.id.edt_search)
     EditText edtSearch;
     @BindView(R.id.rcv_contact)
@@ -64,7 +70,6 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
     public static AppointmentContactTabFragment newInstance(int type, String typeString, int target, int month) {
         Bundle args = new Bundle();
         args.putInt("type", type);
-        args.putString("typeString", typeString);
         args.putString("typeString", typeString);
         args.putInt("target", target);
         args.putInt("month", month);
@@ -102,6 +107,7 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
         mMonth = getArguments().getInt("month", 0);
         initViews();
         loadDataContact(getFirstData());
+        addTextChangeListener();
     }
 
     private UsersList getFirstData() {
@@ -158,45 +164,70 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
     public void onResume() {
         super.onResume();
         edtSearch.setText("", TextView.BufferType.EDITABLE);
+    }
 
-        if (mTextWatcher != null) {
-            edtSearch.removeTextChangedListener(mTextWatcher);
-        }
-        mTextWatcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+    @Override
+    public void addTextChangeListener() {
+        layoutRoot.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                layoutRoot.getWindowVisibleDisplayFrame(r);
+                int screenHeight = layoutRoot.getRootView().getHeight();
 
-            }
+                // r.bottom is the position above soft keypad or device button.
+                // if keypad is shown, the r.bottom is smaller than that before.
+                int keypadHeight = screenHeight - r.bottom;
 
-            @Override
-            public void afterTextChanged(Editable editable) {
-                handler.removeCallbacks(workRunnable);
-                workRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        doSmth(edtSearch.getText().toString());
+                if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+                    // keyboard is opened
+                    if (mTextWatcher != null) {
+                        edtSearch.removeTextChangedListener(mTextWatcher);
                     }
-                };
-                handler.postDelayed(workRunnable, 2000 /*delay*/);
-            }
+                    mTextWatcher = new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            Handler handler = new Handler(Looper.getMainLooper() /*UI thread*/);
-            Runnable workRunnable;
+                        }
 
-            private final void doSmth(String str) {
-                if (mActivity.getSelectedType() == mType) {
-                    mData.clear();
-                    mActionListener.getContact(mMonth, mType, 1, str);
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            handler.removeCallbacks(workRunnable);
+                            workRunnable = new Runnable() {
+                                @Override
+                                public void run() {
+                                    doSmth(edtSearch.getText().toString());
+                                }
+                            };
+                            handler.postDelayed(workRunnable, 1000 /*delay*/);
+                        }
+
+                        Handler handler = new Handler(Looper.getMainLooper() /*UI thread*/);
+                        Runnable workRunnable;
+
+                        private final void doSmth(String str) {
+                            if (mActivity.getSelectedType() == mType) {
+                                mData.clear();
+                                mActionListener.getContact(mMonth, mType, 1, str);
+                                if (mTextWatcher != null) {
+                                    edtSearch.removeTextChangedListener(mTextWatcher);
+                                }
+                            }
+                        }
+                    };
+                    //get text after 2 seconds
+                    edtSearch.addTextChangedListener(mTextWatcher);
+                } else {
+                    // keyboard is closed
                 }
             }
-        };
-        //get text after 2 seconds
-        edtSearch.addTextChangedListener(mTextWatcher);
+        });
     }
 
     @Override

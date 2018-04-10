@@ -112,7 +112,7 @@ public class AddContactPersonActivity extends BaseActivity<AddContactPersonPrese
                         doSmth(edtSearch.getText().toString());
                     }
                 };
-                handler.postDelayed(workRunnable, 2000 /*delay*/);
+                handler.postDelayed(workRunnable, 1000 /*delay*/);
             }
 
             Handler handler = new Handler(Looper.getMainLooper() /*UI thread*/);

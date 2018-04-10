@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import chick.indicator.CircleIndicatorPager;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
+import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.api.ObjectResponse.CampaignForcastTarget;
 import manulife.manulifesop.base.BaseActivity;
@@ -66,10 +65,13 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     @BindView(R.id.txt_contract_num)
     TextView txtContractNum;
 
+    @BindView(R.id.txt_avatar)
+    TextView txtAvatar;
+
     private boolean mIsShowSuccessView = false;
 
     private int mContractNum = 0;
-    private int mIncome = 0;
+    private int mIncome = 55;
     private int mContractPrice = 0;
     private int mProfit;
     private String mStartDate = "";
@@ -80,11 +82,14 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     private List<BaseFragment> mListFragment;
     private CustomViewPagerAdapter mAdapter;
 
+    private String mName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
         hideKeyboardOutside(layoutRoot);
+        mName = getIntent().getStringExtra("name");
         mActionListener = new CreatePlanPresenter(this, this);
         setupSupportForApp();
         initViewPager();
@@ -130,11 +135,25 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 2) {
+                switch (position){
+                    case 1:{
+                        ((CreatePlanStep2Fragment) mAdapter.getItem(position)).setProgressIncome(mIncome);
+                        break;
+                    }
+                    case 2:{
+                        ((CreatePlanStep3Fragment) mAdapter.getItem(position)).updateDate(mContractNum, mMonthNum);
+                        break;
+                    }
+                    case 3:{
+                        mActionListener.getCampaignForcast(mIncome, mProfit, mContractPrice,mStartDate,mEndDate);
+                        break;
+                    }
+                }
+                /*if (position == 2) {
                     ((CreatePlanStep3Fragment) mAdapter.getItem(position)).updateDate(mContractNum, mMonthNum);
                 } else if (position == 3) {
                     mActionListener.getCampaignForcast(mIncome, mProfit, mContractPrice,mStartDate,mEndDate);
-                }
+                }*/
             }
 
             @Override
@@ -220,6 +239,8 @@ public class CreatePlanActivity extends BaseActivity<CreatePlanPresenter> implem
     public void showSuccessView() {
         this.mIsShowSuccessView = true;
         layoutBackButton.setVisibility(View.GONE);
+
+        txtAvatar.setText(mName.substring(0,1));
 
         Animation in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         Animation out = AnimationUtils.loadAnimation(this, R.anim.fade_out);

@@ -26,16 +26,16 @@ public class CampaignForcastTarget {
 
         @SerializedName("newAgent")
         @Expose
-        public List<Integer> newAgent = null;
+        public List<Long> newAgent = null;
         @SerializedName("monthlyBonus")
         @Expose
-        public List<Integer> monthlyBonus = null;
+        public List<Long> monthlyBonus = null;
         @SerializedName("quarterBonus")
         @Expose
-        public List<Integer> quarterBonus = null;
+        public List<Long> quarterBonus = null;
         @SerializedName("mdrtBonus")
         @Expose
-        public List<Integer> mdrtBonus = null;
+        public List<Long> mdrtBonus = null;
 
     }
 }

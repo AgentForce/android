@@ -1,30 +1,24 @@
 package manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ObjectMonth;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.appointment.AppointmentActivity;
 import manulife.manulifesop.activity.FAGroup.clients.consultant.ConsultantActivity;
 import manulife.manulifesop.activity.FAGroup.clients.contact.ContactPersonActivity;
 import manulife.manulifesop.activity.FAGroup.clients.introduceContact.IntroduceContactActivity;
 import manulife.manulifesop.activity.FAGroup.clients.signed.SignedPersonActivity;
-import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
+import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.util.Utils;

@@ -76,25 +76,25 @@ public class UserProfile {
         public Integer zone;
         @SerializedName("createdAt")
         @Expose
-        public Object createdAt;
+        public String createdAt;
         @SerializedName("code_level")
         @Expose
-        public Object codeLevel;
+        public String codeLevel;
         @SerializedName("badge")
         @Expose
-        public Object badge;
+        public String badge;
         @SerializedName("updatedAt")
         @Expose
         public String updatedAt;
         @SerializedName("report_to")
         @Expose
-        public Object reportTo;
+        public Integer reportTo;
         @SerializedName("report_to_list")
         @Expose
         public Object reportToList;
         @SerializedName("report_to_username")
         @Expose
-        public Object reportToUsername;
+        public String reportToUsername;
 
     }
 }

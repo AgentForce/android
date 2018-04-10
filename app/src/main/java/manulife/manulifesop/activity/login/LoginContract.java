@@ -24,6 +24,8 @@ public interface LoginContract {
         void showLogin(String pass);
         void showMainFAActvity();
         void showConfirmCreatePlan();
+
+        void clearPass();
     }
 
     interface Action {

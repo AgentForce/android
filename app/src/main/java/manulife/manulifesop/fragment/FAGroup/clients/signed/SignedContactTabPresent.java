@@ -31,7 +31,7 @@ public class SignedContactTabPresent extends BasePresenter<SignedContactTabContr
         getCompositeDisposable().add(ApiService.getServer().getUserList(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                period, 2,status,page,10,search)
+                period, 4,status,page,10,search)
                 .subscribeOn(Schedulers.computation())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

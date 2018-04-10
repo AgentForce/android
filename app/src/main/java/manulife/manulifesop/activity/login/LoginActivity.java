@@ -1,12 +1,8 @@
 package manulife.manulifesop.activity.login;
 
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -20,16 +16,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.confirmCreatePlan.ConfirmCreatePlanActivity;
-import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
-import manulife.manulifesop.adapter.CustomViewPagerAdapter;
+import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter2;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
-import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
 import manulife.manulifesop.fragment.login.confirmPassInput.ConfirmPassFragment;
 import manulife.manulifesop.fragment.login.createPassInput.CreatePassFragment;
 import manulife.manulifesop.fragment.login.otpInput.OTPFragment;
@@ -77,8 +70,9 @@ public class LoginActivity extends BaseActivity<LoginPresent>
 
     //variable title action bar
     private List<String> mTitleActionBar;
-
     private boolean isInPassInput = false;
+
+    private CustomViewPagerAdapter2 mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,9 +112,16 @@ public class LoginActivity extends BaseActivity<LoginPresent>
         mListFragment.add(CreatePassFragment.newInstance());
         mListFragment.add(ConfirmPassFragment.newInstance());
 
-        CustomViewPagerAdapter2 mAdapter = new CustomViewPagerAdapter2(getSupportFragmentManager(), mListFragment);
+        mAdapter = new CustomViewPagerAdapter2(getSupportFragmentManager(), mListFragment);
         viewPager.setAdapter(mAdapter);
 
+    }
+
+    @Override
+    public void clearPass() {
+        if(viewPager.getCurrentItem() == 2){
+            ((PassFragment)mAdapter.getItem(2)).clearPass();
+        }
     }
 
     @Override

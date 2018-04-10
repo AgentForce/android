@@ -99,7 +99,7 @@ public class IntroduceContactActivity extends BaseActivity<IntroduceContactPrese
 
     private void setupSupportForApp() {
         //txtActionbarTitle.setText(getResources().getString(R.string.activity_create_plan_title_actionbar));
-        txtActionbarTitle.setText("Danh sách KH giới thiệu T12");
+        txtActionbarTitle.setText("Danh sách KH giới thiệu T" + mMonth);
         layoutBackButton.setVisibility(View.VISIBLE);
 
         int statusBarHeight = 0;

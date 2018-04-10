@@ -19,6 +19,7 @@ import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.base.BasePresenter;
+import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ContactMonth.FAContactMonthFragment;
 import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ObjectMonth.FAObjectMonthFragment;
 import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ObjectWeek.FAObjectWeekFragment;
 import manulife.manulifesop.util.Contants;
@@ -43,11 +44,18 @@ public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerCon
     public void getCampaignMonth(int month) {
         this.mMonth = month;
         mPresenterView.showLoading("Lấy thông tin chiến dịch");
-        getCompositeDisposable().add(ApiService.getServer().campaignMonth(
+        getCompositeDisposable().add(ApiService.getServer().getContactMonth(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
-                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, month)
+                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, month,"",1,10)
                 .subscribeOn(Schedulers.computation())
+                .flatMap(contactMonth -> {
+                    ProjectApplication.getInstance().setContactMonth(contactMonth);
+                    return ApiService.getServer().campaignMonth(
+                            SOPSharedPreferences.getInstance(mContext).getAccessToken(),
+                            Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
+                            DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, month);
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(this::handleResponseCampaignMonth, this::handleError)
@@ -71,6 +79,7 @@ public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerCon
             List<BaseFragment> mListFragment = new ArrayList<>();
             mListFragment.add(FAObjectMonthFragment.newInstance(data, month));
             mListFragment.add(FAObjectWeekFragment.newInstance(data, month));
+            mListFragment.add(FAContactMonthFragment.newInstance(month));
             return mListFragment;
         }).subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())

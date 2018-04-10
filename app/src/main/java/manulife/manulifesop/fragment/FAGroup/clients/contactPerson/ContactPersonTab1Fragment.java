@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
@@ -22,11 +23,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -61,6 +69,14 @@ import static android.app.Activity.RESULT_OK;
 
 public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivity, ContactPersonTab1Present> implements ContactPersonTab1Contract.View,
         View.OnClickListener {
+
+    @BindView(R.id.expandable_layout_top)
+    ExpandableLayout expandableLayout;
+    @BindView(R.id.img_show_add)
+    ImageView imgShowAdd;
+
+    @BindView(R.id.layout_root)
+    LinearLayout layoutRoot;
 
     @BindView(R.id.edt_search)
     EditText edtSearch;
@@ -138,6 +154,7 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
         //loadDataContact();
         UsersList data = (UsersList) getArguments().getSerializable("data");
         loadContactList(data);
+        addTextChangeListener();
     }
 
     @Override
@@ -165,51 +182,78 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
     public void onResume() {
         super.onResume();
         edtSearch.setText("", TextView.BufferType.EDITABLE);
+    }
 
-        if (mTextWatcher != null) {
-            edtSearch.removeTextChangedListener(mTextWatcher);
-        }
-        mTextWatcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    @Override
+    public void addTextChangeListener() {
 
-            }
+        layoutRoot.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                layoutRoot.getWindowVisibleDisplayFrame(r);
+                int screenHeight = layoutRoot.getRootView().getHeight();
 
-            }
+                // r.bottom is the position above soft keypad or device button.
+                // if keypad is shown, the r.bottom is smaller than that before.
+                int keypadHeight = screenHeight - r.bottom;
 
-            @Override
-            public void afterTextChanged(Editable editable) {
-                handler.removeCallbacks(workRunnable);
-                workRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        doSmth(edtSearch.getText().toString());
+                if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+                    // keyboard is opened
+                    if (mTextWatcher != null) {
+                        edtSearch.removeTextChangedListener(mTextWatcher);
                     }
-                };
-                handler.postDelayed(workRunnable, 2000 /*delay*/);
-            }
+                    mTextWatcher = new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            Handler handler = new Handler(Looper.getMainLooper() /*UI thread*/);
-            Runnable workRunnable;
+                        }
 
-            private final void doSmth(String str) {
-                if (mActivity.getSelectedType() == mType) {
-                    mData.clear();
-                    mActionListener.getUserListProcess(mMonth, mType, 1, str);
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            handler.removeCallbacks(workRunnable);
+                            workRunnable = new Runnable() {
+                                @Override
+                                public void run() {
+                                    doSmth(edtSearch.getText().toString());
+                                }
+                            };
+                            handler.postDelayed(workRunnable, 1000);
+                        }
+
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        Runnable workRunnable;
+
+                        private final void doSmth(String str) {
+                            if (mActivity.getSelectedType() == mType) {
+                                mData.clear();
+                                mActionListener.getUserListProcess(mMonth, mType, 1, str);
+
+                                if (mTextWatcher != null) {
+                                    edtSearch.removeTextChangedListener(mTextWatcher);
+                                }
+                            }
+                        }
+                    };
+                    //get text after 2 seconds
+                    edtSearch.addTextChangedListener(mTextWatcher);
+                } else {
+                    // keyboard is closed
                 }
             }
-        };
-        //get text after 2 seconds
-        edtSearch.addTextChangedListener(mTextWatcher);
+        });
+
     }
 
     @Override
     public void loadContactList(UsersList data) {
         listContact.setLayoutManager(mLayoutManager);
-
         for (int i = 0; i < data.data.rows.size(); i++) {
             ActiveHistFA temp = new ActiveHistFA();
             temp.setId(data.data.rows.get(i).id);
@@ -251,7 +295,6 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
         });
         listContact.setAdapter(mAdapterActiveHist);
 
-
         //set space between two items
         int[] ATTRS = new int[]{android.R.attr.listDivider};
         TypedArray a = getContext().obtainStyledAttributes(ATTRS);
@@ -265,7 +308,6 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
                 mLayoutManager.getOrientation());
         dividerItemDecoration.setDrawable(insetDivider);
         listContact.addItemDecoration(dividerItemDecoration);
-
 
         listContact.clearOnScrollListeners();
         listContact.addOnScrollListener(new EndlessScrollListenerRecyclerView(
@@ -438,7 +480,8 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
         return true;
     }
 
-    @OnClick({R.id.txt_add_from_telephone, R.id.txt_add_new, R.id.txt_add_from_introduce})
+    @OnClick({R.id.txt_add_from_telephone, R.id.txt_add_new,
+            R.id.txt_add_from_introduce, R.id.layout_show_add})
     public void onClickEvent(View view) {
         int id = view.getId();
         switch (id) {
@@ -463,6 +506,16 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
                 data.putBoolean("isFromContact", true);
                 //mActivity.goNextScreen(IntroduceContactActivity.class,data);
                 mActivity.goNextScreen(IntroduceContactActivity.class, data, Contants.ADD_INTRODUCE_FROM_CONTACT);
+                break;
+            }
+            case R.id.layout_show_add:{
+                if(expandableLayout.isExpanded()){
+                    expandableLayout.collapse(true);
+                    imgShowAdd.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_down));
+                }else{
+                    expandableLayout.expand(true);
+                    imgShowAdd.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_up));
+                }
                 break;
             }
         }

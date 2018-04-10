@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import chick.indicator.CircleIndicatorPager;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
+import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;

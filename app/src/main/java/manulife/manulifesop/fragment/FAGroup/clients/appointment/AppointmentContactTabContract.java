@@ -13,6 +13,8 @@ public interface AppointmentContactTabContract {
     interface View extends BaseMVPView {
         void gotoConactDetail(int id);
         void loadDataContact(UsersList data);
+
+        void addTextChangeListener();
     }
 
     interface Action {

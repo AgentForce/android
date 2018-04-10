@@ -75,8 +75,7 @@ public class CreatePassFragment extends BaseFragment<LoginActivity, CreatePassPr
         initPasswordView();
     }
 
-    public void initPasswordView()
-    {
+    public void initPasswordView() {
         //init list password
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         listPass.setLayoutManager(layoutManager);
@@ -89,7 +88,7 @@ public class CreatePassFragment extends BaseFragment<LoginActivity, CreatePassPr
         mDataList.add(false);
         mDataList.add(false);
 
-        mAdapter = new PasswordAdapter(getContext(),mDataList);
+        mAdapter = new PasswordAdapter(getContext(), mDataList);
         listPass.setAdapter(mAdapter);
 
         //list pass listener
@@ -122,40 +121,19 @@ public class CreatePassFragment extends BaseFragment<LoginActivity, CreatePassPr
             public void afterTextChanged(Editable editable) {
                 String tmpText = editable.toString();
 
-                for(int i=1;i<=mDataList.size();i++)
-                {
-                    if(i <= tmpText.length()) {
-                        mDataList.set(i-1, true);
-                    }else
-                    {
-                        mDataList.set(i-1,false);
+                for (int i = 1; i <= mDataList.size(); i++) {
+                    if (i <= tmpText.length()) {
+                        mDataList.set(i - 1, true);
+                    } else {
+                        mDataList.set(i - 1, false);
                     }
                 }
                 mAdapter.notifyDataSetChanged();
-                if(tmpText.length()>=6)
-                {
+                if (tmpText.length() >= 6) {
                     mActivity.showFragmentConfirmPass(tmpText);
                 }
             }
         });
 
     }
-
-    /*@OnClick(R.id.btn_next)
-    public void onClick(View view) {
-        int id = view.getId();
-        switch (id) {
-            case R.id.btn_next: {
-                if (edtPass.getText().toString().length() >= 6) {
-                    //mActivity.showFragmentPhoneInput(edtAgencyName.getText().toString());
-                    //mActivity.showCheckingUser(edtPhone.getText().toString());
-                    //mActivity.showCheckOTP(edtOTP.getText().toString());
-
-                } else {
-                    mActivity.showMessage("Thông báo", "Mật khẩu có 6 ký tự!", SweetAlertDialog.WARNING_TYPE);
-                }
-                break;
-            }
-        }
-    }*/
 }

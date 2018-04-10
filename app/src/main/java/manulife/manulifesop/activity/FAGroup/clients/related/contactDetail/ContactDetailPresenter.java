@@ -99,8 +99,8 @@ public class ContactDetailPresenter extends BasePresenter<ContactDetailContract.
 
     private void handleResponseChangeStatus(BaseResponse baseResponse) {
         if(baseResponse.statusCode == 1){
-            mPresenterView.finishChangeStatus();
             mPresenterView.finishLoading();
+            mPresenterView.finishChangeStatus();
         }else {
             mPresenterView.finishLoading(baseResponse.msg,false);
         }

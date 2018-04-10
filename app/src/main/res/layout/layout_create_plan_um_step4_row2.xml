@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/cus_border_grey">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:text="Số HĐ/Đại lý hoạt động" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="90"
+        android:layout_marginBottom="10dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:orientation="horizontal"
+            android:gravity="right">
+
+            <RelativeLayout
+                android:id="@+id/layout_add_step4_row2"
+                android:layout_width="40dp"
+                android:layout_height="40dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    app:riv_border_color="@color/colorPrimary"
+                    app:riv_border_width="2dp"
+                    app:riv_corner_radius="20dp"
+                    app:riv_mutate_background="true" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="17dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_add_green" />
+            </RelativeLayout>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/txt_num_contract_per_agent"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:text="3"
+            android:textStyle="bold"
+            android:textSize="24sp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:orientation="horizontal"
+            android:gravity="left">
+
+            <RelativeLayout
+                android:id="@+id/layout_sub_step4_row2"
+                android:layout_width="40dp"
+                android:layout_height="40dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"
+                    app:riv_border_color="@color/colorPrimary"
+                    app:riv_border_width="2dp"
+                    app:riv_corner_radius="20dp"
+                    app:riv_mutate_background="true" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="14dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_sub_green" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

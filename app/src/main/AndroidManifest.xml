@@ -30,10 +30,10 @@
             android:name=".activity.first.FirstActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeTranslucent">
-            <!--<intent-filter>
+            <intent-filter>
                  <action android:name="android.intent.action.MAIN" />
                  <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>-->
+             </intent-filter>
         </activity>
         <activity
             android:name=".activity.login.LoginActivity"
@@ -52,7 +52,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
@@ -65,7 +64,6 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
@@ -76,15 +74,14 @@
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
 
         <activity
-            android:name=".activity.FAGroup.main.MainFAActivity"
+            android:name=".activity.main.MainFAActivity"
             android:label="@string/activity_main_fa_dashboard"
             android:screenOrientation="portrait"></activity>
 

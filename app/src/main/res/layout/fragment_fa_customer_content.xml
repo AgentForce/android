@@ -11,7 +11,7 @@
         android:layout_height="30dp"
         android:background="#eeeeee"
         app:tabGravity="fill"
-        app:tabMode="fixed"
+        app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/colorPrimaryDark"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         app:tabTextColor="@android:color/black" />

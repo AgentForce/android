@@ -20,7 +20,7 @@ import butterknife.BindView;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.related.createEvent.CreateEventActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.eventDetail.EventDetailActivity;
-import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
+import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.EventCalendarAdapter;
 import manulife.manulifesop.adapter.ObjectData.EventCalendar;
 import manulife.manulifesop.base.BaseFragment;

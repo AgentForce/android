@@ -1,5 +1,6 @@
 package manulife.manulifesop.fragment.FAGroup.clients;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,13 +9,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import java.util.Calendar;
 
 import butterknife.BindView;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
+import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.FAContentCustomerFragment;
@@ -25,6 +26,8 @@ import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.FAContentCust
 
 public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerPresent> implements FACustomerContract.View {
 
+    @BindView(R.id.layout_root)
+    LinearLayout layoutRoot;
 
     @BindView(R.id.tabs_menu)
     TabLayout tabLayout;

@@ -6,6 +6,13 @@
     <string name="activity_welcome_content">Khi bấm vào đồng ý, bạn đã chấp nhận các điều khoản &amp; điều kiện của ứng dụng Manulife</string>
     <string name="activity_welcome_note">Tôi đồng ý cho phép ứng dụng truy cập danh bạn điện thoại của tôi</string>
 
+    <string name="activity_welcome_title_step1">Quản lý khách hàng</string>
+    <string name="activity_welcome_content_tep1">Tạo danh sách khách hàng theo từng tháng giúp bạn quản lý &amp; chăm sóc khách hàng tốt hơn</string>
+    <string name="activity_welcome_title_step2">Theo dõi trạng thái khách hàng</string>
+    <string name="activity_welcome_content_tep2">Cập nhật, theo dõi khách hàng trong từng giai đoạn từ liên hệ cho đến khi ký kết hợp đồng</string>
+    <string name="activity_welcome_title_step3">Biểu đồ cập nhật số lượng khách hàng trong tháng</string>
+    <string name="activity_welcome_content_tep3">Cập nhật số lượng thông tin khách hàng chín sác giúp bạn đạt kết quả kinh doanh hiệu quả nhất</string>
+
     <!--activity_login-->
     <string name="activity_login_title">Đăng nhập tài khoản</string>
     <string name="activity_login_hello">Vui lòng nhập mật khẩu</string>
@@ -51,6 +58,12 @@
     <!--activity_create_plan_SM-->
     <string name="activity_create_plan_SM_title_step2">Kế hoạch dự kiến</string>
     <string name="activity_create_plan_SM_title_step3">Kế hoạch kinh doanh SM</string>
+
+    <!--activity_create_plan_UM-->
+    <string name="activity_create_plan_UM_title_step2">Dự báo kế hoạch tuyển dụng</string>
+    <string name="activity_create_plan_UM_title_step3">Tuyển dụng đại lý mới</string>
+    <string name="activity_create_plan_UM_title_step4">Đại lý hiện hữu</string>
+    <string name="activity_create_plan_UM_title_step5">Phát triển UM mới</string>
 
     <!--activity_signed_success-->
     <string name="activity_signed_success_title">Vui lòng nhập vài thông tin dưới đây để hoàn tất hợp đồng</string>

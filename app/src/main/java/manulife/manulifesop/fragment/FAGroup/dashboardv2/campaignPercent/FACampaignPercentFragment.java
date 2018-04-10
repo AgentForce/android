@@ -22,7 +22,7 @@ import butterknife.OnClick;
 import chick.circular_progress_bar.CircularProgressBar;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
+import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
@@ -120,11 +120,25 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
 
     private void initViews(){
         if(mType.equals("week")){
-            txtTitle.setText("Sửa số lượng liên hệ");
+            txtTitle.setText("Phân bổ kế hoạch làm việc");
         }else if(mType.equals("month")){
             txtTitle.setText("Thêm mục tiêu tháng");
         }else{
             txtTitle.setVisibility(View.GONE);
+            circularProgressBar1.setShowline2(true);
+            circularProgressBar1.setProgressLine2(50);
+
+            circularProgressBar2.setShowline2(true);
+            circularProgressBar2.setProgressLine2(50);
+
+            circularProgressBar3.setShowline2(true);
+            circularProgressBar3.setProgressLine2(50);
+
+            circularProgressBar4.setShowline2(true);
+            circularProgressBar4.setProgressLine2(50);
+
+            circularProgressBar5.setShowline2(true);
+            circularProgressBar5.setProgressLine2(50);
         }
 
         circularProgressBar1.setTitle(mPercents.get(0) + "%");

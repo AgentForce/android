@@ -27,6 +27,7 @@ import manulife.manulifesop.api.ObjectResponse.CheckUser;
 import manulife.manulifesop.api.ObjectResponse.CheckVersion;
 import manulife.manulifesop.api.ObjectResponse.ContactActivity;
 import manulife.manulifesop.api.ObjectResponse.ContactHistory;
+import manulife.manulifesop.api.ObjectResponse.ContactMonth;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
 import manulife.manulifesop.api.ObjectResponse.EventsCreate;
 import manulife.manulifesop.api.ObjectResponse.EventsMonth;
@@ -62,8 +63,9 @@ public interface ApiInterface {
     Observable<LoginResult> login(@Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                   @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
                                   @Body InputLoginData data);
+
     @GET("users/profile/{username}")
-    Observable<UserProfile> getUserProfile(@Header("Authorization") String accessToken,@Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+    Observable<UserProfile> getUserProfile(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                            @Header("devicename") String devicename, @Header("imei") String imei,
                                            @Path(value = "username", encoded = false) String username);
 
@@ -93,8 +95,8 @@ public interface ApiInterface {
 
     @POST("users/refreshtoken")
     Observable<RefreshToken> refreshToken(@Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
-                                            @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
-                                            @Body InputRefreshToken data);
+                                          @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                          @Body InputRefreshToken data);
 
     @POST("campaigns/fa")
     Observable<VerifyOTP> createCampaign(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
@@ -140,17 +142,18 @@ public interface ApiInterface {
     Observable<UsersList> getIntorduceUserList(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                                @Header("devicename") String devicename, @Header("imei") String imei,
                                                @Path(value = "period", encoded = false) int period, @Query("page") int page,
-                                               @Query("limit") int limit,@Query("search") String search);
+                                               @Query("limit") int limit, @Query("search") String search);
 
     @POST("leads")
     Observable<BaseResponse> addContact(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                         @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
                                         @Body InputAddContact data);
+
     @PUT("leads/{id}")
     Observable<BaseResponse> updateContact(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
-                                                 @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
-                                                 @Path(value = "id", encoded = false) int id,
-                                                 @Body InputUpdateContact data);
+                                           @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                           @Path(value = "id", encoded = false) int id,
+                                           @Body InputUpdateContact data);
 
     @GET("leads/{id}")
     Observable<ContactDetail> getContactDetail(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
@@ -193,6 +196,7 @@ public interface ApiInterface {
     Observable<BaseResponse> deleteEvent(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                          @Header("devicename") String devicename, @Header("imei") String imei,
                                          @Path(value = "id", encoded = false) int id);
+
     @POST("activities")
     Observable<EventsCreate> createActivity(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                             @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
@@ -200,18 +204,20 @@ public interface ApiInterface {
 
     @PUT("activities/{id}")
     Observable<BaseResponse> updateEvent(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
-                                                @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                         @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
                                          @Path(value = "id", encoded = false) int id, @Body InputUpdateEvent data);
+
     @PUT("activities/complete/{id}")
     Observable<BaseResponse> updateEventDone(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
-                                         @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
-                                         @Path(value = "id", encoded = false) int id);
+                                             @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                             @Path(value = "id", encoded = false) int id);
 
     @PUT("campaigns/incrementcontract/{period}")
     Observable<BaseResponse> increaseContactCampaign(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
-                                                 @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
-                                                 @Path(value = "period", encoded = false) int period,
-                                                 @Body InputIncreaseContact data);
+                                                     @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                     @Path(value = "period", encoded = false) int period,
+                                                     @Body InputIncreaseContact data);
+
     @PUT("campaigns/target/{period}")
     Observable<BaseResponse> changeCampaignWeek(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                                 @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
@@ -221,14 +227,22 @@ public interface ApiInterface {
 
     @POST("campaigns/forcasttarget")
     Observable<CampaignForcastTarget> getCampaignForcast(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
-                                                     @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
-                                                     @Body InputGetForcastTarget data);
+                                                         @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                         @Body InputGetForcastTarget data);
 
     @POST("leads/contract")
     Observable<BaseResponse> submitContract(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
-                                                         @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
-                                                         @Body InputSubmitContract data);
+                                            @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                            @Body InputSubmitContract data);
+
     @PUT("campaigns/forwardtarget")
     Observable<BaseResponse> forwardTarget(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
-                                                @Header("devicename") String devicename, @Header("imei") String imei);
+                                           @Header("devicename") String devicename, @Header("imei") String imei);
+
+    @GET("leads/search/{month}")
+    Observable<ContactMonth> getContactMonth(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                             @Header("devicename") String devicename, @Header("imei") String imei,
+                                             @Path(value = "month", encoded = false) int month,
+                                             @Query("search") String search,
+                                             @Query("page") int page, @Query("limit") int limit);
 }

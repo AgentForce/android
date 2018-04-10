@@ -10,7 +10,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface CreatePlanStep2Contract {
 
     interface View extends BaseMVPView {
-
+        void setProgressIncome(float value);
     }
 
     interface Action {

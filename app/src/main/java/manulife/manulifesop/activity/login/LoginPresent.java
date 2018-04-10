@@ -102,7 +102,9 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
             chekCampaign();
 
         } else {
+            mPresenterView.clearPass();
             mPresenterView.finishLoading(data.getMsg(), false);
+
         }
     }
 

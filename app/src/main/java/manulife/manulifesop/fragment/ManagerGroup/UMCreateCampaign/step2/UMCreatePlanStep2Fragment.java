@@ -22,6 +22,14 @@ public class UMCreatePlanStep2Fragment extends BaseFragment<UMCreatePlanActivity
     TextView txtStartDate;
     @BindView(R.id.txt_end_date)
     TextView txtEndDate;
+    @BindView(R.id.txt_planed_agent)
+    TextView txtPlanedAgent;
+    @BindView(R.id.txt_planed_manager)
+    TextView txtPlanedManager;
+    @BindView(R.id.txt_not_planed_agent)
+    TextView txtNotPlanedAgent;
+    @BindView(R.id.txt_not_planed_manager)
+    TextView txtNotPlanedManager;
 
 
     @BindView(R.id.txt_new_recruitment)
@@ -32,9 +40,6 @@ public class UMCreatePlanStep2Fragment extends BaseFragment<UMCreatePlanActivity
     TextView txtIncreaseAgent;
     @BindView(R.id.txt_increase_contract)
     TextView txtIncreaseContract;
-    @BindView(R.id.txt_increase_profit)
-    TextView txtIncreaseProfit;
-
 
     @BindView(R.id.rb_month_year)
     RadioGroup rbMonthYear;

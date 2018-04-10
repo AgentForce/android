@@ -1,25 +1,15 @@
 package manulife.manulifesop.fragment.FAGroup.confirmCreatePlan;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
-import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
-import manulife.manulifesop.adapter.CustomViewPagerAdapter;
+import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.base.BaseFragment;
-import manulife.manulifesop.element.CustomViewPager;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step1.CreatePlanStep1Contract;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step1.CreatePlanStep1Present;
-import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Fragment;
 
 /**
  * Created by Chick on 10/27/2017.

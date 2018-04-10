@@ -10,7 +10,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface PassContract {
 
     interface View extends BaseMVPView {
-
+        void clearPass();
     }
 
     interface Action {

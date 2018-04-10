@@ -16,18 +16,17 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import chick.indicator.CircleIndicatorPager;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
-import manulife.manulifesop.activity.ManagerGroup.SMCreatePlan.SMCreatePlanContract;
-import manulife.manulifesop.activity.ManagerGroup.SMCreatePlan.SMCreatePlanPresenter;
+import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
-import manulife.manulifesop.fragment.ManagerGroup.SMCreateCampaign.step1.SMCreatePlanStep1Fragment;
-import manulife.manulifesop.fragment.ManagerGroup.SMCreateCampaign.step2.SMCreatePlanStep2Fragment;
-import manulife.manulifesop.fragment.ManagerGroup.SMCreateCampaign.step3.SMCreatePlanStep3Fragment;
 import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step1.UMCreatePlanStep1Fragment;
 import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step2.UMCreatePlanStep2Fragment;
+import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step3.UMCreatePlanStep3Fragment;
+import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step4.UMCreatePlanStep4Fragment;
+import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step5.UMCreatePlanStep5Fragment;
+import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step6.UMCreatePlanStep6Fragment;
 import manulife.manulifesop.util.Utils;
 
 
@@ -108,6 +107,10 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
         mListFragment = new ArrayList<>();
         mListFragment.add(UMCreatePlanStep1Fragment.newInstance());
         mListFragment.add(UMCreatePlanStep2Fragment.newInstance());
+        mListFragment.add(UMCreatePlanStep3Fragment.newInstance());
+        mListFragment.add(UMCreatePlanStep4Fragment.newInstance());
+        mListFragment.add(UMCreatePlanStep5Fragment.newInstance());
+        mListFragment.add(UMCreatePlanStep6Fragment.newInstance());
 
         mAdapter = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment);
         if (viewPager != null) {

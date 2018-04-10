@@ -1,25 +1,16 @@
 package manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ObjectWeek;
 
-import android.app.AlertDialog;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.warkiz.widget.IndicatorSeekBar;
-
-import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
+import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.FAContentCustomerFragment;

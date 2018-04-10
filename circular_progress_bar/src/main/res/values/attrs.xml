@@ -3,11 +3,14 @@
     <declare-styleable name="CircularProgressBar">
         <attr name="cpb_hasShadow" format="boolean"/>
         <attr name="cpb_progressColor" format="string"/>
+        <attr name="cpb_progressColorLine2" format="string"/>
         <attr name="cpb_backgroundColor" format="string"/>
         <attr name="cpb_title" format="string"/>
         <attr name="cpb_titleColor" format="string"/>
         <attr name="cpb_subtitle" format="string"/>
         <attr name="cpb_subtitleColor" format="string"/>
         <attr name="cpb_strokeWidth" format="integer"/>
+        <attr name="cpb_show_line2" format="boolean"/>
+        <attr name="cpb_strokeWidthLine2" format="integer"/>
     </declare-styleable>
 </resources>

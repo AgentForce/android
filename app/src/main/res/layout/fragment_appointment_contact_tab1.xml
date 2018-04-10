@@ -49,13 +49,6 @@
             android:layout_marginLeft="40dp"
             android:text="Khách hàng giới thiêu(0/50)"
             android:layout_centerVertical="true"/>
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_arrow_down"/>
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcv_contact"

@@ -3,24 +3,18 @@ package manulife.manulifesop.fragment.dashboard;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.view.View;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
-import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
+import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
-import manulife.manulifesop.fragment.FAGroup.clients.contactPerson.ContactPersonTab1Fragment;
-import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanContract;
-import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanPresent;
+import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
 import manulife.manulifesop.fragment.FAGroup.dashboardv2.FADashBoardFragment;
-import manulife.manulifesop.util.Contants;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -73,9 +67,6 @@ public class DashboardFragment extends BaseFragment<MainFAActivity, DashboardPre
     @Override
     public void initViewPagerFA() {
         viewPager.setSwipe(false);
-        /*tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        tabLayout.setSelectedTabIndicatorHeight(0);
-        tabLayout.setClickable(false);*/
         tabLayout.setVisibility(View.GONE);
 
         mListFragment = new ArrayList<>();
@@ -95,7 +86,7 @@ public class DashboardFragment extends BaseFragment<MainFAActivity, DashboardPre
 
         mListFragment = new ArrayList<>();
         mListFragment.add(FADashBoardFragment.newInstance());
-        mListFragment.add(FADashBoardFragment.newInstance());
+        mListFragment.add(ConfirmCreatePlanFragment.newInstance("Trang chủ"));
 
         mTabTitles = new ArrayList<>();
         mTabTitles.add("Dashboard FA");

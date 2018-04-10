@@ -11,7 +11,8 @@
         android:layout_height="70dp"
         app:cpb_progressColor="#F63D2B"
         circular:cpb_subtitle="subtitle"
-        app:cpb_strokeWidth="15"
+        android:progress="100"
+        app:cpb_strokeWidth="10"
         circular:cpb_title="Title"
         android:layout_centerInParent="true"/>
     <TextView

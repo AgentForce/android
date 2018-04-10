@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.adapter.ObjectData.ContactPerson;
 import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
 import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by trinm on 12/01/2018.
@@ -56,6 +58,25 @@ public abstract class BaseFragment<T extends BaseActivity, P extends BasePresent
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         initializeLayout(view);
+    }
+
+    protected void hideKeyboardOutside(View view) {
+        //Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(
+                    (v, event) -> {
+                        Utils.hideSoftKeyboard(view);
+                        v.clearFocus();
+                        return false;
+                    });
+        }
+        //If a layout container, iterate over children
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                hideKeyboardOutside(innerView);
+            }
+        }
     }
 
     @Override

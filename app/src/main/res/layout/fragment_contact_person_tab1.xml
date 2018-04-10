@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,119 +35,137 @@
             android:textSize="@dimen/welcome_activity_note" />
     </LinearLayout>
 
-    <RelativeLayout
+    <!--_______________________________________________________-->
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_layout_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        app:el_duration="500"
+        app:el_expanded="false"
+        app:el_parallax="0">
 
-        <ImageView
-            android:id="@+id/image_temp1"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_contact_phonebook" />
-
-        <TextView
-            android:id="@+id/txt_add_from_telephone"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/image_temp1"
-            android:layout_alignTop="@+id/image_temp1"
-            android:layout_centerVertical="true"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:paddingLeft="50dp"
-            android:text="Thêm từ danh bạ điện thoại"
-            android:textColor="@drawable/text_color_grey"
-            android:textSize="@dimen/welcome_activity_content" />
-    </RelativeLayout>
+            android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/darker_gray" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/image_temp1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_contact_phonebook" />
+
+                <TextView
+                    android:id="@+id/txt_add_from_telephone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/image_temp1"
+                    android:layout_alignTop="@+id/image_temp1"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="50dp"
+                    android:text="Thêm từ danh bạ điện thoại"
+                    android:textColor="@drawable/text_color_grey"
+                    android:textSize="@dimen/welcome_activity_content" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/darker_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/image_temp2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_contact_phone" />
+
+                <TextView
+                    android:id="@+id/txt_add_new"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/image_temp2"
+                    android:layout_alignTop="@+id/image_temp2"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="50dp"
+                    android:text="Thêm số điện thoại mới"
+                    android:textColor="@drawable/text_color_grey"
+                    android:textSize="@dimen/welcome_activity_content" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/darker_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/image_temp3"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_contact_add" />
+
+                <TextView
+                    android:id="@+id/txt_add_from_introduce"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/image_temp3"
+                    android:layout_alignTop="@+id/image_temp3"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="50dp"
+                    android:text="Thêm từ danh sách KH giới thiệu"
+                    android:textColor="@drawable/text_color_grey"
+                    android:textSize="@dimen/welcome_activity_content" />
+            </RelativeLayout>
+        </LinearLayout>
+    </net.cachapa.expandablelayout.ExpandableLayout>
+    <!--_______________________________________________________-->
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/image_temp2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_contact_phone" />
-
-        <TextView
-            android:id="@+id/txt_add_new"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/image_temp2"
-            android:layout_alignTop="@+id/image_temp2"
-            android:layout_centerVertical="true"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:paddingLeft="50dp"
-            android:text="Thêm số điện thoại mới"
-            android:textColor="@drawable/text_color_grey"
-            android:textSize="@dimen/welcome_activity_content" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/darker_gray" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/image_temp3"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_contact_add"/>
-
-        <TextView
-            android:id="@+id/txt_add_from_introduce"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/image_temp3"
-            android:layout_alignTop="@+id/image_temp3"
-            android:layout_centerVertical="true"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:paddingLeft="50dp"
-            android:text="Thêm từ danh sách KH giới thiệu"
-            android:textColor="@drawable/text_color_grey"
-            android:textSize="@dimen/welcome_activity_content" />
-    </RelativeLayout>
-
-    <RelativeLayout
+        android:id="@+id/layout_show_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -164,12 +183,13 @@
             android:textSize="14sp" />
 
         <ImageView
+            android:id="@+id/img_show_add"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:src="@drawable/ic_arrow_down"/>
+            android:src="@drawable/ic_arrow_down" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

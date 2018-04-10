@@ -130,6 +130,11 @@ public class PassFragment extends BaseFragment<LoginActivity, PassPresent> imple
 
     }
 
+    @Override
+    public void clearPass() {
+        edtPass.setText("");
+    }
+
     @OnClick(R.id.btn_login)
     public void onClick(View view) {
         int id = view.getId();

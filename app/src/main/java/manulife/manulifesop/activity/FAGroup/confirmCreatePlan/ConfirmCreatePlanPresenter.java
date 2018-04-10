@@ -29,6 +29,7 @@ public class ConfirmCreatePlanPresenter extends BasePresenter<ConfirmCreatePlanC
     @Override
     public void getUserProfile(String userName) {
         mPresenterView.showLoading("Lấy dữ liệu");
+        String temp = SOPSharedPreferences.getInstance(mContext).getAccessToken();
         getCompositeDisposable().add(ApiService.getServer().getUserProfile(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,

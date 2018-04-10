@@ -50,8 +50,10 @@ public class CreatePlanStep4Fragment extends BaseFragment<CreatePlanActivity,Cre
 
     @Override
     public void showData(int income,CampaignForcastTarget data, int monthNum) {
-        txtIncomeMonthly.setText(Utils.integerTypeTextFormat(income * monthNum * 1000000));
-        long totalIncome = income * monthNum * 1000000;
+        txtIncomeMonthly.setText(Utils.longTypeTextFormat((long)(income * monthNum) * 1000000));
+        long totalIncome = (long)(income * monthNum) * 1000000;
+        /*long totalIncome = income * monthNum;
+        totalIncome = totalIncome * 1000000;*/
         long tmpNum;
         tmpNum = 0;
         for(int i=0;i<data.data.newAgent.size();i++){

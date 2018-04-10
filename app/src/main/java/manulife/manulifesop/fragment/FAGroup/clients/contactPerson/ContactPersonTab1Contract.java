@@ -14,6 +14,8 @@ public interface ContactPersonTab1Contract {
         void gotoContactDetail(int id);
         void loadContactList(UsersList data);
         void showDialogChooseWeek();
+
+        void addTextChangeListener();
     }
 
     interface Action {

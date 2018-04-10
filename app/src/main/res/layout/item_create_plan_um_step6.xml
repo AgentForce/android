@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/cus_border_edittext_grey"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layout_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:background="@drawable/cus_button_border_white_background_top">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="9dp"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:id="@+id/txt_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Tháng 1"
+                    android:textAllCaps="true"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/txt_agent_number"
+                    android:text="Đại lý đầu kỳ"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_agent_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/cus_text_step"
+                    android:gravity="center_horizontal"
+                    android:minWidth="50dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:text="5"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="5dp"
+            android:weightSum="100">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/txt_agent_number"
+                    android:text="Tuyển thêm: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txt_add_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/txt_agent_number"
+                    android:text="5"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/txt_agent_number"
+                    android:text="Đại lý giảm: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txt_agent_num_decrease"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/txt_agent_number"
+                    android:text="3"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/layout_expand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            app:el_expanded="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <LinearLayout
+                        android:id="@+id/layout_add_employee"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="10dp">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:background="@android:color/transparent"
+                                android:scaleType="fitCenter"
+                                app:riv_border_color="@color/colorPrimary"
+                                app:riv_border_width="2dp"
+                                app:riv_corner_radius="20dp"
+                                app:riv_mutate_background="true" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="17dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_add_green" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_sub_employee"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="10dp">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:background="@android:color/transparent"
+                                android:scaleType="fitCenter"
+                                app:riv_border_color="@color/colorPrimary"
+                                app:riv_border_width="2dp"
+                                app:riv_corner_radius="20dp"
+                                app:riv_mutate_background="true" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="17dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_sub_green" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <LinearLayout
+                        android:id="@+id/layout_add_agent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="10dp">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:background="@android:color/transparent"
+                                android:scaleType="fitCenter"
+                                app:riv_border_color="@color/colorPrimary"
+                                app:riv_border_width="2dp"
+                                app:riv_corner_radius="20dp"
+                                app:riv_mutate_background="true" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="17dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_add_green" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_sub_agent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="10dp">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:background="@android:color/transparent"
+                                android:scaleType="fitCenter"
+                                app:riv_border_color="@color/colorPrimary"
+                                app:riv_border_width="2dp"
+                                app:riv_corner_radius="20dp"
+                                app:riv_mutate_background="true" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="17dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_sub_green" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </net.cachapa.expandablelayout.ExpandableLayout>
+
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundGrey"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            &lt;!&ndash;column1&ndash;&gt;
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_toLeftOf="@+id/txt_agent_number"
+                        android:text="Tuyển thêm: "
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/txt_add_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_toLeftOf="@+id/txt_agent_number"
+                        android:text="5"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:weightSum="100">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_horizontal"
+                        android:layout_weight="50">
+
+                        <RelativeLayout
+                            android:id="@+id/layout_add_employee"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:background="@android:color/transparent"
+                                android:scaleType="fitCenter"
+                                app:riv_border_color="@color/colorPrimary"
+                                app:riv_border_width="2dp"
+                                app:riv_corner_radius="20dp"
+                                app:riv_mutate_background="true" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="17dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_add_green" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:orientation="horizontal"
+                        android:gravity="center_horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/layout_sub_employee"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp">
+
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_centerVertical="true"
+                                android:background="@android:color/transparent"
+                                android:scaleType="fitCenter"
+                                app:riv_border_color="@color/colorPrimary"
+                                app:riv_border_width="2dp"
+                                app:riv_corner_radius="20dp"
+                                app:riv_mutate_background="true" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="17dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_sub_green" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>-->
+
+    </LinearLayout>
+
+</LinearLayout>

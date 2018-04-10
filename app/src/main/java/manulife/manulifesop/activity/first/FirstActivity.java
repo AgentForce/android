@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.View;
 import android.view.animation.Animation;
@@ -12,32 +13,62 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import chick.indicator.CircleIndicatorPager;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.main.MainFAActivity;
+import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.activity.login.LoginActivity;
+import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseActivity;
+import manulife.manulifesop.base.BaseFragment;
+import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
+import manulife.manulifesop.fragment.FAGroup.createPlane.step1.CreatePlanStep1Fragment;
+import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Fragment;
+import manulife.manulifesop.fragment.first.FirstFragment;
 
 
 public class FirstActivity extends BaseActivity<FirstPresenter> implements FirstContract.View {
 
     @BindView(R.id.layout_welcome)
     RelativeLayout layoutWelcome;
-    @BindView(R.id.btn_agree)
-    Button btnAgree;
-    @BindView(R.id.cb_agree)
-    AppCompatCheckBox cbAgree;
-    @BindView(R.id.layout_permission)
-    LinearLayout layoutPermission;
+
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+    @BindView(R.id.circle_indicator_pager)
+    CircleIndicatorPager indicator;
+
+    private List<BaseFragment> mListFragment;
+    private CustomViewPagerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
         mActionListener = new FirstPresenter(this, this);
+        //new code
+        initViewpagerWelcome();
+    }
+
+    @Override
+    public void initViewpagerWelcome() {
+        mListFragment = new ArrayList<>();
+        mListFragment.add(FirstFragment.newInstance(1));
+        mListFragment.add(FirstFragment.newInstance(2));
+        mListFragment.add(FirstFragment.newInstance(3));
+
+        mAdapter = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment);
+        if (viewPager != null) {
+            viewPager.setAdapter(mAdapter);
+        }
+        if (indicator != null) {
+            indicator.setViewPager(viewPager);
+        }
     }
 
     @Override
@@ -55,23 +86,6 @@ public class FirstActivity extends BaseActivity<FirstPresenter> implements First
     @Override
     public void showFaMainBoard() {
         goNextScreen(MainFAActivity.class);
-    }
-
-    @OnClick({R.id.btn_agree,R.id.layout_permission})
-    public void onClick(View view) {
-        int id = view.getId();
-        switch (id) {
-            case R.id.btn_agree: {
-                if (cbAgree.isChecked())
-                    mActionListener.checkPermissionGranted();
-                else
-                    showMessage("Thông báo", "Cần đồng ý điều khoản cho phép đọc danh bạ!", SweetAlertDialog.WARNING_TYPE);
-                break;
-            }
-            case R.id.layout_permission:{
-                cbAgree.setChecked(!cbAgree.isChecked());
-            }
-        }
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -99,23 +113,14 @@ public class FirstActivity extends BaseActivity<FirstPresenter> implements First
                         }
                     });
                 }
-                /*if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mActionListener.clickAgreeButton();
-                } else {
-                    showInform("Thông báo", "Không đủ quyền để chạy chương trình", "OK", SweetAlertDialog.ERROR_TYPE, new CallBackInformDialog() {
-                        @Override
-                        public void DiaglogPositive() {
-                            Intent startMain = new Intent(Intent.ACTION_MAIN);
-                            startMain.addCategory(Intent.CATEGORY_HOME);
-                            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(startMain);
-                            System.exit(1);
-                        }
-                    });
-                }*/
                 return;
             }
         }
+    }
+
+    @Override
+    public void fragmentCheckPermission() {
+        mActionListener.checkPermissionGranted();
     }
 
     @Override

@@ -14,6 +14,9 @@ public interface FirstContract {
         void showWelcome();
         void showLogin();
         void showFaMainBoard();
+        void initViewpagerWelcome();
+
+        void fragmentCheckPermission();
     }
     interface Action{
         void checkInternetViaPingServer();
