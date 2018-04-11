@@ -16,6 +16,8 @@ public interface FADashBoardContract {
         void showACtivities(ActivitiHist activities);
         void updateData();
         void showMenuCreateEvent();
+
+        void initViewHeight();
     }
 
     interface Action {

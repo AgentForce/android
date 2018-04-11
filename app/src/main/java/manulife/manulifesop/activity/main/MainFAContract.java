@@ -14,6 +14,9 @@ public interface MainFAContract {
         void showCustomer();
         void showEvents();
         void showPersonal();
+        void showMenuSale();
+        void showMenuEmploy();
+        void showManageEmploy();
 
         void showHideActionbar(boolean isShow);
         void updateActionbarTitle(String title);

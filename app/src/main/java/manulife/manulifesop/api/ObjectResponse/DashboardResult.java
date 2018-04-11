@@ -78,6 +78,23 @@ public class DashboardResult implements Serializable{
             @Expose
             public Integer currentReLead;
 
+            @SerializedName("ForcastCallSale")
+            @Expose
+            public Integer forcastCallSale;
+            @SerializedName("ForcastMetting")
+            @Expose
+            public Integer forcastMetting;
+            @SerializedName("ForcastPresentation")
+            @Expose
+            public Integer forcastPresentation;
+            @SerializedName("ForcastContract")
+            @Expose
+            public Integer forcastContract;
+            @SerializedName("ForcastReLead")
+            @Expose
+            public Integer forcastReLead;
+
+
         }
 
     }

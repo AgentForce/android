@@ -50,6 +50,7 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
     TextView txtTitle;
 
     private List<Integer> mPercents;
+    private List<Integer> mPercentForcast;
     private String mType;//week,month,year
 
     private int mMonth;
@@ -86,9 +87,10 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
     TextView txtMonthOK;
     List<Integer> mListMonthTarget;
 
-    public static FACampaignPercentFragment newInstance(List<Integer> percents, String type, int month,DashboardResult dataWeekMonth) {
+    public static FACampaignPercentFragment newInstance(List<Integer> percents, List<Integer> percentForcast,String type, int month,DashboardResult dataWeekMonth) {
         Bundle args = new Bundle();
         args.putSerializable("percent", (Serializable) percents);
+        args.putSerializable("percentForcast", (Serializable) percentForcast);
         args.putString("type",type);
         args.putSerializable("dataCampaign", dataWeekMonth);
         args.putInt("month",month);
@@ -112,6 +114,7 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
         super.onViewCreated(view, savedInstanceState);
 
         mPercents = (List<Integer>) getArguments().getSerializable("percent");
+        mPercentForcast = (List<Integer>) getArguments().getSerializable("percentForcast");
         mType = getArguments().getString("type","week");
         mMonth = getArguments().getInt("month",0);
         mData = (DashboardResult) getArguments().getSerializable("dataCampaign");
@@ -124,21 +127,22 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
         }else if(mType.equals("month")){
             txtTitle.setText("Thêm mục tiêu tháng");
         }else{
+
             txtTitle.setVisibility(View.GONE);
             circularProgressBar1.setShowline2(true);
-            circularProgressBar1.setProgressLine2(50);
+            circularProgressBar1.setProgressLine2(mPercentForcast.get(0));
 
             circularProgressBar2.setShowline2(true);
-            circularProgressBar2.setProgressLine2(50);
+            circularProgressBar2.setProgressLine2(mPercentForcast.get(1));
 
             circularProgressBar3.setShowline2(true);
-            circularProgressBar3.setProgressLine2(50);
+            circularProgressBar3.setProgressLine2(mPercentForcast.get(2));
 
             circularProgressBar4.setShowline2(true);
-            circularProgressBar4.setProgressLine2(50);
+            circularProgressBar4.setProgressLine2(mPercentForcast.get(3));
 
             circularProgressBar5.setShowline2(true);
-            circularProgressBar5.setProgressLine2(50);
+            circularProgressBar5.setProgressLine2(mPercentForcast.get(4));
         }
 
         circularProgressBar1.setTitle(mPercents.get(0) + "%");

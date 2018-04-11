@@ -12,6 +12,8 @@ public interface DashboardContract {
     interface View extends BaseMVPView {
         void initViewPagerFA();
         void initViewPagerSM();
+
+        int getSelectedPage();
     }
 
     interface Action {

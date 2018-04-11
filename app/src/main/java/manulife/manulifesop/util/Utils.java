@@ -148,6 +148,10 @@ public class Utils {
         return (Calendar.getInstance().get(Calendar.MONTH) + 1);
     }
 
+    public static int getCurrentYear(final Context context) {
+        return (Calendar.getInstance().get(Calendar.YEAR));
+    }
+
     public static int getMonthFromStringDate(String inputDate, String inputFormat) {
         int result = 0;
         Date converDate = new Date();

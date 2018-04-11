@@ -53,6 +53,7 @@ import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
 import manulife.manulifesop.fragment.FAGroup.dashboardv2.campaignPercent.FACampaignPercentFragment;
+import manulife.manulifesop.fragment.dashboard.DashboardFragment;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
 import manulife.manulifesop.util.Utils;
@@ -147,9 +148,24 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //mActivity.showHideActionbar(true);
-        //mActivity.updateActionbarTitle("Trang chủ");
         initView();
+        //initViewHeight();
+        initHeightViaSelected();
+    }
+
+    private void initHeightViaSelected(){
+        int pageSelected = ((DashboardFragment)getParentFragment()).getSelectedPage();
+        if(pageSelected == 0){
+            initViewHeight();
+        }
+    }
+
+    private void initView(){
+        mMonth = Utils.getCurrentMonth(getContext());
+        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        //init data
+        mDataActiveHist = new ArrayList<>();
+        txtTitle.setText("Khách hàng tháng " + (Calendar.getInstance().get(Calendar.MONTH) + 1));
     }
 
     @Override
@@ -163,17 +179,11 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
         mActionListener.getDataDashboard();
     }
 
-    private void initView() {
-        mMonth = Utils.getCurrentMonth(getContext());
-        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        //init data
-        mDataActiveHist = new ArrayList<>();
-        txtTitle.setText("Khách hàng tháng " + (Calendar.getInstance().get(Calendar.MONTH) + 1));
-
+    @Override
+    public void initViewHeight() {
         //set margin bottom for viewpager percent
         if (getView() != null) {
             final ViewTreeObserver observer = layoutBot.getViewTreeObserver();
-
             if (observer.isAlive()) {
                 observer.dispatchOnGlobalLayout(); // In case a previous call is waiting when this call is made
                 observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -188,7 +198,6 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
                         FrameLayout.LayoutParams layoutParams2 =
                                 new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, layoutMid.getHeight() - layoutTitleBot.getHeight());
                         listActiHist.setLayoutParams(layoutParams2);
-                        //Log.d("test"," set margin " + (layoutMid.getHeight() - layoutTitleBot.getHeight()));
                     }
                 });
             }
@@ -261,6 +270,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
             List<Integer> percentCurrentWeek = new ArrayList<>();
             List<Integer> percentMonth = new ArrayList<>();
             List<Integer> percentYear = new ArrayList<>();
+            List<Integer> percentYearForcast = new ArrayList<>();
             for (int i = 0; i < dataWeekMonth.data.campaign.size(); i++) {
                 if (dataWeekMonth.data.currentWeek == dataWeekMonth.data.campaign.get(i).week) {
                     //lien he
@@ -312,23 +322,33 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
             //lien he
             percentTemp = Math.round((float) (dataYear.data.campaign.get(0).currentCallSale * 100) / dataYear.data.campaign.get(0).targetCallSale);
             percentYear.add(percentTemp);
+            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).forcastCallSale * 100) / dataYear.data.campaign.get(0).targetCallSale);
+            percentYearForcast.add(percentTemp);
             //hen gap
             percentTemp = Math.round((float) (dataYear.data.campaign.get(0).currentMetting * 100) / dataYear.data.campaign.get(0).targetMetting);
             percentYear.add(percentTemp);
+            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).forcastMetting * 100) / dataYear.data.campaign.get(0).targetMetting);
+            percentYearForcast.add(percentTemp);
             //tu van
             percentTemp = Math.round((float) (dataYear.data.campaign.get(0).currentPresentation * 100) / dataYear.data.campaign.get(0).targetPresentation);
             percentYear.add(percentTemp);
+            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).forcastPresentation * 100) / dataYear.data.campaign.get(0).targetPresentation);
+            percentYearForcast.add(percentTemp);
             //ky hop dong
             percentTemp = Math.round((float) (dataYear.data.campaign.get(0).currentContract * 100) / dataYear.data.campaign.get(0).targetContractSale);
             percentYear.add(percentTemp);
+            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).forcastContract * 100) / dataYear.data.campaign.get(0).targetContractSale);
+            percentYearForcast.add(percentTemp);
             //gioi thie
             percentTemp = Math.round((float) (dataYear.data.campaign.get(0).currentReLead * 100) / dataYear.data.campaign.get(0).targetReLead);
             percentYear.add(percentTemp);
+            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).forcastReLead * 100) / dataYear.data.campaign.get(0).targetReLead);
+            percentYearForcast.add(percentTemp);
 
             mListFragment = new ArrayList<>();
-            mListFragment.add(FACampaignPercentFragment.newInstance(percentCurrentWeek, "week", mMonth, dataWeekMonth));
-            mListFragment.add(FACampaignPercentFragment.newInstance(percentMonth, "month", mMonth, dataWeekMonth));
-            mListFragment.add(FACampaignPercentFragment.newInstance(percentYear, "year", mMonth, dataWeekMonth));
+            mListFragment.add(FACampaignPercentFragment.newInstance(percentCurrentWeek, null,"week", mMonth, dataWeekMonth));
+            mListFragment.add(FACampaignPercentFragment.newInstance(percentMonth, null,"month", mMonth, dataWeekMonth));
+            mListFragment.add(FACampaignPercentFragment.newInstance(percentYear, percentYearForcast,"year", mMonth, dataWeekMonth));
 
             mTabTitles = new ArrayList<>();
             mTabTitles.add("Tuần này");

@@ -30,6 +30,9 @@ import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlan
 import manulife.manulifesop.fragment.FAGroup.dashboardv2.FADashBoardFragment;
 import manulife.manulifesop.fragment.FAGroup.events.FAEventsFragment;
 import manulife.manulifesop.fragment.FAGroup.personal.FAPersonalFragment;
+import manulife.manulifesop.fragment.ManagerGroup.manageEmploy.ManageEmployFragment;
+import manulife.manulifesop.fragment.ManagerGroup.menuDashBoard.menuEmploy.SMEmployMenuFragment;
+import manulife.manulifesop.fragment.ManagerGroup.menuDashBoard.menuSale.SMSaleMenuFragment;
 import manulife.manulifesop.fragment.dashboard.DashboardFragment;
 import manulife.manulifesop.util.SOPSharedPreferences;
 import manulife.manulifesop.util.Utils;
@@ -139,7 +142,10 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
                     case 1: {
 
                         if (mIsgetCampaign)
-                            showCustomer();
+                            if (mIsFA)
+                                showCustomer();
+                            else
+                                showMenuSale();
                         else
                             showFragmentConfirmCreatePlan("Khách hàng");
 
@@ -158,7 +164,10 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
                         break;
                     }
                     case 4: {
-                        Toast.makeText(MainFAActivity.this, "Khác", Toast.LENGTH_SHORT).show();
+                        if (mIsgetCampaign)
+                            showMenuEmploy();
+                        else
+                            showFragmentConfirmCreatePlan("Tuyển dụng");
                         break;
                     }
                 }
@@ -253,6 +262,48 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         mFragmentTran.replace(R.id.frame_container, FAPersonalFragment.newInstance());
         mFragmentTran.commit();
+    }
+
+    @Override
+    public void showMenuSale() {
+        mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+        if (!(mCurrentFragment instanceof SMSaleMenuFragment)) {
+            layoutNotification.setVisibility(View.VISIBLE);
+            layoutEdit.setVisibility(View.GONE);
+
+            mFragmentTran = getSupportFragmentManager().beginTransaction();
+            mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            mFragmentTran.replace(R.id.frame_container, SMSaleMenuFragment.newInstance());
+            mFragmentTran.commit();
+        }
+    }
+
+    @Override
+    public void showMenuEmploy() {
+        mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+        if (!(mCurrentFragment instanceof SMEmployMenuFragment)) {
+            layoutNotification.setVisibility(View.VISIBLE);
+            layoutEdit.setVisibility(View.GONE);
+
+            mFragmentTran = getSupportFragmentManager().beginTransaction();
+            mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            mFragmentTran.replace(R.id.frame_container, SMEmployMenuFragment.newInstance());
+            mFragmentTran.commit();
+        }
+    }
+
+    @Override
+    public void showManageEmploy() {
+        mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+        if (!(mCurrentFragment instanceof ManageEmployFragment)) {
+            layoutNotification.setVisibility(View.VISIBLE);
+            layoutEdit.setVisibility(View.GONE);
+
+            mFragmentTran = getSupportFragmentManager().beginTransaction();
+            mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            mFragmentTran.replace(R.id.frame_container, ManageEmployFragment.newInstance());
+            mFragmentTran.commit();
+        }
     }
 
     @OnClick({R.id.layout_notification, R.id.layout_edit, R.id.layout_add})

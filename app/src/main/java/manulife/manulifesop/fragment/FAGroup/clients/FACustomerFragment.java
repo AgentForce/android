@@ -65,7 +65,6 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
         mActivity.updateActionbarTitle("Khách hàng");
         mCurrentMonth = Calendar.getInstance().get(Calendar.MONTH);
         initTabMenu();
-        //showContentCustomer(mCurrentMonth);
         scrollToTabAfterLayout(mCurrentMonth);
     }
 
@@ -84,9 +83,10 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
                             //noinspection deprecation
                             observer.removeGlobalOnLayoutListener(this);
                         }
-
                         tabLayout.getTabAt(tabIndex).select();
-
+                        if(tabIndex == 0){
+                            showContentCustomer(1);
+                        }
                     }
                 });
             }

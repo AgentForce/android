@@ -321,7 +321,7 @@
 
                     <ImageView
                         android:id="@+id/img_show_activities"
-                        android:layout_width="20dp"
+                        android:layout_width="16dp"
                         android:layout_height="20dp"
                         android:background="@drawable/ic_arrow_up" />
                 </LinearLayout>
@@ -338,7 +338,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rcv_log"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content" />
             </net.cachapa.expandablelayout.ExpandableLayout>
         </LinearLayout>
 

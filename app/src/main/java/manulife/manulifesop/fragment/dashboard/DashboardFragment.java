@@ -2,6 +2,7 @@ package manulife.manulifesop.fragment.dashboard;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -13,8 +14,9 @@ import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
-import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
 import manulife.manulifesop.fragment.FAGroup.dashboardv2.FADashBoardFragment;
+import manulife.manulifesop.fragment.ManagerGroup.dashboard.SMDashBoardFragment;
+import manulife.manulifesop.fragment.ManagerGroup.manageEmploy.content.contentDetail.ContentDetailManageEmployFragment;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -86,7 +88,7 @@ public class DashboardFragment extends BaseFragment<MainFAActivity, DashboardPre
 
         mListFragment = new ArrayList<>();
         mListFragment.add(FADashBoardFragment.newInstance());
-        mListFragment.add(ConfirmCreatePlanFragment.newInstance("Trang chủ"));
+        mListFragment.add(SMDashBoardFragment.newInstance());
 
         mTabTitles = new ArrayList<>();
         mTabTitles.add("Dashboard FA");
@@ -95,20 +97,36 @@ public class DashboardFragment extends BaseFragment<MainFAActivity, DashboardPre
         mAdapterViewPager = new CustomViewPagerAdapter(getChildFragmentManager(), mListFragment, mTabTitles);
         viewPager.setAdapter(mAdapterViewPager);
         tabLayout.setupWithViewPager(viewPager);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 0){
+                    ((FADashBoardFragment)mListFragment.get(0)).initViewHeight();
+                }else{
+                    ((SMDashBoardFragment)mListFragment.get(1)).initViewHeight();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
-    /*@OnClick(R.id.btn_start)
-    public void onClick(View view)
-    {
-        int id = view.getId();
-        switch (id)
-        {
-            case R.id.btn_start:
-            {
-                mActivity.goNextScreen(CreatePlanActivity.class);
-                break;
-            }
-        }
-    }*/
+    @Override
+    public int getSelectedPage() {
+        return viewPager.getCurrentItem();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }
