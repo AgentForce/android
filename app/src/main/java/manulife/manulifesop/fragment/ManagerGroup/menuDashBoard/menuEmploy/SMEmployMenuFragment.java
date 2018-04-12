@@ -38,6 +38,7 @@ public class SMEmployMenuFragment extends BaseFragment<MainFAActivity, SMEmployM
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mActivity.showHideActionbar(true);
         mActivity.updateActionbarTitle("Tuyển dụng");
     }
 

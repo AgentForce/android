@@ -78,7 +78,7 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
 
     private void handleResponseRefreshToken(RefreshToken rs) {
         if(rs.statusCode == 1){
-            SOPSharedPreferences.getInstance(mContext).saveToken(rs.data.accessToken,rs.data.refreshToken);
+            SOPSharedPreferences.getInstance(mContext).saveTokenUser(rs.data.accessToken,rs.data.refreshToken);
             chekCampaign();
         }else{
             mPresenterView.finishLoading();

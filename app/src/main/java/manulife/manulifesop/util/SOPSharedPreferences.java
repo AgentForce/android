@@ -24,6 +24,7 @@ public class SOPSharedPreferences {
     private final String EXTRA_ACCESS_TOKEN_KEY = "extra_access_token_key";
     private final String EXTRA_REFRESH_TOKEN_KEY = "extra_refresh_token_key";
     private final String EXTRA_TOKEN_BEFORE_LOGIN_KEY = "extra_token_before_login_key";
+    private final String EXTRA_USER_NAME = "extra_user_name";
 
     private final String EXTRA_ADDED_CONTACT = "extra_added_contact";
     private final String EXTRA_IS_FA = "extra_is_fa";
@@ -64,15 +65,24 @@ public class SOPSharedPreferences {
 
     public boolean getIsFA()
     {
-        return mPreferences.getBoolean(EXTRA_IS_FA,false);
+        return mPreferences.getBoolean(EXTRA_IS_FA,true);
     }
 
-    public void saveToken(String accessToken, String refreshToken)
+    public void saveTokenUser(String accessToken, String refreshToken)
     {
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString(EXTRA_ACCESS_TOKEN_KEY,accessToken);
         editor.putString(EXTRA_REFRESH_TOKEN_KEY,refreshToken);
         editor.commit();
+    }
+
+    public void saveUser(String userName){
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString(EXTRA_USER_NAME,userName);
+        editor.commit();
+    }
+    public String getUserName(){
+        return mPreferences.getString(EXTRA_USER_NAME,"");
     }
 
     public String getAccessToken()

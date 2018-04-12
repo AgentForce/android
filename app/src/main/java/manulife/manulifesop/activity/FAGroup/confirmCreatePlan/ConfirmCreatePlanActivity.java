@@ -9,6 +9,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
+import manulife.manulifesop.activity.ManagerGroup.SMCreatePlan.SMCreatePlanActivity;
+import manulife.manulifesop.activity.ManagerGroup.UMCreatePlan.UMCreatePlanActivity;
 import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.api.ObjectResponse.UserProfile;
 import manulife.manulifesop.base.BaseActivity;
@@ -35,19 +37,21 @@ public class ConfirmCreatePlanActivity extends BaseActivity<ConfirmCreatePlanPre
     @BindView(R.id.txt_location)
     TextView txtLocation;
 
-
+    //1->9 SM, 10 -> 15 UM, 16 FA
+    private int mLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_create_campaing);
-        mActionListener = new ConfirmCreatePlanPresenter(this,this);
+        mActionListener = new ConfirmCreatePlanPresenter(this, this);
         txtActionbarTitle.setText("Chào mừng bạn");
         mActionListener.getUserProfile(getIntent().getStringExtra("userName"));
     }
 
     @Override
     public void showData(UserProfile data) {
+        this.mLevel = data.data.level;
         txtUserName.setText(data.data.fullName);
         txtAgentNumber.setText(String.valueOf(data.data.username));
         txtTitle.setText(data.data.codeLevel);
@@ -56,18 +60,30 @@ public class ConfirmCreatePlanActivity extends BaseActivity<ConfirmCreatePlanPre
     }
 
     @OnClick({R.id.btn_start, R.id.txt_go_main})
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
         int id = view.getId();
-        switch (id)
-        {
-            case R.id.btn_start:{
-                Bundle data = new Bundle();
-                data.putString("name",txtUserName.getText().toString());
-                goNextScreen(CreatePlanActivity.class,data);
+        switch (id) {
+            case R.id.btn_start: {
+                if(this.mLevel < 10) {
+                    //SM
+                    Bundle data = new Bundle();
+                    data.putString("name", txtUserName.getText().toString());
+                    goNextScreen(SMCreatePlanActivity.class, data);
+                }else if(mLevel < 16){
+                    //UM
+                    Bundle data = new Bundle();
+                    data.putString("name", txtUserName.getText().toString());
+                    goNextScreen(UMCreatePlanActivity.class, data);
+                }else{
+                    //FA
+                    Bundle data = new Bundle();
+                    data.putString("name", txtUserName.getText().toString());
+                    goNextScreen(CreatePlanActivity.class, data);
+                }
+
                 break;
             }
-            case R.id.txt_go_main:{
+            case R.id.txt_go_main: {
                 goNextScreen(MainFAActivity.class);
                 break;
             }

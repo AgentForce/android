@@ -83,8 +83,6 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         hideKeyboardOutside(layoutRoot);
         mActionListener = new MainFAPresenter(this, this);
         mIsFA = SOPSharedPreferences.getInstance(this).getIsFA();
-        //test
-        mIsFA = false;
         setupSupportForApp();
         setupMenuBot();
     }

@@ -17,6 +17,7 @@ import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.fragment.FAGroup.dashboardv2.FADashBoardFragment;
 import manulife.manulifesop.fragment.ManagerGroup.dashboard.SMDashBoardFragment;
 import manulife.manulifesop.fragment.ManagerGroup.manageEmploy.content.contentDetail.ContentDetailManageEmployFragment;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -87,12 +88,12 @@ public class DashboardFragment extends BaseFragment<MainFAActivity, DashboardPre
         viewPager.setSwipe(false);
 
         mListFragment = new ArrayList<>();
-        mListFragment.add(FADashBoardFragment.newInstance());
         mListFragment.add(SMDashBoardFragment.newInstance());
+        mListFragment.add(FADashBoardFragment.newInstance());
 
         mTabTitles = new ArrayList<>();
-        mTabTitles.add("Dashboard FA");
-        mTabTitles.add("Dashboard SM");
+        mTabTitles.add("Tuyển dụng T" + Utils.getCurrentMonth(getContext()));
+        mTabTitles.add("Bán hàng T" + Utils.getCurrentMonth(getContext()));
 
         mAdapterViewPager = new CustomViewPagerAdapter(getChildFragmentManager(), mListFragment, mTabTitles);
         viewPager.setAdapter(mAdapterViewPager);
@@ -107,9 +108,9 @@ public class DashboardFragment extends BaseFragment<MainFAActivity, DashboardPre
             @Override
             public void onPageSelected(int position) {
                 if(position == 0){
-                    ((FADashBoardFragment)mListFragment.get(0)).initViewHeight();
+                    ((SMDashBoardFragment)mListFragment.get(0)).initViewHeight();
                 }else{
-                    ((SMDashBoardFragment)mListFragment.get(1)).initViewHeight();
+                    ((FADashBoardFragment)mListFragment.get(1)).initViewHeight();
                 }
             }
 

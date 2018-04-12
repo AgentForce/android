@@ -76,11 +76,14 @@ public class SMCreatePlanActivity extends BaseActivity<SMCreatePlanPresenter> im
     private List<BaseFragment> mListFragment;
     private CustomViewPagerAdapter mAdapter;
 
+    private String mName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
         hideKeyboardOutside(layoutRoot);
+        mName = getIntent().getStringExtra("name");
         mActionListener = new SMCreatePlanPresenter(this, this);
         setupSupportForApp();
         initViewPager();

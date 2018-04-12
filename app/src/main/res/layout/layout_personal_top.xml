@@ -5,10 +5,12 @@
     android:orientation="vertical">
     <!--Thông tin cá nhân-->
     <LinearLayout
+        android:id="@+id/layout_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_marginBottom="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp">
 
         <ImageView
             android:layout_width="20dp"
@@ -30,6 +32,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/img_row1"
                 android:text="Thông tin cá nhân"
+                android:textColor="@drawable/text_color_grey"
                 android:textSize="@dimen/welcome_activity_content" />
 
             <ImageView
@@ -49,6 +52,7 @@
 
     <!--Nhật ký hoạt động-->
     <LinearLayout
+        android:id="@+id/layout_activity_hist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -74,6 +78,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/img_row2"
                 android:text="Nhật ký hoạt động"
+                android:textColor="@drawable/text_color_grey"
                 android:textSize="@dimen/welcome_activity_content" />
 
             <ImageView
@@ -94,6 +99,7 @@
 
     <!--Thống kê hoạt động-->
     <LinearLayout
+        android:id="@+id/layout_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -119,6 +125,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/img_row3"
                 android:text="Thống kê hoạt động"
+                android:textColor="@drawable/text_color_grey"
                 android:textSize="@dimen/welcome_activity_content" />
 
             <ImageView

@@ -55,6 +55,7 @@ public class SMSaleMenuFragment extends BaseFragment<MainFAActivity, SMSaleMenuP
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mActivity.showHideActionbar(true);
         mActivity.updateActionbarTitle("Bán hàng");
     }
 

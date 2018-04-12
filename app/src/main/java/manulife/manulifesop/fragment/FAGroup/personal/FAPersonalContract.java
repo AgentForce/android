@@ -1,5 +1,6 @@
 package manulife.manulifesop.fragment.FAGroup.personal;
 
+import manulife.manulifesop.api.ObjectResponse.UserProfile;
 import manulife.manulifesop.base.BaseMVPView;
 
 
@@ -10,10 +11,10 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface FAPersonalContract {
 
     interface View extends BaseMVPView {
-
+        void showData(UserProfile data);
     }
 
     interface Action {
-
+        void getUserProfile(String userName);
     }
 }

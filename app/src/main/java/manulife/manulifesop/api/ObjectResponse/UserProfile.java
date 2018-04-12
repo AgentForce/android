@@ -88,13 +88,12 @@ public class UserProfile {
         public String updatedAt;
         @SerializedName("report_to")
         @Expose
-        public Integer reportTo;
+        public String reportTo;
         @SerializedName("report_to_list")
         @Expose
         public Object reportToList;
         @SerializedName("report_to_username")
         @Expose
         public String reportToUsername;
-
     }
 }

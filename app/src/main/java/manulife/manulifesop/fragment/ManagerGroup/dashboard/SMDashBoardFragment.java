@@ -56,6 +56,7 @@ import manulife.manulifesop.fragment.ManagerGroup.dashboard.SMcampaignPercent.SM
 import manulife.manulifesop.fragment.dashboard.DashboardFragment;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.EndlessScrollListenerRecyclerView;
+import manulife.manulifesop.util.SOPSharedPreferences;
 import manulife.manulifesop.util.Utils;
 
 /**
@@ -127,7 +128,7 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
 
     @Override
     public int contentViewLayout() {
-        return R.layout.fragment_fa_dashboardv2;
+        return R.layout.fragment_sm_dashboard;
     }
 
     @Override
@@ -153,19 +154,22 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
         initHeightViaSelected();
     }
 
-    private void initHeightViaSelected(){
-        int pageSelected = ((DashboardFragment)getParentFragment()).getSelectedPage();
-        if(pageSelected == 1){
+    private void initHeightViaSelected() {
+        int pageSelected = ((DashboardFragment) getParentFragment()).getSelectedPage();
+        if (pageSelected == 0) {
             initViewHeight();
         }
     }
 
-    private void initView(){
+    private void initView() {
         mMonth = Utils.getCurrentMonth(getContext());
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         //init data
         mDataActiveHist = new ArrayList<>();
-        txtTitle.setText("Khách hàng tháng " + (Calendar.getInstance().get(Calendar.MONTH) + 1));
+
+        if (SOPSharedPreferences.getInstance(getContext()).getIsFA())
+            txtTitle.setText("Khách hàng tháng " + (Calendar.getInstance().get(Calendar.MONTH) + 1));
+        else txtTitle.setVisibility(View.GONE);
     }
 
     @Override
@@ -347,9 +351,9 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
             percentYearForcast.add(percentTemp);
 
             mListFragment = new ArrayList<>();
-            mListFragment.add(SMCampaignPercentFragment.newInstance(percentCurrentWeek, null,"week", mMonth, dataWeekMonth));
-            mListFragment.add(SMCampaignPercentFragment.newInstance(percentMonth, null,"month", mMonth, dataWeekMonth));
-            mListFragment.add(SMCampaignPercentFragment.newInstance(percentYear, percentYearForcast,"year", mMonth, dataWeekMonth));
+            mListFragment.add(SMCampaignPercentFragment.newInstance(percentCurrentWeek, null, "week", mMonth, dataWeekMonth));
+            mListFragment.add(SMCampaignPercentFragment.newInstance(percentMonth, null, "month", mMonth, dataWeekMonth));
+            mListFragment.add(SMCampaignPercentFragment.newInstance(percentYear, percentYearForcast, "year", mMonth, dataWeekMonth));
 
             mTabTitles = new ArrayList<>();
             mTabTitles.add("Tuần này");

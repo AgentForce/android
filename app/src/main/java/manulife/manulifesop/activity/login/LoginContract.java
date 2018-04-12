@@ -32,6 +32,7 @@ public interface LoginContract {
 
         void createPass(String user, String pass);
         void login(String userName, String pass);
+        void getUserProfile(String userName);
         void chekCampaign();
     }
 }

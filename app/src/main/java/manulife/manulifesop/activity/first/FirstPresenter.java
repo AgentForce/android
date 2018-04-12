@@ -80,7 +80,6 @@ public class FirstPresenter extends BasePresenter<FirstContract.View> implements
 
     public void checkFirstUserLoading() {
         //mPresenterView.showWelcome();
-
         if (!SOPSharedPreferences.getInstance(mContext).isFirstUsing()) {
             mPresenterView.showWelcome();
         } else {

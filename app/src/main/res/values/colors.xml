@@ -32,5 +32,11 @@
     <color name="color_dashboard_sign_previous">#e6f4e7</color>
     <color name="color_dashboard_introduce_previous">#fcece1</color>
 
+    <color name="color_dashboard_sm_survey">#1d89e5</color>
+    <color name="color_dashboard_sm_cop">#ffb200</color>
+    <color name="color_dashboard_sm_mit">#1a6dce</color>
+    <color name="color_dashboard_sm_granted">#0d884b</color>
+    <color name="color_dashboard_sm_introduce">#93c90f</color>
+
 
 </resources>
