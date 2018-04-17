@@ -2,6 +2,8 @@ package manulife.manulifesop.fragment.ManagerGroup.dashboard;
 
 import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
+import manulife.manulifesop.api.ObjectResponse.DashboardSMResult;
+import manulife.manulifesop.api.ObjectResponse.RecruitHistory;
 import manulife.manulifesop.base.BaseMVPView;
 
 
@@ -12,12 +14,14 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface SMDashBoardContract {
 
     interface View extends BaseMVPView {
-        void showDataDashboard(DashboardResult dataWeekMonth, DashboardResult dataYear, ActivitiHist activities);
-        void showACtivities(ActivitiHist activities);
+        void showDataDashboard(DashboardSMResult dataWeekMonth, DashboardSMResult dataYear, RecruitHistory activities);
+        void showACtivities(RecruitHistory activities);
         void updateData();
         void showMenuCreateEvent();
 
         void initViewHeight();
+
+        void finishLoadingMulti();
     }
 
     interface Action {

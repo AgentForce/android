@@ -23,16 +23,19 @@ import manulife.manulifesop.api.ObjectResponse.ActivityDetail;
 import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.CampaignForcastTarget;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
+import manulife.manulifesop.api.ObjectResponse.CampaignRecruitMonth;
 import manulife.manulifesop.api.ObjectResponse.CheckUser;
 import manulife.manulifesop.api.ObjectResponse.CheckVersion;
 import manulife.manulifesop.api.ObjectResponse.ContactActivity;
 import manulife.manulifesop.api.ObjectResponse.ContactHistory;
 import manulife.manulifesop.api.ObjectResponse.ContactMonth;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
+import manulife.manulifesop.api.ObjectResponse.DashboardSMResult;
 import manulife.manulifesop.api.ObjectResponse.EventsCreate;
 import manulife.manulifesop.api.ObjectResponse.EventsMonth;
 import manulife.manulifesop.api.ObjectResponse.EventsOneDay;
 import manulife.manulifesop.api.ObjectResponse.LoginResult;
+import manulife.manulifesop.api.ObjectResponse.RecruitHistory;
 import manulife.manulifesop.api.ObjectResponse.RefreshToken;
 import manulife.manulifesop.api.ObjectResponse.RequestOTP;
 import manulife.manulifesop.api.ObjectResponse.ContactDetail;
@@ -245,4 +248,72 @@ public interface ApiInterface {
                                              @Path(value = "month", encoded = false) int month,
                                              @Query("search") String search,
                                              @Query("page") int page, @Query("limit") int limit);
+
+
+    //-----------------------SM Group-----------------------
+    @GET("campaigns/dashboardrecruit/{type}")
+    Observable<DashboardSMResult> dashBoardSM(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                            @Header("devicename") String devicename, @Header("imei") String imei,
+                                            @Path(value = "type", encoded = false) String type);
+    @GET("campaigns/recruit/{month}")
+    Observable<CampaignRecruitMonth> campaignRecruiMonth(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                         @Header("devicename") String devicename, @Header("imei") String imei,
+                                                         @Path(value = "month", encoded = false) int month);
+
+    @GET("recruits")
+    Observable<RecruitHistory> recruitHistory(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                   @Header("devicename") String devicename, @Header("imei") String imei,
+                                                   @Query("page") int page, @Query("limit") int limit);
+
+    @GET("recruits/search/{month}")
+    Observable<ContactMonth> getContactMonthRecruitment(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                             @Header("devicename") String devicename, @Header("imei") String imei,
+                                             @Path(value = "month", encoded = false) int month,
+                                             @Query("search") String search,
+                                             @Query("page") int page, @Query("limit") int limit);
+
+    @GET("recruits/{period}/{processstep}/{status}")
+    Observable<UsersList> getUserListRecruit(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                      @Header("devicename") String devicename, @Header("imei") String imei,
+                                      @Path(value = "period", encoded = false) int period,
+                                      @Path(value = "processstep", encoded = false) int processstep,
+                                      @Path(value = "status", encoded = false) int status,
+                                      @Query("page") int page, @Query("limit") int limit,
+                                      @Query("search") String search);
+
+    @POST("recruits")
+    Observable<BaseResponse> addRecruit(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                        @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                        @Body InputAddContact data);
+
+    @POST("releads/recruit/movetolead")
+    Observable<BaseResponse> changeIntroduceRecruit(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                    @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                    @Body InputChangeRelead data);
+
+    @PUT("recruits/{id}")
+    Observable<BaseResponse> updateRecruit(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                           @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                           @Path(value = "id", encoded = false) int id,
+                                           @Body InputUpdateContact data);
+
+    @POST("releads/recruit")
+    Observable<BaseResponse> addIntroduceRecruit(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                 @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                 @Body InputIntroduceContact data);
+    @GET("releads/recruit/period/{period}")
+    Observable<UsersList> getIntorduceRecruitList(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                               @Header("devicename") String devicename, @Header("imei") String imei,
+                                               @Path(value = "period", encoded = false) int period, @Query("page") int page,
+                                               @Query("limit") int limit, @Query("search") String search);
+    @PUT("recruits/status/{id}")
+    Observable<BaseResponse> changeRecruitStatus(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                 @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                 @Path(value = "id", encoded = false) int id,
+                                                 @Body InputChangeContactStatus data);
+    @GET("recruits/{id}")
+    Observable<ContactDetail> getRecruitDetail(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                               @Header("devicename") String devicename, @Header("imei") String imei,
+                                               @Path(value = "id", encoded = false) int id);
+
 }

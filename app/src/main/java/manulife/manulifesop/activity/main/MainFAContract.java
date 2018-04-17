@@ -21,6 +21,8 @@ public interface MainFAContract {
         void showHideActionbar(boolean isShow);
         void updateActionbarTitle(String title);
         void showLogin();
+
+        void showPersonalRecruiment();
     }
     interface Action{
         void chekCampaign();

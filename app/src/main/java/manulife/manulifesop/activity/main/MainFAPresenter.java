@@ -49,7 +49,7 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
             } else {
                 mPresenterView.showFragmentConfirmCreatePlan("Trang chủ");
             }
-            mPresenterView.finishLoading();
+            //mPresenterView.finishLoading();
         }else if(data.statusCode == -1){
             //refresh token
             refreshAccessToken();

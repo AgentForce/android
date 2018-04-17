@@ -34,8 +34,6 @@ public class SignedPersonPresenter extends BasePresenter<SignedPersonContract.Vi
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                 period, 4,Contants.SIGNED_NOT_APPLIED,1,10,"")//khách hàng chưa nộp hồ sơ
-                .subscribeOn(Schedulers.computation())
-                .unsubscribeOn(Schedulers.io())
                 .flatMap(usersList -> {
                     ProjectApplication.getInstance().setSignNotApply(usersList);
                     return ApiService.getServer().getUserList(
@@ -64,6 +62,8 @@ public class SignedPersonPresenter extends BasePresenter<SignedPersonContract.Vi
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                             period, 4,Contants.SIGNED_SUCCESS,1,10,"");// khách hàng ký thành công
                 })
+                .subscribeOn(Schedulers.computation())
+                .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleResponse, this::handleError));
     }

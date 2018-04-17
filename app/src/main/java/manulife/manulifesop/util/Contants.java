@@ -26,12 +26,27 @@ public class Contants {
     public static final String SIGNED_WAIT_APPROVE_STRING = "Khách hàng chờ duyệt hồ sơ";
     public static final String SIGNED_SUCCESS_STRING = "Khách hàng ký hợp đồng thành công";
 
+    //____________SM group____________
+    public static final String SURVEY = "Khách hàng khảo sát";
+    public static final String COP = "Khách hàng dự COP";
+    public static final String COP_APPOINTMENT_STRING = "Khách hàng chuyển sang phỏng vấn";
+    public static final String COP_DONE_STRING = "Khách hàng hoàn thành COP";
+    public static final String MIT_STRING = "Học MIT";
+    public static final String MIT_RELEARN_STRING = "Học lại MIT";
+    public static final String MIT_DONE_STRING = "Đã học MIT";
+
+
+
     //menu call type
     public static final String APPOINTMENT_MENU = "appointment_menu";
     public static final String CONSULTANT_MENU = "consultant_menu";
     public static final String CONTACT_MENU = "contact_menu";
     public static final String SIGNED_MENU = "signed_menu";
     public static final String INTRODUCE_MENU = "introduce_menu";
+    //menu recruit
+    public static final String SURVEY_MENU = "survey_menu";
+    public static final String COP_MENU = "cop_menu";
+    public static final String MIT_MENU = "cop_menu";
 
     public static final int ADD_CONTACT = 100;
     public static final int CHANGE_TO_CONTACT = 101;
@@ -66,5 +81,23 @@ public class Contants {
     public static final int SIGNED_APPLIED = 3;
     public static final int SIGNED_WAIT_APPROVE = 4;
     public static final int SIGNED_SUCCESS = 5;
+
+    //_____________________SM group_____________________
+    //variable for contact
+    public static final int SURVEY_ADDED = 1;
+    public static final int SURVEY_REFUSE = 2;
+    public static final int SURVEY_CALLLATER = 3;
+
+    //variable for cop
+    public static final int COP_ADDED = 1;
+    public static final int COP_REFUSE = 2;
+    public static final int COP_CALLATER = 3;
+    public static final int COP_DONE = 4;
+
+    //variable for mit
+    public static final int MIT_ADDED = 1;
+    public static final int MIT_REFUSE = 2;
+    public static final int MIT_RELEARN = 3;
+    public static final int MIT_DONE = 4;
 
 }

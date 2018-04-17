@@ -1,8 +1,7 @@
-package manulife.manulifesop.fragment.ManagerGroup.manageEmploy;
+package manulife.manulifesop.fragment.ManagerGroup.recruiment.manageRecruitment;
 
 
 import manulife.manulifesop.base.BasePresenter;
-import manulife.manulifesop.fragment.dashboard.DashboardContract;
 
 /**
  * Created by Chick on 10/27/2017.

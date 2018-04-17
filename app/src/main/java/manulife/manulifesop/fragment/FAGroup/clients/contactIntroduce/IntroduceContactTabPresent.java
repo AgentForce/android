@@ -66,7 +66,7 @@ public class IntroduceContactTabPresent extends BasePresenter<IntroduceContactTa
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                 checksum, data)
                 .subscribeOn(Schedulers.computation())
-                .unsubscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleResponseAddIntroduce, this::handleError));
     }

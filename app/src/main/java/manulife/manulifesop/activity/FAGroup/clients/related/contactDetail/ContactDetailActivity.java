@@ -43,6 +43,8 @@ import manulife.manulifesop.util.Contants;
 
 public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> implements ContactDetailContract.View {
 
+    @BindView(R.id.txt_avatar)
+    TextView txtAvatar;
     @BindView(R.id.txt_actionbar_title)
     TextView txtActionbarTitle;
     @BindView(R.id.layout_btn_back)
@@ -91,6 +93,9 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     private List<BaseFragment> mListFragment;
     private List<String> mTabTitles;
 
+    //variable to detect sm recruit
+    private boolean mIsRecruit = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +114,10 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         mActionListener = new ContactDetailPresenter(this, this);
         initViews();
         initMenuAfterCall();
-        mActionListener.getContactDetail(mUserId);
+        if (mIsRecruit)
+            mActionListener.getRecruitDetail(mUserId);
+        else
+            mActionListener.getContactDetail(mUserId);
     }
 
     private void initViews() {
@@ -171,10 +179,31 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                     layoutMenu.setLayoutResource(R.layout.layout_float_menu_introduce);
                     layoutMenu.inflate();
 
-                    /*findViewById(R.id.layout_menu_contact).setOnClickListener(this);
-                    findViewById(R.id.layout_menu_call_later).setOnClickListener(this);
-                    findViewById(R.id.layout_menu_cancel).setOnClickListener(this);*/
+                    break;
+                }
 
+                case Contants.SURVEY_MENU: {
+                    mIsRecruit = true;
+                    layoutMenu.setLayoutResource(R.layout.layout_float_menu_survey);
+                    layoutMenu.inflate();
+
+                    processMenuSurvey listener = new processMenuSurvey();
+                    findViewById(R.id.layout_menu_survey).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_call_later).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_cancel).setOnClickListener(listener);
+                    break;
+                }
+
+                case Contants.COP_MENU: {
+                    mIsRecruit = true;
+                    layoutMenu.setLayoutResource(R.layout.layout_float_menu_cop);
+                    layoutMenu.inflate();
+
+                    processMenuCOP listener = new processMenuCOP();
+                    findViewById(R.id.layout_menu_mit).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_cop_event).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_call_later).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_cancel).setOnClickListener(listener);
                     break;
                 }
             }
@@ -192,8 +221,11 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == Contants.ADD_EVENT || requestCode == Contants.UPDATE_CONTACT) {
-                mActionListener.getContactDetail(mUserId);
-            } else if(requestCode == Contants.SIGN_SUCCESS){
+                if (mIsRecruit)
+                    mActionListener.getRecruitDetail(mUserId);
+                else
+                    mActionListener.getContactDetail(mUserId);
+            } else if (requestCode == Contants.SIGN_SUCCESS) {
                 finishChangeStatus();
             }
         }
@@ -236,7 +268,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                     Bundle data = new Bundle();
                     data.putInt("typeInt", 1);
                     data.putInt("contactID", mUserId);
-                    data.putString("name",txtUserName.getText().toString());
+                    data.putString("name", txtUserName.getText().toString());
                     showHideMenuAfterCall();
                     goNextScreen(CreateEventActivity.class, data, Contants.ADD_EVENT);
                     break;
@@ -267,7 +299,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                     Bundle data = new Bundle();
                     data.putInt("typeInt", 1);
                     data.putInt("contactID", mUserId);
-                    data.putString("name",txtUserName.getText().toString());
+                    data.putString("name", txtUserName.getText().toString());
                     showHideMenuAfterCall();
                     goNextScreen(CreateEventActivity.class, data, Contants.ADD_EVENT);
                     break;
@@ -314,6 +346,59 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
 
     }
 
+    private class processMenuSurvey implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            switch (id) {
+                case R.id.layout_menu_survey: {
+                    mActionListener.updateStatusProcessRecruit(mUserId, true, 1);
+                    break;
+                }
+                case R.id.layout_menu_call_later: {
+                    mActionListener.updateStatusProcessRecruit(mUserId, false, Contants.SURVEY_CALLLATER);
+                    break;
+                }
+                case R.id.layout_menu_cancel: {
+                    mActionListener.updateStatusProcessRecruit(mUserId, false, Contants.SURVEY_REFUSE);
+                    break;
+                }
+            }
+        }
+    }
+
+    private class processMenuCOP implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            switch (id) {
+                case R.id.layout_menu_mit: {
+                    mActionListener.updateStatusProcessRecruit(mUserId, true, 1);
+                    break;
+                }
+                case R.id.layout_menu_cop_event: {
+                    Bundle data = new Bundle();
+                    data.putInt("typeInt", 1);
+                    data.putInt("contactID", mUserId);
+                    data.putString("name", txtUserName.getText().toString());
+                    showHideMenuAfterCall();
+                    goNextScreen(CreateEventActivity.class, data, Contants.ADD_EVENT);
+                    break;
+                }
+                case R.id.layout_menu_call_later: {
+                    mActionListener.updateStatusProcessRecruit(mUserId, false, Contants.COP_CALLATER);
+                    break;
+                }
+                case R.id.layout_menu_cancel: {
+                    mActionListener.updateStatusProcessRecruit(mUserId, false, Contants.COP_REFUSE);
+                    break;
+                }
+            }
+        }
+    }
+
     private void initScore(int score) {
         switch (score) {
             case 1: {
@@ -351,6 +436,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
 
     @Override
     public void initViewPager() {
+        txtAvatar.setText(ProjectApplication.getInstance().getContactDetail().data.name.substring(0, 1));
         txtUserName.setText(ProjectApplication.getInstance().getContactDetail().data.name);
         txtPhone.setText(ProjectApplication.getInstance().getContactDetail().data.phone);
         initScore(ProjectApplication.getInstance().getContactDetail().data.score);
@@ -383,8 +469,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         Animation in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         layoutMenuBot.startAnimation(in);
         layoutMenuBot.setVisibility(View.VISIBLE);
-        if(mAdapterViewPager.getItem(0) instanceof ContactDetailStep1Fragment)
-        {
+        if (mAdapterViewPager.getItem(0) instanceof ContactDetailStep1Fragment) {
             ((ContactDetailStep1Fragment) mAdapterViewPager.getItem(0)).showXLetter(true);
         }
         enableViewTop(false);
@@ -399,8 +484,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                 layoutMenuBot.startAnimation(out);
                 layoutMenuBot.setVisibility(View.GONE);
 
-                if(mAdapterViewPager.getItem(0) instanceof ContactDetailStep1Fragment)
-                {
+                if (mAdapterViewPager.getItem(0) instanceof ContactDetailStep1Fragment) {
                     ((ContactDetailStep1Fragment) mAdapterViewPager.getItem(0)).showXLetter(false);
                 }
 
@@ -409,8 +493,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                 Animation in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
                 layoutMenuBot.startAnimation(in);
                 layoutMenuBot.setVisibility(View.VISIBLE);
-                if(mAdapterViewPager.getItem(0) instanceof ContactDetailStep1Fragment)
-                {
+                if (mAdapterViewPager.getItem(0) instanceof ContactDetailStep1Fragment) {
                     ((ContactDetailStep1Fragment) mAdapterViewPager.getItem(0)).showXLetter(true);
                 }
                 enableViewTop(false);
@@ -431,7 +514,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         }
     }
 
-    @OnClick({R.id.layout_btn_back,R.id.layout_btn_edit})
+    @OnClick({R.id.layout_btn_back, R.id.layout_btn_edit})
     public void onClickView(View view) {
         int id = view.getId();
         switch (id) {
@@ -439,14 +522,16 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                 onBackPressed();
                 break;
             }
-            case R.id.layout_btn_edit:{
+            case R.id.layout_btn_edit: {
                 List<ContactPerson> dataInput = new ArrayList<>();
                 dataInput.add(new ContactPerson(false, "",
-                        ProjectApplication.getInstance().getContactDetail().data.name, ProjectApplication.getInstance().getContactDetail().data.phone, 0,false));
+                        ProjectApplication.getInstance().getContactDetail().data.name, ProjectApplication.getInstance().getContactDetail().data.phone, 0, false));
                 Bundle data = new Bundle();
                 data.putSerializable("data", (Serializable) dataInput);
                 data.putInt("idRelead", mUserId);
-                data.putBoolean("isUpdateContact",true);
+                data.putBoolean("isUpdateContact", true);
+                if (mIsRecruit)
+                    data.putBoolean("isRecruit", true);
                 goNextScreen(UpdateContactInfoActivity.class, data, Contants.UPDATE_CONTACT);
                 break;
             }

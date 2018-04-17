@@ -14,6 +14,8 @@ public interface DashboardContract {
         void initViewPagerSM();
 
         int getSelectedPage();
+
+        void finishLoadingChild(int positionChild);
     }
 
     interface Action {

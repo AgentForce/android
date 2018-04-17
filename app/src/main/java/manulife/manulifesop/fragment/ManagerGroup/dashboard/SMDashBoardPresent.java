@@ -11,6 +11,8 @@ import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
 import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
+import manulife.manulifesop.api.ObjectResponse.DashboardSMResult;
+import manulife.manulifesop.api.ObjectResponse.RecruitHistory;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.fragment.FAGroup.dashboardv2.FADashBoardContract;
 import manulife.manulifesop.util.Contants;
@@ -24,8 +26,8 @@ import manulife.manulifesop.util.Utils;
 
 public class SMDashBoardPresent extends BasePresenter<SMDashBoardContract.View> implements SMDashBoardContract.Action {
 
-    private DashboardResult mDataDashboardWeekMonth;
-    private DashboardResult mDataDashboardYear;
+    private DashboardSMResult mDataDashboardWeekMonth;
+    private DashboardSMResult mDataDashboardYear;
     private Context mContext;
 
     public SMDashBoardPresent(SMDashBoardContract.View presenterView, Context context) {
@@ -36,32 +38,32 @@ public class SMDashBoardPresent extends BasePresenter<SMDashBoardContract.View> 
     @Override
     public void getDataDashboard() {
         mPresenterView.showLoading("Lấy dữ liệu");
-        getCompositeDisposable().add(ApiService.getServer().dashBoard(
+        getCompositeDisposable().add(ApiService.getServer().dashBoardSM(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                 DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, "weekmonth")
-                .subscribeOn(Schedulers.computation())
                 .flatMap(dashboardResult -> {
                     this.mDataDashboardWeekMonth = dashboardResult;
-                    return ApiService.getServer().dashBoard(
+                    return ApiService.getServer().dashBoardSM(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                             DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, "year");
                 })
                 .flatMap(dashboardResult -> {
                     this.mDataDashboardYear = dashboardResult;
-                    return ApiService.getServer().campaignMonth(
+                    return ApiService.getServer().campaignRecruiMonth(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                             DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, Utils.getCurrentMonth(mContext));
                 })
                 .flatMap(campaignMonth -> {
-                    ProjectApplication.getInstance().setCampaign(campaignMonth);
-                    return ApiService.getServer().activitiesDashboard(
+                    ProjectApplication.getInstance().setCampaignRecruit(campaignMonth);
+                    return ApiService.getServer().recruitHistory(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                             DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, 1, 10);
                 })
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(this::handleResponseDashboard, this::handleError));
@@ -71,10 +73,10 @@ public class SMDashBoardPresent extends BasePresenter<SMDashBoardContract.View> 
         mPresenterView.finishLoading(throwable.getMessage(), false);
     }
 
-    private void handleResponseDashboard(ActivitiHist data) {
+    private void handleResponseDashboard(RecruitHistory data) {
         if (data.statusCode == 1) {
+            mPresenterView.finishLoadingMulti();
             mPresenterView.showDataDashboard(mDataDashboardWeekMonth, mDataDashboardYear, data);
-            mPresenterView.finishLoading();
         } else {
             mPresenterView.finishLoading(data.msg, false);
         }
@@ -82,7 +84,7 @@ public class SMDashBoardPresent extends BasePresenter<SMDashBoardContract.View> 
 
     @Override
     public void getActivities(int page) {
-        getCompositeDisposable().add(ApiService.getServer().activitiesDashboard(
+        getCompositeDisposable().add(ApiService.getServer().recruitHistory(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                 DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, page, 10)
@@ -93,12 +95,12 @@ public class SMDashBoardPresent extends BasePresenter<SMDashBoardContract.View> 
         );
     }
 
-    private void handleResponseActivity(ActivitiHist activitiHist) {
-        if (activitiHist.statusCode == 1) {
-            mPresenterView.showACtivities(activitiHist);
+    private void handleResponseActivity(RecruitHistory data) {
+        if (data.statusCode == 1) {
+            mPresenterView.showACtivities(data);
             mPresenterView.finishLoading();
         }else{
-            mPresenterView.finishLoading(activitiHist.msg, false);
+            mPresenterView.finishLoading(data.msg, false);
         }
     }
 

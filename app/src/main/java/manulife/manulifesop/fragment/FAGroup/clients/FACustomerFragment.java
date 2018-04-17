@@ -128,7 +128,7 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
     public void showDialogEditCampaign() {
         Fragment CurrentFragment = getChildFragmentManager().findFragmentById(R.id.frame_container_customer);
         if (CurrentFragment instanceof FAContentCustomerFragment)
-            //((FAContentCustomerFragment) CurrentFragment).showDialogEditCampaign();
+            //((PersonalRecuitmentContentFragment) CurrentFragment).showDialogEditCampaign();
             ((FAContentCustomerFragment) CurrentFragment).showDialogEditObjectMonth();
     }
 }

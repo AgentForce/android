@@ -18,6 +18,8 @@ public interface FADashBoardContract {
         void showMenuCreateEvent();
 
         void initViewHeight();
+
+        void finishLoadingMulti();
     }
 
     interface Action {

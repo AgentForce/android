@@ -65,6 +65,9 @@ public class AddContactPersonActivity extends BaseActivity<AddContactPersonPrese
 
     private Context mContext;
 
+    //variable for sm recruitment
+    private boolean mIsRecruit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +76,7 @@ public class AddContactPersonActivity extends BaseActivity<AddContactPersonPrese
         mContext = this;
         mDataChoosed = new ArrayList<>();
         mActionListener = new AddContactPersonPresenter(this, this);
+        mIsRecruit = getIntent().getBooleanExtra("isRecruit",false);
         setupSupportForApp();
         initViews();
         //mActionListener.readAllContacts();
@@ -206,6 +210,7 @@ public class AddContactPersonActivity extends BaseActivity<AddContactPersonPrese
                         //showMessage("Thông báo", mDataChoosed.size() + mDataChoosed.get(0).getName(), SweetAlertDialog.WARNING_TYPE);
                         Bundle data = new Bundle();
                         data.putSerializable("data", (Serializable) mDataChoosed);
+                        data.putBoolean("isRecruit", mIsRecruit);
                         goNextScreen(UpdateContactInfoActivity.class, data, Contants.ADD_CONTACT);
                     } else {
                         showMessage("Thông báo", "Chọn ít nhất một số điện thoại", SweetAlertDialog.WARNING_TYPE);

@@ -192,6 +192,9 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
                     edtSearch.addTextChangedListener(mTextWatcher);
                 } else {
                     // keyboard is closed
+                    if (mTextWatcher != null) {
+                        edtSearch.removeTextChangedListener(mTextWatcher);
+                    }
                 }
             }
         });
@@ -272,7 +275,7 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
         listContact.setAdapter(mAdapterActiveHist);
 
         //set space between two items
-        int[] ATTRS = new int[]{android.R.attr.listDivider};
+        /*int[] ATTRS = new int[]{android.R.attr.listDivider};
         TypedArray a = getContext().obtainStyledAttributes(ATTRS);
         Drawable divider = a.getDrawable(0);
         int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
@@ -283,7 +286,7 @@ public class SignedContactTabFragment extends BaseFragment<SignedPersonActivity,
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listContact.getContext(),
                 mLayoutManager.getOrientation());
         dividerItemDecoration.setDrawable(insetDivider);
-        listContact.addItemDecoration(dividerItemDecoration);
+        listContact.addItemDecoration(dividerItemDecoration);*/
 
 
         listContact.clearOnScrollListeners();

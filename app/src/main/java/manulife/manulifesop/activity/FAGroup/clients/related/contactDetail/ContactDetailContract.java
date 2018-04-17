@@ -16,6 +16,8 @@ public interface ContactDetailContract {
     }
     interface Action{
         void getContactDetail(int id);
+        void getRecruitDetail(int id);
         void updateStatusProcess(int leadID,boolean isChangeStep, int changeToStatus);
+        void updateStatusProcessRecruit(int leadID,boolean isChangeStep, int changeToStatus);
     }
 }

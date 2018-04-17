@@ -48,11 +48,14 @@ public class ContactDetailStep1RefuseFragment extends BaseFragment<ContactDetail
     private String mProcessStep;
     private int mContactID;
 
+    //variable to detect sm recruit
+    private boolean mIsRecruit = false;
+
 
     public static ContactDetailStep1RefuseFragment newInstance(String processStep, int contactID) {
         Bundle args = new Bundle();
-        args.putString("processStep",processStep);
-        args.putInt("contactID",contactID);
+        args.putString("processStep", processStep);
+        args.putInt("contactID", contactID);
         ContactDetailStep1RefuseFragment fragment = new ContactDetailStep1RefuseFragment();
         fragment.setArguments(args);
         return fragment;
@@ -65,14 +68,14 @@ public class ContactDetailStep1RefuseFragment extends BaseFragment<ContactDetail
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new ContactDetailStep1RefusePresent(this,getContext());
+        mActionListener = new ContactDetailStep1RefusePresent(this, getContext());
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mProcessStep = getArguments().getString("processStep","");
-        mContactID = getArguments().getInt("contactID",0);
+        mProcessStep = getArguments().getString("processStep", "");
+        mContactID = getArguments().getInt("contactID", 0);
         initViews();
     }
 
@@ -85,7 +88,7 @@ public class ContactDetailStep1RefuseFragment extends BaseFragment<ContactDetail
     @Override
     public void initViews() {
         ContactDetail data = ProjectApplication.getInstance().getContactDetail();
-        if(data.statusCode==1) {
+        if (data.statusCode == 1) {
             txtAge.setText(ProjectApplication.getInstance()
                     .getAgeString(data.data.age));
             txtIncome.setText(ProjectApplication.getInstance()
@@ -103,18 +106,23 @@ public class ContactDetailStep1RefuseFragment extends BaseFragment<ContactDetail
         }
     }
 
-    private void setTitleForButtonChange(){
-        switch (mProcessStep){
-            case Contants.CONTACT_MENU:{
+    private void setTitleForButtonChange() {
+        switch (mProcessStep) {
+            case Contants.CONTACT_MENU: {
                 btnAddAppointment.setText("Đưa vào danh sách cần liên hệ");
                 break;
             }
-            case Contants.APPOINTMENT_MENU:{
+            case Contants.APPOINTMENT_MENU: {
                 btnAddAppointment.setText("Đưa vào danh sách hẹn gặp");
                 break;
             }
-            case Contants.CONSULTANT_MENU:{
+            case Contants.CONSULTANT_MENU: {
                 btnAddAppointment.setText("Đưa vào danh sách tư vấn");
+                break;
+            }
+            case Contants.SURVEY_MENU: {
+                btnAddAppointment.setText("Đưa vào danh sách khảo sát");
+                mIsRecruit = true;
                 break;
             }
         }
@@ -130,7 +138,10 @@ public class ContactDetailStep1RefuseFragment extends BaseFragment<ContactDetail
                         "Hủy", SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
                             @Override
                             public void DiaglogPositive() {
-                                mActionListener.changeStatusToOne(mContactID,false,1);
+                                if (mIsRecruit)
+                                    mActionListener.changeStatusRecruitToOne(mContactID, false, 1);
+                                else
+                                    mActionListener.changeStatusToOne(mContactID, false, 1);
                             }
 
                             @Override

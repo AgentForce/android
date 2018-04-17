@@ -225,6 +225,9 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
                     edtSearch.addTextChangedListener(mTextWatcher);
                 } else {
                     // keyboard is closed
+                    if (mTextWatcher != null) {
+                        edtSearch.removeTextChangedListener(mTextWatcher);
+                    }
                 }
             }
         });
@@ -277,7 +280,7 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
         listContact.setAdapter(mAdapterActiveHist);
 
         //set space between two items
-        int[] ATTRS = new int[]{android.R.attr.listDivider};
+        /*int[] ATTRS = new int[]{android.R.attr.listDivider};
         TypedArray a = getContext().obtainStyledAttributes(ATTRS);
         Drawable divider = a.getDrawable(0);
         int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
@@ -288,7 +291,7 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listContact.getContext(),
                 mLayoutManager.getOrientation());
         dividerItemDecoration.setDrawable(insetDivider);
-        listContact.addItemDecoration(dividerItemDecoration);
+        listContact.addItemDecoration(dividerItemDecoration);*/
 
 
         listContact.clearOnScrollListeners();
@@ -322,7 +325,7 @@ public class AppointmentContactTabFragment extends BaseFragment<AppointmentActiv
                 break;
             }
             case R.id.txt_add_from_introduce: {
-                mActivity.goNextScreen(IntroduceContactActivity.class);
+                mActivity.goNextScreen(IntroduceRecruitmentActivity.class);
                 break;
             }
         }

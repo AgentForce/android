@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--mục tiêu theo tháng-->
+    <LinearLayout
+        android:id="@+id/layout_object_month"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--khách hàng khảo sát-->
+        <RelativeLayout
+            android:id="@+id/layout_step1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/image_left"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_dashboard_sm_survey"
+                    android:scaleType="fitCenter"
+                    app:riv_corner_radius="5dp"
+                    app:riv_mutate_background="true" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_contact_white" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/image_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_arrow_right2" />
+
+            <TextView
+                android:id="@+id/txt_step1_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/image_right"
+                android:text="0/0"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/welcome_activity_content"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/txt_step1_result"
+                android:layout_toRightOf="@+id/image_left"
+                android:text="Khảo sát tuyển dụng"
+                android:textSize="@dimen/welcome_activity_content" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+        <!--khách hàng cop-->
+        <RelativeLayout
+            android:id="@+id/layout_step2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/image_step2_left"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_dashboard_sm_cop"
+                    android:scaleType="fitCenter"
+                    app:riv_corner_radius="5dp"
+                    app:riv_mutate_background="true" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_meeting_white" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/image_step2_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_arrow_right2" />
+
+            <TextView
+                android:id="@+id/txt_step2_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/image_step2_right"
+                android:text="0/0"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/welcome_activity_content"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/txt_step2_result"
+                android:layout_toRightOf="@+id/image_step2_left"
+                android:text="Dự COP"
+                android:textSize="@dimen/welcome_activity_content" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+        <!--khách hàng mit-->
+        <RelativeLayout
+            android:id="@+id/layout_step3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/image_step3_left"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_dashboard_sm_mit"
+                    android:scaleType="fitCenter"
+                    app:riv_corner_radius="5dp"
+                    app:riv_mutate_background="true" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_consultant2" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/image_step3_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_arrow_right2" />
+
+            <TextView
+                android:id="@+id/txt_step3_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/image_step3_right"
+                android:text="0/0"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/welcome_activity_content"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/txt_step3_result"
+                android:layout_toRightOf="@+id/image_step3_left"
+                android:text="Học MIT"
+                android:textSize="@dimen/welcome_activity_content" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+        <!--khách hàng ký cấp mã-->
+        <RelativeLayout
+            android:id="@+id/layout_step4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/image_step4_left"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_dashboard_sm_granted"
+                    android:scaleType="fitCenter"
+                    app:riv_corner_radius="5dp"
+                    app:riv_mutate_background="true" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_sign_white" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/image_step4_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_arrow_right2" />
+
+            <TextView
+                android:id="@+id/txt_step4_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/image_step4_right"
+                android:text="0/0"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/welcome_activity_content"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/txt_step4_result"
+                android:layout_toRightOf="@+id/image_step4_left"
+                android:text="Cấp mã"
+                android:textSize="@dimen/welcome_activity_content" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@android:color/darker_gray" />
+        <!--khách hàng giới thiệu-->
+        <RelativeLayout
+            android:id="@+id/layout_step5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/image_step5_left"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_dashboard_sm_introduce"
+                    android:scaleType="fitCenter"
+                    app:riv_corner_radius="5dp"
+                    app:riv_mutate_background="true" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_introduce_white" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/image_step5_right"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/ic_arrow_right2" />
+
+            <TextView
+                android:id="@+id/txt_step5_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/image_step5_right"
+                android:text="0/0"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/welcome_activity_content"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/txt_step5_result"
+                android:layout_toRightOf="@+id/image_step5_left"
+                android:text="Giới thiêu"
+                android:textSize="@dimen/welcome_activity_content" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>

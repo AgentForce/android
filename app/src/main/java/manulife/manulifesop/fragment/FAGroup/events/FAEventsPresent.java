@@ -44,7 +44,7 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
     @Override
     public void getAllActivitisInMonth(int month) {
 
-        mPresenterView.showLoading("Lấy dữ liệu tháng");
+        mPresenterView.showLoading("Lấy dữ liệu");
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH,1);
@@ -83,7 +83,7 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
 
     @Override
     public void getEventsOneDay(Date date) {
-        mPresenterView.showLoading("Lấy dữ liệu ngày");
+        mPresenterView.showLoading("Lấy dữ liệu");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         getCompositeDisposable().add(ApiService.getServer().getEventsDay(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),

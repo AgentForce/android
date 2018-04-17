@@ -626,7 +626,7 @@ public class FAObjectWeekFragment extends BaseFragment<MainFAActivity, FAObjectW
         int id = view.getId();
         switch (id) {
             case R.id.txt_edit_week: {
-                //((FAContentCustomerFragment)this.getParentFragment()).showDialogEditObjectMonth();
+                //((PersonalRecuitmentContentFragment)this.getParentFragment()).showDialogEditObjectMonth();
                 ((FAContentCustomerFragment) this.getParentFragment()).showDialogEditCampaign();
                 break;
             }

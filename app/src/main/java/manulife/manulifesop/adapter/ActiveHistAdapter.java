@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.introduceContact.IntroduceContactActivity;
+import manulife.manulifesop.activity.ManagerGroup.Recruitment.introduceRecruitment.IntroduceRecruitmentActivity;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 
@@ -68,14 +69,15 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
         final ActiveHistFA object = mListObject.get(position);
         if (object.getTitle() != null && object.getTitle().length() > 1) {
             holder.txtAvatarTitle.setText(
-                    object.getTitle().substring(0,1)
+                    object.getTitle().substring(0, 1)
             );
         }
         //visible menu right for introduce contact
-        if(mContext instanceof IntroduceContactActivity){
+        if (mContext instanceof IntroduceContactActivity ||
+                mContext instanceof IntroduceRecruitmentActivity) {
             holder.layoutMenuRightClick.setVisibility(View.GONE);
             holder.layoutMenuRightView.setAlpha(0);
-        }else{
+        } else {
             holder.layoutMenuRightClick.setVisibility(View.VISIBLE);
             holder.layoutMenuRightView.setAlpha(1f);
         }
@@ -95,13 +97,13 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.menu_detail:
-                                mCallback.onClickMenuRight(position,0);
+                                mCallback.onClickMenuRight(position, 0);
                                 break;
                             case R.id.menu_call:
-                                mCallback.onClickMenuRight(position,1);
+                                mCallback.onClickMenuRight(position, 1);
                                 break;
                             case R.id.menu_create_event:
-                                mCallback.onClickMenuRight(position,2);
+                                mCallback.onClickMenuRight(position, 2);
                                 break;
                         }
                         return false;
@@ -155,7 +157,6 @@ public class ActiveHistAdapter extends RecyclerView.Adapter<ActiveHistAdapter.Vi
         LinearLayout layoutMenuRightView;
         @BindView(R.id.layout_root)
         LinearLayout layoutRoot;
-
 
 
         public ViewHolder(View itemView) {

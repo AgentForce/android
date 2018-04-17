@@ -16,7 +16,6 @@ import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.fragment.FAGroup.dashboardv2.FADashBoardFragment;
 import manulife.manulifesop.fragment.ManagerGroup.dashboard.SMDashBoardFragment;
-import manulife.manulifesop.fragment.ManagerGroup.manageEmploy.content.contentDetail.ContentDetailManageEmployFragment;
 import manulife.manulifesop.util.Utils;
 
 /**
@@ -36,6 +35,9 @@ public class DashboardFragment extends BaseFragment<MainFAActivity, DashboardPre
     private List<String> mTabTitles;
 
     private boolean mIsFA;
+
+    //variable for finish loading for child
+    private List<Boolean> mListChildLoaded;
 
     public static DashboardFragment newInstance(boolean isFA) {
         Bundle args = new Bundle();
@@ -61,10 +63,16 @@ public class DashboardFragment extends BaseFragment<MainFAActivity, DashboardPre
         mActivity.showHideActionbar(true);
         mActivity.updateActionbarTitle("Trang chủ");
         mIsFA = getArguments().getBoolean("isFA", false);
-        if (mIsFA)
+        mListChildLoaded = new ArrayList<>();
+        if (mIsFA) {
+            mListChildLoaded.add(false);
             initViewPagerFA();
-        else
+        }
+        else {
+            mListChildLoaded.add(false);
+            mListChildLoaded.add(false);
             initViewPagerSM();
+        }
     }
 
     @Override
@@ -81,6 +89,26 @@ public class DashboardFragment extends BaseFragment<MainFAActivity, DashboardPre
         mAdapterViewPager = new CustomViewPagerAdapter(getChildFragmentManager(), mListFragment, mTabTitles);
         viewPager.setAdapter(mAdapterViewPager);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void finishLoadingChild(int positionChild) {
+        boolean isAllDone = true;
+        //check positionChild is out of range
+        if(positionChild >= mListChildLoaded.size()){
+            //đang trong trường hợp FA position là 1 mà chỉ load 1 màn hình
+            mListChildLoaded.set(0, true);
+        }else {
+            mListChildLoaded.set(positionChild, true);
+        }
+
+        for(int i=0;i<mListChildLoaded.size();i++){
+            if(!mListChildLoaded.get(i)){
+                isAllDone = false;
+                break;
+            }
+        }
+        if(isAllDone) finishLoading();
     }
 
     @Override
@@ -129,5 +157,9 @@ public class DashboardFragment extends BaseFragment<MainFAActivity, DashboardPre
     @Override
     public void onResume() {
         super.onResume();
+        //refresh list boolean loaded
+        for(int i=0;i<mListChildLoaded.size();i++){
+            mListChildLoaded.set(i,false);
+        }
     }
 }

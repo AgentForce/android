@@ -58,15 +58,15 @@ public class EventDetailPresenter extends BasePresenter<EventDetailContract.View
         getCompositeDisposable().add(ApiService.getServer().deleteEvent(SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                 eventID)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
                 .map(baseResponse -> {
                     if(baseResponse.statusCode == 1){
                         CalendarEvents.deleteEvent(mContext,eventID,eventName);
                     }
                     return baseResponse;
                 })
+                .subscribeOn(Schedulers.computation())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleResponseDelete, this::handleError));
     }
 

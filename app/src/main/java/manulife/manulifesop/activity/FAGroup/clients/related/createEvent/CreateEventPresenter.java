@@ -56,9 +56,6 @@ public class CreateEventPresenter extends BasePresenter<CreateEventContract.View
         getCompositeDisposable().add(ApiService.getServer().createActivity(SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                 "checksum", data)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
                 .map(eventsCreate -> {
                     if(eventsCreate.statusCode == 1) {
                         long startDateAdd = Utils.convertStringToDate(data.startDate, "yyyy-MM-dd HH:mm").getTime();
@@ -77,6 +74,9 @@ public class CreateEventPresenter extends BasePresenter<CreateEventContract.View
                     }
                     return eventsCreate;
                 })
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
                 .subscribe(this::handleResponseCreate, this::handleError));
     }
 
@@ -110,9 +110,6 @@ public class CreateEventPresenter extends BasePresenter<CreateEventContract.View
         getCompositeDisposable().add(ApiService.getServer().updateEvent(SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                 "checksum", eventID, data)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
                 .map(baseResponse -> {
                     long startDateAdd = Utils.convertStringToDate(data.startDate, "yyyy-MM-dd HH:mm").getTime();
                     long endDateAdd = Utils.convertStringToDate(data.endDate, "yyyy-MM-dd HH:mm").getTime();
@@ -131,6 +128,9 @@ public class CreateEventPresenter extends BasePresenter<CreateEventContract.View
                     }
                     return baseResponse;
                 })
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
                 .subscribe(this::handleResponseUpdate, this::handleError));
     }
 

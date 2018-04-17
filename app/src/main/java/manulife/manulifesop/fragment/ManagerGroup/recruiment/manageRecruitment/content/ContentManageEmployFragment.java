@@ -1,4 +1,4 @@
-package manulife.manulifesop.fragment.ManagerGroup.manageEmploy.content;
+package manulife.manulifesop.fragment.ManagerGroup.recruiment.manageRecruitment.content;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ import butterknife.BindView;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.base.BaseFragment;
-import manulife.manulifesop.fragment.ManagerGroup.manageEmploy.ManageEmployFragment;
-import manulife.manulifesop.fragment.ManagerGroup.manageEmploy.content.contentDetail.ContentDetailManageEmployFragment;
+import manulife.manulifesop.fragment.ManagerGroup.recruiment.manageRecruitment.ManageEmployFragment;
+import manulife.manulifesop.fragment.ManagerGroup.recruiment.manageRecruitment.content.contentDetail.ContentDetailManageEmployFragment;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -34,6 +34,8 @@ public class ContentManageEmployFragment extends BaseFragment<MainFAActivity, Co
 
     private String mType;
 
+    //variable for
+
     public static ContentManageEmployFragment newInstance(String type) {
         Bundle args = new Bundle();
         args.putString("type",type);
@@ -44,7 +46,7 @@ public class ContentManageEmployFragment extends BaseFragment<MainFAActivity, Co
 
     @Override
     public int contentViewLayout() {
-        return R.layout.fragment_fa_customer;
+        return R.layout.fragment_sm_customer;
     }
 
     @Override
@@ -124,7 +126,13 @@ public class ContentManageEmployFragment extends BaseFragment<MainFAActivity, Co
 
     @Override
     public void setViewsHeight() {
-        ((ContentDetailManageEmployFragment)getChildFragmentManager()
-                        .findFragmentById(R.id.frame_container_customer)).initviewsHeight();
+        /*((ContentDetailManageEmployFragment)getChildFragmentManager()
+                        .findFragmentById(R.id.frame_container_customer)).initviewsHeight();*/
+        ContentDetailManageEmployFragment fragment = (ContentDetailManageEmployFragment)getChildFragmentManager()
+                .findFragmentById(R.id.frame_container_customer);
+        if(fragment != null)
+        {
+            fragment.initviewsHeight();
+        }
     }
 }

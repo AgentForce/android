@@ -343,6 +343,9 @@ public class FAContactMonthFragment extends BaseFragment<MainFAActivity, FAConta
                     edtSearch.addTextChangedListener(mTextWatcher);
                 } else {
                     // keyboard is closed
+                    if (mTextWatcher != null) {
+                        edtSearch.removeTextChangedListener(mTextWatcher);
+                    }
                 }
             }
         });

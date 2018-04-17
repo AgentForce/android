@@ -24,11 +24,10 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
+import manulife.manulifesop.api.ObjectResponse.DashboardSMResult;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
 import manulife.manulifesop.fragment.FAGroup.dashboardv2.FADashBoardFragment;
-import manulife.manulifesop.fragment.FAGroup.dashboardv2.campaignPercent.FACampaignPercentContract;
-import manulife.manulifesop.fragment.FAGroup.dashboardv2.campaignPercent.FACampaignPercentPresent;
 import manulife.manulifesop.util.Utils;
 
 /**
@@ -62,7 +61,7 @@ public class SMCampaignPercentFragment extends BaseFragment<MainFAActivity,SMCam
     private List<Integer> mListContractWeek;
     private int mTotalContract;
     private int mCurrentWeek;
-    private DashboardResult mData;
+    private DashboardSMResult mData;
 
     IndicatorSeekBar sbStep1, sbStep2, sbStep3, sbStep4;
 
@@ -89,7 +88,7 @@ public class SMCampaignPercentFragment extends BaseFragment<MainFAActivity,SMCam
     TextView txtMonthOK;
     List<Integer> mListMonthTarget;
 
-    public static SMCampaignPercentFragment newInstance(List<Integer> percents, List<Integer> percentForcast, String type, int month, DashboardResult dataWeekMonth) {
+    public static SMCampaignPercentFragment newInstance(List<Integer> percents, List<Integer> percentForcast, String type, int month, DashboardSMResult dataWeekMonth) {
         Bundle args = new Bundle();
         args.putSerializable("percent", (Serializable) percents);
         args.putSerializable("percentForcast", (Serializable) percentForcast);
@@ -119,7 +118,7 @@ public class SMCampaignPercentFragment extends BaseFragment<MainFAActivity,SMCam
         mPercentForcast = (List<Integer>) getArguments().getSerializable("percentForcast");
         mType = getArguments().getString("type","week");
         mMonth = getArguments().getInt("month",0);
-        mData = (DashboardResult) getArguments().getSerializable("dataCampaign");
+        mData = (DashboardSMResult) getArguments().getSerializable("dataCampaign");
         initViews();
     }
 
@@ -564,13 +563,13 @@ public class SMCampaignPercentFragment extends BaseFragment<MainFAActivity,SMCam
         });
         layoutRoot4.setAlpha(0.7f);
     }
-    private void calculatePerCentContractPerWeek(DashboardResult data) {
+    private void calculatePerCentContractPerWeek(DashboardSMResult data) {
         mCurrentWeek = data.data.currentWeek;
         int totalContract = 0;
         mListContractWeek = new ArrayList<>();
-        for (int i = 0; i < data.data.campaign.size(); i++) {
-            totalContract += data.data.campaign.get(i).targetContractSale;
-            mListContractWeek.add(data.data.campaign.get(i).targetContractSale);
+        for (int i = 0; i < data.data.campaigns.size(); i++) {
+            totalContract += data.data.campaigns.get(i).targetAgentCode;
+            mListContractWeek.add(data.data.campaigns.get(i).targetAgentCode);
         }
         mTotalContract = totalContract;
     }
@@ -620,12 +619,12 @@ public class SMCampaignPercentFragment extends BaseFragment<MainFAActivity,SMCam
 
         mListMonthTarget = new ArrayList<>();
         int targetstep1 = 0, targetstep2 = 0, targetstep3 = 0, targetstep4 = 0, targetstep5 = 0;
-        for (int i = 0; i < mData.data.campaign.size(); i++) {
-            targetstep1 += mData.data.campaign.get(i).targetCallSale;
-            targetstep2 += mData.data.campaign.get(i).targetMetting;
-            targetstep3 += mData.data.campaign.get(i).targetPresentation;
-            targetstep4 += mData.data.campaign.get(i).targetContractSale;
-            targetstep5 += mData.data.campaign.get(i).targetReLead;
+        for (int i = 0; i < mData.data.campaigns.size(); i++) {
+            targetstep1 += mData.data.campaigns.get(i).targetSurvey;
+            targetstep2 += mData.data.campaigns.get(i).targetCop;
+            targetstep3 += mData.data.campaigns.get(i).targetMit;
+            targetstep4 += mData.data.campaigns.get(i).targetAgentCode;
+            targetstep5 += mData.data.campaigns.get(i).targetReLeadRecruit;
         }
         mListMonthTarget.add(targetstep1);
         mListMonthTarget.add(targetstep2);

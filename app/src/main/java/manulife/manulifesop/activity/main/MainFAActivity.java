@@ -22,7 +22,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.first.FirstActivity;
 import manulife.manulifesop.activity.login.LoginActivity;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.fragment.FAGroup.clients.FACustomerFragment;
@@ -30,9 +29,10 @@ import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlan
 import manulife.manulifesop.fragment.FAGroup.dashboardv2.FADashBoardFragment;
 import manulife.manulifesop.fragment.FAGroup.events.FAEventsFragment;
 import manulife.manulifesop.fragment.FAGroup.personal.FAPersonalFragment;
-import manulife.manulifesop.fragment.ManagerGroup.manageEmploy.ManageEmployFragment;
+import manulife.manulifesop.fragment.ManagerGroup.recruiment.manageRecruitment.ManageEmployFragment;
 import manulife.manulifesop.fragment.ManagerGroup.menuDashBoard.menuEmploy.SMEmployMenuFragment;
 import manulife.manulifesop.fragment.ManagerGroup.menuDashBoard.menuSale.SMSaleMenuFragment;
+import manulife.manulifesop.fragment.ManagerGroup.recruiment.personalRecruitment.PersonalRecruitmentFragment;
 import manulife.manulifesop.fragment.dashboard.DashboardFragment;
 import manulife.manulifesop.util.SOPSharedPreferences;
 import manulife.manulifesop.util.Utils;
@@ -214,7 +214,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
     @Override
     public void showDashBoard() {
         mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
-        if (!(mCurrentFragment instanceof FADashBoardFragment)) {
+        if (!(mCurrentFragment instanceof DashboardFragment)) {
             mIsgetCampaign = true;
             layoutNotification.setVisibility(View.VISIBLE);
             layoutEdit.setVisibility(View.GONE);
@@ -236,6 +236,20 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
             mFragmentTran = getSupportFragmentManager().beginTransaction();
             mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
             mFragmentTran.replace(R.id.frame_container, FACustomerFragment.newInstance());
+            mFragmentTran.commit();
+        }
+    }
+
+    @Override
+    public void showPersonalRecruiment() {
+        mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+        if (!(mCurrentFragment instanceof PersonalRecruitmentFragment)) {
+            layoutNotification.setVisibility(View.GONE);
+            layoutEdit.setVisibility(View.VISIBLE);
+
+            mFragmentTran = getSupportFragmentManager().beginTransaction();
+            mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            mFragmentTran.replace(R.id.frame_container,PersonalRecruitmentFragment.newInstance());
             mFragmentTran.commit();
         }
     }

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
+import manulife.manulifesop.api.ObjectResponse.CampaignRecruitMonth;
 import manulife.manulifesop.api.ObjectResponse.ContactActivity;
 import manulife.manulifesop.api.ObjectResponse.ContactDetail;
 import manulife.manulifesop.api.ObjectResponse.ContactHistory;
@@ -55,6 +56,22 @@ public class ProjectApplication extends MultiDexApplication {
     private CampaignMonth mDataCampaign;
     private int mCampaignWeekId;
     private ContactMonth mDataContactMonth;
+
+    //variable for comapign sm detail
+    private CampaignRecruitMonth mDataCampaignRecruit;
+
+    //variables for sm cop
+    private UsersList mCOP_added;
+    private UsersList mCOP_calllater;
+    private UsersList mCOP_refuse;
+    private UsersList mCOP_done;
+
+    //variables for sm mit
+    private UsersList mMIT_added;
+    private UsersList mMIT_relearn;
+    private UsersList mMIT_refuse;
+    private UsersList mMIT_done;
+
 
     //variable for contact detail;
     private ContactDetail mContactDetail;
@@ -299,11 +316,20 @@ public class ProjectApplication extends MultiDexApplication {
     public CampaignMonth getCampaign(){
         return mDataCampaign;
     }
+
     public void setCampaignWeekId(int id){
         this.mCampaignWeekId = id;
     }
     public int getCampaignWeekId(){
         return this.mCampaignWeekId;
+    }
+
+    //init fo campaign sm detail
+    public void setCampaignRecruit(CampaignRecruitMonth data){
+        this.mDataCampaignRecruit = data;
+    }
+    public CampaignRecruitMonth getCampaignRecruit(){
+        return mDataCampaignRecruit;
     }
 
     //init for userdetail
@@ -418,6 +444,63 @@ public class ProjectApplication extends MultiDexApplication {
         return this.mIntroduce;
     }
 
-    //init for contact
+    //init for sm cop
+    public void setCOPAdded(UsersList data)
+    {
+        this.mCOP_added = data;
+    }
+    public UsersList getCOPAdded(){
+        return this.mCOP_added;
+    }
+    public void setCOPCallLater(UsersList data)
+    {
+        this.mCOP_calllater = data;
+    }
+    public UsersList getCOPCallLater(){
+        return this.mCOP_calllater;
+    }
+    public void setCOPRefuse(UsersList data)
+    {
+        this.mCOP_refuse = data;
+    }
+    public UsersList getCOPRefuse(){
+        return this.mCOP_refuse;
+    }
+    public void setCOPDone(UsersList data)
+    {
+        this.mCOP_done = data;
+    }
+    public UsersList getCOPDone(){
+        return this.mCOP_done;
+    }
 
+    //init for sm cop
+    public void setMITAdded(UsersList data)
+    {
+        this.mMIT_added = data;
+    }
+    public UsersList getMITAdded(){
+        return this.mMIT_added;
+    }
+    public void setMITRefuse(UsersList data)
+    {
+        this.mMIT_refuse = data;
+    }
+    public UsersList getMITRefuse(){
+        return this.mMIT_refuse;
+    }
+    public void setMITRelearn(UsersList data)
+    {
+        this.mMIT_relearn = data;
+    }
+    public UsersList getMITRelearn(){
+        return this.mMIT_relearn;
+    }
+    public void setMITDone(UsersList data)
+    {
+        this.mMIT_done = data;
+    }
+    public UsersList getMITDone(){
+        return this.mMIT_done;
+    }
 }

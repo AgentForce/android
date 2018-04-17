@@ -1,7 +1,5 @@
-package manulife.manulifesop.fragment.ManagerGroup.manageEmploy.content.contentDetail;
+package manulife.manulifesop.fragment.ManagerGroup.recruiment.manageRecruitment.content.contentDetail;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +8,6 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -19,16 +16,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.ContactDetailActivity;
 import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.ActiveHistAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
-import manulife.manulifesop.fragment.ManagerGroup.manageEmploy.content.ContentManageEmployFragment;
-import manulife.manulifesop.util.Contants;
+import manulife.manulifesop.fragment.ManagerGroup.recruiment.manageRecruitment.content.ContentManageEmployFragment;
 
 /**
  * Created by Chick on 10/27/2017.

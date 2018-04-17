@@ -17,5 +17,6 @@ public interface ContactDetailStep1RefuseContract {
 
     interface Action {
         void changeStatusToOne(int leadID, boolean isChangeProcessStep, int status);
+        void changeStatusRecruitToOne(int leadID, boolean isChangeProcessStep, int status);
     }
 }

@@ -49,7 +49,7 @@ public class SMEmployMenuFragment extends BaseFragment<MainFAActivity, SMEmployM
         int id = view.getId();
         switch (id) {
             case R.id.layout_personal_employ: {
-                Toast.makeText(mActivity, "tyen dung ca nhan", Toast.LENGTH_SHORT).show();
+                mActivity.showPersonalRecruiment();
                 break;
             }
             case R.id.layout_manage_employ: {

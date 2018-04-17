@@ -158,6 +158,9 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
     private boolean mIsChangeToContact;
     private int mReleadID;
 
+    //variable for sm recruit
+    private boolean mIsRecruit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,15 +172,18 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
         mIsChangeToContact = getIntent().getBooleanExtra("isChangeToContact", false);
         mIsUpdateContact = getIntent().getBooleanExtra("isUpdateContact", false);
         mReleadID = getIntent().getIntExtra("idRelead", 0);
+
+        mIsRecruit = getIntent().getBooleanExtra("isRecruit", false);
+
         setupSupportForApp();
         initViews();
 
-        if(mIsUpdateContact){
+        if (mIsUpdateContact) {
             initViewsUpdate();
         }
     }
 
-    private void initViewsUpdate(){
+    private void initViewsUpdate() {
         ContactDetail data = ProjectApplication.getInstance().getContactDetail();
         txtStep1Choose.setText(ProjectApplication.getInstance().getAgeString(data.data.age));
         txtStep1Choose.setTag(data.data.age);
@@ -776,7 +782,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
                         layoutChooseStep3.startAnimation(in);
                         layoutChooseStep3.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
                     }
                     imgStep3Add.setImageResource(R.drawable.ic_add);
@@ -800,7 +806,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
                         layoutChooseStep4.startAnimation(in);
                         layoutChooseStep4.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
                     }
                     imgStep4Add.setImageResource(R.drawable.ic_add);
@@ -816,7 +822,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
                     imgStep5Add.setImageResource(R.drawable.ic_sub);
 
-                    Utils.smoothScrollViewToPosition(getApplicationContext(),scrollView,edtNote.getBottom());
+                    Utils.smoothScrollViewToPosition(getApplicationContext(), scrollView, edtNote.getBottom());
 
                 } else {
                     expandableLayoutStep5.collapse(true);
@@ -824,7 +830,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
                         layoutChooseStep5.startAnimation(in);
                         layoutChooseStep5.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
                     }
                     imgStep5Add.setImageResource(R.drawable.ic_add);
@@ -835,21 +841,41 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                 if (validateInput()) {
                     //check if is process for add contact or change relead to contact
                     if (mIsChangeToContact) {
-                        mActionListener.changeReleadToContact(mReleadID, ProjectApplication.getInstance().getCampaignWeekId(),
-                                Integer.valueOf(txtStep1Choose.getTag().toString()), 0, Integer.valueOf(txtStep2Choose.getTag().toString()),
-                                Integer.valueOf(txtStep3Choose.getTag().toString()),
-                                Integer.valueOf(txtStep4Choose.getTag().toString()),
-                                Integer.valueOf(txtStep5Choose.getTag().toString()),
-                                edtNote.getText().toString());
-                    } else if(mIsUpdateContact){
-                        mActionListener.updateContactInfo(mReleadID,txtName.getText().toString(),Integer.valueOf(txtStep1Choose.getTag().toString()),
-                                0,Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
-                                Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
-                    }
-                    else{
-                        mActionListener.addContactInfo(mPosition, txtName.getText().toString(), txtPhone.getText().toString(), Integer.valueOf(txtStep1Choose.getTag().toString()),
-                                0, Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
-                                Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
+                        //check is from contact or recruit
+                        if (mIsRecruit)
+                            mActionListener.changeReleadToRecruit(mReleadID, ProjectApplication.getInstance().getCampaignWeekId(),
+                                    Integer.valueOf(txtStep1Choose.getTag().toString()), 0, Integer.valueOf(txtStep2Choose.getTag().toString()),
+                                    Integer.valueOf(txtStep3Choose.getTag().toString()),
+                                    Integer.valueOf(txtStep4Choose.getTag().toString()),
+                                    Integer.valueOf(txtStep5Choose.getTag().toString()),
+                                    edtNote.getText().toString());
+                        else
+                            mActionListener.changeReleadToContact(mReleadID, ProjectApplication.getInstance().getCampaignWeekId(),
+                                    Integer.valueOf(txtStep1Choose.getTag().toString()), 0, Integer.valueOf(txtStep2Choose.getTag().toString()),
+                                    Integer.valueOf(txtStep3Choose.getTag().toString()),
+                                    Integer.valueOf(txtStep4Choose.getTag().toString()),
+                                    Integer.valueOf(txtStep5Choose.getTag().toString()),
+                                    edtNote.getText().toString());
+                    } else if (mIsUpdateContact) {
+                        //check is from contact or recruit
+                        if (mIsRecruit)
+                            mActionListener.updateRecruitInfo(mReleadID, txtName.getText().toString(), Integer.valueOf(txtStep1Choose.getTag().toString()),
+                                    0, Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
+                                    Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
+                        else
+                            mActionListener.updateContactInfo(mReleadID, txtName.getText().toString(), Integer.valueOf(txtStep1Choose.getTag().toString()),
+                                    0, Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
+                                    Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
+                    } else {
+                        //check is from contact or recruit
+                        if (mIsRecruit)
+                            mActionListener.addRecruitInfo(mPosition, txtName.getText().toString(), txtPhone.getText().toString(), Integer.valueOf(txtStep1Choose.getTag().toString()),
+                                    0, Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
+                                    Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
+                        else
+                            mActionListener.addContactInfo(mPosition, txtName.getText().toString(), txtPhone.getText().toString(), Integer.valueOf(txtStep1Choose.getTag().toString()),
+                                    0, Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
+                                    Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
                     }
                 }
                 break;

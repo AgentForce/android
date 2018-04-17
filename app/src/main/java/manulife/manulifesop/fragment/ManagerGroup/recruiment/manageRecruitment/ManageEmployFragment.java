@@ -1,10 +1,9 @@
-package manulife.manulifesop.fragment.ManagerGroup.manageEmploy;
+package manulife.manulifesop.fragment.ManagerGroup.recruiment.manageRecruitment;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +14,7 @@ import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
-import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
-import manulife.manulifesop.fragment.FAGroup.dashboardv2.FADashBoardFragment;
-import manulife.manulifesop.fragment.ManagerGroup.manageEmploy.content.ContentManageEmployFragment;
-import manulife.manulifesop.fragment.dashboard.DashboardContract;
-import manulife.manulifesop.fragment.dashboard.DashboardPresent;
-import manulife.manulifesop.fragment.login.createPassInput.CreatePassFragment;
+import manulife.manulifesop.fragment.ManagerGroup.recruiment.manageRecruitment.content.ContentManageEmployFragment;
 import manulife.manulifesop.util.Utils;
 
 /**

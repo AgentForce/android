@@ -40,8 +40,6 @@ public class ContactPersonPresenter extends BasePresenter<ContactPersonContract.
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                 period, 1,Contants.USER_CONTACT,page,10,"")//khách hàng liên hệ
-                .subscribeOn(Schedulers.computation())
-                .unsubscribeOn(Schedulers.io())
                 .flatMap(usersList -> {
                     this.mContact = usersList;
                     return ApiService.getServer().getUserList(
@@ -56,6 +54,8 @@ public class ContactPersonPresenter extends BasePresenter<ContactPersonContract.
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                             period, 1,Contants.USER_REFUSE,page,10,"");// khách hàng từ chối
                 })
+                .subscribeOn(Schedulers.computation())
+                .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleResponse, this::handleError));
     }

@@ -24,6 +24,16 @@ public interface UpdateContactInfoContract {
         void updateContactInfo(int releadID, String name, int age, int gender,
                                int income, int marital, int relationship,
                                int source, String description);
+        //__________sm recruit__________
+        void addRecruitInfo(int position, String name, String phone,int age, int gender,
+                            int income, int marital, int relationship,
+                            int source, String description);
+        void changeReleadToRecruit(int releadID, int campaignID, int age, int gender,
+                                   int income, int marital, int relationship,
+                                   int source, String description);
+        void updateRecruitInfo(int releadID, String name, int age, int gender,
+                               int income, int marital, int relationship,
+                               int source, String description);
 
     }
 }

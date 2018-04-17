@@ -1,4 +1,4 @@
-package manulife.manulifesop.fragment.ManagerGroup.manageEmploy.content;
+package manulife.manulifesop.fragment.ManagerGroup.recruiment.manageRecruitment.content;
 
 import manulife.manulifesop.base.BaseMVPView;
 

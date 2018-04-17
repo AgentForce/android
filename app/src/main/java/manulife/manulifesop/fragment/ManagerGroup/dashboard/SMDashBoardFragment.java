@@ -48,6 +48,8 @@ import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
 import manulife.manulifesop.api.ObjectResponse.DashboardResult;
+import manulife.manulifesop.api.ObjectResponse.DashboardSMResult;
+import manulife.manulifesop.api.ObjectResponse.RecruitHistory;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
@@ -175,7 +177,13 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
     @Override
     public void onResume() {
         super.onResume();
+        mDataActiveHist.clear();
         mActionListener.getDataDashboard();
+    }
+
+    @Override
+    public void finishLoadingMulti() {
+        ((DashboardFragment)this.getParentFragment()).finishLoadingChild(0);
     }
 
     @Override
@@ -211,7 +219,7 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
 
 
     @Override
-    public void showDataDashboard(DashboardResult dataWeekMonth, DashboardResult dataYear, ActivitiHist activities) {
+    public void showDataDashboard(DashboardSMResult dataWeekMonth, DashboardSMResult dataYear, RecruitHistory activities) {
         targetStep1 = 0;
         targetStep2 = 0;
         targetStep3 = 0;
@@ -220,21 +228,21 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
 
         int step1 = 0, step2 = 0, step3 = 0, step4 = 0, step5 = 0;
         if (dataWeekMonth.statusCode == 1) {
-            for (int i = 0; i < dataWeekMonth.data.campaign.size(); i++) {
-                targetStep1 += dataWeekMonth.data.campaign.get(i).targetCallSale;
-                step1 += dataWeekMonth.data.campaign.get(i).currentCallSale;
+            for (int i = 0; i < dataWeekMonth.data.campaigns.size(); i++) {
+                targetStep1 += dataWeekMonth.data.campaigns.get(i).targetSurvey;
+                step1 += dataWeekMonth.data.campaigns.get(i).currentSurvey;
 
-                targetStep2 += dataWeekMonth.data.campaign.get(i).targetMetting;
-                step2 += dataWeekMonth.data.campaign.get(i).currentMetting;
+                targetStep2 += dataWeekMonth.data.campaigns.get(i).targetCop;
+                step2 += dataWeekMonth.data.campaigns.get(i).currentCop;
 
-                targetStep3 += dataWeekMonth.data.campaign.get(i).targetPresentation;
-                step3 += dataWeekMonth.data.campaign.get(i).currentPresentation;
+                targetStep3 += dataWeekMonth.data.campaigns.get(i).targetMit;
+                step3 += dataWeekMonth.data.campaigns.get(i).currentMit;
 
-                targetStep4 += dataWeekMonth.data.campaign.get(i).targetContractSale;
-                step4 += dataWeekMonth.data.campaign.get(i).currentContract;
+                targetStep4 += dataWeekMonth.data.campaigns.get(i).targetAgentCode;
+                step4 += dataWeekMonth.data.campaigns.get(i).currentAgentCode;
 
-                targetStep5 += dataWeekMonth.data.campaign.get(i).targetReLead;
-                step5 += dataWeekMonth.data.campaign.get(i).currentReLead;
+                targetStep5 += dataWeekMonth.data.campaigns.get(i).targetReLeadRecruit;
+                step5 += dataWeekMonth.data.campaigns.get(i).currentReLeadRecruit;
             }
         }
         txtStep1.setText(String.valueOf(step1));
@@ -262,92 +270,94 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
         }
     }
 
-    private void initViewPager(DashboardResult dataWeekMonth, DashboardResult dataYear) {
+    private void initViewPager(DashboardSMResult dataWeekMonth, DashboardSMResult dataYear) {
         //viewPager.setSwipe(false);
         if (dataWeekMonth.statusCode == 1 && dataYear.statusCode == 1) {
 
-            int currentCallSale = 0, currentMetting = 0, currentPresentation = 0,
-                    currentContractSale = 0, currentReLead = 0;
-            int targetCallSale = 0, targetMetting = 0, targetPresentation = 0,
-                    targetContractSale = 0, targetReLead = 0;
+            int currentStep1 = 0, currentStep2 = 0, currentStep3 = 0,
+                    currentStep4 = 0, currentStep5 = 0;
+            int targetStep1 = 0, targetStep2 = 0, targetStep3 = 0,
+                    targetStep4 = 0, targetStep5 = 0;
             int percentTemp;
 
             List<Integer> percentCurrentWeek = new ArrayList<>();
             List<Integer> percentMonth = new ArrayList<>();
             List<Integer> percentYear = new ArrayList<>();
             List<Integer> percentYearForcast = new ArrayList<>();
-            for (int i = 0; i < dataWeekMonth.data.campaign.size(); i++) {
-                if (dataWeekMonth.data.currentWeek == dataWeekMonth.data.campaign.get(i).week) {
+            for (int i = 0; i < dataWeekMonth.data.campaigns.size(); i++) {
+                if (dataWeekMonth.data.currentWeek == dataWeekMonth.data.campaigns.get(i).week) {
                     //lien he
-                    percentTemp = Math.round((float) (dataWeekMonth.data.campaign.get(i).currentCallSale * 100) / dataWeekMonth.data.campaign.get(i).targetCallSale);
+                    percentTemp = Math.round((float) (dataWeekMonth.data.campaigns.get(i).currentSurvey * 100) / dataWeekMonth.data.campaigns.get(i).targetSurvey);
                     percentCurrentWeek.add(percentTemp);
                     //hen gap
-                    percentTemp = Math.round((float) (dataWeekMonth.data.campaign.get(i).currentMetting * 100) / dataWeekMonth.data.campaign.get(i).targetMetting);
+                    percentTemp = Math.round((float) (dataWeekMonth.data.campaigns.get(i).currentCop * 100) / dataWeekMonth.data.campaigns.get(i).targetCop);
                     percentCurrentWeek.add(percentTemp);
                     //tu van
-                    percentTemp = Math.round((float) (dataWeekMonth.data.campaign.get(i).currentPresentation * 100) / dataWeekMonth.data.campaign.get(i).targetPresentation);
+                    percentTemp = Math.round((float) (dataWeekMonth.data.campaigns.get(i).currentMit * 100) / dataWeekMonth.data.campaigns.get(i).targetMit);
                     percentCurrentWeek.add(percentTemp);
                     //ky hop dong
-                    percentTemp = Math.round((float) (dataWeekMonth.data.campaign.get(i).currentContract * 100) / dataWeekMonth.data.campaign.get(i).targetContractSale);
+                    percentTemp = Math.round((float) (dataWeekMonth.data.campaigns.get(i).currentAgentCode * 100) / dataWeekMonth.data.campaigns.get(i).targetAgentCode);
                     percentCurrentWeek.add(percentTemp);
                     //gioi thie
-                    percentTemp = Math.round((float) (dataWeekMonth.data.campaign.get(i).currentReLead * 100) / dataWeekMonth.data.campaign.get(i).targetReLead);
+                    percentTemp = Math.round((float) (dataWeekMonth.data.campaigns.get(i).currentReLeadRecruit * 100) / dataWeekMonth.data.campaigns.get(i).targetReLeadRecruit);
                     percentCurrentWeek.add(percentTemp);
                 }
-                currentCallSale += dataWeekMonth.data.campaign.get(i).currentCallSale;
-                targetCallSale += dataWeekMonth.data.campaign.get(i).targetCallSale;
+                currentStep1 += dataWeekMonth.data.campaigns.get(i).currentSurvey;
+                targetStep1 += dataWeekMonth.data.campaigns.get(i).targetSurvey;
 
-                currentMetting += dataWeekMonth.data.campaign.get(i).currentMetting;
-                targetMetting += dataWeekMonth.data.campaign.get(i).targetMetting;
+                currentStep2 += dataWeekMonth.data.campaigns.get(i).currentCop;
+                targetStep2 += dataWeekMonth.data.campaigns.get(i).targetCop;
 
-                currentPresentation += dataWeekMonth.data.campaign.get(i).currentPresentation;
-                targetPresentation += dataWeekMonth.data.campaign.get(i).targetPresentation;
+                currentStep3 += dataWeekMonth.data.campaigns.get(i).currentMit;
+                targetStep3 += dataWeekMonth.data.campaigns.get(i).targetMit;
 
-                currentContractSale += dataWeekMonth.data.campaign.get(i).currentContract;
-                targetContractSale += dataWeekMonth.data.campaign.get(i).targetContractSale;
+                currentStep4 += dataWeekMonth.data.campaigns.get(i).currentAgentCode;
+                targetStep4 += dataWeekMonth.data.campaigns.get(i).targetAgentCode;
 
-                currentReLead += dataWeekMonth.data.campaign.get(i).currentReLead;
-                targetReLead += dataWeekMonth.data.campaign.get(i).targetReLead;
+                currentStep5 += dataWeekMonth.data.campaigns.get(i).currentReLeadRecruit;
+                targetStep5 += dataWeekMonth.data.campaigns.get(i).targetReLeadRecruit;
+
+
 
             }
 
             //generate pervent month
-            percentTemp = Math.round((float) (currentCallSale * 100) / targetCallSale);
+            percentTemp = Math.round((float) (currentStep1 * 100) / targetStep1);
             percentMonth.add(percentTemp);
-            percentTemp = Math.round((float) (currentMetting * 100) / targetMetting);
+            percentTemp = Math.round((float) (currentStep2 * 100) / targetStep2);
             percentMonth.add(percentTemp);
-            percentTemp = Math.round((float) (currentPresentation * 100) / targetPresentation);
+            percentTemp = Math.round((float) (currentStep3 * 100) / targetStep3);
             percentMonth.add(percentTemp);
-            percentTemp = Math.round((float) (currentContractSale * 100) / targetContractSale);
+            percentTemp = Math.round((float) (currentStep4 * 100) / targetStep4);
             percentMonth.add(percentTemp);
-            percentTemp = Math.round((float) (currentReLead * 100) / targetReLead);
+            percentTemp = Math.round((float) (currentStep5 * 100) / targetStep5);
             percentMonth.add(percentTemp);
 
             //generate percent year
             //lien he
-            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).currentCallSale * 100) / dataYear.data.campaign.get(0).targetCallSale);
+            percentTemp = Math.round((float) (dataYear.data.campaigns.get(0).currentSurvey * 100) / dataYear.data.campaigns.get(0).targetSurvey);
             percentYear.add(percentTemp);
-            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).forcastCallSale * 100) / dataYear.data.campaign.get(0).targetCallSale);
+            percentTemp = Math.round((float) (dataYear.data.campaigns.get(0).forcastSurvey * 100) / dataYear.data.campaigns.get(0).targetSurvey);
             percentYearForcast.add(percentTemp);
             //hen gap
-            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).currentMetting * 100) / dataYear.data.campaign.get(0).targetMetting);
+            percentTemp = Math.round((float) (dataYear.data.campaigns.get(0).currentCop * 100) / dataYear.data.campaigns.get(0).targetCop);
             percentYear.add(percentTemp);
-            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).forcastMetting * 100) / dataYear.data.campaign.get(0).targetMetting);
+            percentTemp = Math.round((float) (dataYear.data.campaigns.get(0).forcastCop * 100) / dataYear.data.campaigns.get(0).targetCop);
             percentYearForcast.add(percentTemp);
             //tu van
-            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).currentPresentation * 100) / dataYear.data.campaign.get(0).targetPresentation);
+            percentTemp = Math.round((float) (dataYear.data.campaigns.get(0).currentMit * 100) / dataYear.data.campaigns.get(0).targetMit);
             percentYear.add(percentTemp);
-            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).forcastPresentation * 100) / dataYear.data.campaign.get(0).targetPresentation);
+            percentTemp = Math.round((float) (dataYear.data.campaigns.get(0).forcastMit * 100) / dataYear.data.campaigns.get(0).targetMit);
             percentYearForcast.add(percentTemp);
             //ky hop dong
-            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).currentContract * 100) / dataYear.data.campaign.get(0).targetContractSale);
+            percentTemp = Math.round((float) (dataYear.data.campaigns.get(0).currentAgentCode * 100) / dataYear.data.campaigns.get(0).targetAgentCode);
             percentYear.add(percentTemp);
-            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).forcastContract * 100) / dataYear.data.campaign.get(0).targetContractSale);
+            percentTemp = Math.round((float) (dataYear.data.campaigns.get(0).forcastAgentCode * 100) / dataYear.data.campaigns.get(0).targetAgentCode);
             percentYearForcast.add(percentTemp);
             //gioi thie
-            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).currentReLead * 100) / dataYear.data.campaign.get(0).targetReLead);
+            percentTemp = Math.round((float) (dataYear.data.campaigns.get(0).currentReLeadRecruit * 100) / dataYear.data.campaigns.get(0).targetReLeadRecruit);
             percentYear.add(percentTemp);
-            percentTemp = Math.round((float) (dataYear.data.campaign.get(0).forcastReLead * 100) / dataYear.data.campaign.get(0).targetReLead);
+            percentTemp = Math.round((float) (dataYear.data.campaigns.get(0).forcastReLeadRecruit * 100) / dataYear.data.campaigns.get(0).targetReLeadRecruit);
             percentYearForcast.add(percentTemp);
 
             mListFragment = new ArrayList<>();
@@ -369,7 +379,7 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
     }
 
     @Override
-    public void showACtivities(ActivitiHist activities) {
+    public void showACtivities(RecruitHistory activities) {
         //mDataActiveHist.clear();
         listActiHist.setLayoutManager(mLayoutManager);
 
@@ -434,7 +444,7 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
         }
 
         //set space between two items
-        int[] ATTRS = new int[]{android.R.attr.listDivider};
+        /*int[] ATTRS = new int[]{android.R.attr.listDivider};
         TypedArray a = getContext().obtainStyledAttributes(ATTRS);
         Drawable divider = a.getDrawable(0);
         int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
@@ -445,7 +455,7 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listActiHist.getContext(),
                 mLayoutManager.getOrientation());
         dividerItemDecoration.setDrawable(insetDivider);
-        listActiHist.addItemDecoration(dividerItemDecoration);
+        listActiHist.addItemDecoration(dividerItemDecoration);*/
 
         listActiHist.clearOnScrollListeners();
         listActiHist.addOnScrollListener(new EndlessScrollListenerRecyclerView(

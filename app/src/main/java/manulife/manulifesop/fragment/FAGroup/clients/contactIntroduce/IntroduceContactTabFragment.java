@@ -212,7 +212,7 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
         }
 
         //set space between two items
-        int[] ATTRS = new int[]{android.R.attr.listDivider};
+        /*int[] ATTRS = new int[]{android.R.attr.listDivider};
         TypedArray a = getContext().obtainStyledAttributes(ATTRS);
         Drawable divider = a.getDrawable(0);
         int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
@@ -223,7 +223,7 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listContact.getContext(),
                 mLayoutManager.getOrientation());
         dividerItemDecoration.setDrawable(insetDivider);
-        listContact.addItemDecoration(dividerItemDecoration);
+        listContact.addItemDecoration(dividerItemDecoration);*/
 
 
         listContact.clearOnScrollListeners();

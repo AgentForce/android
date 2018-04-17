@@ -39,7 +39,6 @@ public class FADashBoardPresent extends BasePresenter<FADashBoardContract.View> 
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                 DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, "weekmonth")
-                .subscribeOn(Schedulers.computation())
                 .flatMap(dashboardResult -> {
                     this.mDataDashboardWeekMonth = dashboardResult;
                     return ApiService.getServer().dashBoard(
@@ -61,6 +60,7 @@ public class FADashBoardPresent extends BasePresenter<FADashBoardContract.View> 
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                             DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, 1, 10);
                 })
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(this::handleResponseDashboard, this::handleError));
@@ -72,8 +72,8 @@ public class FADashBoardPresent extends BasePresenter<FADashBoardContract.View> 
 
     private void handleResponseDashboard(ActivitiHist data) {
         if (data.statusCode == 1) {
+            mPresenterView.finishLoadingMulti();
             mPresenterView.showDataDashboard(mDataDashboardWeekMonth, mDataDashboardYear, data);
-            mPresenterView.finishLoading();
         } else {
             mPresenterView.finishLoading(data.msg, false);
         }

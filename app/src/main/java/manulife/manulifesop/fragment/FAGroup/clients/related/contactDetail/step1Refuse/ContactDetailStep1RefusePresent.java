@@ -46,6 +46,24 @@ public class ContactDetailStep1RefusePresent extends BasePresenter<ContactDetail
                 .subscribe(this::handleResponse, this::handleErrorr));
     }
 
+    @Override
+    public void changeStatusRecruitToOne(int leadID, boolean isChangeProcessStep, int status) {
+        mPresenterView.showLoading("Xử lý dữ liệu");
+
+        InputChangeContactStatus data = new InputChangeContactStatus();
+        data.nextProcessStep = isChangeProcessStep;
+        data.statusProcessStep = status;
+
+        getCompositeDisposable().add(ApiService.getServer().changeRecruitStatus(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
+                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
+                "checksum",leadID,data)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse, this::handleErrorr));
+    }
+
     private void handleErrorr(Throwable throwable) {
         mPresenterView.finishLoading(throwable.getMessage(),false);
     }

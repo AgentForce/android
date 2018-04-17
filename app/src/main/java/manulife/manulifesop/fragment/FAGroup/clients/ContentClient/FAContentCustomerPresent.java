@@ -48,7 +48,6 @@ public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerCon
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                 DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, month,"",1,10)
-                .subscribeOn(Schedulers.computation())
                 .flatMap(contactMonth -> {
                     ProjectApplication.getInstance().setContactMonth(contactMonth);
                     return ApiService.getServer().campaignMonth(
@@ -56,6 +55,7 @@ public class FAContentCustomerPresent extends BasePresenter<FAContentCustomerCon
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                             DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, month);
                 })
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(this::handleResponseCampaignMonth, this::handleError)

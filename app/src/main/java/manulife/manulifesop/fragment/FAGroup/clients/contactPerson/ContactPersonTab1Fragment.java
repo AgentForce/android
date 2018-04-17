@@ -245,6 +245,9 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
                     edtSearch.addTextChangedListener(mTextWatcher);
                 } else {
                     // keyboard is closed
+                    if (mTextWatcher != null) {
+                        edtSearch.removeTextChangedListener(mTextWatcher);
+                    }
                 }
             }
         });
@@ -296,7 +299,7 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
         listContact.setAdapter(mAdapterActiveHist);
 
         //set space between two items
-        int[] ATTRS = new int[]{android.R.attr.listDivider};
+        /*int[] ATTRS = new int[]{android.R.attr.listDivider};
         TypedArray a = getContext().obtainStyledAttributes(ATTRS);
         Drawable divider = a.getDrawable(0);
         int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
@@ -307,7 +310,7 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listContact.getContext(),
                 mLayoutManager.getOrientation());
         dividerItemDecoration.setDrawable(insetDivider);
-        listContact.addItemDecoration(dividerItemDecoration);
+        listContact.addItemDecoration(dividerItemDecoration);*/
 
         listContact.clearOnScrollListeners();
         listContact.addOnScrollListener(new EndlessScrollListenerRecyclerView(
@@ -504,7 +507,7 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
                 data.putInt("target", mTargetIntroduce);
                 data.putInt("month", mMonth);
                 data.putBoolean("isFromContact", true);
-                //mActivity.goNextScreen(IntroduceContactActivity.class,data);
+                //mActivity.goNextScreen(IntroduceRecruitmentActivity.class,data);
                 mActivity.goNextScreen(IntroduceContactActivity.class, data, Contants.ADD_INTRODUCE_FROM_CONTACT);
                 break;
             }
