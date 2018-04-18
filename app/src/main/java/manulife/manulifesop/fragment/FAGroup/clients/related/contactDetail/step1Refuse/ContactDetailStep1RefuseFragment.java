@@ -125,6 +125,16 @@ public class ContactDetailStep1RefuseFragment extends BaseFragment<ContactDetail
                 mIsRecruit = true;
                 break;
             }
+            case Contants.COP_MENU:{
+                btnAddAppointment.setText("Đưa vào danh sách học COP");
+                mIsRecruit = true;
+                break;
+            }
+            case Contants.MIT_MENU:{
+                btnAddAppointment.setText("Đưa vào danh sách học MIT");
+                mIsRecruit = true;
+                break;
+            }
         }
     }
 

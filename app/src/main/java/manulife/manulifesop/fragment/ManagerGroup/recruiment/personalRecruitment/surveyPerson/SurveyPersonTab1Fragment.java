@@ -264,52 +264,42 @@ public class SurveyPersonTab1Fragment extends BaseFragment<SurveyActivity, Surve
             temp.setContent(data.data.rows.get(i).phone);
             mData.add(temp);
         }
-        mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
-            @Override
-            public void onClickMenuRight(int position, int option) {
-                switch (option) {
-                    case 0: {
-                        gotoContactDetail(mData.get(position).getId());
-                        break;
-                    }
-                    case 1: {
-                        String phone = "tel:" + mData.get(position).getContent();
-                        Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse(phone));
-                        startActivity(callIntent);
-                        break;
-                    }
-                    case 2: {
-                        Bundle data = new Bundle();
-                        data.putInt("typeInt", 1);
-                        data.putInt("contactID", mData.get(position).getId());
-                        data.putString("name", mData.get(position).getTitle());
-                        mActivity.goNextScreen(CreateEventActivity.class, data);
-                        break;
+        if(mAdapterActiveHist == null) {
+            mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
+                @Override
+                public void onClickMenuRight(int position, int option) {
+                    switch (option) {
+                        case 0: {
+                            gotoContactDetail(mData.get(position).getId());
+                            break;
+                        }
+                        case 1: {
+                            String phone = "tel:" + mData.get(position).getContent();
+                            Intent callIntent = new Intent(Intent.ACTION_CALL);
+                            callIntent.setData(Uri.parse(phone));
+                            startActivity(callIntent);
+                            break;
+                        }
+                        case 2: {
+                            Bundle data = new Bundle();
+                            data.putInt("typeInt", 1);
+                            data.putInt("contactID", mData.get(position).getId());
+                            data.putString("name", mData.get(position).getTitle());
+                            mActivity.goNextScreen(CreateEventActivity.class, data);
+                            break;
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onClickMainContent(int position) {
-                gotoContactDetail(mData.get(position).getId());
-            }
-        });
-        listContact.setAdapter(mAdapterActiveHist);
-
-        //set space between two items
-        /*int[] ATTRS = new int[]{android.R.attr.listDivider};
-        TypedArray a = getContext().obtainStyledAttributes(ATTRS);
-        Drawable divider = a.getDrawable(0);
-        int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
-        int insetRight = getResources().getDimensionPixelSize(R.dimen.margin_right_DividerItemDecoration);
-        InsetDrawable insetDivider = new InsetDrawable(divider, insetLeft, 0, insetRight, 0);
-        a.recycle();
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listContact.getContext(),
-                mLayoutManager.getOrientation());
-        dividerItemDecoration.setDrawable(insetDivider);
-        listContact.addItemDecoration(dividerItemDecoration);*/
+                @Override
+                public void onClickMainContent(int position) {
+                    gotoContactDetail(mData.get(position).getId());
+                }
+            });
+            listContact.setAdapter(mAdapterActiveHist);
+        }else{
+            mAdapterActiveHist.notifyDataSetChanged();
+        }
 
         listContact.clearOnScrollListeners();
         listContact.addOnScrollListener(new EndlessScrollListenerRecyclerView(

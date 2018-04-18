@@ -1,6 +1,7 @@
 package manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ContactMonth;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
@@ -190,56 +191,45 @@ public class FAContactMonthFragment extends BaseFragment<MainFAActivity, FAConta
 
         mData.addAll(data);
 
-        mAdapter = new ContactAllFAAdapter(getContext(), mData, new CallBackClickContact() {
-            @Override
-            public void onClickMenuRight(int position, int option) {
-                switch (option) {
-                    case 0: {
-                        gotoConactDetail(mData.get(position).getId(), mData.get(position).getProcessStep(),
-                                mData.get(position).getStatusStep());
-                        break;
-                    }
-                    case 1: {
-                        String phone = "tel:" + mData.get(position).getPhone();
-                        Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse(phone));
-                        startActivity(callIntent);
-                        break;
-                    }
-                    case 2: {
-                        Bundle data = new Bundle();
-                        data.putInt("typeInt", 1);
-                        data.putInt("contactID", mData.get(position).getId());
-                        data.putString("name", mData.get(position).getTitle());
-                        mActivity.goNextScreen(CreateEventActivity.class, data);
-                        break;
+        if(mAdapter ==  null) {
+            mAdapter = new ContactAllFAAdapter(getContext(), mData, new CallBackClickContact() {
+                @Override
+                public void onClickMenuRight(int position, int option) {
+                    switch (option) {
+                        case 0: {
+                            gotoConactDetail(mData.get(position).getId(), mData.get(position).getProcessStep(),
+                                    mData.get(position).getStatusStep());
+                            break;
+                        }
+                        case 1: {
+                            String phone = "tel:" + mData.get(position).getPhone();
+                            Intent callIntent = new Intent(Intent.ACTION_CALL);
+                            callIntent.setData(Uri.parse(phone));
+                            startActivity(callIntent);
+                            break;
+                        }
+                        case 2: {
+                            Bundle data = new Bundle();
+                            data.putInt("typeInt", 1);
+                            data.putInt("contactID", mData.get(position).getId());
+                            data.putString("name", mData.get(position).getTitle());
+                            mActivity.goNextScreen(CreateEventActivity.class, data);
+                            break;
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onClickMainContent(int position) {
-                gotoConactDetail(mData.get(position).getId(), mData.get(position).getProcessStep(),
-                        mData.get(position).getStatusStep());
+                @Override
+                public void onClickMainContent(int position) {
+                    gotoConactDetail(mData.get(position).getId(), mData.get(position).getProcessStep(),
+                            mData.get(position).getStatusStep());
 
-            }
-        });
-        listContact.setAdapter(mAdapter);
-
-        //set space between two items
-        int[] ATTRS = new int[]{android.R.attr.listDivider};
-        TypedArray a = getContext().obtainStyledAttributes(ATTRS);
-        Drawable divider = a.getDrawable(0);
-        int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
-        int insetRight = getResources().getDimensionPixelSize(R.dimen.margin_right_DividerItemDecoration);
-        InsetDrawable insetDivider = new InsetDrawable(divider, insetLeft, 0, insetRight, 0);
-        a.recycle();
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listContact.getContext(),
-                mLayoutManager.getOrientation());
-        dividerItemDecoration.setDrawable(insetDivider);
-        listContact.addItemDecoration(dividerItemDecoration);
-
+                }
+            });
+            listContact.setAdapter(mAdapter);
+        }else{
+            mAdapter.notifyDataSetChanged();
+        }
 
         listContact.clearOnScrollListeners();
         listContact.addOnScrollListener(new EndlessScrollListenerRecyclerView(
@@ -254,6 +244,7 @@ public class FAContactMonthFragment extends BaseFragment<MainFAActivity, FAConta
         String typeString = ProjectApplication.getInstance().getStringProcessStatusName(
                 progressStep + "" + statusstep
         );
+        if(typeString.contains("từ chối")) typeString = Contants.REFUSE;
         String typeMenu;
         switch (progressStep) {
             case 1: {

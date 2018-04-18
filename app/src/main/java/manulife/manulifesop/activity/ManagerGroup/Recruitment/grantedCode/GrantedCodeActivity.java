@@ -20,6 +20,7 @@ import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
 import manulife.manulifesop.fragment.FAGroup.clients.signed.SignedContactTabFragment;
+import manulife.manulifesop.fragment.ManagerGroup.recruiment.personalRecruitment.grantedCode.GrantedCodeTabFragment;
 import manulife.manulifesop.util.Contants;
 
 
@@ -89,26 +90,26 @@ public class GrantedCodeActivity extends BaseActivity<GrantedCodePresenter> impl
     public void initViewPager() {
         mListFragment = new ArrayList<>();
         //type = appointment, seen, calllater, refuse
-        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_NOT_APPLIED,Contants.SIGNED_NOT_APPLY_STRING,mTarget,mMonth));
-        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_BHXH,Contants.SIGNED_BHXH_STRING,mTarget,mMonth));
-        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_APPLIED,Contants.SIGNED_APPLIED_STRING,mTarget,mMonth));
-        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_WAIT_APPROVE,Contants.SIGNED_WAIT_APPROVE_STRING,mTarget,mMonth));
-        mListFragment.add(SignedContactTabFragment.newInstance(Contants.SIGNED_SUCCESS,Contants.SIGNED_SUCCESS_STRING,mTarget,mMonth));
+        mListFragment.add(GrantedCodeTabFragment.newInstance(Contants.CODE_CHANGED_TO_APPLY,Contants.CODE_STRING_,mTarget,mMonth));
+        mListFragment.add(GrantedCodeTabFragment.newInstance(Contants.CODE_APPLIED_DOCUMENT_AGENT,Contants.CODE_APPLIED_AGENT_STRING,mTarget,mMonth));
+        mListFragment.add(GrantedCodeTabFragment.newInstance(Contants.CODE_APPLIED_DONE,Contants.CODE_APPLIED_DONE_STRING,mTarget,mMonth));
+        mListFragment.add(GrantedCodeTabFragment.newInstance(Contants.CODE_WAITING_APPROVE,Contants.CODE_WAIT_APPROVE_STRING,mTarget,mMonth));
+        mListFragment.add(GrantedCodeTabFragment.newInstance(Contants.CODE_GRANTED_CODE,Contants.CODE_GRANTED_STRING,mTarget,mMonth));
 
         mTabTitles = new ArrayList<>();
         mTabTitles.add("Chưa nộp hồ sơ(" +
-                ProjectApplication.getInstance().getSignNotApply().data.count + ")");
-        mTabTitles.add("Hoàn tất BHXH(" +
-                ProjectApplication.getInstance().getSignBHXH().data.count
+                ProjectApplication.getInstance().getCodeAdded().data.count + ")");
+        mTabTitles.add("Hoàn tất HSUV(" +
+                ProjectApplication.getInstance().getCodeAppliedAgent().data.count
                 + ")");
         mTabTitles.add("Đã nộp hồ sơ(" +
-                ProjectApplication.getInstance().getSignApplied().data.count
+                ProjectApplication.getInstance().getCodeAppliedDone().data.count
                 + ")");
         mTabTitles.add("Chờ duyệt(" +
-                ProjectApplication.getInstance().getSignWaitApprove().data.count
+                ProjectApplication.getInstance().getCodeWaitApprove().data.count
                 + ")");
-        mTabTitles.add("Ký HĐ thành công(" +
-                ProjectApplication.getInstance().getSignSuccess().data.count +
+        mTabTitles.add("Đã được cấp mã(" +
+                ProjectApplication.getInstance().getCodeGranted().data.count +
                 "/" + mTarget + ")");
 
         mAdapterViewPager = new CustomViewPagerAdapter(getSupportFragmentManager(), mListFragment, mTabTitles);

@@ -41,8 +41,9 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
 
     private CustomViewPagerAdapter mAdapter;
 
-    public static FACustomerFragment newInstance() {
+    public static FACustomerFragment newInstance(String title) {
         Bundle args = new Bundle();
+        args.putString("title",title);
         FACustomerFragment fragment = new FACustomerFragment();
         fragment.setArguments(args);
         return fragment;
@@ -62,7 +63,7 @@ public class FACustomerFragment extends BaseFragment<MainFAActivity, FACustomerP
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mActivity.showHideActionbar(true);
-        mActivity.updateActionbarTitle("Khách hàng");
+        mActivity.updateActionbarTitle(getArguments().getString("title","Khách hàng"));
         mCurrentMonth = Calendar.getInstance().get(Calendar.MONTH);
         initTabMenu();
         scrollToTabAfterLayout(mCurrentMonth);

@@ -35,21 +35,21 @@ public class MITPresenter extends BasePresenter<MITContract.View> implements MIT
                 period, 3,Contants.MIT_ADDED,1,10,"")//khách hàng học MIT
                 .flatMap(usersList -> {
                     ProjectApplication.getInstance().setMITAdded(usersList);
-                    return ApiService.getServer().getUserList(
+                    return ApiService.getServer().getUserListRecruit(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                             period, 3,Contants.MIT_RELEARN,1,10,"");// học lại
                 })
                 .flatMap(usersList -> {
                     ProjectApplication.getInstance().setMITRelearn(usersList);
-                    return ApiService.getServer().getUserList(
+                    return ApiService.getServer().getUserListRecruit(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                             period, 3,Contants.MIT_REFUSE,1,10,"");// khách hàng từ chối
                 })
                 .flatMap(usersList -> {
                     ProjectApplication.getInstance().setMITRefuse(usersList);
-                    return ApiService.getServer().getUserList(
+                    return ApiService.getServer().getUserListRecruit(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                             period, 3,Contants.MIT_DONE,1,10,"");// khách hàng hoàn thành

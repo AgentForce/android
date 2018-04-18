@@ -52,6 +52,9 @@ public class ProjectApplication extends MultiDexApplication {
     //String for process status
     private static HashMap<String,String> mStringProcessStatusName;
 
+    //String for process status sm
+    private static HashMap<String,String> mStringProcessStatusNameSM;
+
     //variable for campaign detail
     private CampaignMonth mDataCampaign;
     private int mCampaignWeekId;
@@ -72,6 +75,12 @@ public class ProjectApplication extends MultiDexApplication {
     private UsersList mMIT_refuse;
     private UsersList mMIT_done;
 
+    //variable for sm granted code
+    private UsersList mCode_added;
+    private UsersList mCode_applied_agent_document;
+    private UsersList mCode_applied_done;
+    private UsersList mCode_wait_approve;
+    private UsersList mCode_granted_code;
 
     //variable for contact detail;
     private ContactDetail mContactDetail;
@@ -140,6 +149,7 @@ public class ProjectApplication extends MultiDexApplication {
         //new code
         setHashmapStringProcessStatus();
         setHashmapStringProcessStatusName();
+        setHashmapStringProcessStatusNameSM();
         setHashmapProcessStep();
         setHashmapIncome();
         setHashmapAge();
@@ -192,11 +202,11 @@ public class ProjectApplication extends MultiDexApplication {
         mStringProcessStatusName = new HashMap<>();
         mStringProcessStatusName.put("11","Khách hàng liên hệ");
         mStringProcessStatusName.put("12","Khách hàng từ chối(Liên hệ)");
-        mStringProcessStatusName.put("13","Khách hàng gọi lại sau((Liên hệ))");
+        mStringProcessStatusName.put("13","Khách hàng gọi lại sau(Liên hệ)");
         mStringProcessStatusName.put("14","Khách hàng đã liên hệ");
         mStringProcessStatusName.put("21","Khách hàng cần hẹn gặp");
         mStringProcessStatusName.put("22","Khách hàng từ chối(Hẹn gặp)");
-        mStringProcessStatusName.put("23","Khách hàng gọi lại sau((Hẹn gặp))");
+        mStringProcessStatusName.put("23","Khách hàng gọi lại sau(Hẹn gặp)");
         mStringProcessStatusName.put("24","Khách hàng đã gặp");
         mStringProcessStatusName.put("31","Khách hàng tư vấn");
         mStringProcessStatusName.put("32","Khách hàng từ chối(Tư vấn)");
@@ -211,6 +221,30 @@ public class ProjectApplication extends MultiDexApplication {
 
     public String getStringProcessStatusName(String keyProcessStatus){
         return mStringProcessStatusName.get(keyProcessStatus);
+    }
+
+    public void setHashmapStringProcessStatusNameSM(){
+        mStringProcessStatusNameSM = new HashMap<>();
+        mStringProcessStatusNameSM.put("11","Ứng viên khảo sát");
+        mStringProcessStatusNameSM.put("12","Ứng viên từ chối(Khảo sát)");
+        mStringProcessStatusNameSM.put("13","Ứng viên gọi lại sau(Khảo sát)");
+        mStringProcessStatusNameSM.put("21","Ứng viên tham dự COP");
+        mStringProcessStatusNameSM.put("22","Ứng viên từ chối(COP)");
+        mStringProcessStatusNameSM.put("23","Ứng viên gọi lại sau(COP)");
+        mStringProcessStatusNameSM.put("24","Ứng viên hoàn thành COP");
+        mStringProcessStatusNameSM.put("31","Ứng viên học MIT");
+        mStringProcessStatusNameSM.put("32","Ứng viên từ chối(MIT)");
+        mStringProcessStatusNameSM.put("33","Ứng viên học lại MIT");
+        mStringProcessStatusNameSM.put("34","Ứng viên hoàn thành MIT");
+        mStringProcessStatusNameSM.put("41","Ứng viên nộp hồ sơ đại lý");
+        mStringProcessStatusNameSM.put("42","Ứng viên hoàn tất nộp hồ sơ đại lý");
+        mStringProcessStatusNameSM.put("43","Ứng viên đã nộp hồ sơ");
+        mStringProcessStatusNameSM.put("44","Ứng viên chờ cấp mã");
+        mStringProcessStatusNameSM.put("45","Ứng viên đã cấp mã");
+    }
+
+    public String getStringProcessStatusNameSM(String keyProcessStatus){
+        return mStringProcessStatusNameSM.get(keyProcessStatus);
     }
 
     public HashMap<Integer,String> getHashmapProcessStep(){
@@ -474,7 +508,7 @@ public class ProjectApplication extends MultiDexApplication {
         return this.mCOP_done;
     }
 
-    //init for sm cop
+    //init for sm mit
     public void setMITAdded(UsersList data)
     {
         this.mMIT_added = data;
@@ -502,5 +536,42 @@ public class ProjectApplication extends MultiDexApplication {
     }
     public UsersList getMITDone(){
         return this.mMIT_done;
+    }
+
+    //init for sm granted code
+    public void setCodeAdded(UsersList data)
+    {
+        this.mCode_added = data;
+    }
+    public UsersList getCodeAdded(){
+        return this.mCode_added;
+    }
+    public void setCodeAppliedAgent(UsersList data)
+    {
+        this.mCode_applied_agent_document = data;
+    }
+    public UsersList getCodeAppliedAgent(){
+        return this.mCode_applied_agent_document;
+    }
+    public void setCodeAppliedDone(UsersList data)
+    {
+        this.mCode_applied_done = data;
+    }
+    public UsersList getCodeAppliedDone(){
+        return this.mCode_applied_done;
+    }
+    public void setCodeWaitApprove(UsersList data)
+    {
+        this.mCode_wait_approve = data;
+    }
+    public UsersList getCodeWaitApprove(){
+        return this.mCode_wait_approve;
+    }
+    public void setCodeGranted(UsersList data)
+    {
+        this.mCode_granted_code = data;
+    }
+    public UsersList getCodeGranted(){
+        return this.mCode_granted_code;
     }
 }

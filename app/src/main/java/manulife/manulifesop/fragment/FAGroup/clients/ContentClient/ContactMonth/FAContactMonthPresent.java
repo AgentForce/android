@@ -41,7 +41,7 @@ public class FAContactMonthPresent extends BasePresenter<FAContactMonthContract.
         getCompositeDisposable().add(ApiService.getServer().getContactMonth(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
-                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, month,search,1,10)
+                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, month,search,page,10)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())

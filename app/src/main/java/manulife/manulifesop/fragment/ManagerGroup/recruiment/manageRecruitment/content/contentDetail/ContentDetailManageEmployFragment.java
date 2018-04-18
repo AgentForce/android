@@ -187,11 +187,11 @@ public class ContentDetailManageEmployFragment extends BaseFragment<MainFAActivi
         }
     }
 
-    @OnClick({R.id.layout_image_right})
+    @OnClick({R.id.layout_title_bot})
     public void onClickView(View view) {
         int id = view.getId();
         switch (id) {
-            case R.id.layout_image_right: {
+            case R.id.layout_title_bot: {
                 if (expandableLayoutMid.isExpanded()) {
                     expandableLayoutMid.collapse(true);
                     expandableLayoutList.expand(true);

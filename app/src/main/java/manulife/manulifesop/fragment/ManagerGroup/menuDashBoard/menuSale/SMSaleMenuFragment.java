@@ -66,7 +66,7 @@ public class SMSaleMenuFragment extends BaseFragment<MainFAActivity, SMSaleMenuP
         int id = view.getId();
         switch (id) {
             case R.id.layout_personal_sale: {
-                mActivity.showCustomer();
+                mActivity.showCustomer("Bán hàng cá nhân");
                 break;
             }
             case R.id.layout_manage_sale: {

@@ -19,7 +19,9 @@ import manulife.manulifesop.activity.FAGroup.clients.contact.ContactPersonActivi
 import manulife.manulifesop.activity.FAGroup.clients.introduceContact.IntroduceContactActivity;
 import manulife.manulifesop.activity.FAGroup.clients.signed.SignedPersonActivity;
 import manulife.manulifesop.activity.ManagerGroup.Recruitment.cop.COPActivity;
+import manulife.manulifesop.activity.ManagerGroup.Recruitment.grantedCode.GrantedCodeActivity;
 import manulife.manulifesop.activity.ManagerGroup.Recruitment.introduceRecruitment.IntroduceRecruitmentActivity;
+import manulife.manulifesop.activity.ManagerGroup.Recruitment.mit.MITActivity;
 import manulife.manulifesop.activity.ManagerGroup.Recruitment.survey.SurveyActivity;
 import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
@@ -147,7 +149,7 @@ public class RecruitmentObjectMonthFragment extends BaseFragment<MainFAActivity,
                     Bundle data = new Bundle();
                     data.putInt("month", mMonth);
                     data.putInt("target", targetStep3);
-                    mActivity.goNextScreen(ConsultantActivity.class, data);
+                    mActivity.goNextScreen(MITActivity.class, data);
                 }
                 break;
             }
@@ -156,7 +158,7 @@ public class RecruitmentObjectMonthFragment extends BaseFragment<MainFAActivity,
                     Bundle data = new Bundle();
                     data.putInt("month", mMonth);
                     data.putInt("target", targetStep4);
-                    mActivity.goNextScreen(SignedPersonActivity.class, data);
+                    mActivity.goNextScreen(GrantedCodeActivity.class, data);
                 }
                 break;
             }

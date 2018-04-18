@@ -29,37 +29,37 @@ public class GrantedCodePresenter extends BasePresenter<GrantedCodeContract.View
     @Override
     public void getAllData(int period) {
         mPresenterView.showLoading("Xử lý dữ liệu");
-        getCompositeDisposable().add(ApiService.getServer().getUserList(
+        getCompositeDisposable().add(ApiService.getServer().getUserListRecruit(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                period, 4,Contants.SIGNED_NOT_APPLIED,1,10,"")//khách hàng chưa nộp hồ sơ
+                period, 4,Contants.CODE_CHANGED_TO_APPLY,1,10,"")//đã chuyển sang nộp hờ sơ đại lý
                 .flatMap(usersList -> {
-                    ProjectApplication.getInstance().setSignNotApply(usersList);
-                    return ApiService.getServer().getUserList(
+                    ProjectApplication.getInstance().setCodeAdded(usersList);
+                    return ApiService.getServer().getUserListRecruit(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 4,Contants.SIGNED_BHXH,1,10,"");// khách hàng hoàn tất BHXH
+                            period, 4,Contants.CODE_APPLIED_DOCUMENT_AGENT,1,10,"");// hoàn tất nộp hồ sơ đại lý
                 })
                 .flatMap(usersList -> {
-                    ProjectApplication.getInstance().setSignBHXH(usersList);
-                    return ApiService.getServer().getUserList(
+                    ProjectApplication.getInstance().setCodeAppliedAgent(usersList);
+                    return ApiService.getServer().getUserListRecruit(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 4,Contants.SIGNED_APPLIED,1,10,"");// khách hàng đã nộp hồ sơ
+                            period, 4,Contants.CODE_APPLIED_DONE,1,10,"");// đã nộp hồ sơ
                 })
                 .flatMap(usersList -> {
-                    ProjectApplication.getInstance().setSignApplied(usersList);
-                    return ApiService.getServer().getUserList(
+                    ProjectApplication.getInstance().setCodeAppliedDone(usersList);
+                    return ApiService.getServer().getUserListRecruit(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 4,Contants.SIGNED_WAIT_APPROVE,1,10,"");// khách hàng chờ duyệt hồ sơ
+                            period, 4,Contants.CODE_WAITING_APPROVE,1,10,"");// Chờ duyệt hồ sơ
                 })
                 .flatMap(usersList -> {
-                    ProjectApplication.getInstance().setSignWaitApprove(usersList);
-                    return ApiService.getServer().getUserList(
+                    ProjectApplication.getInstance().setCodeWaitApprove(usersList);
+                    return ApiService.getServer().getUserListRecruit(
                             SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                             Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                            period, 4,Contants.SIGNED_SUCCESS,1,10,"");// khách hàng ký thành công
+                            period, 4,Contants.CODE_GRANTED_CODE,1,10,"");// cấp mã thành công
                 })
                 .subscribeOn(Schedulers.computation())
                 .unsubscribeOn(Schedulers.io())
@@ -73,7 +73,7 @@ public class GrantedCodePresenter extends BasePresenter<GrantedCodeContract.View
 
     private void handleResponse(UsersList usersList) {
         if(usersList.statusCode==1){
-            ProjectApplication.getInstance().setSignSuccess(usersList);
+            ProjectApplication.getInstance().setCodeGranted(usersList);
             mPresenterView.initViewPager();
             mPresenterView.finishLoading();
         }else{

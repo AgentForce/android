@@ -595,23 +595,23 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
 
     @Override
     public boolean validateInput() {
-        if (txtStep1Choose.getText().equals("choose")) {
+        if (txtStep1Choose.getText().equals("")) {
             showMessage("Thông báo", "Chưa chọn độ tuổi!", SweetAlertDialog.WARNING_TYPE);
             return false;
         }
-        if (txtStep2Choose.getText().equals("choose")) {
+        if (txtStep2Choose.getText().equals("")) {
             showMessage("Thông báo", "Chưa chọn thu nhập!", SweetAlertDialog.WARNING_TYPE);
             return false;
         }
-        if (txtStep3Choose.getText().equals("choose")) {
+        if (txtStep3Choose.getText().equals("")) {
             showMessage("Thông báo", "Chưa chọn tình trạng hôn nhân!", SweetAlertDialog.WARNING_TYPE);
             return false;
         }
-        if (txtStep4Choose.getText().equals("choose")) {
+        if (txtStep4Choose.getText().equals("")) {
             showMessage("Thông báo", "Chưa chọn mối quan hệ!", SweetAlertDialog.WARNING_TYPE);
             return false;
         }
-        if (txtStep5Choose.getText().equals("choose")) {
+        if (txtStep5Choose.getText().equals("")) {
             showMessage("Thông báo", "Chưa chọn nguồn!", SweetAlertDialog.WARNING_TYPE);
             return false;
         }
@@ -640,7 +640,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             Animation out = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
 
             txtActionbarTitle.setText("Thông tin khách hàng (" + (position + 1) + "/" + mDataChoosed.size() + ")");
-            txtStep1Choose.setText("choose");
+            txtStep1Choose.setText("");
             layoutChooseStep1.startAnimation(out);
             layoutChooseStep1.startAnimation(out);
             layoutChooseStep1.setVisibility(View.GONE);
@@ -651,7 +651,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             initListenerStep1Line1();
             initListenerStep1Line2();
 
-            txtStep2Choose.setText("choose");
+            txtStep2Choose.setText("");
             layoutChooseStep2.startAnimation(out);
             layoutChooseStep2.startAnimation(out);
             layoutChooseStep2.setVisibility(View.GONE);
@@ -662,7 +662,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             initListenerStep2Line1();
             initListenerStep2Line2();
 
-            txtStep3Choose.setText("choose");
+            txtStep3Choose.setText("");
             layoutChooseStep3.startAnimation(out);
             layoutChooseStep3.startAnimation(out);
             layoutChooseStep3.setVisibility(View.GONE);
@@ -673,7 +673,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             initListenerStep3Line1();
             initListenerStep3Line2();
 
-            txtStep4Choose.setText("choose");
+            txtStep4Choose.setText("");
             layoutChooseStep4.startAnimation(out);
             layoutChooseStep4.startAnimation(out);
             layoutChooseStep4.setVisibility(View.GONE);
@@ -684,7 +684,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             initListenerStep4Line1();
             initListenerStep4Line2();
 
-            txtStep5Choose.setText("choose");
+            txtStep5Choose.setText("");
             layoutChooseStep5.startAnimation(out);
             layoutChooseStep5.startAnimation(out);
             layoutChooseStep5.setVisibility(View.GONE);
@@ -730,7 +730,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     //Utils.smoothScrollViewToPosition(getApplicationContext(),scrollView,layoutTitleStep2.getBottom());
                 } else {
                     expandableLayoutStep1.collapse(true);
-                    if (!txtStep1Choose.getText().equals("choose")) {
+                    if (!txtStep1Choose.getText().equals("")) {
                         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
                         layoutChooseStep1.startAnimation(in);
                         layoutChooseStep1.setVisibility(View.VISIBLE);
@@ -754,7 +754,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     //Utils.smoothScrollViewToPosition(getApplicationContext(),scrollView,layoutTitleStep3.getBottom());
                 } else {
                     expandableLayoutStep2.collapse(true);
-                    if (!txtStep2Choose.getText().equals("choose")) {
+                    if (!txtStep2Choose.getText().equals("")) {
                         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
                         layoutChooseStep2.startAnimation(in);
                         layoutChooseStep2.setVisibility(View.VISIBLE);
@@ -778,7 +778,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     //Utils.smoothScrollViewToPosition(getApplicationContext(),scrollView,layoutTitleStep4.getBottom());
                 } else {
                     expandableLayoutStep3.collapse(true);
-                    if (!txtStep3Choose.getText().equals("choose")) {
+                    if (!txtStep3Choose.getText().equals("")) {
                         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
                         layoutChooseStep3.startAnimation(in);
                         layoutChooseStep3.setVisibility(View.VISIBLE);
@@ -802,7 +802,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                     //Utils.smoothScrollViewToPosition(getApplicationContext(),scrollView,layoutTitleStep5.getBottom());
                 } else {
                     expandableLayoutStep4.collapse(true);
-                    if (!txtStep4Choose.getText().equals("choose")) {
+                    if (!txtStep4Choose.getText().equals("")) {
                         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
                         layoutChooseStep4.startAnimation(in);
                         layoutChooseStep4.setVisibility(View.VISIBLE);
@@ -826,7 +826,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
 
                 } else {
                     expandableLayoutStep5.collapse(true);
-                    if (!txtStep5Choose.getText().equals("choose")) {
+                    if (!txtStep5Choose.getText().equals("")) {
                         Animation in = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
                         layoutChooseStep5.startAnimation(in);
                         layoutChooseStep5.setVisibility(View.VISIBLE);

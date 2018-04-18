@@ -34,6 +34,7 @@ import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.Conta
 import manulife.manulifesop.activity.FAGroup.clients.related.createEvent.CreateEventActivity;
 import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.ContactAllFAAdapter;
+import manulife.manulifesop.adapter.ContactAllSMAdapter;
 import manulife.manulifesop.adapter.ObjectData.ContactAllFA;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
@@ -55,7 +56,7 @@ public class RecruitmentContactMonthFragment extends BaseFragment<MainFAActivity
     @BindView(R.id.rcv_contact)
     RecyclerView listContact;
 
-    private ContactAllFAAdapter mAdapter;
+    private ContactAllSMAdapter mAdapter;
     private List<ContactAllFA> mData;
     private LinearLayoutManager mLayoutManager;
 
@@ -169,44 +170,48 @@ public class RecruitmentContactMonthFragment extends BaseFragment<MainFAActivity
 
         mData.addAll(data);
 
-        mAdapter = new ContactAllFAAdapter(getContext(), mData, new CallBackClickContact() {
-            @Override
-            public void onClickMenuRight(int position, int option) {
-                switch (option) {
-                    case 0: {
-                        gotoConactDetail(mData.get(position).getId(), mData.get(position).getProcessStep(),
-                                mData.get(position).getStatusStep());
-                        break;
-                    }
-                    case 1: {
-                        String phone = "tel:" + mData.get(position).getPhone();
-                        Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse(phone));
-                        startActivity(callIntent);
-                        break;
-                    }
-                    case 2: {
-                        Bundle data = new Bundle();
-                        data.putInt("typeInt", 1);
-                        data.putInt("contactID", mData.get(position).getId());
-                        data.putString("name", mData.get(position).getTitle());
-                        mActivity.goNextScreen(CreateEventActivity.class, data);
-                        break;
+        if(mAdapter == null) {
+            mAdapter = new ContactAllSMAdapter(getContext(), mData, new CallBackClickContact() {
+                @Override
+                public void onClickMenuRight(int position, int option) {
+                    switch (option) {
+                        case 0: {
+                            gotoConactDetail(mData.get(position).getId(), mData.get(position).getProcessStep(),
+                                    mData.get(position).getStatusStep());
+                            break;
+                        }
+                        case 1: {
+                            String phone = "tel:" + mData.get(position).getPhone();
+                            Intent callIntent = new Intent(Intent.ACTION_CALL);
+                            callIntent.setData(Uri.parse(phone));
+                            startActivity(callIntent);
+                            break;
+                        }
+                        case 2: {
+                            Bundle data = new Bundle();
+                            data.putInt("typeInt", 1);
+                            data.putInt("contactID", mData.get(position).getId());
+                            data.putString("name", mData.get(position).getTitle());
+                            mActivity.goNextScreen(CreateEventActivity.class, data);
+                            break;
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onClickMainContent(int position) {
-                gotoConactDetail(mData.get(position).getId(), mData.get(position).getProcessStep(),
-                        mData.get(position).getStatusStep());
+                @Override
+                public void onClickMainContent(int position) {
+                    gotoConactDetail(mData.get(position).getId(), mData.get(position).getProcessStep(),
+                            mData.get(position).getStatusStep());
 
-            }
-        });
-        listContact.setAdapter(mAdapter);
+                }
+            });
+            listContact.setAdapter(mAdapter);
+        }else{
+            mAdapter.notifyDataSetChanged();
+        }
 
         //set space between two items
-        int[] ATTRS = new int[]{android.R.attr.listDivider};
+        /*int[] ATTRS = new int[]{android.R.attr.listDivider};
         TypedArray a = getContext().obtainStyledAttributes(ATTRS);
         Drawable divider = a.getDrawable(0);
         int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
@@ -217,7 +222,7 @@ public class RecruitmentContactMonthFragment extends BaseFragment<MainFAActivity
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listContact.getContext(),
                 mLayoutManager.getOrientation());
         dividerItemDecoration.setDrawable(insetDivider);
-        listContact.addItemDecoration(dividerItemDecoration);
+        listContact.addItemDecoration(dividerItemDecoration);*/
 
 
         listContact.clearOnScrollListeners();
@@ -230,29 +235,30 @@ public class RecruitmentContactMonthFragment extends BaseFragment<MainFAActivity
     @Override
     public void gotoConactDetail(int id, int progressStep, int statusstep) {
 
-        String typeString = ProjectApplication.getInstance().getStringProcessStatusName(
+        String typeString = ProjectApplication.getInstance().getStringProcessStatusNameSM(
                 progressStep + "" + statusstep
         );
+        if(typeString.contains("từ chối")) typeString = Contants.REFUSE;
         String typeMenu;
         switch (progressStep) {
             case 1: {
-                typeMenu = Contants.CONTACT_MENU;
+                typeMenu = Contants.SURVEY_MENU;
                 break;
             }
             case 2: {
-                typeMenu = Contants.APPOINTMENT_MENU;
+                typeMenu = Contants.COP_MENU;
                 break;
             }
             case 3: {
-                typeMenu = Contants.CONSULTANT_MENU;
+                typeMenu = Contants.MIT_MENU;
                 break;
             }
             case 4: {
-                typeMenu = Contants.SIGNED_MENU;
+                typeMenu = Contants.CODE_MENU;
                 break;
             }
             default: {
-                typeMenu = Contants.CONTACT_MENU;
+                typeMenu = Contants.SURVEY_MENU;
                 break;
             }
         }

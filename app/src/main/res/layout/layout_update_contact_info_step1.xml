@@ -71,7 +71,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="choose"
+                    android:text=""
                     android:textSize="@dimen/welcome_activity_content"
                     android:textStyle="bold" />
             </LinearLayout>

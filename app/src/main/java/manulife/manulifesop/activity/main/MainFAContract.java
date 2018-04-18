@@ -11,7 +11,7 @@ public interface MainFAContract {
     {
         void showFragmentConfirmCreatePlan(String title);
         void showDashBoard();
-        void showCustomer();
+        void showCustomer(String title);
         void showEvents();
         void showPersonal();
         void showMenuSale();

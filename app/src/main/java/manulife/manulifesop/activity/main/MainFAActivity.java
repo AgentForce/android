@@ -84,7 +84,10 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         mActionListener = new MainFAPresenter(this, this);
         mIsFA = SOPSharedPreferences.getInstance(this).getIsFA();
         setupSupportForApp();
-        setupMenuBot();
+        if (mIsFA)
+            setupMenuBotFA();
+        else
+            setupMenuBotSM();
     }
 
     @Override
@@ -112,13 +115,9 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         viewStatusBar.setLayoutParams(params);
     }
 
-    private void setupMenuBot() {
+    private void setupMenuBotFA() {
         int[] tabColors = getApplicationContext().getResources().getIntArray(R.array.tab_colors);
-
-        if (mIsFA)
-            mNavigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bot);
-        else
-            mNavigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bot_sm);
+        mNavigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bot);
 
         mNavigationAdapter.setupWithBottomNavigation(bottomNavigation, tabColors);
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
@@ -140,13 +139,9 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
                     case 1: {
 
                         if (mIsgetCampaign)
-                            if (mIsFA)
-                                showCustomer();
-                            else
-                                showMenuSale();
+                            showCustomer("Khách hàng");
                         else
                             showFragmentConfirmCreatePlan("Khách hàng");
-
                         break;
                     }
                     case 2: {
@@ -161,11 +156,60 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
                         showPersonal();
                         break;
                     }
-                    case 4: {
+                }
+                return true;
+            }
+        });
+    }
+
+    private void setupMenuBotSM() {
+        int[] tabColors = getApplicationContext().getResources().getIntArray(R.array.tab_colors);
+        mNavigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bot_sm);
+
+        mNavigationAdapter.setupWithBottomNavigation(bottomNavigation, tabColors);
+        bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+        bottomNavigation.setAccentColor(getResources().getColor(R.color.colorPrimary));
+        bottomNavigation.setInactiveColor(getResources().getColor(R.color.botMenuDisable));
+
+        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+            @Override
+            public boolean onTabSelected(int position, boolean wasSelected) {
+                switch (position) {
+                    case 0: {
+                        if (mIsgetCampaign)
+                            showDashBoard();
+                        else
+                            showFragmentConfirmCreatePlan("Trang chủ");
+
+                        break;
+                    }
+                    case 1: {
+
                         if (mIsgetCampaign)
                             showMenuEmploy();
                         else
                             showFragmentConfirmCreatePlan("Tuyển dụng");
+
+                        break;
+                    }
+                    case 2: {
+
+                        if (mIsgetCampaign)
+                            showMenuSale();
+                        else
+                            showFragmentConfirmCreatePlan("Bán hàng");
+                        break;
+                    }
+                    case 3: {
+                        if (mIsgetCampaign)
+                            showEvents();
+                        else
+                            showFragmentConfirmCreatePlan("Tháng " + Utils.getCurrentMonth(getApplicationContext()));
+
+                        break;
+                    }
+                    case 4: {
+                        showPersonal();
                         break;
                     }
                 }
@@ -227,7 +271,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
     }
 
     @Override
-    public void showCustomer() {
+    public void showCustomer(String title) {
         mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
         if (!(mCurrentFragment instanceof FACustomerFragment)) {
             layoutNotification.setVisibility(View.GONE);
@@ -235,7 +279,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
             mFragmentTran = getSupportFragmentManager().beginTransaction();
             mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-            mFragmentTran.replace(R.id.frame_container, FACustomerFragment.newInstance());
+            mFragmentTran.replace(R.id.frame_container, FACustomerFragment.newInstance(title));
             mFragmentTran.commit();
         }
     }
@@ -249,7 +293,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
             mFragmentTran = getSupportFragmentManager().beginTransaction();
             mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-            mFragmentTran.replace(R.id.frame_container,PersonalRecruitmentFragment.newInstance());
+            mFragmentTran.replace(R.id.frame_container, PersonalRecruitmentFragment.newInstance());
             mFragmentTran.commit();
         }
     }

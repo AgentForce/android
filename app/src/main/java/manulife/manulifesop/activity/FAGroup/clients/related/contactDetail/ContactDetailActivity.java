@@ -206,6 +206,31 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                     findViewById(R.id.layout_menu_cancel).setOnClickListener(listener);
                     break;
                 }
+                case Contants.MIT_MENU: {
+                    mIsRecruit = true;
+                    layoutMenu.setLayoutResource(R.layout.layout_float_menu_mit);
+                    layoutMenu.inflate();
+
+                    processMenuMIT listener = new processMenuMIT();
+                    findViewById(R.id.layout_menu_granted_code).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_mit_event).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_relearn).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_cancel).setOnClickListener(listener);
+                    break;
+                }
+                case Contants.CODE_MENU: {
+                    mIsRecruit = true;
+                    layoutMenu.setLayoutResource(R.layout.layout_float_menu_code);
+                    layoutMenu.inflate();
+
+                    processMenuCODE listener = new processMenuCODE();
+                    findViewById(R.id.layout_menu_applied_agent).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_applied_done).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_waiting_approve).setOnClickListener(listener);
+                    findViewById(R.id.layout_menu_granted_code).setOnClickListener(listener);
+                    break;
+                }
+
             }
         }
     }
@@ -393,6 +418,62 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                 }
                 case R.id.layout_menu_cancel: {
                     mActionListener.updateStatusProcessRecruit(mUserId, false, Contants.COP_REFUSE);
+                    break;
+                }
+            }
+        }
+    }
+    private class processMenuMIT implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            switch (id) {
+                case R.id.layout_menu_granted_code: {
+                    mActionListener.updateStatusProcessRecruit(mUserId, true, 1);
+                    break;
+                }
+                case R.id.layout_menu_mit_event: {
+                    Bundle data = new Bundle();
+                    data.putInt("typeInt", 1);
+                    data.putInt("contactID", mUserId);
+                    data.putString("name", txtUserName.getText().toString());
+                    showHideMenuAfterCall();
+                    goNextScreen(CreateEventActivity.class, data, Contants.ADD_EVENT);
+                    break;
+                }
+                case R.id.layout_menu_relearn: {
+                    mActionListener.updateStatusProcessRecruit(mUserId, false, Contants.MIT_RELEARN);
+                    break;
+                }
+                case R.id.layout_menu_cancel: {
+                    mActionListener.updateStatusProcessRecruit(mUserId, false, Contants.MIT_REFUSE);
+                    break;
+                }
+            }
+        }
+    }
+
+    private class processMenuCODE implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            switch (id) {
+                case R.id.layout_menu_applied_agent: {
+                    mActionListener.updateStatusProcessRecruit(mUserId, false, Contants.CODE_APPLIED_DOCUMENT_AGENT);
+                    break;
+                }
+                case R.id.layout_menu_applied_done: {
+                    mActionListener.updateStatusProcessRecruit(mUserId, false, Contants.CODE_APPLIED_DONE);
+                    break;
+                }
+                case R.id.layout_menu_waiting_approve: {
+                    mActionListener.updateStatusProcessRecruit(mUserId, false, Contants.CODE_WAITING_APPROVE);
+                    break;
+                }
+                case R.id.layout_menu_granted_code: {
+                    mActionListener.updateStatusProcessRecruit(mUserId, false, Contants.CODE_GRANTED_CODE);
                     break;
                 }
             }

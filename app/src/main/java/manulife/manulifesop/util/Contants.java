@@ -34,6 +34,11 @@ public class Contants {
     public static final String MIT_STRING = "Học MIT";
     public static final String MIT_RELEARN_STRING = "Học lại MIT";
     public static final String MIT_DONE_STRING = "Đã học MIT";
+    public static final String CODE_STRING_ = "Đã chuyển sang nộp hờ sơ đại lý";
+    public static final String CODE_APPLIED_AGENT_STRING = "Đã hoàn tất nộp hồ sơ đại lý";
+    public static final String CODE_APPLIED_DONE_STRING = "Đã nộp hồ sơ";
+    public static final String CODE_WAIT_APPROVE_STRING = "Chờ cấp mã";
+    public static final String CODE_GRANTED_STRING = "Đã cấp mã";
 
 
 
@@ -46,7 +51,8 @@ public class Contants {
     //menu recruit
     public static final String SURVEY_MENU = "survey_menu";
     public static final String COP_MENU = "cop_menu";
-    public static final String MIT_MENU = "cop_menu";
+    public static final String MIT_MENU = "mit_menu";
+    public static final String CODE_MENU = "code_menu";
 
     public static final int ADD_CONTACT = 100;
     public static final int CHANGE_TO_CONTACT = 101;
@@ -99,5 +105,12 @@ public class Contants {
     public static final int MIT_REFUSE = 2;
     public static final int MIT_RELEARN = 3;
     public static final int MIT_DONE = 4;
+
+    //variable for granted code
+    public static final int CODE_CHANGED_TO_APPLY = 1;
+    public static final int CODE_APPLIED_DOCUMENT_AGENT = 2;
+    public static final int CODE_APPLIED_DONE = 3;
+    public static final int CODE_WAITING_APPROVE = 4;
+    public static final int CODE_GRANTED_CODE = 5;
 
 }

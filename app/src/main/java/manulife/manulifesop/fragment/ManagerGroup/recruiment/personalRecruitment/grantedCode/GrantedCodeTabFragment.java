@@ -29,6 +29,7 @@ import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.ContactDetailActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.createEvent.CreateEventActivity;
 import manulife.manulifesop.activity.FAGroup.clients.signed.SignedPersonActivity;
+import manulife.manulifesop.activity.ManagerGroup.Recruitment.grantedCode.GrantedCodeActivity;
 import manulife.manulifesop.adapter.ActiveHistAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.api.ObjectResponse.UsersList;
@@ -42,7 +43,7 @@ import manulife.manulifesop.util.Utils;
  * Created by Chick on 10/27/2017.
  */
 
-public class GrantedCodeTabFragment extends BaseFragment<SignedPersonActivity, GrantedCodeTabPresent> implements GrantedCodeTabContract.View {
+public class GrantedCodeTabFragment extends BaseFragment<GrantedCodeActivity, GrantedCodeTabPresent> implements GrantedCodeTabContract.View {
 
     @BindView(R.id.layout_root)
     LinearLayout layoutRoot;
@@ -111,9 +112,9 @@ public class GrantedCodeTabFragment extends BaseFragment<SignedPersonActivity, G
 
     private void initViews() {
         switch (mTypeString) {
-            case Contants.SIGNED_SUCCESS_STRING: {
-                txtTitle.setText("Khách hàng ký hợp đồng thành công(" +
-                        ProjectApplication.getInstance().getSignSuccess().data.count
+            case Contants.CODE_STRING_: {
+                txtTitle.setText("Ứng viên chưa nộp hồ sơ(" +
+                        ProjectApplication.getInstance().getCodeAdded().data.count
                         + "/" + mTarget + ")");
                 break;
             }
@@ -202,24 +203,24 @@ public class GrantedCodeTabFragment extends BaseFragment<SignedPersonActivity, G
     private UsersList getFirstData() {
         UsersList data = new UsersList();
         switch (mType) {
-            case Contants.SIGNED_SUCCESS: {
-                data = ProjectApplication.getInstance().getSignSuccess();
+            case Contants.CODE_CHANGED_TO_APPLY: {
+                data = ProjectApplication.getInstance().getCodeAdded();
                 break;
             }
-            case Contants.SIGNED_NOT_APPLIED: {
-                data = ProjectApplication.getInstance().getSignNotApply();
+            case Contants.CODE_APPLIED_DOCUMENT_AGENT: {
+                data = ProjectApplication.getInstance().getCodeAppliedAgent();
                 break;
             }
-            case Contants.SIGNED_BHXH: {
-                data = ProjectApplication.getInstance().getSignBHXH();
+            case Contants.CODE_APPLIED_DONE: {
+                data = ProjectApplication.getInstance().getCodeAppliedDone();
                 break;
             }
-            case Contants.SIGNED_APPLIED: {
-                data = ProjectApplication.getInstance().getSignApplied();
+            case Contants.CODE_WAITING_APPROVE: {
+                data = ProjectApplication.getInstance().getCodeWaitApprove();
                 break;
             }
-            case Contants.SIGNED_WAIT_APPROVE: {
-                data = ProjectApplication.getInstance().getSignWaitApprove();
+            case Contants.CODE_GRANTED_CODE: {
+                data = ProjectApplication.getInstance().getCodeGranted();
                 break;
             }
         }
@@ -238,55 +239,42 @@ public class GrantedCodeTabFragment extends BaseFragment<SignedPersonActivity, G
             temp.setContent(data.data.rows.get(i).phone);
             mData.add(temp);
         }
-
-
-        mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
-            @Override
-            public void onClickMenuRight(int position, int option) {
-                switch (option){
-                    case 0:{
-                        gotoConactDetail(mData.get(position).getId());
-                        break;
-                    }
-                    case 1:{
-                        String phone = "tel:" + mData.get(position).getContent();
-                        Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse(phone));
-                        startActivity(callIntent);
-                        break;
-                    }
-                    case 2:{
-                        Bundle data = new Bundle();
-                        data.putInt("typeInt", 1);
-                        data.putInt("contactID", mData.get(position).getId());
-                        data.putString("name",mData.get(position).getTitle());
-                        mActivity.goNextScreen(CreateEventActivity.class, data);
-                        break;
+        if(mAdapterActiveHist == null) {
+            mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
+                @Override
+                public void onClickMenuRight(int position, int option) {
+                    switch (option) {
+                        case 0: {
+                            gotoConactDetail(mData.get(position).getId());
+                            break;
+                        }
+                        case 1: {
+                            String phone = "tel:" + mData.get(position).getContent();
+                            Intent callIntent = new Intent(Intent.ACTION_CALL);
+                            callIntent.setData(Uri.parse(phone));
+                            startActivity(callIntent);
+                            break;
+                        }
+                        case 2: {
+                            Bundle data = new Bundle();
+                            data.putInt("typeInt", 1);
+                            data.putInt("contactID", mData.get(position).getId());
+                            data.putString("name", mData.get(position).getTitle());
+                            mActivity.goNextScreen(CreateEventActivity.class, data);
+                            break;
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onClickMainContent(int position) {
-                gotoConactDetail(mData.get(position).getId());
-            }
-        });
-        listContact.setAdapter(mAdapterActiveHist);
-
-        //set space between two items
-        /*int[] ATTRS = new int[]{android.R.attr.listDivider};
-        TypedArray a = getContext().obtainStyledAttributes(ATTRS);
-        Drawable divider = a.getDrawable(0);
-        int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
-        int insetRight = getResources().getDimensionPixelSize(R.dimen.margin_right_DividerItemDecoration);
-        InsetDrawable insetDivider = new InsetDrawable(divider, insetLeft, 0, insetRight, 0);
-        a.recycle();
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listContact.getContext(),
-                mLayoutManager.getOrientation());
-        dividerItemDecoration.setDrawable(insetDivider);
-        listContact.addItemDecoration(dividerItemDecoration);*/
-
+                @Override
+                public void onClickMainContent(int position) {
+                    gotoConactDetail(mData.get(position).getId());
+                }
+            });
+            listContact.setAdapter(mAdapterActiveHist);
+        }else{
+            mAdapterActiveHist.notifyDataSetChanged();
+        }
 
         listContact.clearOnScrollListeners();
         listContact.addOnScrollListener(new EndlessScrollListenerRecyclerView(
@@ -300,7 +288,7 @@ public class GrantedCodeTabFragment extends BaseFragment<SignedPersonActivity, G
     public void gotoConactDetail(int id) {
         Bundle data = new Bundle();
         data.putString("type", mTypeString);
-        data.putString("type_menu", Contants.SIGNED_MENU);
+        data.putString("type_menu", Contants.CODE_MENU);
         data.putInt("id", id);
         mActivity.goNextScreen(ContactDetailActivity.class, data, Contants.CONTACT_DETAIL);
     }

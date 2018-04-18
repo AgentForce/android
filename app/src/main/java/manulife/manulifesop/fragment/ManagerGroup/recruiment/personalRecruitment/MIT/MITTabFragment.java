@@ -29,6 +29,7 @@ import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.consultant.ConsultantActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.ContactDetailActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.createEvent.CreateEventActivity;
+import manulife.manulifesop.activity.ManagerGroup.Recruitment.mit.MITActivity;
 import manulife.manulifesop.adapter.ActiveHistAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.api.ObjectResponse.UsersList;
@@ -42,7 +43,7 @@ import manulife.manulifesop.util.Utils;
  * Created by Chick on 10/27/2017.
  */
 
-public class MITTabFragment extends BaseFragment<ConsultantActivity, MITTabPresent> implements MITTabContract.View {
+public class MITTabFragment extends BaseFragment<MITActivity, MITTabPresent> implements MITTabContract.View {
 
     @BindView(R.id.layout_root)
     LinearLayout layoutRoot;
@@ -113,22 +114,22 @@ public class MITTabFragment extends BaseFragment<ConsultantActivity, MITTabPrese
         //type = appointment, seen, calllater
 
         switch (mType) {
-            case Contants.CONSULTANT_NEED: {
-                txtTitle.setText("Tư vấn(" +
-                        ProjectApplication.getInstance().getConsultantNeed().data.count
+            case Contants.MIT_ADDED: {
+                txtTitle.setText("Học MIT(" +
+                        ProjectApplication.getInstance().getMITAdded().data.count
                         + "/" + mTarget + ")");
                 break;
             }
-            case Contants.CONSULTANT_SEEN: {
-                txtTitle.setText("Đã hẹn tư vấn");
+            case Contants.MIT_RELEARN: {
+                txtTitle.setText("Học lại MIT");
                 break;
             }
-            case Contants.CONSULTANT_CALLLATER: {
-                txtTitle.setText("Liên hệ sau");
-                break;
-            }
-            case Contants.CONSULTANT_REFUSE: {
+            case Contants.MIT_REFUSE: {
                 txtTitle.setText("Từ chối");
+                break;
+            }
+            case Contants.MIT_DONE: {
+                txtTitle.setText("Hoàn thành MIT");
                 break;
             }
         }
@@ -210,20 +211,20 @@ public class MITTabFragment extends BaseFragment<ConsultantActivity, MITTabPrese
     private UsersList getFirstData() {
         UsersList data = new UsersList();
         switch (mType) {
-            case Contants.CONSULTANT_NEED: {
-                data = ProjectApplication.getInstance().getConsultantNeed();
+            case Contants.MIT_ADDED: {
+                data = ProjectApplication.getInstance().getMITAdded();
                 break;
             }
-            case Contants.CONSULTANT_SEEN: {
-                data = ProjectApplication.getInstance().getConsultantSeen();
+            case Contants.MIT_RELEARN: {
+                data = ProjectApplication.getInstance().getMITRelearn();
                 break;
             }
-            case Contants.CONSULTANT_CALLLATER: {
-                data = ProjectApplication.getInstance().getConsultantCallLater();
+            case Contants.MIT_REFUSE: {
+                data = ProjectApplication.getInstance().getMITRefuse();
                 break;
             }
-            case Contants.CONSULTANT_REFUSE: {
-                data = ProjectApplication.getInstance().getConsultantRefuse();
+            case Contants.MIT_DONE: {
+                data = ProjectApplication.getInstance().getMITDone();
                 break;
             }
         }
@@ -243,54 +244,42 @@ public class MITTabFragment extends BaseFragment<ConsultantActivity, MITTabPrese
             mData.add(temp);
         }
 
-
-        mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
-            @Override
-            public void onClickMenuRight(int position, int option) {
-                switch (option) {
-                    case 0: {
-                        gotoConactDetail(mData.get(position).getId());
-                        break;
-                    }
-                    case 1: {
-                        String phone = "tel:" + mData.get(position).getContent();
-                        Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse(phone));
-                        startActivity(callIntent);
-                        break;
-                    }
-                    case 2: {
-                        Bundle data = new Bundle();
-                        data.putInt("typeInt", 1);
-                        data.putInt("contactID", mData.get(position).getId());
-                        data.putString("name", mData.get(position).getTitle());
-                        mActivity.goNextScreen(CreateEventActivity.class, data);
-                        break;
+        if(mAdapterActiveHist == null) {
+            mAdapterActiveHist = new ActiveHistAdapter(getContext(), mData, new CallBackClickContact() {
+                @Override
+                public void onClickMenuRight(int position, int option) {
+                    switch (option) {
+                        case 0: {
+                            gotoConactDetail(mData.get(position).getId());
+                            break;
+                        }
+                        case 1: {
+                            String phone = "tel:" + mData.get(position).getContent();
+                            Intent callIntent = new Intent(Intent.ACTION_CALL);
+                            callIntent.setData(Uri.parse(phone));
+                            startActivity(callIntent);
+                            break;
+                        }
+                        case 2: {
+                            Bundle data = new Bundle();
+                            data.putInt("typeInt", 1);
+                            data.putInt("contactID", mData.get(position).getId());
+                            data.putString("name", mData.get(position).getTitle());
+                            mActivity.goNextScreen(CreateEventActivity.class, data);
+                            break;
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onClickMainContent(int position) {
-                gotoConactDetail(mData.get(position).getId());
-            }
-        });
-        listContact.setAdapter(mAdapterActiveHist);
-
-        //set space between two items
-        /*int[] ATTRS = new int[]{android.R.attr.listDivider};
-        TypedArray a = getContext().obtainStyledAttributes(ATTRS);
-        Drawable divider = a.getDrawable(0);
-        int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
-        int insetRight = getResources().getDimensionPixelSize(R.dimen.margin_right_DividerItemDecoration);
-        InsetDrawable insetDivider = new InsetDrawable(divider, insetLeft, 0, insetRight, 0);
-        a.recycle();
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listContact.getContext(),
-                mLayoutManager.getOrientation());
-        dividerItemDecoration.setDrawable(insetDivider);
-        listContact.addItemDecoration(dividerItemDecoration);*/
-
+                @Override
+                public void onClickMainContent(int position) {
+                    gotoConactDetail(mData.get(position).getId());
+                }
+            });
+            listContact.setAdapter(mAdapterActiveHist);
+        }else{
+            mAdapterActiveHist.notifyDataSetChanged();
+        }
 
         listContact.clearOnScrollListeners();
         listContact.addOnScrollListener(new EndlessScrollListenerRecyclerView(
@@ -304,7 +293,7 @@ public class MITTabFragment extends BaseFragment<ConsultantActivity, MITTabPrese
     public void gotoConactDetail(int id) {
         Bundle data = new Bundle();
         data.putString("type", mTypeString);
-        data.putString("type_menu", Contants.CONSULTANT_MENU);
+        data.putString("type_menu", Contants.MIT_MENU);
         data.putInt("id", id);
         mActivity.goNextScreen(ContactDetailActivity.class, data, Contants.CONTACT_DETAIL);
     }

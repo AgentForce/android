@@ -207,21 +207,6 @@ public class IntroduceRecruitmentTabFragment extends BaseFragment<IntroduceRecru
             mAdapterActiveHist.notifyDataSetChanged();
         }
 
-        //set space between two items
-        /*int[] ATTRS = new int[]{android.R.attr.listDivider};
-        TypedArray a = getContext().obtainStyledAttributes(ATTRS);
-        Drawable divider = a.getDrawable(0);
-        int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
-        int insetRight = getResources().getDimensionPixelSize(R.dimen.margin_right_DividerItemDecoration);
-        InsetDrawable insetDivider = new InsetDrawable(divider, insetLeft, 0, insetRight, 0);
-        a.recycle();
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listContact.getContext(),
-                mLayoutManager.getOrientation());
-        dividerItemDecoration.setDrawable(insetDivider);
-        listContact.addItemDecoration(dividerItemDecoration);*/
-
-
         listContact.clearOnScrollListeners();
         listContact.addOnScrollListener(new EndlessScrollListenerRecyclerView(
                 Integer.valueOf(data.data.page),
@@ -346,7 +331,7 @@ public class IntroduceRecruitmentTabFragment extends BaseFragment<IntroduceRecru
     }
 
     public void showConfirmChange() {
-        showConfirm("Xác nhận", "Bạn có đồng ý chuyển sang KH tuyển dụng?", "Đồng ý",
+        showConfirm("Xác nhận", "Bạn có đồng ý chuyển sang ứng viên khảo sát?", "Đồng ý",
                 "Hủy", SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
                     @Override
                     public void DiaglogPositive() {
@@ -427,9 +412,9 @@ public class IntroduceRecruitmentTabFragment extends BaseFragment<IntroduceRecru
     private void initDialogEventAddContact(View view) {
 
         if (this.mIsChangeUserToRecruit) {
-            ((TextView) view.findViewById(R.id.txt_title)).setText("Chuyển " + mData.get(mPositionChange).getTitle() + " sang DS tuyển dụng");
+            ((TextView) view.findViewById(R.id.txt_title)).setText("Chuyển " + mData.get(mPositionChange).getTitle() + " sang DS khảo sát");
         } else {
-            ((TextView) view.findViewById(R.id.txt_title)).setText("Thêm người tuyển dụng");
+            ((TextView) view.findViewById(R.id.txt_title)).setText("Thêm ứng viên khảo sát");
         }
 
         view.findViewById(R.id.btn_cancel).setOnClickListener(this);
