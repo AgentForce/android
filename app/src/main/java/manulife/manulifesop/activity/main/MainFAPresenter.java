@@ -38,16 +38,18 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(this::handleResponseCheckCampaign, this::handleError));
+
     }
 
     private void handleResponseCheckCampaign(VerifyOTP data) {
         if (data.statusCode == 1) {
             //test
-            //data.data.status = false;
+            data.data.status = false;
             if (data.data.status) {
                 mPresenterView.showDashBoard();
             } else {
                 mPresenterView.showFragmentConfirmCreatePlan("Trang chủ");
+                mPresenterView.finishLoading();
             }
             //mPresenterView.finishLoading();
         }else if(data.statusCode == -1){

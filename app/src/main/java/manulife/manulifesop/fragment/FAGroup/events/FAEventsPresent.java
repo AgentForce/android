@@ -65,14 +65,14 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
     private void handleResponseEventsMonth(EventsMonth data) {
         if(data.statusCode==1){
             List<String> colors;
-            for(int i=0;i<data.data.size();i++){
+            for(int i=0;i<data.data.rows.size();i++){
                 //mPresenterView.addEventToDate(Utils.convertStringToDate(data.data.get(i).date,"yyyy-MM-dd"));
                 colors = new ArrayList<>();
-                for(int j=0;j<data.data.get(i).activities.size();j++){
-                    colors.add(ProjectApplication.getInstance().getProcessStepColor(data.data.get(i).activities.get(j).processStep));
+                for(int j=0;j<data.data.rows.get(i).activities.size();j++){
+                    colors.add(ProjectApplication.getInstance().getProcessStepColor(data.data.rows.get(i).activities.get(j).processStep));
                     if(j>3)break;
                 }
-                mPresenterView.addEventToDate(Utils.convertStringToDate(data.data.get(i).date,"yyyy-MM-dd"),colors);
+                mPresenterView.addEventToDate(Utils.convertStringToDate(data.data.rows.get(i).date,"yyyy-MM-dd"),colors);
                 getEventsOneDay(Calendar.getInstance().getTime());
             }
 

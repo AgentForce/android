@@ -28,6 +28,7 @@ public class SOPSharedPreferences {
 
     private final String EXTRA_ADDED_CONTACT = "extra_added_contact";
     private final String EXTRA_IS_FA = "extra_is_fa";
+    private final String EXTRA_LEVEL = "extra_level";
 
 
     private SharedPreferences mPreferences;
@@ -66,6 +67,18 @@ public class SOPSharedPreferences {
     public boolean getIsFA()
     {
         return mPreferences.getBoolean(EXTRA_IS_FA,true);
+    }
+
+    public void saveLevel(int level)
+    {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putInt(EXTRA_LEVEL,level);
+        editor.commit();
+    }
+
+    public int getLevel()
+    {
+        return mPreferences.getInt(EXTRA_LEVEL,15);
     }
 
     public void saveTokenUser(String accessToken, String refreshToken)

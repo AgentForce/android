@@ -3,6 +3,7 @@ package manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step8;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,6 +28,11 @@ import manulife.manulifesop.fragment.first.FirstFragment;
  */
 
 public class UMCreatePlanStep8Fragment extends BaseFragment<UMCreatePlanActivity, UMCreatePlanStep8Present> implements UMCreatePlanStep8Contract.View {
+
+    @BindView(R.id.txt_start_date)
+    TextView txtStartDate;
+    @BindView(R.id.txt_end_date)
+    TextView txtEndDate;
 
     @BindView(R.id.view_pager)
     CustomViewPager viewPager;
@@ -57,6 +63,9 @@ public class UMCreatePlanStep8Fragment extends BaseFragment<UMCreatePlanActivity
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        txtStartDate.setText(mActivity.getStartDate());
+        txtEndDate.setText(mActivity.getEndDate());
         initViewpagers();
     }
 

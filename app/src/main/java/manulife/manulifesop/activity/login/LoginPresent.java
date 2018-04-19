@@ -92,7 +92,6 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
                     data.getData().getRefreshToken());
             SOPSharedPreferences.getInstance(mContext).saveUser(mUser);
             getUserProfile(mUser);
-            //chekCampaign();
 
         } else {
             mPresenterView.clearPass();
@@ -118,6 +117,7 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
         if(rs.statusCode == 1){
             rs.data.level = 15;
             SOPSharedPreferences.getInstance(mContext).saveIsFA(rs.data.level>15);
+            SOPSharedPreferences.getInstance(mContext).saveLevel(rs.data.level);
             chekCampaign();
         }else
             mPresenterView.finishLoading(rs.msg, false);

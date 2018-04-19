@@ -8,8 +8,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
+import manulife.manulifesop.activity.ManagerGroup.SMCreatePlan.SMCreatePlanActivity;
+import manulife.manulifesop.activity.ManagerGroup.UMCreatePlan.UMCreatePlanActivity;
 import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.base.BaseFragment;
+import manulife.manulifesop.util.SOPSharedPreferences;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -53,7 +56,24 @@ public class ConfirmCreatePlanFragment extends BaseFragment<MainFAActivity,Confi
         {
             case R.id.btn_start:
             {
-                mActivity.goNextScreen(CreatePlanActivity.class);
+                int level = SOPSharedPreferences.getInstance(getContext()).getLevel();
+                String userName = SOPSharedPreferences.getInstance(getContext()).getUserName();
+                if(level < 10) {
+                    //SM
+                    Bundle data = new Bundle();
+                    data.putString("name", userName);
+                    mActivity.goNextScreen(SMCreatePlanActivity.class, data);
+                }else if(level < 16){
+                    //UM
+                    Bundle data = new Bundle();
+                    data.putString("name", userName);
+                    mActivity.goNextScreen(UMCreatePlanActivity.class, data);
+                }else{
+                    //FA
+                    Bundle data = new Bundle();
+                    data.putString("name", userName);
+                    mActivity.goNextScreen(CreatePlanActivity.class, data);
+                }
                 break;
             }
         }

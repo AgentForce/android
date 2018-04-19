@@ -2,13 +2,16 @@ package manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step2;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.ManagerGroup.UMCreatePlan.UMCreatePlanActivity;
+import manulife.manulifesop.api.ObjectResponse.UMForcastRecruit;
 import manulife.manulifesop.base.BaseFragment;
 
 
@@ -44,9 +47,7 @@ public class UMCreatePlanStep2Fragment extends BaseFragment<UMCreatePlanActivity
     @BindView(R.id.rb_month_year)
     RadioGroup rbMonthYear;
 
-    private int mContract;
-    private int mMonthNum;
-
+    UMForcastRecruit mData;
 
     public static UMCreatePlanStep2Fragment newInstance() {
         Bundle args = new Bundle();
@@ -62,7 +63,7 @@ public class UMCreatePlanStep2Fragment extends BaseFragment<UMCreatePlanActivity
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new UMCreatePlanStep2Present(this);
+        mActionListener = new UMCreatePlanStep2Present(this,getContext());
     }
 
     @Override
@@ -71,30 +72,75 @@ public class UMCreatePlanStep2Fragment extends BaseFragment<UMCreatePlanActivity
         initViews();
     }
 
+    @Override
+    public void getData() {
+        mActionListener.getUmForcastRecruit();
+    }
+
+    @Override
+    public void showData(UMForcastRecruit data) {
+        mData = data;
+
+        txtStartDate.setText(mActivity.getStartDate());
+        txtEndDate.setText(mActivity.getEndDate());
+
+        ((RadioButton)rbMonthYear.getChildAt(0)).setChecked(true);
+        txtPlanedAgent.setText(data.data.goalSetup.fa + " Đại lý");
+        txtPlanedManager.setText(data.data.goalSetup.um + " Quản lý");
+        txtNotPlanedAgent.setText(data.data.noGoalSetup.fa + " Đại lý");
+        txtNotPlanedManager.setText(data.data.noGoalSetup.um + " Quản lý");
+
+        txtNewRecruitment.setText(String.valueOf(data.data.quantityNewAgent));
+        txtQuitJob.setText(String.valueOf(data.data.quantityAgentTer));
+        txtIncreaseAgent.setText(data.data.quantityAgentGrow.current + " ĐL + "
+        + data.data.quantityAgentGrow.future + " ĐL/Tháng");
+        txtIncreaseContract.setText(data.data.quantityContractGrow + " ĐL/Tháng");
+
+    }
+
     private void initViews(){
         rbMonthYear.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                updateDate(mContract,mMonthNum);
+                updateData(mData,mActivity.getMonthNumber());
             }
         });
     }
 
-    public void updateDate(int contractNum,int monthNum) {
-        this.mContract = contractNum;
-        this.mMonthNum = monthNum;
-        if (rbMonthYear.getCheckedRadioButtonId() == R.id.rbn_campaign) {
-            contractNum = contractNum * monthNum;
+    @Override
+    public void updateData(UMForcastRecruit data, int month) {
+        if (rbMonthYear.getCheckedRadioButtonId() == R.id.rbn_campaign){
+            txtPlanedAgent.setText((data.data.goalSetup.fa * month) + " Đại lý");
+            txtPlanedManager.setText((data.data.goalSetup.um * month) + " Quản lý");
+            txtNotPlanedAgent.setText((data.data.noGoalSetup.fa*month) + " Đại lý");
+            txtNotPlanedManager.setText((data.data.noGoalSetup.um*month) + " Quản lý");
+
+            txtNewRecruitment.setText(String.valueOf(data.data.quantityNewAgent*month));
+            txtQuitJob.setText(String.valueOf(data.data.quantityAgentTer*month));
+            txtIncreaseAgent.setText((data.data.quantityAgentGrow.current*month) + " ĐL + "
+                    + (data.data.quantityAgentGrow.future*month) + " ĐL/Tháng");
+            txtIncreaseContract.setText((data.data.quantityContractGrow*month) + " ĐL/Tháng");
+        }else{
+            txtPlanedAgent.setText(data.data.goalSetup.fa + " Đại lý");
+            txtPlanedManager.setText(data.data.goalSetup.um + " Quản lý");
+            txtNotPlanedAgent.setText(data.data.noGoalSetup.fa + " Đại lý");
+            txtNotPlanedManager.setText(data.data.noGoalSetup.um + " Quản lý");
+
+            txtNewRecruitment.setText(String.valueOf(data.data.quantityNewAgent));
+            txtQuitJob.setText(String.valueOf(data.data.quantityAgentTer));
+            txtIncreaseAgent.setText(data.data.quantityAgentGrow.current + " ĐL + "
+                    + data.data.quantityAgentGrow.future + " ĐL/Tháng");
+            txtIncreaseContract.setText(data.data.quantityContractGrow + " ĐL/Tháng");
         }
     }
-
 
     @OnClick(R.id.btn_next)
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.btn_next: {
-                mActivity.showNextFragment("","");
+                mActivity.setDataStep2(mData);
+                mActivity.showNextFragment();
                 break;
             }
         }

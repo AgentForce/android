@@ -24,7 +24,6 @@ import manulife.manulifesop.util.Utils;
 
 public class DashboardFragment extends BaseFragment<MainFAActivity, DashboardPresent> implements DashboardContract.View {
 
-
     @BindView(R.id.tabs_menu_options)
     TabLayout tabLayout;
     @BindView(R.id.view_pager)

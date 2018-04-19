@@ -12,6 +12,7 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +42,7 @@ public class FAEventsFragment extends BaseFragment<MainFAActivity, FAEventsPrese
 
     private EventCalendarAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
+    private List<EventCalendar> mData;
 
     private Date mCurrentDate;
     public static FAEventsFragment newInstance() {
@@ -77,6 +79,8 @@ public class FAEventsFragment extends BaseFragment<MainFAActivity, FAEventsPrese
     private void initViews() {
         setTitleFromDate(Calendar.getInstance().getTime());
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        listEvent.setLayoutManager(mLayoutManager);
+        mData = new ArrayList<>();
     }
 
     private void setTitleFromDate(Date date) {
@@ -117,39 +121,44 @@ public class FAEventsFragment extends BaseFragment<MainFAActivity, FAEventsPrese
 
     @Override
     public void showDataEvents(List<EventCalendar> dataEvent) {
-        listEvent.setLayoutManager(mLayoutManager);
-        mAdapter = new EventCalendarAdapter(getContext(), dataEvent, new CallBackClickContact() {
-            @Override
-            public void onClickMenuRight(int position, int option) {
-                switch (option){
-                    case 0:{
-                        Bundle data = new Bundle();
-                        data.putInt("eventID",dataEvent.get(position).getId());
-                        goNextScreenFragment(EventDetailActivity.class,data, Contants.EVENT_DETAIL);
-                        break;
-                    }
-                    case 1:{
-                        Bundle data = new Bundle();
-                        data.putSerializable("eventID",dataEvent.get(position).getId());
-                        goNextScreenFragment(CreateEventActivity.class, data, Contants.UPDATE_EVENT);
-                        break;
-                    }
-                    case 2:{
-                        mActionListener.updateEventDone(dataEvent.get(position).getId());
-                        break;
+        mData.clear();
+        mData.addAll(dataEvent);
+        if(mAdapter == null) {
+            mAdapter = new EventCalendarAdapter(getContext(), mData, new CallBackClickContact() {
+                @Override
+                public void onClickMenuRight(int position, int option) {
+                    switch (option) {
+                        case 0: {
+                            Bundle data = new Bundle();
+                            data.putInt("eventID", mData.get(position).getId());
+                            goNextScreenFragment(EventDetailActivity.class, data, Contants.EVENT_DETAIL);
+                            break;
+                        }
+                        case 1: {
+                            Bundle data = new Bundle();
+                            data.putSerializable("eventID", mData.get(position).getId());
+                            goNextScreenFragment(CreateEventActivity.class, data, Contants.UPDATE_EVENT);
+                            break;
+                        }
+                        case 2: {
+                            mActionListener.updateEventDone(mData.get(position).getId());
+                            break;
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onClickMainContent(int position) {
-                //Toast.makeText(mActivity, "Main click", Toast.LENGTH_SHORT).show();
-                Bundle data = new Bundle();
-                data.putInt("eventID",dataEvent.get(position).getId());
-                goNextScreenFragment(EventDetailActivity.class,data, Contants.EVENT_DETAIL);
-            }
-        });
-        listEvent.setAdapter(mAdapter);
+                @Override
+                public void onClickMainContent(int position) {
+                    //Toast.makeText(mActivity, "Main click", Toast.LENGTH_SHORT).show();
+                    Bundle data = new Bundle();
+                    data.putInt("eventID", mData.get(position).getId());
+                    goNextScreenFragment(EventDetailActivity.class, data, Contants.EVENT_DETAIL);
+                }
+            });
+            listEvent.setAdapter(mAdapter);
+        }else{
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

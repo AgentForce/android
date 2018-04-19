@@ -29,7 +29,7 @@ import manulife.manulifesop.adapter.ObjectData.UMStep6;
  * Created by ADMIN on 3/1/2018.
  */
 
-public class CreatePlanUMStep6Adapter extends RecyclerView.Adapter<CreatePlanUMStep6Adapter.ViewHolder>{
+public class CreatePlanUMStep6Adapter extends RecyclerView.Adapter<CreatePlanUMStep6Adapter.ViewHolder> {
 
     private LayoutInflater inflater;
     private List<UMStep6> mData;
@@ -76,18 +76,22 @@ public class CreatePlanUMStep6Adapter extends RecyclerView.Adapter<CreatePlanUMS
         holder.layoutAgentAdd_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int number = mData.get(position).getAgentAdd()+1;
+                int number = mData.get(position).getAgentAdd() + 1;
                 holder.txtAgentAdd.setText(String.valueOf(number));
                 mData.get(position).setAgentAdd(number);
+                reloadData(position);
             }
         });
         holder.layoutAgentAdd_sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int number = mData.get(position).getAgentAdd() - 1;
-                if(number >= 0) {
+                int numStartNext = mData.get(position).getAgentStart()
+                        + number - mData.get(position).getAgentDecrease();
+                if (number >= 0 && numStartNext >=0) {
                     holder.txtAgentAdd.setText(String.valueOf(number));
                     mData.get(position).setAgentAdd(number);
+                    reloadData(position);
                 }
             }
         });
@@ -96,21 +100,38 @@ public class CreatePlanUMStep6Adapter extends RecyclerView.Adapter<CreatePlanUMS
         holder.layoutAgentDecrease_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int number = mData.get(position).getAgentDecrease()+1;
-                holder.txtAgentDecrease.setText(String.valueOf(number));
-                mData.get(position).setAgentDecrease(number);
+                int number = mData.get(position).getAgentDecrease() + 1;
+                int numStartNext = mData.get(position).getAgentStart()
+                        + mData.get(position).getAgentAdd() - number;
+                if(numStartNext >=0) {
+                    holder.txtAgentDecrease.setText(String.valueOf(number));
+                    mData.get(position).setAgentDecrease(number);
+                    reloadData(position);
+                }
             }
         });
         holder.layoutAgentDecrease_sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int number = mData.get(position).getAgentDecrease() - 1;
-                if(number >= 0) {
+                if (number >= 0) {
                     holder.txtAgentDecrease.setText(String.valueOf(number));
                     mData.get(position).setAgentDecrease(number);
+                    reloadData(position);
                 }
             }
         });
+    }
+
+    private void reloadData(int currentPosition) {
+
+        for (int i = currentPosition + 1; i < mData.size(); i++) {
+            int newAgent = mData.get(i-1).getAgentStart() +
+                    mData.get(i-1).getAgentAdd()
+                    - mData.get(i-1).getAgentDecrease();
+            mData.get(i).setAgentStart(newAgent);
+        }
+        notifyDataSetChanged();
     }
 
     @Override

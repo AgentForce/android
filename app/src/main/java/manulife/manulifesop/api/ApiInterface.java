@@ -39,6 +39,7 @@ import manulife.manulifesop.api.ObjectResponse.RecruitHistory;
 import manulife.manulifesop.api.ObjectResponse.RefreshToken;
 import manulife.manulifesop.api.ObjectResponse.RequestOTP;
 import manulife.manulifesop.api.ObjectResponse.ContactDetail;
+import manulife.manulifesop.api.ObjectResponse.UMForcastRecruit;
 import manulife.manulifesop.api.ObjectResponse.UserProfile;
 import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.api.ObjectResponse.VerifyOTP;
@@ -315,5 +316,8 @@ public interface ApiInterface {
     Observable<ContactDetail> getRecruitDetail(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                                @Header("devicename") String devicename, @Header("imei") String imei,
                                                @Path(value = "id", encoded = false) int id);
+    @GET("campaigns/um/forcast/recruit")
+    Observable<UMForcastRecruit> getUmForcastRecruit(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                     @Header("devicename") String devicename, @Header("imei") String imei);
 
 }

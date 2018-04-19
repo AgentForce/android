@@ -18,6 +18,8 @@ import chick.indicator.CircleIndicatorPager;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
+import manulife.manulifesop.adapter.ObjectData.UMStep6;
+import manulife.manulifesop.api.ObjectResponse.UMForcastRecruit;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.CustomViewPager;
@@ -69,10 +71,22 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
 
     private boolean mIsShowSuccessView = false;
 
-    private int mSupportMoney;
+    //data step 1
     private String mStartDate = "";
     private String mEndDate = "";
     private int mMonthNum = 0;
+    //data step2
+    private UMForcastRecruit mDataStep2;
+    //data step3
+    private List<Integer> mDataStep3;
+    //data step4
+    private List<Integer> mDataStep4;
+    //data step5
+    private List<Integer> mDataStep5;
+    //data step6
+    private List<UMStep6> mDataStep6;
+    //data step7
+    private List<Integer> mDataStep7;
 
 
     private List<BaseFragment> mListFragment;
@@ -136,8 +150,9 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
             @Override
             public void onPageSelected(int position) {
                 if (position == 1) {
-                    Toast.makeText(UMCreatePlanActivity.this, "call api", Toast.LENGTH_SHORT).show();
-                    //((CreatePlanStep3Fragment) mAdapter.getItem(position)).updateDate(mContractNum, mMonthNum);
+                    ((UMCreatePlanStep2Fragment) mAdapter.getItem(position)).getData();
+                }else if(position == 7){
+                    Toast.makeText(UMCreatePlanActivity.this, "forcast income", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -178,7 +193,12 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
     }
 
     @Override
-    public void showNextFragment(String startDate, String endDate) {
+    public void showNextFragment() {
+        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+    }
+
+    @Override
+    public void setDataStep1(String startDate, String endDate) {
         if (startDate.length() > 0) {
             this.mStartDate = startDate;
             txtStartDate.setText(startDate);
@@ -189,6 +209,73 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
             this.mMonthNum = (Utils.getMonthFromStringDate(mEndDate,"dd/MM/yyyy")
                     - Utils.getMonthFromStringDate(mStartDate,"dd/MM/yyyy")) + 1;
         }
-        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+    }
+
+    @Override
+    public void setDataStep2(UMForcastRecruit data) {
+        this.mDataStep2 = data;
+    }
+
+    @Override
+    public void setDataStep3(int newAgent, int newContact, int FYC) {
+        mDataStep3 = new ArrayList<>();
+        mDataStep3.add(newAgent);
+        mDataStep3.add(newContact);
+        mDataStep3.add(FYC);
+    }
+
+    @Override
+    public void setDataStep4(int currentAgent, int currentContact, int currentFYC, int maintainAgent) {
+        mDataStep4 = new ArrayList<>();
+        mDataStep4.add(currentAgent);
+        mDataStep4.add(currentContact);
+        mDataStep4.add(currentFYC);
+        mDataStep4.add(maintainAgent);
+    }
+
+    @Override
+    public void setDataStep5(int numUM, int totalUMProfit) {
+        mDataStep5 = new ArrayList<>();
+        mDataStep5.add(numUM);
+        mDataStep5.add(totalUMProfit);
+    }
+
+    @Override
+    public void setDataStep6(List<UMStep6> data) {
+        mDataStep6 = data;
+    }
+
+    @Override
+    public void setDataStep7(int contactPerMonth, int FYCPerMonth, int FYC, int RYP) {
+        mDataStep7 = new ArrayList<>();
+        mDataStep7.add(contactPerMonth);
+        mDataStep7.add(FYCPerMonth);
+        mDataStep7.add(FYC);
+        mDataStep7.add(RYP);
+    }
+
+    @Override
+    public String getStartDate() {
+        return mStartDate;
+    }
+
+    @Override
+    public String getEndDate() {
+        return mEndDate;
+    }
+
+    @Override
+    public int getMonthNumber() {
+        return mMonthNum;
+    }
+
+    @Override
+    public UMForcastRecruit getDataStep2() {
+        return mDataStep2;
+    }
+
+    @Override
+    public List<Integer> getDataStep3() {
+        return mDataStep3;
     }
 }

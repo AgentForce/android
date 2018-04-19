@@ -223,8 +223,9 @@ public class UMCreatePlanStep1Fragment extends BaseFragment<UMCreatePlanActivity
         int id = view.getId();
         switch (id) {
             case R.id.btn_next: {
-                mActivity.showNextFragment(edtStartDate.getText().toString(),
+                mActivity.setDataStep1(edtStartDate.getText().toString(),
                         txtEndDate.getText().toString());
+                mActivity.showNextFragment();
                 break;
             }
             case R.id.edt_start_date: {

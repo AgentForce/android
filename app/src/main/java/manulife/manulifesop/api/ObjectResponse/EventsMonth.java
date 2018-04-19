@@ -15,30 +15,35 @@ public class EventsMonth {
     public Integer statusCode;
     @SerializedName("data")
     @Expose
-    public List<Data> data = null;
+    public Data data;
     @SerializedName("msgCode")
     @Expose
     public String msgCode;
     @SerializedName("msg")
     @Expose
     public String msg;
-
     public class Data {
 
-        @SerializedName("date")
+        @SerializedName("rows")
         @Expose
-        public String date;
-        @SerializedName("activities")
-        @Expose
-        public List<Activity> activities = null;
+        public List<Row> rows = null;
+        public class Row {
 
-        public class Activity {
-
-            @SerializedName("ProcessStep")
+            @SerializedName("date")
             @Expose
-            public Integer processStep;
+            public String date;
+            @SerializedName("activities")
+            @Expose
+            public List<Activity> activities = null;
+
+            public class Activity {
+
+                @SerializedName("ProcessStep")
+                @Expose
+                public Integer processStep;
+
+            }
 
         }
-
     }
 }

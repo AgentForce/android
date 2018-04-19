@@ -58,11 +58,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 layout="@layout/layout_create_plan_um_step7_row2"/>
-            <include
+            <!--<include
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                layout="@layout/layout_create_plan_um_step7_row3"/>
+                layout="@layout/layout_create_plan_um_step7_row3"/>-->
             <include
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -16,6 +16,7 @@ import manulife.manulifesop.adapter.ContactHistAdapter;
 import manulife.manulifesop.adapter.CreatePlanUMStep6Adapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.adapter.ObjectData.UMStep6;
+import manulife.manulifesop.api.ObjectResponse.UMForcastRecruit;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step5.UMCreatePlanStep5Contract;
 import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step5.UMCreatePlanStep5Present;
@@ -65,11 +66,25 @@ public class UMCreatePlanStep6Fragment extends BaseFragment<UMCreatePlanActivity
         listData.setLayoutManager(mLayoutManager);
 
         UMStep6 tmp;
-        for (int i = 1; i <= 12; i++) {
+        //init for first
+        UMForcastRecruit dataStep2 = mActivity.getDataStep2();
+        int totalAgent = dataStep2.data.goalSetup.fa + dataStep2.data.goalSetup.um+
+                dataStep2.data.noGoalSetup.fa + dataStep2.data.noGoalSetup.um;
+
+        List<Integer> dataStep3 = mActivity.getDataStep3();
+        tmp = new UMStep6();
+        tmp.setMonth(1);
+        tmp.setAgentStart(totalAgent);
+        tmp.setAgentAdd(dataStep3.get(0));
+        tmp.setAgentDecrease(1);
+        tmp.setCollapse(true);
+        mData.add(tmp);
+
+        for (int i = 2; i <= 12; i++) {
             tmp = new UMStep6();
             tmp.setMonth(i);
-            tmp.setAgentStart(5 + i);
-            tmp.setAgentAdd(5+i);
+            tmp.setAgentStart(mData.get(i-2).getAgentStart() + mData.get(i-2).getAgentAdd() - mData.get(i-2).getAgentDecrease());
+            tmp.setAgentAdd(dataStep3.get(0));
             tmp.setAgentDecrease(1);
             tmp.setCollapse(true);
             mData.add(tmp);
@@ -85,7 +100,8 @@ public class UMCreatePlanStep6Fragment extends BaseFragment<UMCreatePlanActivity
         int id = view.getId();
         switch (id) {
             case R.id.btn_next: {
-                mActivity.showNextFragment("", "");
+                mActivity.setDataStep6(mData);
+                mActivity.showNextFragment();
                 break;
             }
         }

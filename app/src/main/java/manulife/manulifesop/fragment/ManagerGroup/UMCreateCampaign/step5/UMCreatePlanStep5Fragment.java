@@ -2,7 +2,9 @@ package manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step5;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.ManagerGroup.UMCreatePlan.UMCreatePlanActivity;
@@ -16,6 +18,11 @@ import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step4.UMCreat
  */
 
 public class UMCreatePlanStep5Fragment extends BaseFragment<UMCreatePlanActivity, UMCreatePlanStep5Present> implements UMCreatePlanStep5Contract.View {
+
+    @BindView(R.id.txt_new_agent_year)
+    TextView txtNewAgent;
+    @BindView(R.id.txt_profit_per_agent)
+    TextView txtTotalProfit;
 
 
     public static UMCreatePlanStep5Fragment newInstance() {
@@ -42,12 +49,37 @@ public class UMCreatePlanStep5Fragment extends BaseFragment<UMCreatePlanActivity
     }
 
 
-    @OnClick(R.id.btn_next)
+    @OnClick({R.id.btn_next, R.id.layout_add_step5_row1, R.id.layout_sub_step5_row1,
+            R.id.layout_add_step5_row2, R.id.layout_sub_step5_row2})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.btn_next: {
-                mActivity.showNextFragment("","");
+                mActivity.setDataStep5(Integer.valueOf(txtNewAgent.getText().toString()),
+                        Integer.valueOf(txtTotalProfit.getText().toString()));
+                mActivity.showNextFragment();
+                break;
+            }
+            case R.id.layout_add_step5_row1: {
+                int newValue = Integer.valueOf(txtNewAgent.getText().toString()) + 1;
+                txtNewAgent.setText(String.valueOf(newValue));
+                break;
+            }
+            case R.id.layout_sub_step5_row1: {
+                int newValue = Integer.valueOf(txtNewAgent.getText().toString()) - 1;
+                if (newValue < 0) newValue = 0;
+                txtNewAgent.setText(String.valueOf(newValue));
+                break;
+            }
+            case R.id.layout_add_step5_row2: {
+                int newValue = Integer.valueOf(txtTotalProfit.getText().toString()) + 1;
+                txtTotalProfit.setText(String.valueOf(newValue));
+                break;
+            }
+            case R.id.layout_sub_step5_row2: {
+                int newValue = Integer.valueOf(txtTotalProfit.getText().toString()) - 1;
+                if (newValue < 0) newValue = 0;
+                txtTotalProfit.setText(String.valueOf(newValue));
                 break;
             }
         }
