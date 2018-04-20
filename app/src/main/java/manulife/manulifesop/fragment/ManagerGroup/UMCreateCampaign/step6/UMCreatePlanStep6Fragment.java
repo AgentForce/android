@@ -20,6 +20,7 @@ import manulife.manulifesop.api.ObjectResponse.UMForcastRecruit;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step5.UMCreatePlanStep5Contract;
 import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step5.UMCreatePlanStep5Present;
+import manulife.manulifesop.util.Utils;
 
 
 /**
@@ -71,19 +72,21 @@ public class UMCreatePlanStep6Fragment extends BaseFragment<UMCreatePlanActivity
         int totalAgent = dataStep2.data.goalSetup.fa + dataStep2.data.goalSetup.um+
                 dataStep2.data.noGoalSetup.fa + dataStep2.data.noGoalSetup.um;
 
+        int startMonth = Utils.getMonthFromStringDate(mActivity.getStartDate(),"dd/MM/yyyy") + 1;
+        int endMonth = Utils.getMonthFromStringDate(mActivity.getEndDate(),"dd/MM/yyyy") + 1;
         List<Integer> dataStep3 = mActivity.getDataStep3();
         tmp = new UMStep6();
-        tmp.setMonth(1);
+        tmp.setMonth(startMonth);
         tmp.setAgentStart(totalAgent);
         tmp.setAgentAdd(dataStep3.get(0));
         tmp.setAgentDecrease(1);
         tmp.setCollapse(true);
         mData.add(tmp);
 
-        for (int i = 2; i <= 12; i++) {
+        for (int i = startMonth + 1 ; i <= endMonth; i++) {
             tmp = new UMStep6();
             tmp.setMonth(i);
-            tmp.setAgentStart(mData.get(i-2).getAgentStart() + mData.get(i-2).getAgentAdd() - mData.get(i-2).getAgentDecrease());
+            tmp.setAgentStart(mData.get(i-startMonth -1).getAgentStart() + mData.get(i-startMonth-1).getAgentAdd() - mData.get(i-startMonth-1).getAgentDecrease());
             tmp.setAgentAdd(dataStep3.get(0));
             tmp.setAgentDecrease(1);
             tmp.setCollapse(true);

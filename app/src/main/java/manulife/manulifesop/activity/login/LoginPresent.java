@@ -115,7 +115,7 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
 
     private void handleResponseGetProfile(UserProfile rs) {
         if(rs.statusCode == 1){
-            rs.data.level = 15;
+            //rs.data.level = 15;
             SOPSharedPreferences.getInstance(mContext).saveIsFA(rs.data.level>15);
             SOPSharedPreferences.getInstance(mContext).saveLevel(rs.data.level);
             chekCampaign();

@@ -17,6 +17,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -74,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="trệu đ"
+                        android:text="triệu đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>
@@ -118,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="trệu đ"
+                        android:text="triệu đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>
@@ -162,7 +163,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="trệu đ"
+                        android:text="triệu đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>
@@ -206,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="trệu đ"
+                        android:text="triệu đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>
@@ -250,7 +251,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="trệu đ"
+                        android:text="triệu đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>
@@ -294,7 +295,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="trệu đ"
+                        android:text="triệu đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>
@@ -338,7 +339,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="trệu đ"
+                        android:text="triệu đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>
@@ -351,6 +352,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/title_total_income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

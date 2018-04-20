@@ -6,8 +6,10 @@ import manulife.manulifesop.api.ObjectInput.InputChangeCampaignWeek;
 import manulife.manulifesop.api.ObjectInput.InputChangeContactStatus;
 import manulife.manulifesop.api.ObjectInput.InputChangeRelead;
 import manulife.manulifesop.api.ObjectInput.InputCreateCampaign;
+import manulife.manulifesop.api.ObjectInput.InputCreateCampaignUM;
 import manulife.manulifesop.api.ObjectInput.InputCreateEvent;
 import manulife.manulifesop.api.ObjectInput.InputCreatePass;
+import manulife.manulifesop.api.ObjectInput.InputForcastIncomeUM;
 import manulife.manulifesop.api.ObjectInput.InputGetForcastTarget;
 import manulife.manulifesop.api.ObjectInput.InputIncreaseContact;
 import manulife.manulifesop.api.ObjectInput.InputIntroduceContact;
@@ -34,6 +36,7 @@ import manulife.manulifesop.api.ObjectResponse.DashboardSMResult;
 import manulife.manulifesop.api.ObjectResponse.EventsCreate;
 import manulife.manulifesop.api.ObjectResponse.EventsMonth;
 import manulife.manulifesop.api.ObjectResponse.EventsOneDay;
+import manulife.manulifesop.api.ObjectResponse.ForcastIncomeUM;
 import manulife.manulifesop.api.ObjectResponse.LoginResult;
 import manulife.manulifesop.api.ObjectResponse.RecruitHistory;
 import manulife.manulifesop.api.ObjectResponse.RefreshToken;
@@ -319,5 +322,17 @@ public interface ApiInterface {
     @GET("campaigns/um/forcast/recruit")
     Observable<UMForcastRecruit> getUmForcastRecruit(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                                      @Header("devicename") String devicename, @Header("imei") String imei);
+
+    @POST("campaigns/um/forcast/income")
+    Observable<ForcastIncomeUM> getForcastIncomeUM(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                    @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                    @Body InputForcastIncomeUM data);
+
+    @POST("campaigns/um")
+    Observable<BaseResponse> createCampaignUM(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                   @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                   @Body InputCreateCampaignUM data);
+
+
 
 }

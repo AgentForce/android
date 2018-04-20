@@ -44,7 +44,7 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
     private void handleResponseCheckCampaign(VerifyOTP data) {
         if (data.statusCode == 1) {
             //test
-            data.data.status = false;
+            //data.data.status = false;
             if (data.data.status) {
                 mPresenterView.showDashBoard();
             } else {

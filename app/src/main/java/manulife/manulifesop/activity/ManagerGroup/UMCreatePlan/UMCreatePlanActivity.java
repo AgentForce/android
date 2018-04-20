@@ -3,6 +3,8 @@ package manulife.manulifesop.activity.ManagerGroup.UMCreatePlan;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -56,6 +58,8 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
     LinearLayout layoutStep;
     @BindView(R.id.layout_success)
     RelativeLayout layoutSuccess;
+    @BindView(R.id.txt_avatar)
+    TextView txtAvatar;
 
     //view for success layout
     @BindView(R.id.btn_goto_main)
@@ -66,8 +70,6 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
     TextView txtEndDate;
     @BindView(R.id.txt_income)
     TextView txtIncome;
-    @BindView(R.id.txt_contract_num)
-    TextView txtContractNum;
 
     private boolean mIsShowSuccessView = false;
 
@@ -88,7 +90,6 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
     //data step7
     private List<Integer> mDataStep7;
 
-
     private List<BaseFragment> mListFragment;
     private CustomViewPagerAdapter mAdapter;
 
@@ -97,7 +98,7 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_plan);
+        setContentView(R.layout.activity_create_plan_um);
         hideKeyboardOutside(layoutRoot);
         mName = getIntent().getStringExtra("name");
         mActionListener = new UMCreatePlanPresenter(this, this);
@@ -152,7 +153,7 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
                 if (position == 1) {
                     ((UMCreatePlanStep2Fragment) mAdapter.getItem(position)).getData();
                 }else if(position == 7){
-                    Toast.makeText(UMCreatePlanActivity.this, "forcast income", Toast.LENGTH_SHORT).show();
+                    ((UMCreatePlanStep8Fragment) mAdapter.getItem(position)).getForCastIncome();
                 }
             }
 
@@ -185,6 +186,21 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
         } else {
             backToPrevious(new Bundle());
         }
+    }
+
+    @Override
+    public void showSuccessView() {
+        this.mIsShowSuccessView = true;
+        layoutBackButton.setVisibility(View.GONE);
+
+        txtAvatar.setText(mName.substring(0,1));
+
+        Animation in = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation out = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        layoutStep.startAnimation(out);
+        layoutStep.setVisibility(View.GONE);
+        layoutSuccess.startAnimation(in);
+        layoutSuccess.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -255,6 +271,11 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
     }
 
     @Override
+    public void setInComeMonthly(String income) {
+        txtIncome.setText(income);
+    }
+
+    @Override
     public String getStartDate() {
         return mStartDate;
     }
@@ -277,5 +298,25 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
     @Override
     public List<Integer> getDataStep3() {
         return mDataStep3;
+    }
+
+    @Override
+    public List<Integer> getDataStep4() {
+        return mDataStep4;
+    }
+
+    @Override
+    public List<Integer> getDataStep5() {
+        return mDataStep5;
+    }
+
+    @Override
+    public List<UMStep6> getDataStep6() {
+        return mDataStep6;
+    }
+
+    @Override
+    public List<Integer> getDataStep7() {
+        return mDataStep7;
     }
 }

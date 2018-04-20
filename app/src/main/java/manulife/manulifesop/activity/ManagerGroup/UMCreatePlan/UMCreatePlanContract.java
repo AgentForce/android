@@ -22,11 +22,18 @@ public interface UMCreatePlanContract {
         void setDataStep5(int numUM, int totalUMProfit);
         void setDataStep6(List<UMStep6> data);
         void setDataStep7(int contactPerMonth,int FYCPerMonth, int FYC,int RYP);
+        void setInComeMonthly(String income);
         String getStartDate();
         String getEndDate();
         int getMonthNumber();
         UMForcastRecruit getDataStep2();
         List<Integer> getDataStep3();
+        List<Integer> getDataStep7();
+        List<Integer> getDataStep4();
+        List<Integer> getDataStep5();
+        List<UMStep6> getDataStep6();
+
+        void showSuccessView();
 
     }
     interface Action{

@@ -10,7 +10,7 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface UMCreatePlanStep8Screen1Contract {
 
     interface View extends BaseMVPView {
-
+        void initViews();
     }
 
     interface Action {
