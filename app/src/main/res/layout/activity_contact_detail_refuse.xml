@@ -117,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Nguyễn Cao Minh"
+            android:text=""
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -126,7 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="+84 090 2549 388"
+            android:text=""
             android:textSize="16sp" />
         <!--rank-->
         <LinearLayout
@@ -177,7 +177,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Khách hàng liên hệ"
+            android:text=""
             android:textSize="14sp" />
 
         <android.support.design.widget.TabLayout

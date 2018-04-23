@@ -3,6 +3,8 @@ package manulife.manulifesop.fragment.FAGroup.clients.contactIntroduce;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
@@ -14,6 +16,7 @@ import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -57,9 +60,9 @@ public class IntroduceContactTabPresent extends BasePresenter<IntroduceContactTa
     public void addIntroduceContact(String phone, String name, int campaignID) {
         mPresenterView.showLoading("Xử lý dữ liệu");
 
-        String checksum = "adfadf";
         InputIntroduceContact data = new InputIntroduceContact(phone, name, campaignID);
 
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().addIntroduceContact(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),

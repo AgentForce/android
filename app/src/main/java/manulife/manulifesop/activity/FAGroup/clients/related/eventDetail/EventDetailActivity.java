@@ -161,7 +161,9 @@ public class EventDetailActivity extends BaseActivity<EventDetailPresenter> impl
                 break;
             }
             case R.id.layout_btn_back: {
-                onBackPressed();
+                //onBackPressed();
+                setResult(RESULT_OK);
+                finish();
                 break;
             }
             case R.id.layout_edit:{

@@ -3,6 +3,8 @@ package manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
@@ -14,6 +16,7 @@ import manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step1
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -36,10 +39,12 @@ public class ContactDetailStep1RefusePresent extends BasePresenter<ContactDetail
         data.nextProcessStep = isChangeProcessStep;
         data.statusProcessStep = status;
 
+        String checksum = Utils.getSignature(new Gson().toJson(data));
+
         getCompositeDisposable().add(ApiService.getServer().changeContactStatus(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                "checksum",leadID,data)
+                checksum,leadID,data)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())

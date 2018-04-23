@@ -3,11 +3,13 @@ package manulife.manulifesop.api.ObjectResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by ADMIN on 3/28/2018.
  */
 
-public class UserProfile {
+public class UserProfile implements Serializable{
     @SerializedName("statusCode")
     @Expose
     public Integer statusCode;
@@ -21,7 +23,7 @@ public class UserProfile {
     @Expose
     public String msg;
 
-    public class Data {
+    public class Data implements Serializable{
 
         @SerializedName("id")
         @Expose
@@ -55,10 +57,10 @@ public class UserProfile {
         public Integer status;
         @SerializedName("lastlogin")
         @Expose
-        public Object lastlogin;
+        public String lastlogin;
         @SerializedName("expirence")
         @Expose
-        public Object expirence;
+        public String expirence;
         @SerializedName("fullName")
         @Expose
         public String fullName;

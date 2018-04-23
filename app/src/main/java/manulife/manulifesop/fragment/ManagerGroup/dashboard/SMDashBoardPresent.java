@@ -107,10 +107,11 @@ public class SMDashBoardPresent extends BasePresenter<SMDashBoardContract.View> 
     @Override
     public void forwardCampaign() {
         mPresenterView.showLoading("Xử lý dữ liệu!");
+        String checksum = Utils.getSignature("");
         getCompositeDisposable().add(ApiService.getServer().forwardTarget(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
-                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI)
+                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,checksum)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())

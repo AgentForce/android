@@ -33,7 +33,7 @@ import manulife.manulifesop.ProjectApplication;
  */
 public class Utils {
 
-    private static String SECRETKEY = "abc";
+    private static String SECRETKEY = "manulife117";
 
     public static void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager =
@@ -134,7 +134,7 @@ public class Utils {
             DateFormat df = new SimpleDateFormat(inputTimzoneFormat);
             df.setTimeZone(tz);
             result = convertDateToString(df.parse(inputDate), outputFormat);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;

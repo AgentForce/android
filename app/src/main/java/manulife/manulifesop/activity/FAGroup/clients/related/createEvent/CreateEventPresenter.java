@@ -6,6 +6,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.util.Calendar;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -53,9 +55,11 @@ public class CreateEventPresenter extends BasePresenter<CreateEventContract.View
         data.notification = notification;
         data.isSupport = support;
 
+        String checksum = Utils.getSignature(new Gson().toJson(data));
+
         getCompositeDisposable().add(ApiService.getServer().createActivity(SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                "checksum", data)
+                checksum, data)
                 .map(eventsCreate -> {
                     if(eventsCreate.statusCode == 1) {
                         long startDateAdd = Utils.convertStringToDate(data.startDate, "yyyy-MM-dd HH:mm").getTime();
@@ -107,9 +111,11 @@ public class CreateEventPresenter extends BasePresenter<CreateEventContract.View
         data.notification = notification;
         data.isSupport = support;
 
+        String checksum = Utils.getSignature(new Gson().toJson(data));
+
         getCompositeDisposable().add(ApiService.getServer().updateEvent(SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                "checksum", eventID, data)
+                checksum, eventID, data)
                 .map(baseResponse -> {
                     long startDateAdd = Utils.convertStringToDate(data.startDate, "yyyy-MM-dd HH:mm").getTime();
                     long endDateAdd = Utils.convertStringToDate(data.endDate, "yyyy-MM-dd HH:mm").getTime();

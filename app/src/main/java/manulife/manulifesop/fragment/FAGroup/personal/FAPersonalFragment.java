@@ -8,6 +8,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
+import manulife.manulifesop.activity.FAGroup.personal.personalInfo.PersonalInfoActivity;
 import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.api.ObjectResponse.UserProfile;
 import manulife.manulifesop.base.BaseFragment;
@@ -26,6 +27,8 @@ public class FAPersonalFragment extends BaseFragment<MainFAActivity, FAPersonalP
     TextView txtID;
     @BindView(R.id.txt_avatar)
     TextView txtAvatar;
+
+    private UserProfile mDataProfie;
 
 
     public static FAPersonalFragment newInstance() {
@@ -54,6 +57,7 @@ public class FAPersonalFragment extends BaseFragment<MainFAActivity, FAPersonalP
 
     @Override
     public void showData(UserProfile data) {
+        mDataProfie = data;
         txtName.setText(data.data.fullName);
         txtID.setText("ID: " + data.data.username);
         String fullName = data.data.fullName;
@@ -63,7 +67,7 @@ public class FAPersonalFragment extends BaseFragment<MainFAActivity, FAPersonalP
 
     @OnClick({R.id.layout_logout, R.id.layout_support, R.id.layout_introduce,
             R.id.layout_setting, R.id.layout_info, R.id.layout_activity_hist,
-            R.id.layout_activity})
+            R.id.layout_activity,R.id.layout_personal_object,R.id.layout_emulation_program})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -100,17 +104,29 @@ public class FAPersonalFragment extends BaseFragment<MainFAActivity, FAPersonalP
                 break;
             }
             case R.id.layout_info: {
-                showMessage("Inform", "Information", SweetAlertDialog.WARNING_TYPE);
+                Bundle data = new Bundle();
+                data.putSerializable("data",mDataProfie);
+                mActivity.goNextScreen(PersonalInfoActivity.class,data);
                 break;
             }
             case R.id.layout_activity_hist: {
-                showMessage("Inform", "Activity hist", SweetAlertDialog.WARNING_TYPE);
+                showMessage("Inform", "Nhật ký hoạt động", SweetAlertDialog.WARNING_TYPE);
                 break;
             }
             case R.id.layout_activity: {
-                showMessage("Inform", "Activity", SweetAlertDialog.WARNING_TYPE);
+                showMessage("Inform", "Tin tức hoạt động", SweetAlertDialog.WARNING_TYPE);
                 break;
             }
+            case R.id.layout_personal_object: {
+                showMessage("Inform", "Mục tiêu cá nhân", SweetAlertDialog.WARNING_TYPE);
+                break;
+            }
+            case R.id.layout_emulation_program: {
+                showMessage("Inform", "Chương trình thi đua", SweetAlertDialog.WARNING_TYPE);
+                break;
+            }
+
+
         }
     }
 

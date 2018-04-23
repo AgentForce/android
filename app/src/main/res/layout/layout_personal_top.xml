@@ -97,7 +97,7 @@
         android:layout_marginLeft="70dp"
         android:background="@color/backgroundGrey" />
 
-    <!--Thống kê hoạt động-->
+    <!--Tin tức hoạt động-->
     <LinearLayout
         android:id="@+id/layout_activity"
         android:layout_width="wrap_content"
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/img_row3"
-                android:text="Thống kê hoạt động"
+                android:text="Tin tức hoạt động"
                 android:textColor="@drawable/text_color_grey"
                 android:textSize="@dimen/welcome_activity_content" />
 

@@ -17,6 +17,7 @@ import manulife.manulifesop.api.ObjectInput.InputLoginData;
 import manulife.manulifesop.api.ObjectInput.InputRefreshToken;
 import manulife.manulifesop.api.ObjectInput.InputRequestOTP;
 import manulife.manulifesop.api.ObjectInput.InputSubmitContract;
+import manulife.manulifesop.api.ObjectInput.InputTest;
 import manulife.manulifesop.api.ObjectInput.InputUpdateContact;
 import manulife.manulifesop.api.ObjectInput.InputUpdateEvent;
 import manulife.manulifesop.api.ObjectInput.InputVerifyOTP;
@@ -42,6 +43,7 @@ import manulife.manulifesop.api.ObjectResponse.RecruitHistory;
 import manulife.manulifesop.api.ObjectResponse.RefreshToken;
 import manulife.manulifesop.api.ObjectResponse.RequestOTP;
 import manulife.manulifesop.api.ObjectResponse.ContactDetail;
+import manulife.manulifesop.api.ObjectResponse.Test;
 import manulife.manulifesop.api.ObjectResponse.UMForcastRecruit;
 import manulife.manulifesop.api.ObjectResponse.UserProfile;
 import manulife.manulifesop.api.ObjectResponse.UsersList;
@@ -62,6 +64,10 @@ import retrofit2.http.Query;
  */
 
 public interface ApiInterface {
+
+    @POST("app/checksum")
+    Observable<Test> checksumTest(@Body InputTest data);
+
     @FormUrlEncoded
     @POST("/index/check-version")
     Observable<CheckVersion> checkVersion(@Field("platform") String android);
@@ -244,7 +250,7 @@ public interface ApiInterface {
 
     @PUT("campaigns/forwardtarget")
     Observable<BaseResponse> forwardTarget(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
-                                           @Header("devicename") String devicename, @Header("imei") String imei);
+                                           @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum);
 
     @GET("leads/search/{month}")
     Observable<ContactMonth> getContactMonth(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,

@@ -3,6 +3,8 @@ package manulife.manulifesop.fragment.ManagerGroup.dashboard.SMcampaignPercent;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ import manulife.manulifesop.fragment.FAGroup.dashboardv2.campaignPercent.FACampa
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -41,10 +44,11 @@ public class SMCampaignPercentPresent extends BasePresenter<SMCampaignPercentCon
 
         InputChangeCampaignWeek data = new InputChangeCampaignWeek();
         data.target = dataList;
+        String checksum = Utils.getSignature(new Gson().toJson(data));
         getCompositeDisposable().add(ApiService.getServer().changeCampaignWeek(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
-                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, "checksum",
+                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum,
                 month, data)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -72,10 +76,12 @@ public class SMCampaignPercentPresent extends BasePresenter<SMCampaignPercentCon
 
         InputIncreaseContact data = new InputIncreaseContact();
         data.incrementContract = increaseNumber;
+        String checksum = Utils.getSignature(new Gson().toJson(data));
+
         getCompositeDisposable().add(ApiService.getServer().increaseContactCampaign(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
-                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, "checksum",
+                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum,
                 month, data)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())

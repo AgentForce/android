@@ -73,8 +73,8 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
                     if(j>3)break;
                 }
                 mPresenterView.addEventToDate(Utils.convertStringToDate(data.data.rows.get(i).date,"yyyy-MM-dd"),colors);
-                getEventsOneDay(Calendar.getInstance().getTime());
             }
+            getEventsOneDay(Calendar.getInstance().getTime());
 
         }else{
             mPresenterView.finishLoading(data.msg,false);
@@ -125,10 +125,12 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
     public void updateEventDone(int eventID) {
         mPresenterView.showLoading("Cập nhật sự kiện");
 
+        String checksum = Utils.getSignature("");
+
         getCompositeDisposable().add(ApiService.getServer().updateEventDone(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                "check sum",eventID)
+                checksum,eventID)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())

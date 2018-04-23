@@ -2,6 +2,8 @@ package manulife.manulifesop.activity.login;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
@@ -15,6 +17,7 @@ import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -38,10 +41,11 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
         this.mUserCreatePass = user;
         this.mPassCreatePass = pass;
 
-        String checksum = "fadfadf";
         InputCreatePass data = new InputCreatePass();
         data.password = pass;
         data.userName = user;
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().setPassword(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
@@ -72,10 +76,11 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     public void login(String userName, String pass) {
 
         this.mUser = userName;
-        String checksum = "fadfadf";
         InputLoginData data = new InputLoginData();
         data.setUserName(userName);
         data.setPassword(pass);
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().login(
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,

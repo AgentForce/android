@@ -2,17 +2,22 @@ package manulife.manulifesop.activity.main;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectInput.InputRefreshToken;
+import manulife.manulifesop.api.ObjectInput.InputTest;
 import manulife.manulifesop.api.ObjectResponse.RefreshToken;
+import manulife.manulifesop.api.ObjectResponse.Test;
 import manulife.manulifesop.api.ObjectResponse.VerifyOTP;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by trinm on 12/01/2018.
@@ -68,9 +73,10 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
     public void refreshAccessToken() {
         InputRefreshToken data = new InputRefreshToken();
         data.refreshToken = SOPSharedPreferences.getInstance(mContext).getRefreshToken();
+        String checksum = Utils.getSignature(new Gson().toJson(data));
         getCompositeDisposable().add(ApiService.getServer().refreshToken(
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
-                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,"checksum",
+                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,checksum,
                 data)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -86,5 +92,23 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
             mPresenterView.finishLoading();
             mPresenterView.showLogin();
         }
+    }
+
+    @Override
+    public void testChecksum() {
+        InputTest data = new InputTest();
+        data.name = "name";
+        data.age = "age";
+        data.phone= "phone";
+        String checksum = Utils.getSignature(new Gson().toJson(data));
+        getCompositeDisposable().add(ApiService.getServer().checksumTest(data)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseChecksum, this::handleError));
+    }
+
+    private void handleResponseChecksum(Test test) {
+        String temp = test.data.encode;
     }
 }

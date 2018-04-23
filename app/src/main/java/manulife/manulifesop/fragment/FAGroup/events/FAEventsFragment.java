@@ -164,7 +164,8 @@ public class FAEventsFragment extends BaseFragment<MainFAActivity, FAEventsPrese
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == Activity.RESULT_OK && requestCode == Contants.EVENT_DETAIL){
+        //if(resultCode == Activity.RESULT_OK && requestCode == Contants.EVENT_DETAIL){
+        if(resultCode == Activity.RESULT_OK){
             mActionListener.getEventsOneDay(mCurrentDate);
         }
     }

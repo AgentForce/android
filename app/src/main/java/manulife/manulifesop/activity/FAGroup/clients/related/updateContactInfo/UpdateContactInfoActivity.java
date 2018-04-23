@@ -715,7 +715,9 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
         int id = view.getId();
         switch (id) {
             case R.id.layout_btn_back: {
-                onBackPressed();
+                //onBackPressed();
+                setResult(RESULT_OK);
+                finish();
                 break;
             }
             case R.id.layout_title_step1: {

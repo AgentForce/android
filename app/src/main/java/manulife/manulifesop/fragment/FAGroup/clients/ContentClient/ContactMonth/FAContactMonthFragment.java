@@ -175,6 +175,7 @@ public class FAContactMonthFragment extends BaseFragment<MainFAActivity, FAConta
                 }).subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(contactAllFAS -> {
+                    mAdapter = null;
                     loadContactMonth(contactAllFAS, mCurrentPage, mLastPage);
                 });
 

@@ -54,6 +54,7 @@ public class ProjectApplication extends MultiDexApplication {
 
     //String for process status sm
     private static HashMap<String,String> mStringProcessStatusNameSM;
+    private static HashMap<String,String> mStringProcessStatusSM;
 
     //variable for campaign detail
     private CampaignMonth mDataCampaign;
@@ -148,6 +149,7 @@ public class ProjectApplication extends MultiDexApplication {
         new DeviceInfo(this);
         //new code
         setHashmapStringProcessStatus();
+        setHashmapStringProcessStatusSM();
         setHashmapStringProcessStatusName();
         setHashmapStringProcessStatusNameSM();
         setHashmapProcessStep();
@@ -221,6 +223,30 @@ public class ProjectApplication extends MultiDexApplication {
 
     public String getStringProcessStatusName(String keyProcessStatus){
         return mStringProcessStatusName.get(keyProcessStatus);
+    }
+
+    public void setHashmapStringProcessStatusSM(){
+        mStringProcessStatusSM = new HashMap<>();
+        mStringProcessStatusSM.put("11","Đã thêm ứng viên");
+        mStringProcessStatusSM.put("12","Đã chuyển sang từ chối");
+        mStringProcessStatusSM.put("13","Đã chuyển sang gọi lại");
+        mStringProcessStatusSM.put("21","Đã chuyển sang dự COP");
+        mStringProcessStatusSM.put("22","Đã chuyển sang từ chối");
+        mStringProcessStatusSM.put("23","Đã chuyển sang gọi lại sau");
+        mStringProcessStatusSM.put("24","Đã hoàn thành thành COP");
+        mStringProcessStatusSM.put("31","Đã chuyển học MIT");
+        mStringProcessStatusSM.put("32","Đã chuyển sang từ chối");
+        mStringProcessStatusSM.put("33","Đã chuyển học lại MIT");
+        mStringProcessStatusSM.put("34","Đã học MIT");
+        mStringProcessStatusSM.put("41","Đã chuyển sang nộp hồ sơ đại lý");
+        mStringProcessStatusSM.put("42","Đã hoàn tất nộp hồ sơ đại lý");
+        mStringProcessStatusSM.put("43","Đã nộp hồ sơ");
+        mStringProcessStatusSM.put("44","Chờ cấp mã");
+        mStringProcessStatusSM.put("45","Đã cấp mã");
+    }
+
+    public String getStringProcessStatusSM(String keyProcessStatus){
+        return mStringProcessStatusSM.get(keyProcessStatus);
     }
 
     public void setHashmapStringProcessStatusNameSM(){

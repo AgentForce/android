@@ -3,6 +3,8 @@ package manulife.manulifesop.activity.FAGroup.createPlan;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,7 +46,7 @@ public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> 
 
     @Override
     public void createCampaign(String startDate, String endDate, long profit, long contractPrice, long inCome) {
-        String checksum = "";
+
         InputCreateCampaign data = new InputCreateCampaign();
 
         data.setStartDate(Utils.convertStringDateToStringDate(startDate, "dd/MM/yyyy", "yyyy-MM-dd"));
@@ -52,6 +54,8 @@ public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> 
         data.setCaseSize(contractPrice * 1000000);
         data.setCommissionRate(profit);
         data.setIncomeMonthly(inCome * 1000000);
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().createCampaign(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
@@ -78,13 +82,14 @@ public class CreatePlanPresenter extends BasePresenter<CreatePlanContract.View> 
     @Override
     public void getCampaignForcast(int income, int profit, int contractPrice,String startDate, String endDate) {
         mPresenterView.showLoading("Xử lý dữ liệu");
-        String checksum = "adfadf";
         InputGetForcastTarget data = new InputGetForcastTarget();
         data.fyc = income * 1000000;
         data.rate = profit;
         data.caseSize = contractPrice * 1000000;
         data.startDate = Utils.convertStringDateToStringDate(startDate, "dd/MM/yyyy", "yyyy-MM-dd");
         data.endDate = Utils.convertStringDateToStringDate(endDate, "dd/MM/yyyy", "yyyy-MM-dd");
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().getCampaignForcast(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),

@@ -530,7 +530,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
             mListFragment.add(ContactDetailStep1Fragment.newInstance());
         }
         mListFragment.add(ContactDetailStep2Fragment.newInstance(mUserId));
-        mListFragment.add(ContactDetailStep3Fragment.newInstance());
+        mListFragment.add(ContactDetailStep3Fragment.newInstance(mIsRecruit));
 
         mTabTitles = new ArrayList<>();
         mTabTitles.add("Cá nhân");

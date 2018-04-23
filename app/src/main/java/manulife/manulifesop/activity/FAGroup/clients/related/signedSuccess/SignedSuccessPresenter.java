@@ -2,6 +2,8 @@ package manulife.manulifesop.activity.FAGroup.clients.related.signedSuccess;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
@@ -14,6 +16,7 @@ import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by trinm on 12/01/2018.
@@ -39,10 +42,12 @@ public class SignedSuccessPresenter extends BasePresenter<SignedSuccessContract.
         data.numContract = numContract;
         data.productType = productType;
 
+        String checksum = Utils.getSignature(new Gson().toJson(data));
+
         getCompositeDisposable().add(ApiService.getServer().submitContract(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                "checksum",data)
+                checksum,data)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())

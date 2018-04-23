@@ -37,8 +37,11 @@ public class ContactDetailStep3Fragment extends BaseFragment<ContactDetailActivi
     private List<ActiveHistFA> mData;
     private LinearLayoutManager mLayoutManager;
 
-    public static ContactDetailStep3Fragment newInstance() {
+    private boolean mIsRecruitment;
+
+    public static ContactDetailStep3Fragment newInstance(boolean isRecruitment) {
         Bundle args = new Bundle();
+        args.putBoolean("isRecruit", isRecruitment);
         ContactDetailStep3Fragment fragment = new ContactDetailStep3Fragment();
         fragment.setArguments(args);
         return fragment;
@@ -66,6 +69,7 @@ public class ContactDetailStep3Fragment extends BaseFragment<ContactDetailActivi
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mIsRecruitment = getArguments().getBoolean("isRecruit", false);
         initViews();
         loadData(ProjectApplication.getInstance().getContactHistory());
     }
@@ -83,9 +87,14 @@ public class ContactDetailStep3Fragment extends BaseFragment<ContactDetailActivi
         for (int i = 0; i < data.data.count; i++) {
             temp = new ActiveHistFA();
             temp.setId(data.data.rows.get(i).leadID);
-            temp.setTitle(ProjectApplication.getInstance().getStringProcessStatus(
-                    data.data.rows.get(i).processStep + "" + data.data.rows.get(i).statusProcessStep
-            ));
+            if (mIsRecruitment)
+                temp.setTitle(ProjectApplication.getInstance().getStringProcessStatusSM(
+                        data.data.rows.get(i).processStep + "" + data.data.rows.get(i).statusProcessStep
+                ));
+            else
+                temp.setTitle(ProjectApplication.getInstance().getStringProcessStatus(
+                        data.data.rows.get(i).processStep + "" + data.data.rows.get(i).statusProcessStep
+                ));
             temp.setContent(Utils.convertStringTimeZoneDateToStringDate(
                     data.data.rows.get(i).createdAt, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'",
                     "dd/MM/yyyy HH:mm:ss"

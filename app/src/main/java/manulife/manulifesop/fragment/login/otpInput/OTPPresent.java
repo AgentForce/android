@@ -4,6 +4,8 @@ package manulife.manulifesop.fragment.login.otpInput;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
@@ -36,10 +38,11 @@ public class OTPPresent extends BasePresenter<OTPContract.View> implements OTPCo
 
         mPresenterView.showLoading("Yêu cầu OTP!");
 
-        String checksum = Utils.getSignature(phone + user);
         InputRequestOTP data = new InputRequestOTP();
         data.setPhone(phone);
         data.setUserName(user);
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().requestOTP(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
@@ -69,11 +72,12 @@ public class OTPPresent extends BasePresenter<OTPContract.View> implements OTPCo
     @Override
     public void verifyOTP(String user, String phone, String otp) {
         mPresenterView.showLoading("Xác thực OTP!");
-        String checksum = Utils.getSignature(phone + user);
         InputVerifyOTP data = new InputVerifyOTP();
         data.setCode(otp);
         data.setPhone(phone);
         data.setUserName(user);
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().verifyOTP(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),

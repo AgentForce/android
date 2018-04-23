@@ -154,6 +154,7 @@ public class RecruitmentContactMonthFragment extends BaseFragment<MainFAActivity
                 }).subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(contactAllFAS -> {
+                    mAdapter = null;
                     loadContactMonth(contactAllFAS, mCurrentPage, mLastPage);
                 });
 

@@ -2,6 +2,8 @@ package manulife.manulifesop.activity.FAGroup.clients.related.contactDetail;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
@@ -16,6 +18,7 @@ import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by trinm on 12/01/2018.
@@ -109,10 +112,12 @@ public class ContactDetailPresenter extends BasePresenter<ContactDetailContract.
         data.nextProcessStep = isChangeStep;
         data.statusProcessStep = changeToStatus;
 
+        String checksum = Utils.getSignature(new Gson().toJson(data));
+
         getCompositeDisposable().add(ApiService.getServer().changeContactStatus(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                "checksum", leadID, data)
+                checksum, leadID, data)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -127,10 +132,12 @@ public class ContactDetailPresenter extends BasePresenter<ContactDetailContract.
         data.nextProcessStep = isChangeStep;
         data.statusProcessStep = changeToStatus;
 
+        String checksum = Utils.getSignature(new Gson().toJson(data));
+
         getCompositeDisposable().add(ApiService.getServer().changeRecruitStatus(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                "checksum", leadID, data)
+                checksum, leadID, data)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())

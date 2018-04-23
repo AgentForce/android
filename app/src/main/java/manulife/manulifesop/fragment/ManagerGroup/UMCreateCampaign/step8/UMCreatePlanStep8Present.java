@@ -3,6 +3,8 @@ package manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step8;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +58,7 @@ public class UMCreatePlanStep8Present extends BasePresenter<UMCreatePlanStep8Con
             int totalCommissionNewUMYearUM) {
 
         mPresenterView.showLoading("Lấy dữ liệu");
-        String checksum = "fadfadf";
+
         InputForcastIncomeUM data = new InputForcastIncomeUM();
         data.startDate = Utils.convertStringDateToStringDate(
                 startDate,"dd/MM/yyyy","yyyy-MM-dd");
@@ -76,6 +78,8 @@ public class UMCreatePlanStep8Present extends BasePresenter<UMCreatePlanStep8Con
         data.fycPerCaseExistAgentUM = fycPerCaseExistAgentUM;
         data.fycContinueMonthlyUM = fycContinueMonthlyUM;
         data.totalCommissionNewUMYearUM = totalCommissionNewUMYearUM;
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().getForcastIncomeUM(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
@@ -121,7 +125,7 @@ public class UMCreatePlanStep8Present extends BasePresenter<UMCreatePlanStep8Con
             int totalCommissionNewUMYearUM,
             List<UMStep6> monthGoal) {
         mPresenterView.showLoading("Lấy dữ liệu");
-        String checksum = "fadfadf";
+
         InputCreateCampaignUM data = new InputCreateCampaignUM();
         data.startDate = Utils.convertStringDateToStringDate(
                 startDate,"dd/MM/yyyy","yyyy-MM-dd");
@@ -150,6 +154,8 @@ public class UMCreatePlanStep8Present extends BasePresenter<UMCreatePlanStep8Con
                     monthGoal.get(i).getAgentDecrease()));
         }
         data.monthGoal = dataGoalMonth;
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().createCampaignUM(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),

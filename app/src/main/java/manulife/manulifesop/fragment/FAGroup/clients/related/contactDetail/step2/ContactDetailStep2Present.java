@@ -13,6 +13,7 @@ import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -55,11 +56,11 @@ public class ContactDetailStep2Present extends BasePresenter<ContactDetailStep2C
     @Override
     public void updateEventDone(int eventID) {
         mPresenterView.showLoading("Cập nhật sự kiện");
-
+        String checksum = Utils.getSignature("");
         getCompositeDisposable().add(ApiService.getServer().updateEventDone(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                "check sum",eventID)
+                checksum,eventID)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())

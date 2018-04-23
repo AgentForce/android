@@ -18,6 +18,7 @@ import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
+import manulife.manulifesop.util.Utils;
 import retrofit2.Response;
 
 /**
@@ -43,9 +44,9 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         mPhone = phone.trim().replace("-","").replace("+","")
                 .replace(" ","");
 
-        mPresenterView.showLoading("Cập nhật thông tin người thứ" + (position + 1));
-        //create checksum
-        String checksum = "12345";
+        //mPresenterView.showLoading("Cập nhật thông tin người thứ" + (position + 1));
+        mPresenterView.showLoading("Cập nhật thông tin");
+
         InputAddContact data = new InputAddContact();
         data.campId = ProjectApplication.getInstance().getCampaignWeekId();
         data.phone = phone.trim().replace("-","").replace("+","")
@@ -59,6 +60,8 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         data.source = source;
         data.leadType = 1;//khách hàng là 1 (FA mặc định)
         data.description = description;
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().addContact(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
@@ -77,8 +80,7 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
                 .replace(" ","");
 
         mPresenterView.showLoading("Cập nhật thông tin người thứ" + (position + 1));
-        //create checksum
-        String checksum = "12345";
+
         InputAddContact data = new InputAddContact();
         data.campId = ProjectApplication.getInstance().getCampaignWeekId();
         data.phone = phone.trim().replace("-","").replace("+","")
@@ -92,6 +94,8 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         data.source = source;
         data.leadType = 2;//tuyển dụng là 2 // thực sự không bắt
         data.description = description;
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().addRecruit(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
@@ -121,8 +125,7 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
     @Override
     public void changeReleadToContact(int releadID, int campaignID, int age, int gender, int income, int marital, int relationship, int source, String description) {
         mPresenterView.showLoading("Chuyển sang KH liên hệ");
-        //create checksum
-        String checksum = "12345";
+
         InputChangeRelead data = new InputChangeRelead();
         data.reLeadId = releadID;
         data.campId = campaignID;
@@ -134,6 +137,8 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         data.source = source;
         data.leadType = 1;//khách hàng là 1 (FA mặc định)
         data.description = description;
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().changeIntroduceContact(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
@@ -148,8 +153,7 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
     @Override
     public void changeReleadToRecruit(int releadID, int campaignID, int age, int gender, int income, int marital, int relationship, int source, String description) {
         mPresenterView.showLoading("Chuyển sang KH tuyển dụng");
-        //create checksum
-        String checksum = "12345";
+
         InputChangeRelead data = new InputChangeRelead();
         data.reLeadId = releadID;
 
@@ -161,6 +165,8 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         data.source = source;
         data.leadType = 2;//tuyển dụng là 2
         data.description = description;
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().changeIntroduceRecruit(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
@@ -184,8 +190,6 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
     @Override
     public void updateContactInfo(int releadID, String name, int age, int gender, int income, int marital, int relationship, int source, String description) {
         mPresenterView.showLoading("Cập nhật thông tin");
-        //create checksum
-        String checksum = "12345";
         InputUpdateContact data = new InputUpdateContact();
         data.name = name;
         data.age = age;
@@ -195,6 +199,8 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         data.relationship = relationship;
         data.source = source;
         data.description = description;
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().updateContact(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
@@ -209,8 +215,7 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
     @Override
     public void updateRecruitInfo(int releadID, String name, int age, int gender, int income, int marital, int relationship, int source, String description) {
         mPresenterView.showLoading("Cập nhật thông tin");
-        //create checksum
-        String checksum = "12345";
+
         InputUpdateContact data = new InputUpdateContact();
         data.name = name;
         data.age = age;
@@ -220,6 +225,8 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         data.relationship = relationship;
         data.source = source;
         data.description = description;
+
+        String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().updateRecruit(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
