@@ -14,6 +14,7 @@ public interface CreateEventContract {
     interface View extends BaseMVPView {
         void finishCreate();
         void showMenuChooseEvent();
+        void showMenuChooseEventUM();
         void showMenuChooseTimeRemind();
         void showUpdateViews(ActivityDetail data);
     }

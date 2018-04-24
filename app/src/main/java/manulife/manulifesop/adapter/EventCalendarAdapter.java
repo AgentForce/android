@@ -73,7 +73,7 @@ public class EventCalendarAdapter extends RecyclerView.Adapter<EventCalendarAdap
             holder.imgAvatar.setBorderColor(Color.parseColor("#F63D2B"));
         }
         holder.txtName.setText(object.getName());
-        holder.txtTitleType.setText(ProjectApplication.getInstance().getHashmapProcessStep().get(object.getProcessStep()));
+        holder.txtTitleType.setText(object.getProcessStep());
         holder.txtDateTime.setText(object.getDate());
         holder.txtAvatarName.setText(object.getName().substring(0,1));
         holder.txtLocation.setText(object.getLocation());

@@ -190,9 +190,10 @@ public class RecruitmentContactMonthFragment extends BaseFragment<MainFAActivity
                         }
                         case 2: {
                             Bundle data = new Bundle();
-                            data.putInt("typeInt", 1);
+                            data.putInt("typeInt", 7);
                             data.putInt("contactID", mData.get(position).getId());
                             data.putString("name", mData.get(position).getTitle());
+                            data.putBoolean("isRecruit",true);
                             mActivity.goNextScreen(CreateEventActivity.class, data);
                             break;
                         }

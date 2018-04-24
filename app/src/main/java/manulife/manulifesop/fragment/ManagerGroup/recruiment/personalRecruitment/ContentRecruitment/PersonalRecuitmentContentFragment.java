@@ -123,7 +123,7 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
 
             LayoutInflater inflater = this.getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.dialog_edit_contract_week, null);
+            View dialogView = inflater.inflate(R.layout.dialog_edit_contract_week_sm, null);
 
             //mData.data.currentWeek = 1;
             calculatePerCentContractPerWeek(mData);
@@ -539,7 +539,7 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
                 && mMonth < (currentMonth + 3)) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
             LayoutInflater inflater = this.getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.dialog_edit_object_month, null);
+            View dialogView = inflater.inflate(R.layout.dialog_edit_object_month_sm, null);
 
             initAllViewsMonth(dialogView);
             initViewMonthStep1(dialogView);
@@ -613,7 +613,7 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
 
     private void initViewMonthStep1(View view) {
         sbMonthStep1.setMin(mListMonthTarget.get(0));
-        sbMonthStep1.setMax(mListMonthTarget.get(0) + 100);
+        sbMonthStep1.setMax(mListMonthTarget.get(0) + 80);
         sbMonthStep1.setProgress(mListMonthTarget.get(0));
 
         sbMonthStep1.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
@@ -638,14 +638,14 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-                if (currentProcess % 10 > 0) {
-                    if (currentProcess % 10 > 5) {
-                        sbMonthStep1.setProgress(((currentProcess / 10) * 10) + 10);
+                if (currentProcess % 8 > 0) {
+                    if (currentProcess % 8 > 4) {
+                        sbMonthStep1.setProgress(((currentProcess / 8) * 8) + 8);
                     } else {
-                        sbMonthStep1.setProgress(((currentProcess / 10) * 10));
+                        sbMonthStep1.setProgress(((currentProcess / 8) * 8));
                     }
                 }
-                reloadAllStepMonth(sbMonthStep1.getProgress() / 10, 1);
+                reloadAllStepMonth(sbMonthStep1.getProgress() / 8, 1);
             }
         });
         sbMonthStep1.setMin(mListMonthTarget.get(0));
@@ -653,7 +653,7 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
 
     private void initViewMonthStep2(View view) {
         sbMonthStep2.setMin(mListMonthTarget.get(1));
-        sbMonthStep2.setMax(mListMonthTarget.get(1) + 50);
+        sbMonthStep2.setMax(mListMonthTarget.get(1) + 30);
         sbMonthStep2.setProgress(mListMonthTarget.get(1));
 
         sbMonthStep2.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
@@ -678,21 +678,21 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-                if (currentProcess % 5 > 0) {
-                    if (currentProcess % 5 >= 3) {
-                        sbMonthStep2.setProgress(((currentProcess / 5) * 5) + 5);
+                if (currentProcess % 3 > 0) {
+                    if (currentProcess % 3 >= 2) {
+                        sbMonthStep2.setProgress(((currentProcess / 3) * 3) + 3);
                     } else {
-                        sbMonthStep2.setProgress(((currentProcess / 5) * 5));
+                        sbMonthStep2.setProgress(((currentProcess / 3) * 3));
                     }
                 }
-                reloadAllStepMonth(sbMonthStep2.getProgress() / 5, 2);
+                reloadAllStepMonth(sbMonthStep2.getProgress() / 3, 2);
             }
         });
     }
 
     private void initViewMonthStep3(View view) {
         sbMonthStep3.setMin(mListMonthTarget.get(2));
-        sbMonthStep3.setMax(mListMonthTarget.get(2) + 30);
+        sbMonthStep3.setMax(mListMonthTarget.get(2) + 20);
         sbMonthStep3.setProgress(mListMonthTarget.get(2));
 
         sbMonthStep3.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
@@ -717,14 +717,14 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-                if (currentProcess % 3 > 0) {
-                    if (currentProcess % 3 >= 2) {
-                        sbMonthStep3.setProgress(((currentProcess / 3) * 3) + 3);
+                if (currentProcess % 2 > 0) {
+                    if (currentProcess % 2 >= 1) {
+                        sbMonthStep3.setProgress(((currentProcess / 2) * 2) + 2);
                     } else {
-                        sbMonthStep3.setProgress(((currentProcess / 3) * 3));
+                        sbMonthStep3.setProgress(((currentProcess / 2) * 2));
                     }
                 }
-                reloadAllStepMonth(sbMonthStep3.getProgress() / 3, 3);
+                reloadAllStepMonth(sbMonthStep3.getProgress() / 2, 3);
             }
         });
     }
@@ -764,7 +764,7 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
 
     private void initViewMonthStep5(View view) {
         sbMonthStep5.setMin(mListMonthTarget.get(4));
-        sbMonthStep5.setMax(mListMonthTarget.get(4) + 80);
+        sbMonthStep5.setMax(mListMonthTarget.get(4) + 60);
         sbMonthStep5.setProgress(mListMonthTarget.get(4));
 
         sbMonthStep5.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
@@ -789,35 +789,35 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
-                if (currentProcess % 8 > 0) {
-                    if (currentProcess % 8 > 4) {
-                        sbMonthStep5.setProgress(((currentProcess / 8) * 8) + 8);
+                if (currentProcess % 6 > 0) {
+                    if (currentProcess % 6 > 3) {
+                        sbMonthStep5.setProgress(((currentProcess / 6) * 6) + 6);
                     } else {
-                        sbMonthStep5.setProgress(((currentProcess / 8) * 8));
+                        sbMonthStep5.setProgress(((currentProcess / 6) * 6));
                     }
                 }
-                reloadAllStepMonth(sbMonthStep5.getProgress() / 8, 5);
+                reloadAllStepMonth(sbMonthStep5.getProgress() / 6, 5);
             }
         });
     }
 
     private void reloadAllStepMonth(int numContract, int fromStep) {
 
-        sbMonthStep1.setProgress(numContract * 10);
-        sbMonthStep2.setProgress(numContract * 5);
-        sbMonthStep3.setProgress(numContract * 3);
+        sbMonthStep1.setProgress(numContract * 8);
+        sbMonthStep2.setProgress(numContract * 3);
+        sbMonthStep3.setProgress(numContract * 2);
         sbMonthStep4.setProgress(numContract);
-        sbMonthStep5.setProgress(numContract * 8);
+        sbMonthStep5.setProgress(numContract * 6);
 
         if (sbMonthStep5.getProgress() == sbMonthStep5.getMax()) {
             float currentMax = sbMonthStep5.getMax();
-            sbMonthStep5.setMax(currentMax + 80);
+            sbMonthStep5.setMax(currentMax + 60);
             sbMonthStep5.setMin(currentMax);
             sbMonthStep5.setProgress(currentMax);
         } else if (sbMonthStep5.getProgress() == sbMonthStep5.getMin() && sbMonthStep5.getProgress() > mListMonthTarget.get(4)) {
             float currentMin = sbMonthStep5.getMin();
             sbMonthStep5.setMax(currentMin);
-            sbMonthStep5.setMin(currentMin - 80);
+            sbMonthStep5.setMin(currentMin - 60);
             sbMonthStep5.setProgress(currentMin);
         }
 
@@ -835,37 +835,37 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
 
         if (sbMonthStep3.getProgress() == sbMonthStep3.getMax()) {
             float currentMax = sbMonthStep3.getMax();
-            sbMonthStep3.setMax(currentMax + 30);
+            sbMonthStep3.setMax(currentMax + 20);
             sbMonthStep3.setMin(currentMax);
             sbMonthStep3.setProgress(currentMax);
         } else if (sbMonthStep3.getProgress() == sbMonthStep3.getMin() && sbMonthStep3.getProgress() > mListMonthTarget.get(2)) {
             float currentMin = sbMonthStep3.getMin();
             sbMonthStep3.setMax(currentMin);
-            sbMonthStep3.setMin(currentMin - 30);
+            sbMonthStep3.setMin(currentMin - 20);
             sbMonthStep3.setProgress(currentMin);
         }
 
         if (sbMonthStep2.getProgress() == sbMonthStep2.getMax()) {
             float currentMax = sbMonthStep2.getMax();
-            sbMonthStep2.setMax(currentMax + 50);
+            sbMonthStep2.setMax(currentMax + 30);
             sbMonthStep2.setMin(currentMax);
             sbMonthStep2.setProgress(currentMax);
         } else if (sbMonthStep2.getProgress() == sbMonthStep2.getMin() && sbMonthStep2.getProgress() > mListMonthTarget.get(1)) {
             float currentMin = sbMonthStep2.getMin();
             sbMonthStep2.setMax(currentMin);
-            sbMonthStep2.setMin(currentMin - 50);
+            sbMonthStep2.setMin(currentMin - 30);
             sbMonthStep2.setProgress(currentMin);
         }
 
         if (sbMonthStep1.getProgress() == sbMonthStep1.getMax()) {
             float currentMax = sbMonthStep1.getMax();
-            sbMonthStep1.setMax(currentMax + 100);
+            sbMonthStep1.setMax(currentMax + 80);
             sbMonthStep1.setMin(currentMax);
             sbMonthStep1.setProgress(currentMax);
         } else if (sbMonthStep1.getProgress() == sbMonthStep1.getMin() && sbMonthStep1.getProgress() > mListMonthTarget.get(0)) {
             float currentMin = sbMonthStep1.getMin();
             sbMonthStep1.setMax(currentMin);
-            sbMonthStep1.setMin(currentMin - 100);
+            sbMonthStep1.setMin(currentMin - 80);
             sbMonthStep1.setProgress(currentMin);
         }
     }

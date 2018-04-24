@@ -68,6 +68,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 layout="@layout/layout_create_plan_um_step4_row4"/>
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                layout="@layout/layout_create_plan_um_step7_row4"/>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

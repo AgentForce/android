@@ -308,6 +308,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
             mFragmentTran = getSupportFragmentManager().beginTransaction();
             mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
             mFragmentTran.replace(R.id.frame_container, FAEventsFragment.newInstance());
+
             mFragmentTran.commit();
         }
     }
@@ -374,6 +375,8 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
                 mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
                 if (mCurrentFragment instanceof FACustomerFragment)
                     ((FACustomerFragment) mCurrentFragment).showDialogEditCampaign();
+                else if(mCurrentFragment instanceof PersonalRecruitmentFragment)
+                    ((PersonalRecruitmentFragment) mCurrentFragment).showDialogEditCampaign();
 
                 break;
             }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import manulife.manulifesop.api.ObjectResponse.ContactHistory;
 import manulife.manulifesop.api.ObjectResponse.ContactMonth;
 import manulife.manulifesop.api.ObjectResponse.UsersList;
 import manulife.manulifesop.util.DeviceInfo;
+import manulife.manulifesop.util.Utils;
 
 /*
 import com.crashlytics.android.Crashlytics;
@@ -53,6 +55,7 @@ public class ProjectApplication extends MultiDexApplication {
     private static HashMap<String,String> mStringProcessStatusName;
 
     //String for process status sm
+    private static HashMap<Integer,String> mProcessStepValueSM;
     private static HashMap<String,String> mStringProcessStatusNameSM;
     private static HashMap<String,String> mStringProcessStatusSM;
 
@@ -111,8 +114,8 @@ public class ProjectApplication extends MultiDexApplication {
     //variable for introduce contact
     private UsersList mIntroduce;
 
-    //variable for contact
-    List<UsersList> mListDataContact;
+    //variable save start date in create campaign
+    private String mOnboardDate;
 
     public void setInstance(ProjectApplication application) {
         synchronized (instanceLock) {
@@ -159,6 +162,7 @@ public class ProjectApplication extends MultiDexApplication {
         setHashmapRelationship();
         setHashmapSource();
         setHashmapEventType();
+        setHashmapProcessStepSM();
 
 
     }
@@ -169,6 +173,9 @@ public class ProjectApplication extends MultiDexApplication {
         mEventType.put(2,"Hẹn tư vấn");
         mEventType.put(3,"Hẹn chốt hợp đồng");
         mEventType.put(4,"Sự kiện khác");
+        mEventType.put(5,"Hẹn dự COP");
+        mEventType.put(6,"Hẹn học MIT");
+        mEventType.put(7,"Hẹn khảo sát");
     }
 
     public String getEventStringFromType(int type){
@@ -269,12 +276,24 @@ public class ProjectApplication extends MultiDexApplication {
         mStringProcessStatusNameSM.put("45","Ứng viên đã cấp mã");
     }
 
+    public String getHashmapProcessStepSM(int key){
+        return mProcessStepValueSM.get(key);
+    }
+
+    private void setHashmapProcessStepSM(){
+        mProcessStepValueSM = new HashMap<>();
+        mProcessStepValueSM.put(1,"Ứng viên khảo sát");
+        mProcessStepValueSM.put(2,"Ứng viên dự COP");
+        mProcessStepValueSM.put(3,"Ứng viên học MIT");
+        mProcessStepValueSM.put(4,"Ứng viên cấp mã");
+    }
+
     public String getStringProcessStatusNameSM(String keyProcessStatus){
         return mStringProcessStatusNameSM.get(keyProcessStatus);
     }
 
-    public HashMap<Integer,String> getHashmapProcessStep(){
-        return mProcessStepValue;
+    public String getHashmapProcessStep(int key){
+        return mProcessStepValue.get(key);
     }
 
     public String getProcessStepColor(int step){
@@ -282,11 +301,10 @@ public class ProjectApplication extends MultiDexApplication {
     }
     private void setHashmapProcessStep(){
         mProcessStepValue = new HashMap<>();
-        mProcessStepValue.put(0,"Liên hệ khách hàng");
-        mProcessStepValue.put(1,"Hẹn gặp khách hàng");
-        mProcessStepValue.put(2,"Tư vấn khách hàng");
-        mProcessStepValue.put(3,"Ký hợp đồng");
-        mProcessStepValue.put(4,"Giới thiệu");
+        mProcessStepValue.put(1,"Liên hệ khách hàng");
+        mProcessStepValue.put(2,"Hẹn gặp khách hàng");
+        mProcessStepValue.put(3,"Tư vấn khách hàng");
+        mProcessStepValue.put(4,"Ký hợp đồng");
 
         mProcessStepColor = new HashMap<>();
         mProcessStepColor.put(0,"#f44236");
@@ -599,5 +617,14 @@ public class ProjectApplication extends MultiDexApplication {
     }
     public UsersList getCodeGranted(){
         return this.mCode_granted_code;
+    }
+
+    public void setOnboardDate(String date,String inputFormat){
+        mOnboardDate = Utils.convertStringTimeZoneDateToStringDate(
+                date,inputFormat,"dd/MM/yyyy"
+        );
+    }
+    public String getOnboardDate(){
+        return mOnboardDate;
     }
 }

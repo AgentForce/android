@@ -48,6 +48,7 @@ public class Contants {
     public static final String CONTACT_MENU = "contact_menu";
     public static final String SIGNED_MENU = "signed_menu";
     public static final String INTRODUCE_MENU = "introduce_menu";
+    public static final String INTRODUCE_MENU_SM = "introduce_menu_sm";
     //menu recruit
     public static final String SURVEY_MENU = "survey_menu";
     public static final String COP_MENU = "cop_menu";

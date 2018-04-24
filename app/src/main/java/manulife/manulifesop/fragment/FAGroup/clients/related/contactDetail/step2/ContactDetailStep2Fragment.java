@@ -53,9 +53,12 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
     private AlertDialog alertDialog;
     private int mContactID;
 
-    public static ContactDetailStep2Fragment newInstance(int contactID) {
+    private boolean mIsRecruitment;
+
+    public static ContactDetailStep2Fragment newInstance(int contactID, boolean isRecruit) {
         Bundle args = new Bundle();
         args.putInt("contactID", contactID);
+        args.putBoolean("isRecruit", isRecruit);
         ContactDetailStep2Fragment fragment = new ContactDetailStep2Fragment();
         fragment.setArguments(args);
         return fragment;
@@ -84,6 +87,7 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mContactID = getArguments().getInt("contactID", 0);
+        mIsRecruitment = getArguments().getBoolean("isRecruit", false);
         initViews();
         loadContactActivities(ProjectApplication.getInstance().getContactActivity());
     }
@@ -98,10 +102,15 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
         rcvEvent.setLayoutManager(mLayoutManager);
 
         EventCalendar temp;
+        String processStepTemp;
         for (int i = 0; i < data.data.size(); i++) {
+            if (mIsRecruitment)
+                processStepTemp = ProjectApplication.getInstance().getHashmapProcessStepSM(data.data.get(i).processStep);
+            else
+                processStepTemp = ProjectApplication.getInstance().getHashmapProcessStep(data.data.get(i).processStep);
             temp = new EventCalendar(data.data.get(i).id, "avatar",
                     data.data.get(i).manulifeLead.name + " - " + data.data.get(i).name,
-                    data.data.get(i).processStep,
+                    processStepTemp,
                     Utils.convertStringTimeZoneDateToStringDate(data.data.get(i).startDate,
                             "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "dd/MM/yyyy HH:mm"),
                     data.data.get(i).location, data.data.get(i).status
@@ -188,7 +197,10 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
         int id = view.getId();
         switch (id) {
             case R.id.btn_create_event: {
-                showMenuCreateEvent();
+                if (mIsRecruitment)
+                    showMenuCreateEventUM();
+                else
+                    showMenuCreateEvent();
                 break;
             }
         }
@@ -224,6 +236,34 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
     }
 
     @Override
+    public void showMenuCreateEventUM() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_create_event_contact_um, null);
+
+        initDialogEventUM(dialogView);
+
+        dialogBuilder.setView(dialogView);
+
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(true);
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+
+        alertDialog.show();
+    }
+
+    private void initDialogEventUM(View view) {
+        view.findViewById(R.id.txt_survey).setOnClickListener(this);
+        view.findViewById(R.id.txt_cop).setOnClickListener(this);
+        view.findViewById(R.id.txt_mit).setOnClickListener(this);
+        view.findViewById(R.id.btn_cancel).setOnClickListener(this);
+    }
+
+    @Override
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -232,6 +272,7 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
                 data.putInt("typeInt", 1);
                 data.putInt("contactID", mContactID);
                 data.putString("name", ProjectApplication.getInstance().getContactDetail().data.name);
+                data.putBoolean("isRecruit",false);
                 alertDialog.dismiss();
                 goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
                 break;
@@ -241,6 +282,7 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
                 data.putInt("typeInt", 2);
                 data.putInt("contactID", mContactID);
                 data.putString("name", ProjectApplication.getInstance().getContactDetail().data.name);
+                data.putBoolean("isRecruit",false);
                 alertDialog.dismiss();
                 goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
                 break;
@@ -250,6 +292,7 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
                 data.putInt("typeInt", 3);
                 data.putInt("contactID", mContactID);
                 data.putString("name", ProjectApplication.getInstance().getContactDetail().data.name);
+                data.putBoolean("isRecruit",false);
                 alertDialog.dismiss();
                 goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
                 break;
@@ -259,12 +302,43 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
                 data.putInt("typeInt", 4);
                 data.putInt("contactID", mContactID);
                 data.putString("name", ProjectApplication.getInstance().getContactDetail().data.name);
+                data.putBoolean("isRecruit",false);
                 alertDialog.dismiss();
                 goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
                 break;
             }
             case R.id.btn_cancel: {
                 alertDialog.dismiss();
+                break;
+            }
+            case R.id.txt_survey: {
+                Bundle data = new Bundle();
+                data.putInt("typeInt", 7);
+                data.putInt("contactID", mContactID);
+                data.putString("name", ProjectApplication.getInstance().getContactDetail().data.name);
+                data.putBoolean("isRecruit",true);
+                alertDialog.dismiss();
+                goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
+                break;
+            }
+            case R.id.txt_cop: {
+                Bundle data = new Bundle();
+                data.putInt("typeInt", 5);
+                data.putInt("contactID", mContactID);
+                data.putString("name", ProjectApplication.getInstance().getContactDetail().data.name);
+                data.putBoolean("isRecruit",true);
+                alertDialog.dismiss();
+                goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
+                break;
+            }
+            case R.id.txt_mit: {
+                Bundle data = new Bundle();
+                data.putInt("typeInt", 6);
+                data.putInt("contactID", mContactID);
+                data.putString("name", ProjectApplication.getInstance().getContactDetail().data.name);
+                data.putBoolean("isRecruit",true);
+                alertDialog.dismiss();
+                goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
                 break;
             }
         }

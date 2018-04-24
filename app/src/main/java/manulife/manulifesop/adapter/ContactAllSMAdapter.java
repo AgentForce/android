@@ -88,7 +88,7 @@ public class ContactAllSMAdapter extends RecyclerView.Adapter<ContactAllSMAdapte
             }
             case 2:
             {
-                holder.imgProcessStep1.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
+                holder.imgProcessStep1.setBackgroundColor(mContext.getResources().getColor(R.color.color_dashboard_sm_survey));
                 holder.imgProcessStep2.setBackgroundColor(mContext.getResources().getColor(R.color.color_dashboard_sm_cop));
                 holder.imgProcessStep3.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
                 holder.imgProcessStep4.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
@@ -96,17 +96,17 @@ public class ContactAllSMAdapter extends RecyclerView.Adapter<ContactAllSMAdapte
             }
             case 3:
             {
-                holder.imgProcessStep1.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
-                holder.imgProcessStep2.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
+                holder.imgProcessStep1.setBackgroundColor(mContext.getResources().getColor(R.color.color_dashboard_sm_survey));
+                holder.imgProcessStep2.setBackgroundColor(mContext.getResources().getColor(R.color.color_dashboard_sm_cop));
                 holder.imgProcessStep3.setBackgroundColor(mContext.getResources().getColor(R.color.color_dashboard_sm_mit));
                 holder.imgProcessStep4.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
                 break;
             }
             case 4:
             {
-                holder.imgProcessStep1.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
-                holder.imgProcessStep2.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
-                holder.imgProcessStep3.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
+                holder.imgProcessStep1.setBackgroundColor(mContext.getResources().getColor(R.color.color_dashboard_sm_survey));
+                holder.imgProcessStep2.setBackgroundColor(mContext.getResources().getColor(R.color.color_dashboard_sm_cop));
+                holder.imgProcessStep3.setBackgroundColor(mContext.getResources().getColor(R.color.color_dashboard_sm_mit));
                 holder.imgProcessStep4.setBackgroundColor(mContext.getResources().getColor(R.color.color_dashboard_sm_granted));
                 break;
             }

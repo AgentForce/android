@@ -294,6 +294,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                     data.putInt("typeInt", 1);
                     data.putInt("contactID", mUserId);
                     data.putString("name", txtUserName.getText().toString());
+                    data.putBoolean("isRecruit",false);
                     showHideMenuAfterCall();
                     goNextScreen(CreateEventActivity.class, data, Contants.ADD_EVENT);
                     break;
@@ -325,6 +326,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                     data.putInt("typeInt", 1);
                     data.putInt("contactID", mUserId);
                     data.putString("name", txtUserName.getText().toString());
+                    data.putBoolean("isRecruit",false);
                     showHideMenuAfterCall();
                     goNextScreen(CreateEventActivity.class, data, Contants.ADD_EVENT);
                     break;
@@ -408,6 +410,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                     data.putInt("typeInt", 1);
                     data.putInt("contactID", mUserId);
                     data.putString("name", txtUserName.getText().toString());
+                    data.putBoolean("isRecruit",false);
                     showHideMenuAfterCall();
                     goNextScreen(CreateEventActivity.class, data, Contants.ADD_EVENT);
                     break;
@@ -435,9 +438,10 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
                 }
                 case R.id.layout_menu_mit_event: {
                     Bundle data = new Bundle();
-                    data.putInt("typeInt", 1);
+                    data.putInt("typeInt", 7);
                     data.putInt("contactID", mUserId);
                     data.putString("name", txtUserName.getText().toString());
+                    data.putBoolean("isRecruit",true);
                     showHideMenuAfterCall();
                     goNextScreen(CreateEventActivity.class, data, Contants.ADD_EVENT);
                     break;
@@ -529,7 +533,7 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         } else {
             mListFragment.add(ContactDetailStep1Fragment.newInstance());
         }
-        mListFragment.add(ContactDetailStep2Fragment.newInstance(mUserId));
+        mListFragment.add(ContactDetailStep2Fragment.newInstance(mUserId,mIsRecruit));
         mListFragment.add(ContactDetailStep3Fragment.newInstance(mIsRecruit));
 
         mTabTitles = new ArrayList<>();

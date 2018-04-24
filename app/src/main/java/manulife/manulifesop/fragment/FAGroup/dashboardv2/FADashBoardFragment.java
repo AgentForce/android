@@ -2,15 +2,11 @@ package manulife.manulifesop.fragment.FAGroup.dashboardv2;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -119,6 +115,8 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
     private int mContactID;
     private String mName;
 
+    private boolean isCreatedHeight = false;
+
     public static FADashBoardFragment newInstance() {
         Bundle args = new Bundle();
         FADashBoardFragment fragment = new FADashBoardFragment();
@@ -151,6 +149,7 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
         super.onViewCreated(view, savedInstanceState);
         initView();
         //initViewHeight();
+        isCreatedHeight = false;
         initHeightViaSelected();
     }
 
@@ -190,25 +189,28 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
 
     @Override
     public void initViewHeight() {
-        //set margin bottom for viewpager percent
-        if (getView() != null) {
-            final ViewTreeObserver observer = layoutBot.getViewTreeObserver();
-            if (observer.isAlive()) {
-                observer.dispatchOnGlobalLayout(); // In case a previous call is waiting when this call is made
-                observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        observer.removeOnGlobalLayoutListener(this);
-                        RelativeLayout.LayoutParams layoutParams =
-                                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-                        layoutParams.setMargins(0, 0, 0, layoutBot.getHeight());
-                        layoutMid.setLayoutParams(layoutParams);
-                        //set min height for lisview
-                        FrameLayout.LayoutParams layoutParams2 =
-                                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, layoutMid.getHeight() - layoutTitleBot.getHeight());
-                        listActiHist.setLayoutParams(layoutParams2);
-                    }
-                });
+        if(!isCreatedHeight) {
+            isCreatedHeight = true;
+            //set margin bottom for viewpager percent
+            if (getView() != null) {
+                final ViewTreeObserver observer = layoutBot.getViewTreeObserver();
+                if (observer.isAlive()) {
+                    observer.dispatchOnGlobalLayout(); // In case a previous call is waiting when this call is made
+                    observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            observer.removeOnGlobalLayoutListener(this);
+                            RelativeLayout.LayoutParams layoutParams =
+                                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+                            layoutParams.setMargins(0, 0, 0, layoutBot.getHeight());
+                            layoutMid.setLayoutParams(layoutParams);
+                            //set min height for lisview
+                            FrameLayout.LayoutParams layoutParams2 =
+                                    new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, layoutMid.getHeight() - layoutTitleBot.getHeight());
+                            listActiHist.setLayoutParams(layoutParams2);
+                        }
+                    });
+                }
             }
         }
     }

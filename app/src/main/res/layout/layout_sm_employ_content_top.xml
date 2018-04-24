@@ -17,10 +17,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="20"
-            android:text="Liên hệ"
+            android:text="Khảo sát"
             android:textSize="14sp"/>
         <ProgressBar
-            android:id="@+id/progress_contact"
+            android:id="@+id/progress_survey"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:progress="50"
             android:progressDrawable="@drawable/custom_progress_drawable_step1" />
         <TextView
-            android:id="@+id/txt_contact_progress"
+            android:id="@+id/txt_survey_progress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -52,10 +52,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="20"
-            android:text="Hẹn gặp"
+            android:text="Dự COP"
             android:textSize="14sp"/>
         <ProgressBar
-            android:id="@+id/progress_appointment"
+            android:id="@+id/progress_cop"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
             android:progress="50"
             android:progressDrawable="@drawable/custom_progress_drawable_step2" />
         <TextView
-            android:id="@+id/txt_appointment_progress"
+            android:id="@+id/txt_cop_progress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -87,10 +87,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="20"
-            android:text="Tư vấn"
+            android:text="Học MIT"
             android:textSize="14sp"/>
         <ProgressBar
-            android:id="@+id/progress_consultant"
+            android:id="@+id/progress_mit"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
             android:progress="50"
             android:progressDrawable="@drawable/custom_progress_drawable_step3" />
         <TextView
-            android:id="@+id/txt_consultant_progress"
+            android:id="@+id/txt_mit_progress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -122,10 +122,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="20"
-            android:text="Ký HĐ"
+            android:text="Cấp mã"
             android:textSize="14sp"/>
         <ProgressBar
-            android:id="@+id/progress_contract"
+            android:id="@+id/progress_code"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
             android:progress="50"
             android:progressDrawable="@drawable/custom_progress_drawable_step4" />
         <TextView
-            android:id="@+id/txt_contract_progress"
+            android:id="@+id/txt_code_progress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"

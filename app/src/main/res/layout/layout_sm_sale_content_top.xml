@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/transparent"
+    android:id="@+id/layout_mid_include">
+    <!--liên hệ-->
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="20"
+            android:text="Liên hệ"
+            android:textSize="14sp"/>
+        <ProgressBar
+            android:id="@+id/progress_contact"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="60"
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/custom_progress_drawable_step1" />
+        <TextView
+            android:id="@+id/txt_contact_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="27/60"
+            android:gravity="right"
+            android:textColor="@color/color_dashboard_contact"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <!--Hẹn gặp-->
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="20"
+            android:text="Hẹn gặp"
+            android:textSize="14sp"/>
+        <ProgressBar
+            android:id="@+id/progress_appointment"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="60"
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/custom_progress_drawable_step2" />
+        <TextView
+            android:id="@+id/txt_appointment_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="27/60"
+            android:gravity="right"
+            android:textColor="@color/color_dashboard_meeting"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <!--Tư vấn-->
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="20"
+            android:text="Tư vấn"
+            android:textSize="14sp"/>
+        <ProgressBar
+            android:id="@+id/progress_consultant"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="60"
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/custom_progress_drawable_step3" />
+        <TextView
+            android:id="@+id/txt_consultant_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="27/60"
+            android:gravity="right"
+            android:textColor="@color/color_dashboard_advisory"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <!--Ký HĐ-->
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="20"
+            android:text="Ký HĐ"
+            android:textSize="14sp"/>
+        <ProgressBar
+            android:id="@+id/progress_contract"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="60"
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/custom_progress_drawable_step4" />
+        <TextView
+            android:id="@+id/txt_contract_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="27/60"
+            android:gravity="right"
+            android:textColor="@color/color_dashboard_sign"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <!--Giới thiệu-->
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="20"
+            android:text="Giới thiệu"
+            android:textSize="14sp"/>
+        <ProgressBar
+            android:id="@+id/progress_introduce"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="60"
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/custom_progress_drawable_step5" />
+        <TextView
+            android:id="@+id/txt_introduce_progress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="27/60"
+            android:gravity="right"
+            android:textColor="@color/color_dashboard_introduce"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

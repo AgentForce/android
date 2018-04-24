@@ -96,6 +96,8 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
     private int mEventID;
     private ActivityDetail mData;
 
+    private boolean mIsRecruit;
+
     private AlertDialog alertDialog;
     private String selectedStartTime;
     private String selectedEndTime;
@@ -111,7 +113,7 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
         hideKeyboardOutside(layoutRoot);
         mTypeInt = getIntent().getIntExtra("typeInt", 1);
         mContactID = getIntent().getIntExtra("contactID", 0);
-
+        mIsRecruit = getIntent().getBooleanExtra("isRecruit", false);
         mEventID = getIntent().getIntExtra("eventID", -1);
         setupSupportForApp();
 
@@ -121,8 +123,7 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
             txtButton.setText("Cập nhật sự kiện");
             txtActionbarTitle.setText("Cập nhật sự kiện");
             txtType.setClickable(false);
-        }
-        else {
+        } else {
             initViewsAdd();
             mIsUpdate = false;
             txtType.setClickable(true);
@@ -152,6 +153,10 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
         mOldTitle = mData.data.name;
         txtType.setText(ProjectApplication.getInstance().getEventStringFromType(mData.data.type));
         mTypeInt = mData.data.type;
+        if(mData.data.type >4)
+            mIsRecruit = true;
+        else
+            mIsRecruit = false;
 
         switchAllday.setChecked(mData.data.fullDate);
 
@@ -197,7 +202,7 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
         txtType.setText(ProjectApplication.getInstance().getEventStringFromType(mTypeInt));
     }
 
-    private void initViewEvents(){
+    private void initViewEvents() {
         Calendar calendar = Calendar.getInstance();
         String currentTime = Utils.convertDateToString(calendar.getTime(), "HH:mm");
 
@@ -249,6 +254,34 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
     }
 
     @Override
+    public void showMenuChooseEventUM() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(CreateEventActivity.this);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_create_event_contact_um, null);
+
+        initDialogEventUM(dialogView);
+
+        dialogBuilder.setView(dialogView);
+
+        alertDialog = dialogBuilder.create();
+        alertDialog.setCancelable(true);
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
+
+        alertDialog.show();
+    }
+
+    private void initDialogEventUM(View view) {
+        view.findViewById(R.id.txt_survey).setOnClickListener(this);
+        view.findViewById(R.id.txt_cop).setOnClickListener(this);
+        view.findViewById(R.id.txt_mit).setOnClickListener(this);
+        view.findViewById(R.id.btn_cancel).setOnClickListener(this);
+    }
+
+    @Override
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -276,30 +309,48 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
                 alertDialog.dismiss();
                 break;
             }
+            case R.id.txt_survey: {
+                mTypeInt = 7;
+                txtType.setText(ProjectApplication.getInstance().getEventStringFromType(4));
+                alertDialog.dismiss();
+                break;
+            }
+            case R.id.txt_cop: {
+                mTypeInt = 5;
+                txtType.setText(ProjectApplication.getInstance().getEventStringFromType(4));
+                alertDialog.dismiss();
+                break;
+            }
+            case R.id.txt_mit: {
+                mTypeInt = 6;
+                txtType.setText(ProjectApplication.getInstance().getEventStringFromType(4));
+                alertDialog.dismiss();
+                break;
+            }
             case R.id.btn_cancel: {
                 alertDialog.dismiss();
                 break;
             }
 
-            case R.id.txt_10_minute:{
+            case R.id.txt_10_minute: {
                 txtNotificationTime.setText("Báo trước 10 phút");
                 txtNotificationTime.setTag(10);
                 alertDialog.dismiss();
                 break;
             }
-            case R.id.txt_20_minute:{
+            case R.id.txt_20_minute: {
                 txtNotificationTime.setText("Báo trước 20 phút");
                 txtNotificationTime.setTag(20);
                 alertDialog.dismiss();
                 break;
             }
-            case R.id.txt_30_minute:{
+            case R.id.txt_30_minute: {
                 txtNotificationTime.setText("Báo trước 30 phút");
                 txtNotificationTime.setTag(30);
                 alertDialog.dismiss();
                 break;
             }
-            case R.id.txt_60_minute:{
+            case R.id.txt_60_minute: {
                 txtNotificationTime.setText("Báo trước 1 tiếng");
                 txtNotificationTime.setTag(60);
                 alertDialog.dismiss();
@@ -399,8 +450,8 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
 
         //auto scroll when chose date
         Calendar calendar = Calendar.getInstance();
-        if(mIsUpdate){
-            calendar.setTime(Utils.convertStringToDate(txtStartDate.getText().toString(),"dd/MM/yyyy"));
+        if (mIsUpdate) {
+            calendar.setTime(Utils.convertStringToDate(txtStartDate.getText().toString(), "dd/MM/yyyy"));
         }
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -424,24 +475,24 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
         } else {
             currentMinute[0] = startTimePicker.getCurrentMinute();
         }
-        if(mIsUpdate){
+        if (mIsUpdate) {
             //set time for start
             Calendar c = Calendar.getInstance();
-            c.setTime(Utils.convertStringToDate(txtStartTime.getText().toString(),"HH:mm"));
-            if (Build.VERSION.SDK_INT >= 23){
+            c.setTime(Utils.convertStringToDate(txtStartTime.getText().toString(), "HH:mm"));
+            if (Build.VERSION.SDK_INT >= 23) {
                 startTimePicker.setHour(c.get(Calendar.HOUR_OF_DAY));
                 startTimePicker.setMinute(c.get(Calendar.MINUTE));
-            }else{
+            } else {
                 startTimePicker.setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
                 startTimePicker.setCurrentMinute(c.get(Calendar.MINUTE));
             }
             //set time for end
             TimePicker endTimePicker = (TimePicker) dialogView.findViewById(R.id.time_picker_end);
-            c.setTime(Utils.convertStringToDate(txtEndTime.getText().toString(),"HH:mm"));
-            if (Build.VERSION.SDK_INT >= 23){
+            c.setTime(Utils.convertStringToDate(txtEndTime.getText().toString(), "HH:mm"));
+            if (Build.VERSION.SDK_INT >= 23) {
                 endTimePicker.setHour(c.get(Calendar.HOUR_OF_DAY));
                 endTimePicker.setMinute(c.get(Calendar.MINUTE));
-            }else{
+            } else {
                 endTimePicker.setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
                 endTimePicker.setCurrentMinute(c.get(Calendar.MINUTE));
             }
@@ -458,10 +509,10 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
                     Utils.smoothScrollViewToPosition(getApplicationContext(), scroll, endTimePicker.getBottom());
 
                     //set time end
-                    if (Build.VERSION.SDK_INT >= 23){
+                    if (Build.VERSION.SDK_INT >= 23) {
                         endTimePicker.setHour(hourse);
                         endTimePicker.setMinute(minute);
-                    }else{
+                    } else {
                         endTimePicker.setCurrentHour(hourse);
                         endTimePicker.setCurrentMinute(minute);
                     }
@@ -491,7 +542,7 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
     }
 
     @OnClick({R.id.layout_btn_back, R.id.layout_start_date, R.id.layout_create,
-            R.id.txt_type,R.id.txt_notification_time})
+            R.id.txt_type, R.id.txt_notification_time})
     public void onClickView(View view) {
         int id = view.getId();
         switch (id) {
@@ -505,7 +556,7 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
             }
             case R.id.layout_create: {
                 if (checkValidate()) {
-                    if(mIsUpdate)
+                    if (mIsUpdate)
                         updateEvent();
                     else
                         addEvent();
@@ -514,17 +565,21 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
                 break;
             }
             case R.id.txt_type: {
-                showMenuChooseEvent();
+                if (mIsRecruit)
+                    showMenuChooseEventUM();
+                else
+                    showMenuChooseEvent();
                 break;
             }
-            case R.id.txt_notification_time:{
+            case R.id.txt_notification_time: {
                 showMenuChooseTimeRemind();
                 break;
             }
 
         }
     }
-    private void addEvent(){
+
+    private void addEvent() {
         showConfirm("Xác nhận", "Đồng ý tạo sự kiện", "Đồng ý",
                 "Hủy", SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
                     @Override
@@ -547,7 +602,8 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
                     }
                 });
     }
-    public void updateEvent(){
+
+    public void updateEvent() {
         showConfirm("Xác nhận", "Cập nhật sự kiện", "Đồng ý",
                 "Hủy", SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
                     @Override
@@ -560,7 +616,7 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
                                 txtStartDate.getText().toString() + " " + txtEndTime.getText().toString(), "dd/MM/yyyy HH:mm",
                                 "yyyy-MM-dd HH:mm"
                         );
-                        mActionListener.updateEvent(mData.data.id, mTypeInt,mOldTitle, edtTitle.getText().toString(),
+                        mActionListener.updateEvent(mData.data.id, mTypeInt, mOldTitle, edtTitle.getText().toString(),
                                 edtLocation.getText().toString(), startTimeInput, endTimeInput,
                                 edtNote.getText().toString(), switchAllday.isChecked(), Integer.valueOf(txtNotificationTime.getTag().toString()), switchBoss.isChecked());
                     }

@@ -97,5 +97,8 @@ public class UserProfile implements Serializable{
         @SerializedName("report_to_username")
         @Expose
         public String reportToUsername;
+        @SerializedName("onboard_date")
+        @Expose
+        public String onboardDate;
     }
 }

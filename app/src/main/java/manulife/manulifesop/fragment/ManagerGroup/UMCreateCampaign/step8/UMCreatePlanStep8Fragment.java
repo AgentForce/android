@@ -143,7 +143,7 @@ public class UMCreatePlanStep8Fragment extends BaseFragment<UMCreatePlanActivity
                                         dataUMStep5.get(0),
                                         dataUMStep4.get(1),
                                         dataUMStep4.get(2),
-                                        dataUMStep4.get(2),
+                                        dataUMStep4.get(3),
                                         dataUMStep5.get(1),
                                         mActivity.getDataStep6()
                                 );
@@ -181,7 +181,7 @@ public class UMCreatePlanStep8Fragment extends BaseFragment<UMCreatePlanActivity
                 dataUMStep5.get(0),
                 dataUMStep4.get(1),
                 dataUMStep4.get(2),
-                dataUMStep4.get(2),
+                dataUMStep4.get(3),
                 dataUMStep5.get(1)
                 );
     }

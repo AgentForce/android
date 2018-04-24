@@ -2,15 +2,11 @@ package manulife.manulifesop.fragment.ManagerGroup.dashboard;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -42,12 +38,15 @@ import manulife.manulifesop.activity.FAGroup.clients.introduceContact.IntroduceC
 import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.ContactDetailActivity;
 import manulife.manulifesop.activity.FAGroup.clients.related.createEvent.CreateEventActivity;
 import manulife.manulifesop.activity.FAGroup.clients.signed.SignedPersonActivity;
+import manulife.manulifesop.activity.ManagerGroup.Recruitment.cop.COPActivity;
+import manulife.manulifesop.activity.ManagerGroup.Recruitment.grantedCode.GrantedCodeActivity;
+import manulife.manulifesop.activity.ManagerGroup.Recruitment.introduceRecruitment.IntroduceRecruitmentActivity;
+import manulife.manulifesop.activity.ManagerGroup.Recruitment.mit.MITActivity;
+import manulife.manulifesop.activity.ManagerGroup.Recruitment.survey.SurveyActivity;
 import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.adapter.ActiveHistAdapter;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
-import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
-import manulife.manulifesop.api.ObjectResponse.DashboardResult;
 import manulife.manulifesop.api.ObjectResponse.DashboardSMResult;
 import manulife.manulifesop.api.ObjectResponse.RecruitHistory;
 import manulife.manulifesop.base.BaseFragment;
@@ -121,6 +120,8 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
     private int mContactID;
     private String mName;
 
+    private boolean isCreatedHeight = false;
+
     public static SMDashBoardFragment newInstance() {
         Bundle args = new Bundle();
         SMDashBoardFragment fragment = new SMDashBoardFragment();
@@ -151,8 +152,8 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initView();
+        isCreatedHeight = false;
         initHeightViaSelected();
     }
 
@@ -194,25 +195,28 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
     @Override
     public void initViewHeight() {
 
-        //set margin bottom for viewpager percent
-        if (getView() != null) {
-            final ViewTreeObserver observer = layoutBot.getViewTreeObserver();
-            if (observer.isAlive()) {
-                observer.dispatchOnGlobalLayout(); // In case a previous call is waiting when this call is made
-                observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        observer.removeOnGlobalLayoutListener(this);
-                        RelativeLayout.LayoutParams layoutParams =
-                                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-                        layoutParams.setMargins(0, 0, 0, layoutBot.getHeight());
-                        layoutMid.setLayoutParams(layoutParams);
-                        //set min height for lisview
-                        FrameLayout.LayoutParams layoutParams2 =
-                                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, layoutMid.getHeight() - layoutTitleBot.getHeight());
-                        listActiHist.setLayoutParams(layoutParams2);
-                    }
-                });
+        if(!isCreatedHeight) {
+            isCreatedHeight = true;
+            //set margin bottom for viewpager percent
+            if (getView() != null) {
+                final ViewTreeObserver observer = layoutBot.getViewTreeObserver();
+                if (observer.isAlive()) {
+                    observer.dispatchOnGlobalLayout(); // In case a previous call is waiting when this call is made
+                    observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            observer.removeOnGlobalLayoutListener(this);
+                            RelativeLayout.LayoutParams layoutParams =
+                                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+                            layoutParams.setMargins(0, 0, 0, layoutBot.getHeight());
+                            layoutMid.setLayoutParams(layoutParams);
+                            //set min height for lisview
+                            FrameLayout.LayoutParams layoutParams2 =
+                                    new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, layoutMid.getHeight() - layoutTitleBot.getHeight());
+                            listActiHist.setLayoutParams(layoutParams2);
+                        }
+                    });
+                }
             }
         }
     }
@@ -388,11 +392,11 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
 
             temp.setAvatar("avatar " + i);
             temp.setTitle(activities.data.rows.get(i).name);
-            temp.setContent(ProjectApplication.getInstance().getStringProcessStatus(
+            temp.setContent(ProjectApplication.getInstance().getStringProcessStatusSM(
                     activities.data.rows.get(i).processStep + "" + activities.data.rows.get(i).statusProcessStep
             ));
             temp.setPhone(activities.data.rows.get(i).phone);
-            temp.setProcessStatusName(ProjectApplication.getInstance().getStringProcessStatusName(
+            temp.setProcessStatusName(ProjectApplication.getInstance().getStringProcessStatusNameSM(
                     activities.data.rows.get(i).processStep + "" + activities.data.rows.get(i).statusProcessStep
             ));
             temp.setProcessStep(activities.data.rows.get(i).processStep);
@@ -443,20 +447,6 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
             mAdapterActiveHist.notifyDataSetChanged();
         }
 
-        //set space between two items
-        /*int[] ATTRS = new int[]{android.R.attr.listDivider};
-        TypedArray a = getContext().obtainStyledAttributes(ATTRS);
-        Drawable divider = a.getDrawable(0);
-        int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
-        int insetRight = getResources().getDimensionPixelSize(R.dimen.margin_right_DividerItemDecoration);
-        InsetDrawable insetDivider = new InsetDrawable(divider, insetLeft, 0, insetRight, 0);
-        a.recycle();
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listActiHist.getContext(),
-                mLayoutManager.getOrientation());
-        dividerItemDecoration.setDrawable(insetDivider);
-        listActiHist.addItemDecoration(dividerItemDecoration);*/
-
         listActiHist.clearOnScrollListeners();
         listActiHist.addOnScrollListener(new EndlessScrollListenerRecyclerView(
                 activities.data.page, Utils.genLastPage(activities.data.count, activities.data.limit),
@@ -467,27 +457,27 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
         String rs;
         switch (processStep) {
             case 1: {
-                rs = Contants.CONTACT_MENU;
+                rs = Contants.SURVEY_MENU;
                 break;
             }
             case 2: {
-                rs = Contants.APPOINTMENT_MENU;
+                rs = Contants.COP_MENU;
                 break;
             }
             case 3: {
-                rs = Contants.CONSULTANT_MENU;
+                rs = Contants.MIT_MENU;
                 break;
             }
             case 4: {
-                rs = Contants.SIGNED_MENU;
+                rs = Contants.CODE_MENU;
                 break;
             }
             case 5: {
-                rs = Contants.INTRODUCE_MENU;
+                rs = Contants.INTRODUCE_MENU_SM;
                 break;
             }
             default:
-                rs = Contants.CONTACT_MENU;
+                rs = Contants.SURVEY_MENU;
         }
         return rs;
     }
@@ -497,7 +487,7 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
 
         LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_create_event_contact, null);
+        View dialogView = inflater.inflate(R.layout.dialog_create_event_contact_um, null);
 
         initDialogEvent(dialogView);
 
@@ -514,10 +504,9 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
     }
 
     private void initDialogEvent(View view) {
-        view.findViewById(R.id.txt_first_meet).setOnClickListener(this);
-        view.findViewById(R.id.txt_advisory).setOnClickListener(this);
-        view.findViewById(R.id.txt_sign).setOnClickListener(this);
-        view.findViewById(R.id.txt_different).setOnClickListener(this);
+        view.findViewById(R.id.txt_survey).setOnClickListener(this);
+        view.findViewById(R.id.txt_cop).setOnClickListener(this);
+        view.findViewById(R.id.txt_mit).setOnClickListener(this);
         view.findViewById(R.id.btn_cancel).setOnClickListener(this);
     }
 
@@ -525,38 +514,32 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
-            case R.id.txt_first_meet: {
+            case R.id.txt_survey: {
                 Bundle data = new Bundle();
-                data.putInt("typeInt", 1);
+                data.putInt("typeInt", 7);
                 data.putInt("contactID", mContactID);
                 data.putString("name", mName);
+                data.putBoolean("isRecruit",true);
                 alertDialog.dismiss();
                 goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
                 break;
             }
-            case R.id.txt_advisory: {
+            case R.id.txt_cop: {
                 Bundle data = new Bundle();
-                data.putInt("typeInt", 2);
+                data.putInt("typeInt", 5);
                 data.putInt("contactID", mContactID);
                 data.putString("name", mName);
+                data.putBoolean("isRecruit",true);
                 alertDialog.dismiss();
                 goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
                 break;
             }
-            case R.id.txt_sign: {
+            case R.id.txt_mit: {
                 Bundle data = new Bundle();
-                data.putInt("typeInt", 3);
+                data.putInt("typeInt", 6);
                 data.putInt("contactID", mContactID);
                 data.putString("name", mName);
-                alertDialog.dismiss();
-                goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
-                break;
-            }
-            case R.id.txt_different: {
-                Bundle data = new Bundle();
-                data.putInt("typeInt", 4);
-                data.putInt("contactID", mContactID);
-                data.putString("name", mName);
+                data.putBoolean("isRecruit",true);
                 alertDialog.dismiss();
                 goNextScreenFragment(CreateEventActivity.class, data, Contants.ADD_EVENT);
                 break;
@@ -578,35 +561,35 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
                 data.putInt("month", mMonth);
                 data.putInt("target", targetStep1);
                 data.putInt("targetIntroduce", targetStep5);
-                mActivity.goNextScreen(ContactPersonActivity.class, data);
+                mActivity.goNextScreen(SurveyActivity.class, data);
                 break;
             }
             case R.id.layout_step2: {
                 Bundle data = new Bundle();
                 data.putInt("month", mMonth);
                 data.putInt("target", targetStep2);
-                mActivity.goNextScreen(AppointmentActivity.class, data);
+                mActivity.goNextScreen(COPActivity.class, data);
                 break;
             }
             case R.id.layout_step3: {
                 Bundle data = new Bundle();
                 data.putInt("month", mMonth);
                 data.putInt("target", targetStep3);
-                mActivity.goNextScreen(ConsultantActivity.class, data);
+                mActivity.goNextScreen(MITActivity.class, data);
                 break;
             }
             case R.id.layout_step4: {
                 Bundle data = new Bundle();
                 data.putInt("month", mMonth);
                 data.putInt("target", targetStep4);
-                mActivity.goNextScreen(SignedPersonActivity.class, data);
+                mActivity.goNextScreen(GrantedCodeActivity.class, data);
                 break;
             }
             case R.id.layout_step5: {
                 Bundle data = new Bundle();
                 data.putInt("month", mMonth);
                 data.putInt("target", targetStep5);
-                mActivity.goNextScreen(IntroduceContactActivity.class, data);
+                mActivity.goNextScreen(IntroduceRecruitmentActivity.class, data);
                 break;
             }
             case R.id.layout_bot: {

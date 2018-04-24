@@ -47,15 +47,15 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
         mPresenterView.showLoading("Lấy dữ liệu");
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH,1);
-        String firstDay = Utils.convertDateToString(calendar.getTime(),"yyyy-MM-dd");
-        calendar.set(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-        String lastDay = Utils.convertDateToString(calendar.getTime(),"yyyy-MM-dd");
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        String firstDay = Utils.convertDateToString(calendar.getTime(), "yyyy-MM-dd");
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        String lastDay = Utils.convertDateToString(calendar.getTime(), "yyyy-MM-dd");
 
         getCompositeDisposable().add(ApiService.getServer().getEventsMonth(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                firstDay,lastDay)
+                firstDay, lastDay)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -63,21 +63,21 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
     }
 
     private void handleResponseEventsMonth(EventsMonth data) {
-        if(data.statusCode==1){
+        if (data.statusCode == 1) {
             List<String> colors;
-            for(int i=0;i<data.data.rows.size();i++){
+            for (int i = 0; i < data.data.rows.size(); i++) {
                 //mPresenterView.addEventToDate(Utils.convertStringToDate(data.data.get(i).date,"yyyy-MM-dd"));
                 colors = new ArrayList<>();
-                for(int j=0;j<data.data.rows.get(i).activities.size();j++){
+                for (int j = 0; j < data.data.rows.get(i).activities.size(); j++) {
                     colors.add(ProjectApplication.getInstance().getProcessStepColor(data.data.rows.get(i).activities.get(j).processStep));
-                    if(j>3)break;
+                    if (j > 3) break;
                 }
-                mPresenterView.addEventToDate(Utils.convertStringToDate(data.data.rows.get(i).date,"yyyy-MM-dd"),colors);
+                mPresenterView.addEventToDate(Utils.convertStringToDate(data.data.rows.get(i).date, "yyyy-MM-dd"), colors);
             }
             getEventsOneDay(Calendar.getInstance().getTime());
 
-        }else{
-            mPresenterView.finishLoading(data.msg,false);
+        } else {
+            mPresenterView.finishLoading(data.msg, false);
         }
     }
 
@@ -96,28 +96,31 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
     }
 
     private void handleError(Throwable throwable) {
-        mPresenterView.finishLoading(throwable.getMessage(),false);
+        mPresenterView.finishLoading(throwable.getMessage(), false);
     }
 
     private void handleResponseEventsDay(EventsOneDay data) {
-        if(data.statusCode==1){
+        if (data.statusCode == 1) {
             List<EventCalendar> dataList = new ArrayList<>();
             EventCalendar tmp;
-            for(int i=0;i<data.data.size();i++)
-            {
-                tmp = new EventCalendar(data.data.get(i).id,"",
+            String processStepTemp;
+            for (int i = 0; i < data.data.size(); i++) {
+                if (data.data.get(i).type > 4)
+                    processStepTemp = ProjectApplication.getInstance().getHashmapProcessStepSM(data.data.get(i).processStep);
+                else
+                    processStepTemp = ProjectApplication.getInstance().getHashmapProcessStep(data.data.get(i).processStep);
+                tmp = new EventCalendar(data.data.get(i).id, "",
                         data.data.get(i).manulifeLead.name + " - " + data.data.get(i).name,
-                        data.data.get(i).processStep,
+                        processStepTemp,
                         Utils.convertStringTimeZoneDateToStringDate(data.data.get(i).startDate,
-                                "yyyy-MM-dd'T'HH:mm:ss.sss'Z'","dd-MM-yyyy HH:mm"),
-                        data.data.get(i).location,data.data.get(i).status);
+                                "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "dd-MM-yyyy HH:mm"),
+                        data.data.get(i).location, data.data.get(i).status);
                 dataList.add(tmp);
             }
             mPresenterView.showDataEvents(dataList);
             mPresenterView.finishLoading();
-        }else
-        {
-            mPresenterView.finishLoading(data.msg,false);
+        } else {
+            mPresenterView.finishLoading(data.msg, false);
         }
     }
 
@@ -130,7 +133,7 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
         getCompositeDisposable().add(ApiService.getServer().updateEventDone(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
-                checksum,eventID)
+                checksum, eventID)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -138,11 +141,11 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
     }
 
     private void handleResponseUpdateEventDone(BaseResponse rs) {
-        if(rs.statusCode == 1){
+        if (rs.statusCode == 1) {
             mPresenterView.updateData();
             mPresenterView.finishLoading();
-        }else{
-            mPresenterView.finishLoading(rs.msg,false);
+        } else {
+            mPresenterView.finishLoading(rs.msg, false);
         }
     }
 }

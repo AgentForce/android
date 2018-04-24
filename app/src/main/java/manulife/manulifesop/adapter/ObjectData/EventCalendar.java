@@ -8,12 +8,12 @@ public class EventCalendar {
     private int id;
     private String avatar;
     private String name;
-    private int processStep;
     private String date;
     private String location;
     private boolean status;
+    private String processStep;
 
-    public EventCalendar(int id,String avatar, String name, int processStep, String date, String location,boolean status) {
+    public EventCalendar(int id,String avatar, String name, String processStep, String date, String location,boolean status) {
         this.id = id;
         this.avatar = avatar;
         this.name = name;
@@ -47,7 +47,7 @@ public class EventCalendar {
         return name;
     }
 
-    public int getProcessStep() {
+    public String getProcessStep() {
         return processStep;
     }
 

@@ -17,8 +17,8 @@ public interface UMCreatePlanContract {
         void setDataStep1(String startDate, String endDate);
         void setDataStep2(UMForcastRecruit data);
         void setDataStep3(int newAgent, int newContact, int FYC);
-        void setDataStep4(int currentAgent,int currentContact,int currentFYC,
-                          int maintainAgent);
+        void setDataStep4(int currentAgent,int currentContact,int currentFYCPerContract,
+                          int maintainAgent, int FYC);
         void setDataStep5(int numUM, int totalUMProfit);
         void setDataStep6(List<UMStep6> data);
         void setDataStep7(int contactPerMonth,int FYCPerMonth, int FYC,int RYP);

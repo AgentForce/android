@@ -12,6 +12,7 @@ public interface ContactDetailStep2Contract {
 
     interface View extends BaseMVPView {
         void showMenuCreateEvent();
+        void showMenuCreateEventUM();
         void loadContactActivities(ContactActivity data);
         void updateData();
     }

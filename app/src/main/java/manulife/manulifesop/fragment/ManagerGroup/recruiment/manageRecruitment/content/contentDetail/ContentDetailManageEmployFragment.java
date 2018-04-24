@@ -47,11 +47,11 @@ public class ContentDetailManageEmployFragment extends BaseFragment<MainFAActivi
     LinearLayout layoutTitleBot;
     @BindView(R.id.img_show_contacts)
     ImageView imgShowContacts;
-    @BindView(R.id.layout_search)
-    LinearLayout layoutSearch;
 
     private int mProcessStep;
     private String mType;
+
+    private boolean isCreatedHeight = false;
 
     //test
     private ActiveHistAdapter mAdapterActiveHist;
@@ -82,8 +82,8 @@ public class ContentDetailManageEmployFragment extends BaseFragment<MainFAActivi
         super.onViewCreated(view, savedInstanceState);
         mProcessStep = getArguments().getInt("processStep",1);
         mType = getArguments().getString("type","");
+        isCreatedHeight = false;
         initHeightViaSelected();
-
         testloadlist();
     }
 
@@ -162,27 +162,29 @@ public class ContentDetailManageEmployFragment extends BaseFragment<MainFAActivi
 
     @Override
     public void initviewsHeight() {
+        if(!isCreatedHeight) {
+            isCreatedHeight = true;
+            //set margin bottom for viewpager percent
+            if (getView() != null) {
+                final ViewTreeObserver observer = layoutBot.getViewTreeObserver();
 
-        //set margin bottom for viewpager percent
-        if (getView() != null) {
-            final ViewTreeObserver observer = layoutBot.getViewTreeObserver();
-
-            if (observer.isAlive()) {
-                observer.dispatchOnGlobalLayout(); // In case a previous call is waiting when this call is made
-                observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        observer.removeOnGlobalLayoutListener(this);
-                        RelativeLayout.LayoutParams layoutParams =
-                                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-                        layoutParams.setMargins(0, 0, 0, layoutBot.getHeight());
-                        layoutMid.setLayoutParams(layoutParams);
-                        //set min height for lisview
-                        LinearLayout.LayoutParams layoutParams2 =
-                                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, layoutMidInclude.getHeight() - layoutTitleBot.getHeight() - layoutSearch.getHeight());
-                        rcvData.setLayoutParams(layoutParams2);
-                    }
-                });
+                if (observer.isAlive()) {
+                    observer.dispatchOnGlobalLayout(); // In case a previous call is waiting when this call is made
+                    observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            observer.removeOnGlobalLayoutListener(this);
+                            RelativeLayout.LayoutParams layoutParams =
+                                    new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+                            layoutParams.setMargins(0, 0, 0, layoutBot.getHeight());
+                            layoutMid.setLayoutParams(layoutParams);
+                            //set min height for lisview
+                            LinearLayout.LayoutParams layoutParams2 =
+                                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, layoutMidInclude.getHeight() - layoutTitleBot.getHeight());
+                            rcvData.setLayoutParams(layoutParams2);
+                        }
+                    });
+                }
             }
         }
     }

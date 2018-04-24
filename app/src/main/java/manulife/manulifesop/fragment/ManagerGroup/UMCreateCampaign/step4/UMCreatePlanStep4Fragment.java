@@ -9,8 +9,6 @@ import butterknife.OnClick;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.ManagerGroup.UMCreatePlan.UMCreatePlanActivity;
 import manulife.manulifesop.base.BaseFragment;
-import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step3.UMCreatePlanStep3Contract;
-import manulife.manulifesop.fragment.ManagerGroup.UMCreateCampaign.step3.UMCreatePlanStep3Present;
 
 
 /**
@@ -23,10 +21,12 @@ public class UMCreatePlanStep4Fragment extends BaseFragment<UMCreatePlanActivity
     TextView txtAgentWorking;
     @BindView(R.id.txt_num_contract_per_agent)
     TextView txtContactPerAgent;
-    @BindView(R.id.txt_FYC)
-    TextView txtFYC;
+    @BindView(R.id.txt_FYC_per_contract)
+    TextView txtFYCPerContract;
     @BindView(R.id.txt_num_agent_year)
     TextView txtAgentYear;
+    @BindView(R.id.txt_FYC)
+    TextView txtFYC;
 
 
     public static UMCreatePlanStep4Fragment newInstance() {
@@ -63,8 +63,9 @@ public class UMCreatePlanStep4Fragment extends BaseFragment<UMCreatePlanActivity
             case R.id.btn_next: {
                 mActivity.setDataStep4(Integer.valueOf(txtAgentWorking.getText().toString()),
                         Integer.valueOf(txtContactPerAgent.getText().toString()),
-                        Integer.valueOf(txtFYC.getText().toString()),
-                        Integer.valueOf(txtAgentYear.getText().toString()));
+                        Integer.valueOf(txtFYCPerContract.getText().toString()),
+                        Integer.valueOf(txtAgentYear.getText().toString()),
+                        Integer.valueOf(txtFYC.getText().toString()));
                 mActivity.showNextFragment();
                 break;
             }
@@ -91,14 +92,14 @@ public class UMCreatePlanStep4Fragment extends BaseFragment<UMCreatePlanActivity
                 break;
             }
             case R.id.layout_add_step4_row3: {
-                int newValue = Integer.valueOf(txtFYC.getText().toString()) + 1;
-                txtFYC.setText(String.valueOf(newValue));
+                int newValue = Integer.valueOf(txtFYCPerContract.getText().toString()) + 1;
+                txtFYCPerContract.setText(String.valueOf(newValue));
                 break;
             }
             case R.id.layout_sub_step4_row3: {
-                int newValue = Integer.valueOf(txtFYC.getText().toString()) - 1;
+                int newValue = Integer.valueOf(txtFYCPerContract.getText().toString()) - 1;
                 if (newValue < 0) newValue = 0;
-                txtFYC.setText(String.valueOf(newValue));
+                txtFYCPerContract.setText(String.valueOf(newValue));
                 break;
             }
             case R.id.layout_add_step4_row4: {
@@ -110,6 +111,18 @@ public class UMCreatePlanStep4Fragment extends BaseFragment<UMCreatePlanActivity
                 int newValue = Integer.valueOf(txtAgentYear.getText().toString()) - 1;
                 if (newValue < 0) newValue = 0;
                 txtAgentYear.setText(String.valueOf(newValue));
+                break;
+            }
+
+            case R.id.layout_add_step7_row4: {
+                int newValue = Integer.valueOf(txtFYC.getText().toString()) + 1;
+                txtFYC.setText(String.valueOf(newValue));
+                break;
+            }
+            case R.id.layout_sub_step7_row4: {
+                int newValue = Integer.valueOf(txtFYC.getText().toString()) - 1;
+                if (newValue < 0) newValue = 0;
+                txtFYC.setText(String.valueOf(newValue));
                 break;
             }
         }

@@ -241,12 +241,14 @@ public class UMCreatePlanActivity extends BaseActivity<UMCreatePlanPresenter> im
     }
 
     @Override
-    public void setDataStep4(int currentAgent, int currentContact, int currentFYC, int maintainAgent) {
+    public void setDataStep4(int currentAgent, int currentContact, int currentFYCPerContract,
+                             int maintainAgent, int FYC) {
         mDataStep4 = new ArrayList<>();
         mDataStep4.add(currentAgent);
         mDataStep4.add(currentContact);
-        mDataStep4.add(currentFYC);
+        mDataStep4.add(currentFYCPerContract);
         mDataStep4.add(maintainAgent);
+        mDataStep4.add(FYC);
     }
 
     @Override

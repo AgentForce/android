@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/cus_border_white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="Chỉnh sửa mục tiêu KH tháng 12"
+            android:textStyle="bold"
+            android:textSize="@dimen/welcome_activity_note"
+            android:layout_marginBottom="5dp"/>
+
+        <!--lien he-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/gray_seedbar_background"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp">
+
+            <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/sb_contract"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isb_indicator_color="@android:color/transparent"
+                app:isb_indicator_custom_top_content_layout="@layout/custom_seekbar_top_customer_rect"
+                app:isb_indicator_stay="true"
+                app:isb_indicator_text_size="16sp"
+                app:isb_max="100"
+                app:isb_min="0"
+                app:isb_progress="0"
+                app:isb_seek_bar_type="continuous"
+                app:isb_show_indicator="true"
+                app:isb_text_color="@color/colorSecond"
+                app:isb_thumb_color="@color/colorSecond"
+                app:isb_tick_num="9"
+                app:isb_track_background_bar_color="@color/colorSecond"
+                app:isb_track_background_bar_size="3dp"
+                app:isb_track_progress_bar_color="@color/colorSecond"
+                app:isb_track_progress_bar_size="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_contact_red"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:text="Khảo sát"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!--hen gap-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/gray_seedbar_background"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp">
+
+            <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/sb_meeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isb_indicator_color="@android:color/transparent"
+                app:isb_indicator_custom_top_content_layout="@layout/custom_seekbar_top_customer_rect"
+                app:isb_indicator_stay="true"
+                app:isb_indicator_text_size="16sp"
+                app:isb_max="100"
+                app:isb_min="0"
+                app:isb_progress="0"
+                app:isb_seek_bar_type="continuous"
+                app:isb_show_indicator="true"
+                app:isb_text_color="@color/colorSecond"
+                app:isb_thumb_color="@color/colorSecond"
+                app:isb_tick_num="9"
+                app:isb_track_background_bar_color="@color/colorSecond"
+                app:isb_track_background_bar_size="3dp"
+                app:isb_track_progress_bar_color="@color/colorSecond"
+                app:isb_track_progress_bar_size="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_appointment"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:text="Dự COP"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!--tu van-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/gray_seedbar_background"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp">
+
+            <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/sb_advisory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isb_indicator_color="@android:color/transparent"
+                app:isb_indicator_custom_top_content_layout="@layout/custom_seekbar_top_customer_rect"
+                app:isb_indicator_stay="true"
+                app:isb_indicator_text_size="16sp"
+                app:isb_max="100"
+                app:isb_min="0"
+                app:isb_progress="0"
+                app:isb_seek_bar_type="continuous"
+                app:isb_show_indicator="true"
+                app:isb_text_color="@color/colorSecond"
+                app:isb_thumb_color="@color/colorSecond"
+                app:isb_tick_num="9"
+                app:isb_track_background_bar_color="@color/colorSecond"
+                app:isb_track_background_bar_size="3dp"
+                app:isb_track_progress_bar_color="@color/colorSecond"
+                app:isb_track_progress_bar_size="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_consultant" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:text="Học MIT"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!--ky ket-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/gray_seedbar_background"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp">
+
+            <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/sb_sign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isb_indicator_color="@android:color/transparent"
+                app:isb_indicator_custom_top_content_layout="@layout/custom_seekbar_top_customer_rect"
+                app:isb_indicator_stay="true"
+                app:isb_indicator_text_size="16sp"
+                app:isb_max="100"
+                app:isb_min="0"
+                app:isb_progress="0"
+                app:isb_seek_bar_type="continuous"
+                app:isb_show_indicator="true"
+                app:isb_text_color="@color/colorSecond"
+                app:isb_thumb_color="@color/colorSecond"
+                app:isb_tick_num="9"
+                app:isb_track_background_bar_color="@color/colorSecond"
+                app:isb_track_background_bar_size="3dp"
+                app:isb_track_progress_bar_color="@color/colorSecond"
+                app:isb_track_progress_bar_size="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_signed" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:text="Cấp mã"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!--gioi thieu-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/gray_seedbar_background"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp">
+
+            <com.warkiz.widget.IndicatorSeekBar
+                android:id="@+id/sb_introduce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isb_indicator_color="@android:color/transparent"
+                app:isb_indicator_custom_top_content_layout="@layout/custom_seekbar_top_customer_rect"
+                app:isb_indicator_stay="true"
+                app:isb_indicator_text_size="16sp"
+                app:isb_max="100"
+                app:isb_min="0"
+                app:isb_progress="0"
+                app:isb_seek_bar_type="continuous"
+                app:isb_show_indicator="true"
+                app:isb_text_color="@color/colorSecond"
+                app:isb_thumb_color="@color/colorSecond"
+                app:isb_tick_num="9"
+                app:isb_track_background_bar_color="@color/colorSecond"
+                app:isb_track_background_bar_size="3dp"
+                app:isb_track_progress_bar_color="@color/colorSecond"
+                app:isb_track_progress_bar_size="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_introduce_red" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Giới thiệu"
+                android:layout_marginLeft="3dp"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!--button ok-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#c2c2c2" />
+
+        <LinearLayout
+            android:id="@+id/layout_bot"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txt_ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="Xác nhận"
+                    android:textColor="@drawable/text_color_blue"
+                    android:textSize="@dimen/welcome_activity_note"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

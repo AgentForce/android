@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectInput.InputCreatePass;
 import manulife.manulifesop.api.ObjectInput.InputLoginData;
@@ -123,6 +124,7 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
             //rs.data.level = 15;
             SOPSharedPreferences.getInstance(mContext).saveIsFA(rs.data.level>15);
             SOPSharedPreferences.getInstance(mContext).saveLevel(rs.data.level);
+            ProjectApplication.getInstance().setOnboardDate(rs.data.onboardDate,"yyyy-MM-dd'T'HH:mm:ss.sss'Z'");
             chekCampaign();
         }else
             mPresenterView.finishLoading(rs.msg, false);
@@ -145,7 +147,7 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     private void handleResponseCheckCampaign(VerifyOTP data) {
         if (data.statusCode == 1) {
             //test
-            //data.data.status = false;
+            data.data.status = false;
             if (data.data.status) {
                 //go to main if campaign is created
                 mPresenterView.showMainFAActvity();

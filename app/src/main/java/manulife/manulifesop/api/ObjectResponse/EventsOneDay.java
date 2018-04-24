@@ -28,6 +28,9 @@ public class EventsOneDay {
         @SerializedName("Id")
         @Expose
         public Integer id;
+        @SerializedName("Type")
+        @Expose
+        public Integer type;
         @SerializedName("Status")
         @Expose
         public Boolean status;

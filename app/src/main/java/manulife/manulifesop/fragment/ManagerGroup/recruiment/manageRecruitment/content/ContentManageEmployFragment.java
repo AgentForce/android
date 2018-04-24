@@ -38,7 +38,7 @@ public class ContentManageEmployFragment extends BaseFragment<MainFAActivity, Co
 
     public static ContentManageEmployFragment newInstance(String type) {
         Bundle args = new Bundle();
-        args.putString("type",type);
+        args.putString("type", type);
         ContentManageEmployFragment fragment = new ContentManageEmployFragment();
         fragment.setArguments(args);
         return fragment;
@@ -58,21 +58,33 @@ public class ContentManageEmployFragment extends BaseFragment<MainFAActivity, Co
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         hideKeyboardOutside(layoutRoot);
+        mType = getArguments().getString("type", "");
         initTabMenu();
-        scrollToTabAfterLayout();
-        mType = getArguments().getString("type","");
+        if (!mType.equals("campaign"))
+            scrollToTabAfterLayout();
     }
 
     @Override
     public void initTabMenu() {
-        for (int i = 1; i <= 4; i++) {
-            tabLayout.addTab(tabLayout.newTab().setText("Giai đoạn " + i).setTag(i));
+        if (mType.equals("month")) {
+            tabLayout.setVisibility(View.VISIBLE);
+            for (int i = 1; i <= 4; i++) {
+                tabLayout.addTab(tabLayout.newTab().setText("Giai đoạn " + i).setTag(i));
+            }
+        } else if (mType.equals("year")) {
+            tabLayout.setVisibility(View.VISIBLE);
+            for (int i = 1; i <= 12; i++) {
+                tabLayout.addTab(tabLayout.newTab().setText("Tháng " + i).setTag(i));
+            }
+        } else {
+            tabLayout.setVisibility(View.GONE);
+            showContentDetail(1, mType);
         }
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                showContentDetail((Integer) tab.getTag(),mType);
+                showContentDetail((Integer) tab.getTag(), mType);
             }
 
             @Override
@@ -104,7 +116,7 @@ public class ContentManageEmployFragment extends BaseFragment<MainFAActivity, Co
                             observer.removeGlobalOnLayoutListener(this);
                         }
                         tabLayout.getTabAt(0).select();
-                        showContentDetail(1,mType);
+                        showContentDetail(1, mType);
                     }
                 });
             }
@@ -112,26 +124,25 @@ public class ContentManageEmployFragment extends BaseFragment<MainFAActivity, Co
     }
 
     @Override
-    public void showContentDetail(int processStep,String type) {
-            mFragmentTran = getChildFragmentManager().beginTransaction();
-            mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-            mFragmentTran.replace(R.id.frame_container_customer, ContentDetailManageEmployFragment.newInstance(processStep,type));
-            mFragmentTran.commit();
+    public void showContentDetail(int processStep, String type) {
+        mFragmentTran = getChildFragmentManager().beginTransaction();
+        mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+        mFragmentTran.replace(R.id.frame_container_customer, ContentDetailManageEmployFragment.newInstance(processStep, type));
+        mFragmentTran.commit();
     }
 
     @Override
     public int getParrentSelectedPage() {
-        return ((ManageEmployFragment)getParentFragment()).getSeletedPage();
+        return ((ManageEmployFragment) getParentFragment()).getSeletedPage();
     }
 
     @Override
     public void setViewsHeight() {
         /*((ContentDetailManageEmployFragment)getChildFragmentManager()
                         .findFragmentById(R.id.frame_container_customer)).initviewsHeight();*/
-        ContentDetailManageEmployFragment fragment = (ContentDetailManageEmployFragment)getChildFragmentManager()
+        ContentDetailManageEmployFragment fragment = (ContentDetailManageEmployFragment) getChildFragmentManager()
                 .findFragmentById(R.id.frame_container_customer);
-        if(fragment != null)
-        {
+        if (fragment != null) {
             fragment.initviewsHeight();
         }
     }

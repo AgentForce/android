@@ -90,7 +90,7 @@ public class ContactAllFAAdapter extends RecyclerView.Adapter<ContactAllFAAdapte
             }
             case 2:
             {
-                holder.imgProcessStep1.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
+                holder.imgProcessStep1.setBackgroundColor(Color.parseColor(ProjectApplication.getInstance().getProcessStepColor(1)));
                 holder.imgProcessStep2.setBackgroundColor(Color.parseColor(ProjectApplication.getInstance().getProcessStepColor(2)));
                 holder.imgProcessStep3.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
                 holder.imgProcessStep4.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
@@ -98,17 +98,17 @@ public class ContactAllFAAdapter extends RecyclerView.Adapter<ContactAllFAAdapte
             }
             case 3:
             {
-                holder.imgProcessStep1.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
-                holder.imgProcessStep2.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
+                holder.imgProcessStep1.setBackgroundColor(Color.parseColor(ProjectApplication.getInstance().getProcessStepColor(1)));
+                holder.imgProcessStep2.setBackgroundColor(Color.parseColor(ProjectApplication.getInstance().getProcessStepColor(2)));
                 holder.imgProcessStep3.setBackgroundColor(Color.parseColor(ProjectApplication.getInstance().getProcessStepColor(3)));
                 holder.imgProcessStep4.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
                 break;
             }
             case 4:
             {
-                holder.imgProcessStep1.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
-                holder.imgProcessStep2.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
-                holder.imgProcessStep3.setBackgroundColor(mContext.getResources().getColor(R.color.backgroundGrey));
+                holder.imgProcessStep1.setBackgroundColor(Color.parseColor(ProjectApplication.getInstance().getProcessStepColor(1)));
+                holder.imgProcessStep2.setBackgroundColor(Color.parseColor(ProjectApplication.getInstance().getProcessStepColor(2)));
+                holder.imgProcessStep3.setBackgroundColor(Color.parseColor(ProjectApplication.getInstance().getProcessStepColor(3)));
                 holder.imgProcessStep4.setBackgroundColor(Color.parseColor(ProjectApplication.getInstance().getProcessStepColor(4)));
                 break;
             }

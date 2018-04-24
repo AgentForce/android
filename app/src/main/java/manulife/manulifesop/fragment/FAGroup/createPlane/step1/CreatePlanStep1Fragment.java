@@ -26,6 +26,7 @@ import butterknife.BindView;
 
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
@@ -77,7 +78,8 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
     }
 
     private void initViews() {
-        edtStartDate.setText(Utils.convertDateToString(Calendar.getInstance().getTime(),"dd/MM/yyyy"));
+        //edtStartDate.setText(Utils.convertDateToString(Calendar.getInstance().getTime(),"dd/MM/yyyy"));
+        edtStartDate.setText(ProjectApplication.getInstance().getOnboardDate());
 
         List<SpinnerObject> dataspinner = new ArrayList<>();
         dataspinner.add(new SpinnerObject("0", "Theo tháng"));
@@ -240,7 +242,7 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
                 break;
             }
             case R.id.edt_start_date: {
-                showDatePicker("start");
+                //showDatePicker("start");
                 break;
             }
         }
