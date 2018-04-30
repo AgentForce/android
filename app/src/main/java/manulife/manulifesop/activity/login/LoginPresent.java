@@ -11,6 +11,7 @@ import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectInput.InputCreatePass;
 import manulife.manulifesop.api.ObjectInput.InputLoginData;
+import manulife.manulifesop.api.ObjectResponse.CheckCampaign;
 import manulife.manulifesop.api.ObjectResponse.LoginResult;
 import manulife.manulifesop.api.ObjectResponse.UserProfile;
 import manulife.manulifesop.api.ObjectResponse.VerifyOTP;
@@ -96,7 +97,7 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
         if (data.getStatus() == 1) {
             SOPSharedPreferences.getInstance(mContext).saveTokenUser("Bearer "+data.getData().getAccessToken(),
                     data.getData().getRefreshToken());
-            SOPSharedPreferences.getInstance(mContext).saveUser(mUser);
+
             getUserProfile(mUser);
 
         } else {
@@ -122,9 +123,10 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
     private void handleResponseGetProfile(UserProfile rs) {
         if(rs.statusCode == 1){
             //rs.data.level = 15;
+            SOPSharedPreferences.getInstance(mContext).saveUser(mUser,rs.data.id);
             SOPSharedPreferences.getInstance(mContext).saveIsFA(rs.data.level>15);
             SOPSharedPreferences.getInstance(mContext).saveLevel(rs.data.level);
-            ProjectApplication.getInstance().setOnboardDate(rs.data.onboardDate,"yyyy-MM-dd'T'HH:mm:ss.sss'Z'");
+            ProjectApplication.getInstance().setOnboardDate(rs.data.onboardDate,"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             chekCampaign();
         }else
             mPresenterView.finishLoading(rs.msg, false);
@@ -144,12 +146,14 @@ public class LoginPresent extends BasePresenter<LoginContract.View> implements L
 
     }
 
-    private void handleResponseCheckCampaign(VerifyOTP data) {
+    private void handleResponseCheckCampaign(CheckCampaign data) {
         if (data.statusCode == 1) {
             //test
-            data.data.status = false;
+            //data.data.status = false;
             if (data.data.status) {
                 //go to main if campaign is created
+                SOPSharedPreferences.getInstance(mContext).saveCampaignStartEnd(
+                        data.data.data.startDate,data.data.data.endDate,"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                 mPresenterView.showMainFAActvity();
             } else {
                 mPresenterView.showConfirmCreatePlan();

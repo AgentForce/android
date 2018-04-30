@@ -24,7 +24,7 @@ public interface FAEventsContract {
     }
 
     interface Action {
-        void getAllActivitisInMonth(int month);
+        void getAllActivitisInMonth(int month,Date loadDate);
         void getEventsOneDay(Date date);
         void updateEventDone(int eventID);
     }

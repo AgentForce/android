@@ -153,6 +153,7 @@ public class ContactPersonTab1Fragment extends BaseFragment<ContactPersonActivit
         initViews();
         //loadDataContact();
         UsersList data = (UsersList) getArguments().getSerializable("data");
+        mAdapterActiveHist = null;
         loadContactList(data);
         addTextChangeListener();
     }

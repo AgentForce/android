@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="triệu đ"
+                        android:text="đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>
@@ -119,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="triệu đ"
+                        android:text="đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>
@@ -163,7 +163,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="triệu đ"
+                        android:text="đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>
@@ -207,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="triệu đ"
+                        android:text="đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>
@@ -251,7 +251,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="triệu đ"
+                        android:text="đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>
@@ -295,7 +295,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="triệu đ"
+                        android:text="đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>
@@ -339,7 +339,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
-                        android:text="triệu đ"
+                        android:text="đ"
                         android:textSize="@dimen/welcome_activity_note" />
                 </LinearLayout>
             </RelativeLayout>

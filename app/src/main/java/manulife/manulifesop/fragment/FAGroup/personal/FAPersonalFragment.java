@@ -77,7 +77,7 @@ public class FAPersonalFragment extends BaseFragment<MainFAActivity, FAPersonalP
                             @Override
                             public void DiaglogPositive() {
                                 SOPSharedPreferences.getInstance(getContext()).saveTokenUser("", "");
-                                SOPSharedPreferences.getInstance(getContext()).saveUser("");
+                                SOPSharedPreferences.getInstance(getContext()).saveUser("",-1);
                                 SOPSharedPreferences.getInstance(getContext()).saveIsFA(true);
                                 //mActivity.logoutProcess();
                                 mActivity.backToPrevious(new Bundle());

@@ -129,6 +129,7 @@ public class IntroduceContactTabFragment extends BaseFragment<IntroduceContactAc
         mType = getArguments().getString("type", "");
         mMonth = getArguments().getInt("month", 0);
         initViews();
+        mAdapterActiveHist = null;
         loadContactList(ProjectApplication.getInstance().getIntroduce());
     }
 

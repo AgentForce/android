@@ -112,7 +112,7 @@ public class ContactDetailStep2Fragment extends BaseFragment<ContactDetailActivi
                     data.data.get(i).manulifeLead.name + " - " + data.data.get(i).name,
                     processStepTemp,
                     Utils.convertStringTimeZoneDateToStringDate(data.data.get(i).startDate,
-                            "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "dd/MM/yyyy HH:mm"),
+                            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "dd/MM/yyyy HH:mm"),
                     data.data.get(i).location, data.data.get(i).status
             );
 

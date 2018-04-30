@@ -16,6 +16,9 @@ public interface ContentManageEmployContract {
 
         int getParrentSelectedPage();
         void setViewsHeight();
+
+        void setManagerName(String name);
+        int getUserIDProcessing();
     }
 
     interface Action {

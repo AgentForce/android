@@ -70,7 +70,7 @@ public class SMSaleMenuFragment extends BaseFragment<MainFAActivity, SMSaleMenuP
                 break;
             }
             case R.id.layout_manage_sale: {
-                Toast.makeText(mActivity, "Quan ly ban hang", Toast.LENGTH_SHORT).show();
+                mActivity.showManageSale();
                 break;
             }
         }

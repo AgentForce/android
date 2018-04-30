@@ -57,7 +57,7 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:alpha="0"
-                    android:background="@color/colorPrimaryDark" />
+                    android:background="@drawable/ic_check" />
 
                 <TextView
                     android:id="@+id/txt_contact_step1_title"
@@ -92,7 +92,7 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:alpha="0"
-                    android:background="@color/colorPrimaryDark" />
+                    android:background="@drawable/ic_check" />
 
                 <TextView
                     android:id="@+id/txt_contact_step2_title"
@@ -125,7 +125,7 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:alpha="0"
-                    android:background="@color/colorPrimaryDark" />
+                    android:background="@drawable/ic_check" />
 
                 <TextView
                     android:id="@+id/txt_contact_step3_title"
@@ -157,7 +157,7 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:alpha="0"
-                    android:background="@color/colorPrimaryDark" />
+                    android:background="@drawable/ic_check" />
 
                 <TextView
                     android:id="@+id/txt_contact_step4_title"

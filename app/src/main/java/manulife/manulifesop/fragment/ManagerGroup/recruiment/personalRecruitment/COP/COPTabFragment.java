@@ -101,6 +101,7 @@ public class COPTabFragment extends BaseFragment<COPActivity, COPTabPresent> imp
         mTarget = getArguments().getInt("target", 0);
         mMonth = getArguments().getInt("month", 0);
         initViews();
+        mAdapterActiveHist = null;
         loadDataContact(getFirstData());
         addTextChangeListener();
     }

@@ -16,7 +16,7 @@ public interface SMCampaignPercentContract {
     }
 
     interface Action {
-        void updateCampaignWeek(int month, int contractW1, int contractW2, int contractW3, int contractW4);
-        void increaseContactCampaign(int month, int increaseNumber);
+        void updateCampaignWeekSM(int month, int contractW1, int contractW2, int contractW3, int contractW4);
+        void increaseAgentCampaignSM(int month, int increaseNumber);
     }
 }

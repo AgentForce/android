@@ -12,6 +12,7 @@ public interface ManageEmployContract {
     interface View extends BaseMVPView {
         void initViewPager();
         int getSeletedPage();
+        int getUserIDProcessing();
     }
 
     interface Action {

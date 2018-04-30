@@ -124,7 +124,7 @@ public class UMCreatePlanStep8Present extends BasePresenter<UMCreatePlanStep8Con
             int fycContinueMonthlyUM,
             int totalCommissionNewUMYearUM,
             List<UMStep6> monthGoal) {
-        mPresenterView.showLoading("Lấy dữ liệu");
+        mPresenterView.showLoading("Xử lý dữ liệu");
 
         InputCreateCampaignUM data = new InputCreateCampaignUM();
         data.startDate = Utils.convertStringDateToStringDate(

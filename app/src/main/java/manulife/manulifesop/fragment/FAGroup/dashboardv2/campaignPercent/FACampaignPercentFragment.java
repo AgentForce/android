@@ -610,9 +610,22 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
         txtMonthOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.dismiss();
-                int increaseNum =  sbMonthStep4.getProgress() - mListMonthTarget.get(3);
-                mActionListener.increaseContactCampaign(mMonth,increaseNum);
+                showConfirm("Xác nhận", "Đồng ý chỉnh sửa mục tiêu tháng?", "Đồng ý",
+                        "Hủy", SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
+                            @Override
+                            public void DiaglogPositive() {
+                                alertDialog.dismiss();
+                                int increaseNum =  sbMonthStep4.getProgress() - mListMonthTarget.get(3);
+                                mActionListener.increaseContactCampaign(mMonth,increaseNum);
+                            }
+
+                            @Override
+                            public void DiaglogNegative() {
+
+                            }
+                        });
+
+
             }
         });
 

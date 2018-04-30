@@ -18,6 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.ManagerGroup.SMCreatePlan.SMCreatePlanActivity;
 import manulife.manulifesop.adapter.ObjectData.SpinnerObject;
@@ -66,7 +67,11 @@ public class SMCreatePlanStep1Fragment extends BaseFragment<SMCreatePlanActivity
     }
 
     private void initViews() {
-        edtStartDate.setText(Utils.convertDateToString(Calendar.getInstance().getTime(), "dd/MM/yyyy"));
+        String startDate = Utils.convertDateToString(Calendar.getInstance().getTime(),"dd/MM/yyyy");
+        String onboardDate = ProjectApplication.getInstance().getOnboardDate();
+        if(onboardDate != null && onboardDate.length() > 1)
+            startDate = onboardDate;
+        edtStartDate.setText(startDate);
 
         List<SpinnerObject> dataspinner = new ArrayList<>();
         dataspinner.add(new SpinnerObject("0", "Theo tháng"));

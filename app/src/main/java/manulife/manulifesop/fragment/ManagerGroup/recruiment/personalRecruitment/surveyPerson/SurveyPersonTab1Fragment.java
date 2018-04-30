@@ -151,8 +151,8 @@ public class SurveyPersonTab1Fragment extends BaseFragment<SurveyActivity, Surve
         mTargetIntroduce = getArguments().getInt("targetIntroduce", 0);
         mCampaignMonth = ProjectApplication.getInstance().getCampaignRecruit();
         initViews();
-        //loadDataContact();
         UsersList data = (UsersList) getArguments().getSerializable("data");
+        mAdapterActiveHist = null;
         loadContactList(data);
         addTextChangeListener();
     }

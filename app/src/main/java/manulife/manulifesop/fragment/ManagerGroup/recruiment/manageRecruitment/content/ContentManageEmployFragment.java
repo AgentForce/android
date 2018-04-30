@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import manulife.manulifesop.R;
@@ -15,6 +16,8 @@ import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.fragment.ManagerGroup.recruiment.manageRecruitment.ManageEmployFragment;
 import manulife.manulifesop.fragment.ManagerGroup.recruiment.manageRecruitment.content.contentDetail.ContentDetailManageEmployFragment;
+import manulife.manulifesop.util.SOPSharedPreferences;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -29,6 +32,9 @@ public class ContentManageEmployFragment extends BaseFragment<MainFAActivity, Co
     TabLayout tabLayout;
     @BindView(R.id.frame_container_customer)
     FrameLayout mFrameLayout;
+
+    @BindView(R.id.txt_manager_name)
+    TextView txtManagerName;
 
     private FragmentTransaction mFragmentTran;
 
@@ -73,7 +79,13 @@ public class ContentManageEmployFragment extends BaseFragment<MainFAActivity, Co
             }
         } else if (mType.equals("year")) {
             tabLayout.setVisibility(View.VISIBLE);
-            for (int i = 1; i <= 12; i++) {
+
+            String startDate = SOPSharedPreferences.getInstance(getContext()).getCampaignStart();
+            int monthStart = Utils.getMonthFromStringDate(startDate, "dd/MM/yyyy")+1;
+            String endDate = SOPSharedPreferences.getInstance(getContext()).getCampaignEnd();
+            int monthEnd = Utils.getMonthFromStringDate(endDate, "dd/MM/yyyy")+1;
+
+            for (int i = monthStart; i <= monthEnd; i++) {
                 tabLayout.addTab(tabLayout.newTab().setText("Tháng " + i).setTag(i));
             }
         } else {
@@ -115,8 +127,10 @@ public class ContentManageEmployFragment extends BaseFragment<MainFAActivity, Co
                             //noinspection deprecation
                             observer.removeGlobalOnLayoutListener(this);
                         }
-                        tabLayout.getTabAt(0).select();
-                        showContentDetail(1, mType);
+                        if(tabLayout!=null) {
+                            tabLayout.getTabAt(0).select();
+                            showContentDetail((Integer) tabLayout.getTabAt(0).getTag(), mType);
+                        }
                     }
                 });
             }
@@ -138,12 +152,28 @@ public class ContentManageEmployFragment extends BaseFragment<MainFAActivity, Co
 
     @Override
     public void setViewsHeight() {
-        /*((ContentDetailManageEmployFragment)getChildFragmentManager()
+        /*((ContentDetailManageSaleFragment)getChildFragmentManager()
                         .findFragmentById(R.id.frame_container_customer)).initviewsHeight();*/
         ContentDetailManageEmployFragment fragment = (ContentDetailManageEmployFragment) getChildFragmentManager()
                 .findFragmentById(R.id.frame_container_customer);
         if (fragment != null) {
             fragment.initviewsHeight();
         }
+    }
+
+    @Override
+    public void setManagerName(String name) {
+        txtManagerName.setText(name);
+    }
+
+    @Override
+    public int getUserIDProcessing() {
+        int userID = -1;
+        ContentDetailManageEmployFragment fragment = (ContentDetailManageEmployFragment) getChildFragmentManager()
+                .findFragmentById(R.id.frame_container_customer);
+        if (fragment != null) {
+            userID = fragment.getUserIDProcessing();
+        }
+        return userID;
     }
 }

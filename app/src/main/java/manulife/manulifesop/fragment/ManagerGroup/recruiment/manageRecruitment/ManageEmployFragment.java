@@ -103,4 +103,9 @@ public class ManageEmployFragment extends BaseFragment<MainFAActivity, ManageEmp
     public int getSeletedPage() {
         return viewPager.getCurrentItem();
     }
+
+    @Override
+    public int getUserIDProcessing() {
+        return ((ContentManageEmployFragment)mListFragment.get(viewPager.getCurrentItem())).getUserIDProcessing();
+    }
 }

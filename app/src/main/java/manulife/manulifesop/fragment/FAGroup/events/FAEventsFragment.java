@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
@@ -70,10 +71,11 @@ public class FAEventsFragment extends BaseFragment<MainFAActivity, FAEventsPrese
         mActivity.showHideActionbar(true);
         initViews();
         initCalendarEvents();
-        //addEventToDate(null);
-        mActionListener.getAllActivitisInMonth(Utils.getCurrentMonth(getContext()));
+
+        compactCalendarView.removeAllEvents();
+        mActionListener.getAllActivitisInMonth(Utils.getCurrentMonth(getContext())-1,
+                Calendar.getInstance().getTime());
         mCurrentDate = Calendar.getInstance().getTime();
-        //mActionListener.getEventsOneDay(mCurrentDate);
     }
 
     private void initViews() {
@@ -103,6 +105,17 @@ public class FAEventsFragment extends BaseFragment<MainFAActivity, FAEventsPrese
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
                 setTitleFromDate(firstDayOfNewMonth);
+                compactCalendarView.removeAllEvents();
+
+                Date loadDAte = firstDayOfNewMonth;
+                if(Utils.getMonthFromDate(firstDayOfNewMonth) ==
+                        Utils.getCurrentMonth(getContext())-1){
+                    loadDAte = Calendar.getInstance().getTime();
+                    compactCalendarView.setCurrentDate(loadDAte);
+                }
+                mActionListener.getAllActivitisInMonth(Utils.getMonthFromDate(loadDAte),
+                        loadDAte);
+
             }
         });
     }

@@ -155,7 +155,7 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
                                 @Override
                                 public void DiaglogPositive() {
                                     alertDialog.dismiss();
-                                    mActionListener.updateCampaignWeek(mMonth,
+                                    mActionListener.updateCampaignWeekSM(mMonth,
                                             Integer.valueOf(txtsignStep1.getText().toString()),
                                             Integer.valueOf(txtsignStep2.getText().toString()),
                                             Integer.valueOf(txtsignStep3.getText().toString()),
@@ -225,11 +225,11 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
 
         mCurrentProcessStep1 = newPercent;
 
-        txtcontractStep1.setText(String.valueOf(newContract * 10));
-        txtmeetingStep1.setText(String.valueOf(newContract * 5));
-        txtadvisoryStep1.setText(String.valueOf(newContract * 3));
+        txtcontractStep1.setText(String.valueOf(newContract * 8));
+        txtmeetingStep1.setText(String.valueOf(newContract * 3));
+        txtadvisoryStep1.setText(String.valueOf(newContract * 2));
         txtsignStep1.setText(String.valueOf(newContract));
-        txtintroduceStep1.setText(String.valueOf(newContract * 8));
+        txtintroduceStep1.setText(String.valueOf(newContract * 6));
     }
 
     private void reloadViewsWeek2() {
@@ -238,11 +238,11 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
         sbStep2.setProgress(newPercent);
         mCurrentProcessStep2 = newPercent;
 
-        txtcontractStep2.setText(String.valueOf(newContract * 10));
-        txtmeetingStep2.setText(String.valueOf(newContract * 5));
-        txtadvisoryStep2.setText(String.valueOf(newContract * 3));
+        txtcontractStep2.setText(String.valueOf(newContract * 8));
+        txtmeetingStep2.setText(String.valueOf(newContract * 3));
+        txtadvisoryStep2.setText(String.valueOf(newContract * 2));
         txtsignStep2.setText(String.valueOf(newContract));
-        txtintroduceStep2.setText(String.valueOf(newContract * 8));
+        txtintroduceStep2.setText(String.valueOf(newContract * 6));
     }
 
     private void reloadViewsWeek3() {
@@ -251,11 +251,11 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
         sbStep3.setProgress(newPercent);
         mCurrentProcessStep3 = newPercent;
 
-        txtcontractStep3.setText(String.valueOf(newContract * 10));
-        txtmeetingStep3.setText(String.valueOf(newContract * 5));
-        txtadvisoryStep3.setText(String.valueOf(newContract * 3));
+        txtcontractStep3.setText(String.valueOf(newContract * 8));
+        txtmeetingStep3.setText(String.valueOf(newContract * 3));
+        txtadvisoryStep3.setText(String.valueOf(newContract * 2));
         txtsignStep3.setText(String.valueOf(newContract));
-        txtintroduceStep3.setText(String.valueOf(newContract * 8));
+        txtintroduceStep3.setText(String.valueOf(newContract * 6));
     }
 
     private void reloadViewsWeek4() {
@@ -263,11 +263,11 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
         int newPercent = Math.round((float) newContract / mTotalContract * 100);
         sbStep4.setProgress(newPercent);
 
-        txtcontractStep4.setText(String.valueOf(newContract * 10));
-        txtmeetingStep4.setText(String.valueOf(newContract * 5));
-        txtadvisoryStep4.setText(String.valueOf(newContract * 3));
+        txtcontractStep4.setText(String.valueOf(newContract * 8));
+        txtmeetingStep4.setText(String.valueOf(newContract * 3));
+        txtadvisoryStep4.setText(String.valueOf(newContract * 2));
         txtsignStep4.setText(String.valueOf(newContract));
-        txtintroduceStep4.setText(String.valueOf(newContract * 8));
+        txtintroduceStep4.setText(String.valueOf(newContract * 6));
     }
 
     private void initViewsDialogWeek1(View dialogView) {
@@ -290,18 +290,16 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
             @Override
             public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
                 if (fromUserTouch) {
-                    /*intTemp = Math.round(Integer.valueOf(txtcontractStep1.getText().toString())
-                            * progress / (int) txtcontractStep1.getTag());
-                    txtcontractStep1.setText(String.valueOf(intTemp));*/
+
                     newContract = Math.round((float) progress * mTotalContract / 100);
                     temp = mTotalContract - newContract;
                     if (newContract != mListContractWeek.get(0) && temp >= 0) {
                         //10:5:3:1:8
-                        txtcontractStep1.setText(String.valueOf(newContract * 10));
-                        txtmeetingStep1.setText(String.valueOf(newContract * 5));
-                        txtadvisoryStep1.setText(String.valueOf(newContract * 3));
+                        txtcontractStep1.setText(String.valueOf(newContract * 8));
+                        txtmeetingStep1.setText(String.valueOf(newContract * 3));
+                        txtadvisoryStep1.setText(String.valueOf(newContract * 2));
                         txtsignStep1.setText(String.valueOf(newContract));
-                        txtintroduceStep1.setText(String.valueOf(newContract * 8));
+                        txtintroduceStep1.setText(String.valueOf(newContract * 6));
 
                         //change percent week 2 - 3 - 4
                         mListContractWeek.set(0, newContract);
@@ -369,11 +367,11 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
                     temp = (mTotalContract - newContract - mListContractWeek.get(0));
                     if (newContract != mListContractWeek.get(1) && temp >= 0) {
                         //10:5:3:1:8
-                        txtcontractStep2.setText(String.valueOf(newContract * 10));
-                        txtmeetingStep2.setText(String.valueOf(newContract * 5));
-                        txtadvisoryStep2.setText(String.valueOf(newContract * 3));
+                        txtcontractStep2.setText(String.valueOf(newContract * 8));
+                        txtmeetingStep2.setText(String.valueOf(newContract * 3));
+                        txtadvisoryStep2.setText(String.valueOf(newContract * 2));
                         txtsignStep2.setText(String.valueOf(newContract));
-                        txtintroduceStep2.setText(String.valueOf(newContract * 8));
+                        txtintroduceStep2.setText(String.valueOf(newContract * 6));
                         //change percent week 3 - 4
                         mListContractWeek.set(1, newContract);
                         temp = (mTotalContract - newContract - mListContractWeek.get(0)) / 2;
@@ -435,11 +433,11 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
                     temp = mTotalContract - newContract - mListContractWeek.get(0) - mListContractWeek.get(1);
                     if (newContract != mListContractWeek.get(2) && temp >= 0) {
                         //10:5:3:1:8
-                        txtcontractStep3.setText(String.valueOf(newContract * 10));
-                        txtmeetingStep3.setText(String.valueOf(newContract * 5));
-                        txtadvisoryStep3.setText(String.valueOf(newContract * 3));
+                        txtcontractStep3.setText(String.valueOf(newContract * 8));
+                        txtmeetingStep3.setText(String.valueOf(newContract * 3));
+                        txtadvisoryStep3.setText(String.valueOf(newContract * 2));
                         txtsignStep3.setText(String.valueOf(newContract));
-                        txtintroduceStep3.setText(String.valueOf(newContract * 8));
+                        txtintroduceStep3.setText(String.valueOf(newContract * 6));
                         //change percent week 4
                         mListContractWeek.set(2, newContract);
                         mListContractWeek.set(3, temp);
@@ -509,7 +507,7 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
         mListContractWeek = new ArrayList<>();
         for (int i = 0; i < data.data.campaigns.size(); i++) {
             totalContract += data.data.campaigns.get(i).targetAgentCode;
-            mListContractWeek.add(data.data.campaigns.get(i).currentAgentCode);
+            mListContractWeek.add(data.data.campaigns.get(i).targetAgentCode);
         }
         mTotalContract = totalContract;
     }
@@ -563,7 +561,7 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
 
     private void initAllViewsMonth(View view) {
         ((TextView) view.findViewById(R.id.txt_title)).setText(
-                "Chỉnh sửa mục tiêu KH tháng " + mMonth
+                "Chỉnh sửa mục tiêu hợp đồng tháng " + mMonth
         );
 
         sbMonthStep1 = view.findViewById(R.id.sb_contract);
@@ -577,13 +575,13 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
             @Override
             public void onClick(View view) {
                 //Toast.makeText(getContext(), "Gọi api update", Toast.LENGTH_SHORT).show();
-                showConfirm("Xác nhận", "Đồng ý tăng số lượng liên hệ?", "Đồng ý", "Hủy",
+                showConfirm("Xác nhận", "Đồng ý tăng số lượng hợp đồng?", "Đồng ý", "Hủy",
                         SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
                             @Override
                             public void DiaglogPositive() {
                                 alertDialog.dismiss();
                                 int increaseNum = sbMonthStep4.getProgress() - mListMonthTarget.get(3);
-                                mActionListener.increaseContactCampaign(mMonth, increaseNum);
+                                mActionListener.increaseAgentCampaignSM(mMonth, increaseNum);
                             }
 
                             @Override

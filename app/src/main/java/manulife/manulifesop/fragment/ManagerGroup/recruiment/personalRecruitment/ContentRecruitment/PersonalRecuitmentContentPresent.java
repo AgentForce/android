@@ -15,6 +15,7 @@ import manulife.manulifesop.BuildConfig;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectInput.InputChangeCampaignWeek;
+import manulife.manulifesop.api.ObjectInput.InputIncreaseAgent;
 import manulife.manulifesop.api.ObjectInput.InputIncreaseContact;
 import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
@@ -97,7 +98,7 @@ public class PersonalRecuitmentContentPresent extends BasePresenter<PersonalRecu
     }
 
     @Override
-    public void updateCampaignWeek(int month, int contractW1, int contractW2, int contractW3, int contractW4) {
+    public void updateCampaignWeekSM(int month, int contractW1, int contractW2, int contractW3, int contractW4) {
         mPresenterView.showLoading("Xử lý dữ liệu");
         List<Integer> dataList = new ArrayList<>();
         dataList.add(contractW1);
@@ -108,7 +109,7 @@ public class PersonalRecuitmentContentPresent extends BasePresenter<PersonalRecu
         InputChangeCampaignWeek data = new InputChangeCampaignWeek();
         data.target = dataList;
         String checksum = Utils.getSignature(new Gson().toJson(data));
-        getCompositeDisposable().add(ApiService.getServer().changeCampaignWeek(
+        getCompositeDisposable().add(ApiService.getServer().changeCampaignSMWeek(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                 DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum,
@@ -130,13 +131,13 @@ public class PersonalRecuitmentContentPresent extends BasePresenter<PersonalRecu
     }
 
     @Override
-    public void increaseContactCampaign(int month, int increaseNumber) {
+    public void increaseAgentCampaignSM(int month, int increaseNumber) {
         mPresenterView.showLoading("Xử lý dữ liệu");
-        InputIncreaseContact data = new InputIncreaseContact();
-        data.incrementContract = increaseNumber;
+        InputIncreaseAgent data = new InputIncreaseAgent();
+        data.incrementNewAgent = increaseNumber;
         String checksum = Utils.getSignature(new Gson().toJson(data));
 
-        getCompositeDisposable().add(ApiService.getServer().increaseContactCampaign(
+        getCompositeDisposable().add(ApiService.getServer().increaseUMAgentCampaign(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
                 DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum,

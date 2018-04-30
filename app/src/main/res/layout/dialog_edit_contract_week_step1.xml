@@ -175,8 +175,6 @@
                 android:layout_marginLeft="2dp"
                 android:textSize="12sp" />
         </LinearLayout>
-
-
     </LinearLayout>
 
 </LinearLayout>

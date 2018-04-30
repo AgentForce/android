@@ -86,7 +86,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter> im
 
         txtJoinDate.setText(Utils.convertStringTimeZoneDateToStringDate(
                 mDataProfie.data.expirence,
-                "yyyy-MM-dd'T'HH:mm:ss.sss'Z'",
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                 "dd/MM/yyyy"));
         if (mDataProfie.data.reportToUsername != null && mDataProfie.data.reportToUsername.length() > 0) {
             String[] splitReportTo = mDataProfie.data.reportToUsername.split("-");

@@ -17,7 +17,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
-            android:src="@color/colorPrimary" />
+            android:background="@drawable/ic_sale_personal" />
 
         <LinearLayout
             android:id="@+id/layout_mid_row1"
@@ -57,8 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/layout_mid_row1"
-            android:layout_toRightOf="@+id/img_row1"
             android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/img_row1"
             android:background="@color/backgroundGrey" />
     </RelativeLayout>
 
@@ -75,7 +75,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
-            android:src="@color/colorPrimary" />
+            android:background="@drawable/ic_sale_manager" />
 
         <LinearLayout
             android:id="@+id/layout_mid_row2"
@@ -113,9 +113,16 @@
 
     </RelativeLayout>
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/image_step3"/>
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_margin="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_menu_sale" />
+    </LinearLayout>
 
 </LinearLayout>

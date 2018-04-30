@@ -110,13 +110,13 @@ public class EventDetailActivity extends BaseActivity<EventDetailPresenter> impl
         switchAllDay.setChecked(data.data.fullDate);
 
         String startDay = Utils.convertStringTimeZoneDateToStringDate(
-                data.data.startDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "dd/MM/yyyy"
+                data.data.startDate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "dd/MM/yyyy"
         );
         String startTime = Utils.convertStringTimeZoneDateToStringDate(
-                data.data.startDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "HH:mm"
+                data.data.startDate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "HH:mm"
         );
         String endTime = Utils.convertStringTimeZoneDateToStringDate(
-                data.data.endDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "HH:mm"
+                data.data.endDate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "HH:mm"
         );
         txtStartDay.setText(startDay);
         if (data.data.fullDate) {

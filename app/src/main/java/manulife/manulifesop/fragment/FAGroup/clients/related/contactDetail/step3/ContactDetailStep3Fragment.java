@@ -96,7 +96,7 @@ public class ContactDetailStep3Fragment extends BaseFragment<ContactDetailActivi
                         data.data.rows.get(i).processStep + "" + data.data.rows.get(i).statusProcessStep
                 ));
             temp.setContent(Utils.convertStringTimeZoneDateToStringDate(
-                    data.data.rows.get(i).createdAt, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'",
+                    data.data.rows.get(i).createdAt, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                     "dd/MM/yyyy HH:mm:ss"
             ));
             mData.add(temp);

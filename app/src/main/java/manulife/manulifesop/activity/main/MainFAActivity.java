@@ -18,9 +18,12 @@ import android.widget.Toast;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.login.LoginActivity;
 import manulife.manulifesop.base.BaseActivity;
@@ -29,6 +32,7 @@ import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlan
 import manulife.manulifesop.fragment.FAGroup.dashboardv2.FADashBoardFragment;
 import manulife.manulifesop.fragment.FAGroup.events.FAEventsFragment;
 import manulife.manulifesop.fragment.FAGroup.personal.FAPersonalFragment;
+import manulife.manulifesop.fragment.ManagerGroup.manageSale.ManageSaleFragment;
 import manulife.manulifesop.fragment.ManagerGroup.recruiment.manageRecruitment.ManageEmployFragment;
 import manulife.manulifesop.fragment.ManagerGroup.menuDashBoard.menuEmploy.SMEmployMenuFragment;
 import manulife.manulifesop.fragment.ManagerGroup.menuDashBoard.menuSale.SMSaleMenuFragment;
@@ -363,6 +367,20 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         }
     }
 
+    @Override
+    public void showManageSale() {
+        mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+        if (!(mCurrentFragment instanceof ManageSaleFragment)) {
+            layoutNotification.setVisibility(View.VISIBLE);
+            layoutEdit.setVisibility(View.GONE);
+
+            mFragmentTran = getSupportFragmentManager().beginTransaction();
+            mFragmentTran.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            mFragmentTran.replace(R.id.frame_container, ManageSaleFragment.newInstance());
+            mFragmentTran.commit();
+        }
+    }
+
     @OnClick({R.id.layout_notification, R.id.layout_edit, R.id.layout_add})
     void onClickViews(View view) {
         int id = view.getId();
@@ -375,7 +393,7 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
                 mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
                 if (mCurrentFragment instanceof FACustomerFragment)
                     ((FACustomerFragment) mCurrentFragment).showDialogEditCampaign();
-                else if(mCurrentFragment instanceof PersonalRecruitmentFragment)
+                else if (mCurrentFragment instanceof PersonalRecruitmentFragment)
                     ((PersonalRecruitmentFragment) mCurrentFragment).showDialogEditCampaign();
 
                 break;
@@ -385,6 +403,26 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
 
     @Override
     public void onBackPressed() {
+        //check if is in ManageSaleFragment
+        mCurrentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+        if (mCurrentFragment instanceof ManageEmployFragment) {
+            if (SOPSharedPreferences.getInstance(getApplicationContext()).getUserID()
+                    != ((ManageEmployFragment) mCurrentFragment).getUserIDProcessing())
+                EventBus.getDefault().post("back to report to in ContentDetailManageEmployFragment");
+            else
+                processBackPressed();
+        } else if (mCurrentFragment instanceof ManageSaleFragment) {
+            if (SOPSharedPreferences.getInstance(getApplicationContext()).getUserID()
+                    != ((ManageSaleFragment) mCurrentFragment).getUserIDProcessing())
+                EventBus.getDefault().post("back to report to in ContentDetailManageSaleFragment");
+            else
+                processBackPressed();
+        } else
+            processBackPressed();
+
+    }
+
+    private void processBackPressed() {
         if (!firstBackPressed) {
             firstBackPressed = true;
             SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
@@ -418,4 +456,5 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 }

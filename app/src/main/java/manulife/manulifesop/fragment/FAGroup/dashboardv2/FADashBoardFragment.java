@@ -154,8 +154,12 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
     }
 
     private void initHeightViaSelected() {
+        boolean isFA = SOPSharedPreferences.getInstance(getContext()).getIsFA();
         int pageSelected = ((DashboardFragment) getParentFragment()).getSelectedPage();
-        if (pageSelected == 1) {
+
+        if (isFA == false && pageSelected == 1) {
+            initViewHeight();
+        }else if(isFA){
             initViewHeight();
         }
     }

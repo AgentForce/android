@@ -20,6 +20,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -130,7 +131,7 @@ public class Utils {
     public static String convertStringTimeZoneDateToStringDate(String inputDate, String inputTimzoneFormat, String outputFormat) {
         String result = "";
         try {
-            TimeZone tz = TimeZone.getTimeZone("UTC");
+            TimeZone tz = TimeZone.getTimeZone("+07");//RFC 822 time zone
             DateFormat df = new SimpleDateFormat(inputTimzoneFormat);
             df.setTimeZone(tz);
             result = convertDateToString(df.parse(inputDate), outputFormat);
@@ -165,6 +166,18 @@ public class Utils {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static int getMonthFromDate(Date date){
+        int result = 0;
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            result = calendar.get(Calendar.MONTH);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  result;
     }
 
     public static int genLastPage(int count, int limit) {

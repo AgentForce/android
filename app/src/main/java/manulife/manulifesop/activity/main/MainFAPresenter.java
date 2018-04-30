@@ -10,6 +10,7 @@ import manulife.manulifesop.BuildConfig;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectInput.InputRefreshToken;
 import manulife.manulifesop.api.ObjectInput.InputTest;
+import manulife.manulifesop.api.ObjectResponse.CheckCampaign;
 import manulife.manulifesop.api.ObjectResponse.RefreshToken;
 import manulife.manulifesop.api.ObjectResponse.Test;
 import manulife.manulifesop.api.ObjectResponse.VerifyOTP;
@@ -46,11 +47,13 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
 
     }
 
-    private void handleResponseCheckCampaign(VerifyOTP data) {
+    private void handleResponseCheckCampaign(CheckCampaign data) {
         if (data.statusCode == 1) {
             //test
             //data.data.status = false;
             if (data.data.status) {
+                SOPSharedPreferences.getInstance(mContext).saveCampaignStartEnd(
+                        data.data.data.startDate,data.data.data.endDate,"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                 mPresenterView.showDashBoard();
             } else {
                 mPresenterView.showFragmentConfirmCreatePlan("Trang chủ");

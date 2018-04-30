@@ -161,13 +161,13 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
         switchAllday.setChecked(mData.data.fullDate);
 
         String startDay = Utils.convertStringTimeZoneDateToStringDate(
-                mData.data.startDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "dd/MM/yyyy"
+                mData.data.startDate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "dd/MM/yyyy"
         );
         String startTime = Utils.convertStringTimeZoneDateToStringDate(
-                mData.data.startDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "HH:mm"
+                mData.data.startDate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "HH:mm"
         );
         String endTime = Utils.convertStringTimeZoneDateToStringDate(
-                mData.data.endDate, "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "HH:mm"
+                mData.data.endDate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "HH:mm"
         );
         txtStartDate.setText(startDay);
         if (mData.data.fullDate) {
@@ -311,19 +311,19 @@ public class CreateEventActivity extends BaseActivity<CreateEventPresenter> impl
             }
             case R.id.txt_survey: {
                 mTypeInt = 7;
-                txtType.setText(ProjectApplication.getInstance().getEventStringFromType(4));
+                txtType.setText(ProjectApplication.getInstance().getEventStringFromType(7));
                 alertDialog.dismiss();
                 break;
             }
             case R.id.txt_cop: {
                 mTypeInt = 5;
-                txtType.setText(ProjectApplication.getInstance().getEventStringFromType(4));
+                txtType.setText(ProjectApplication.getInstance().getEventStringFromType(5));
                 alertDialog.dismiss();
                 break;
             }
             case R.id.txt_mit: {
                 mTypeInt = 6;
-                txtType.setText(ProjectApplication.getInstance().getEventStringFromType(4));
+                txtType.setText(ProjectApplication.getInstance().getEventStringFromType(6));
                 alertDialog.dismiss();
                 break;
             }

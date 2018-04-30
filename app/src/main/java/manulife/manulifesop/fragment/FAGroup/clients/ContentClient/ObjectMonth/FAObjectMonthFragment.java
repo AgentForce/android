@@ -87,6 +87,7 @@ public class FAObjectMonthFragment extends BaseFragment<MainFAActivity, FAObject
 
     private void initViews(CampaignMonth data) {
 
+        targetStep1 = 0; targetStep2 = 0; targetStep3 = 0; targetStep4 = 0; targetStep5 = 0;
         if (data != null && data.statusCode == 1) {
             //int currentStep1 = 0, currentStep2 = 0, currentStep3 = 0, currentStep4 = 0, currentStep5 = 0;
             io.reactivex.Observable.just(data)

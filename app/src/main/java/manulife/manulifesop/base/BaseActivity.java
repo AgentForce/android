@@ -81,7 +81,6 @@ public class BaseActivity<P extends BasePresenter> extends AppCompatActivity imp
         if (mActionListener != null) {
             mActionListener.unSubscribeRequests();
         }
-
         super.onStop();
     }
 

@@ -1,6 +1,7 @@
 package manulife.manulifesop.api;
 
 import io.reactivex.Observable;
+import manulife.manulifesop.api.ObjectInput.InputIncreaseAgent;
 import manulife.manulifesop.api.ObjectInput.InputAddContact;
 import manulife.manulifesop.api.ObjectInput.InputChangeCampaignWeek;
 import manulife.manulifesop.api.ObjectInput.InputChangeContactStatus;
@@ -27,6 +28,7 @@ import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.CampaignForcastTarget;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.api.ObjectResponse.CampaignRecruitMonth;
+import manulife.manulifesop.api.ObjectResponse.CheckCampaign;
 import manulife.manulifesop.api.ObjectResponse.CheckUser;
 import manulife.manulifesop.api.ObjectResponse.CheckVersion;
 import manulife.manulifesop.api.ObjectResponse.ContactActivity;
@@ -40,9 +42,13 @@ import manulife.manulifesop.api.ObjectResponse.EventsOneDay;
 import manulife.manulifesop.api.ObjectResponse.ForcastIncomeUM;
 import manulife.manulifesop.api.ObjectResponse.LoginResult;
 import manulife.manulifesop.api.ObjectResponse.RecruitHistory;
+import manulife.manulifesop.api.ObjectResponse.RecruitmentDashboard;
+import manulife.manulifesop.api.ObjectResponse.RecruitmentDirectly;
 import manulife.manulifesop.api.ObjectResponse.RefreshToken;
 import manulife.manulifesop.api.ObjectResponse.RequestOTP;
 import manulife.manulifesop.api.ObjectResponse.ContactDetail;
+import manulife.manulifesop.api.ObjectResponse.SaleDashboard;
+import manulife.manulifesop.api.ObjectResponse.SaleDashboardDirectly;
 import manulife.manulifesop.api.ObjectResponse.Test;
 import manulife.manulifesop.api.ObjectResponse.UMForcastRecruit;
 import manulife.manulifesop.api.ObjectResponse.UserProfile;
@@ -103,8 +109,8 @@ public interface ApiInterface {
                                       @Body InputCreatePass data);
 
     @GET("campaigns/check")
-    Observable<VerifyOTP> checkCampaign(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
-                                        @Header("devicename") String devicename, @Header("imei") String imei);
+    Observable<CheckCampaign> checkCampaign(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                            @Header("devicename") String devicename, @Header("imei") String imei);
 
     @POST("users/refreshtoken")
     Observable<RefreshToken> refreshToken(@Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
@@ -339,6 +345,45 @@ public interface ApiInterface {
                                                    @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
                                                    @Body InputCreateCampaignUM data);
 
+    @GET("campaigns/manage/recruit/{week}/{month}/{userid}")
+    Observable<RecruitmentDashboard> getRecruitDashboard(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                         @Header("devicename") String devicename, @Header("imei") String imei,
+                                                         @Path(value = "week", encoded = false) int week,
+                                                         @Path(value = "month", encoded = false) int month,
+                                                         @Path(value = "userid", encoded = false) int userid);
 
+    @GET("campaigns/manage/recruitdirectly/{week}/{month}/{userid}")
+    Observable<RecruitmentDirectly> getRecruitDashboardDicrectManagement(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                                         @Header("devicename") String devicename, @Header("imei") String imei,
+                                                                         @Path(value = "week", encoded = false) int week,
+                                                                         @Path(value = "month", encoded = false) int month,
+                                                                         @Path(value = "userid", encoded = false) int userid,
+                                                                         @Query("page") int page,
+                                                                         @Query("limit") int limit);
 
+    @GET("campaigns/manage/sale/{week}/{month}/{userid}")
+    Observable<SaleDashboard> getSaleDashboard(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                               @Header("devicename") String devicename, @Header("imei") String imei,
+                                               @Path(value = "week", encoded = false) int week,
+                                               @Path(value = "month", encoded = false) int month,
+                                               @Path(value = "userid", encoded = false) int userid);
+
+    @GET("campaigns/manage/saledirectly/{week}/{month}/{userid}")
+    Observable<SaleDashboardDirectly> getSaleDashboardDicrectManagement(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                                           @Header("devicename") String devicename, @Header("imei") String imei,
+                                                                           @Path(value = "week", encoded = false) int week,
+                                                                           @Path(value = "month", encoded = false) int month,
+                                                                           @Path(value = "userid", encoded = false) int userid,
+                                                                           @Query("page") int page,
+                                                                           @Query("limit") int limit);
+    @PUT("campaigns/um/increment-newagent/{period}")
+    Observable<BaseResponse> increaseUMAgentCampaign(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                     @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                     @Path(value = "period", encoded = false) int period,
+                                                     @Body InputIncreaseAgent data);
+    @PUT("campaigns/um/target-recruit/{period}")
+    Observable<BaseResponse> changeCampaignSMWeek(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                                @Path(value = "period", encoded = false) int period,
+                                                @Body InputChangeCampaignWeek data);
 }

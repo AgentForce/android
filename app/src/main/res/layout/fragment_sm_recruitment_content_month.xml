@@ -39,7 +39,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/ic_contact_white" />
+                    android:src="@drawable/ic_survey" />
             </RelativeLayout>
 
             <ImageView
@@ -105,7 +105,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/ic_meeting_white" />
+                    android:src="@drawable/ic_cop" />
             </RelativeLayout>
 
             <ImageView
@@ -168,10 +168,10 @@
                     app:riv_mutate_background="true" />
 
                 <ImageView
-                    android:layout_width="20dp"
+                    android:layout_width="19dp"
                     android:layout_height="20dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/ic_consultant2" />
+                    android:src="@drawable/ic_mit" />
             </RelativeLayout>
 
             <ImageView
@@ -237,7 +237,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/ic_sign_white" />
+                    android:src="@drawable/ic_agent_code" />
             </RelativeLayout>
 
             <ImageView

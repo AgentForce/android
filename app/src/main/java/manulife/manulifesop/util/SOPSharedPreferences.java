@@ -23,12 +23,14 @@ public class SOPSharedPreferences {
     private final String EXTRA_FIRST_USING_KEY = "extra_first_using_key";
     private final String EXTRA_ACCESS_TOKEN_KEY = "extra_access_token_key";
     private final String EXTRA_REFRESH_TOKEN_KEY = "extra_refresh_token_key";
-    private final String EXTRA_TOKEN_BEFORE_LOGIN_KEY = "extra_token_before_login_key";
     private final String EXTRA_USER_NAME = "extra_user_name";
+    private final String EXTRA_USER_ID = "extra_user_id";
 
     private final String EXTRA_ADDED_CONTACT = "extra_added_contact";
     private final String EXTRA_IS_FA = "extra_is_fa";
     private final String EXTRA_LEVEL = "extra_level";
+    private final String EXTRA_CAMPAIGN_START = "extra_campaign_start";
+    private final String EXTRA_CAMPAIGN_END = "extra_campaign_end";
 
 
     private SharedPreferences mPreferences;
@@ -89,10 +91,14 @@ public class SOPSharedPreferences {
         editor.commit();
     }
 
-    public void saveUser(String userName){
+    public void saveUser(String userName,int userID){
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString(EXTRA_USER_NAME,userName);
+        editor.putInt(EXTRA_USER_ID,userID);
         editor.commit();
+    }
+    public int getUserID(){
+        return mPreferences.getInt(EXTRA_USER_ID,-1);
     }
     public String getUserName(){
         return mPreferences.getString(EXTRA_USER_NAME,"");
@@ -134,5 +140,23 @@ public class SOPSharedPreferences {
         String json = mPreferences.getString(EXTRA_ADDED_CONTACT, "");
         List<String> data = gson.fromJson(json, listType);
         return data;
+    }
+
+    public void saveCampaignStartEnd(String startDate, String endDate, String inputFormat){
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString(EXTRA_CAMPAIGN_START,Utils.convertStringTimeZoneDateToStringDate(
+                startDate,inputFormat,"dd/MM/yyyy"
+        ));
+        editor.putString(EXTRA_CAMPAIGN_END,Utils.convertStringTimeZoneDateToStringDate(
+                endDate,inputFormat,"dd/MM/yyyy"
+        ));
+        editor.commit();
+    }
+
+    public String getCampaignStart(){
+        return mPreferences.getString(EXTRA_CAMPAIGN_START,"");
+    }
+    public String getCampaignEnd(){
+        return mPreferences.getString(EXTRA_CAMPAIGN_END,"");
     }
 }

@@ -35,6 +35,7 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
 
 
     private Context mContext;
+    private Date mLoadDate;
 
     public FAEventsPresent(FAEventsContract.View presenterView, Context context) {
         super(presenterView);
@@ -42,11 +43,15 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
     }
 
     @Override
-    public void getAllActivitisInMonth(int month) {
+    public void getAllActivitisInMonth(int month,Date loadDate) {
 
         mPresenterView.showLoading("Lấy dữ liệu");
+        mLoadDate = loadDate;
 
         Calendar calendar = Calendar.getInstance();
+        //set month
+        calendar.set(Calendar.MONTH,month);
+
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         String firstDay = Utils.convertDateToString(calendar.getTime(), "yyyy-MM-dd");
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
@@ -74,7 +79,7 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
                 }
                 mPresenterView.addEventToDate(Utils.convertStringToDate(data.data.rows.get(i).date, "yyyy-MM-dd"), colors);
             }
-            getEventsOneDay(Calendar.getInstance().getTime());
+            getEventsOneDay(mLoadDate);
 
         } else {
             mPresenterView.finishLoading(data.msg, false);
@@ -113,7 +118,7 @@ public class FAEventsPresent extends BasePresenter<FAEventsContract.View> implem
                         data.data.get(i).manulifeLead.name + " - " + data.data.get(i).name,
                         processStepTemp,
                         Utils.convertStringTimeZoneDateToStringDate(data.data.get(i).startDate,
-                                "yyyy-MM-dd'T'HH:mm:ss.sss'Z'", "dd-MM-yyyy HH:mm"),
+                                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "dd-MM-yyyy HH:mm"),
                         data.data.get(i).location, data.data.get(i).status);
                 dataList.add(tmp);
             }

@@ -78,8 +78,11 @@ public class CreatePlanStep1Fragment extends BaseFragment<CreatePlanActivity, Cr
     }
 
     private void initViews() {
-        //edtStartDate.setText(Utils.convertDateToString(Calendar.getInstance().getTime(),"dd/MM/yyyy"));
-        edtStartDate.setText(ProjectApplication.getInstance().getOnboardDate());
+        String startDate = Utils.convertDateToString(Calendar.getInstance().getTime(),"dd/MM/yyyy");
+        String onboardDate = ProjectApplication.getInstance().getOnboardDate();
+        if(onboardDate != null && onboardDate.length() > 1)
+            startDate = onboardDate;
+        edtStartDate.setText(startDate);
 
         List<SpinnerObject> dataspinner = new ArrayList<>();
         dataspinner.add(new SpinnerObject("0", "Theo tháng"));
