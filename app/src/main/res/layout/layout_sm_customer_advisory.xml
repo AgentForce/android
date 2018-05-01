@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:orientation="vertical">
+    <!--khách hàng tư vấn-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ứng viên học MIT" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:weightSum="4">
+
+            <!--giai doan 1-->
+            <LinearLayout
+                android:id="@+id/layout_advisory_step1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/cus_step3_background_previous"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_advisory_step1_result_ok"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:alpha="0"
+                    android:background="@drawable/ic_check" />
+
+                <TextView
+                    android:id="@+id/txt_advisory_step1_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="Giai đoạn 1"
+                    android:textColor="@color/botMenuDisable" />
+
+                <TextView
+                    android:id="@+id/txt_advisory_step1_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/0"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <!--giai doan 2-->
+            <LinearLayout
+                android:id="@+id/layout_advisory_step2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/cus_step3_background_previous"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_advisory_step2_result_ok"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:alpha="0"
+                    android:background="@drawable/ic_check" />
+
+                <TextView
+                    android:id="@+id/txt_advisory_step2_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giai đoạn 2"
+                    android:textColor="@color/botMenuDisable" />
+
+                <TextView
+                    android:id="@+id/txt_advisory_step2_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/0"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <!--giai doan 3-->
+            <LinearLayout
+                android:id="@+id/layout_advisory_step3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/cus_step1_background_next"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_advisory_step3_result_ok"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:alpha="0"
+                    android:background="@drawable/ic_check" />
+
+                <TextView
+                    android:id="@+id/txt_advisory_step3_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giai đoạn 3"
+                    android:textColor="@color/botMenuDisable" />
+
+                <TextView
+                    android:id="@+id/txt_advisory_step3_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/0"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <!--giai doan 3-->
+            <LinearLayout
+                android:id="@+id/layout_advisory_step4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/cus_step1_background_next"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_advisory_step4_result_ok"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:alpha="0"
+                    android:background="@drawable/ic_check" />
+
+                <TextView
+                    android:id="@+id/txt_advisory_step4_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giai đoạn 4"
+                    android:textColor="@color/botMenuDisable" />
+
+                <TextView
+                    android:id="@+id/txt_advisory_step4_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/0"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -336,11 +336,11 @@ public class ProjectApplication extends MultiDexApplication {
         mProcessStepValue.put(4,"Ký hợp đồng");
 
         mProcessStepColor = new HashMap<>();
-        mProcessStepColor.put(0,"#f44236");
+        mProcessStepColor.put(0,"#1d89e5");
         mProcessStepColor.put(1,"#ffb200");
-        mProcessStepColor.put(2,"#1d89e5");
-        mProcessStepColor.put(3,"#4caf52");
-        mProcessStepColor.put(4,"#fe7537");
+        mProcessStepColor.put(2,"#1a6dce");
+        mProcessStepColor.put(3,"#0d884b");
+        mProcessStepColor.put(4,"#93c90f");
     }
     public String getIncomeString(int value){
         return mIncomeMonth.get(value);

@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,9 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
-import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.adapter.ObjectData.EventData;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 
@@ -77,10 +74,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.txtName.setText(object.getName());
         holder.txtTitleType.setText(object.getTypeEvent());
         holder.txtDateTime.setText(object.getDateTime());
-        /*holder.userAvatar.setBorderColor(
-                Color.parseColor(ProjectApplication.getInstance().getProcessStepColor(
-                   object.getProcessStep() - 1
-                )));*/
+
         holder.layoutMenuRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

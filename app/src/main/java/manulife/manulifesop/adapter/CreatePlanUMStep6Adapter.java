@@ -1,16 +1,12 @@
 package manulife.manulifesop.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.QuickContactBadge;
 import android.widget.TextView;
-
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -18,11 +14,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter;
-import cn.refactor.library.SmoothCheckBox;
 import manulife.manulifesop.R;
-import manulife.manulifesop.activity.FAGroup.clients.related.addContact.AddContactPersonActivity;
-import manulife.manulifesop.adapter.ObjectData.ContactPerson;
 import manulife.manulifesop.adapter.ObjectData.UMStep6;
 
 /**

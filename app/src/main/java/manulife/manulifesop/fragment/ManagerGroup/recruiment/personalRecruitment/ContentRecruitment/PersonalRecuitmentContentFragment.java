@@ -483,7 +483,7 @@ public class PersonalRecuitmentContentFragment extends BaseFragment<MainFAActivi
         List<String> tabTitles = new ArrayList<>();
         tabTitles.add("Mục tiêu tháng");
         tabTitles.add("Mục tiêu theo tuần");
-        tabTitles.add("Khách hàng T" + mMonth);
+        tabTitles.add("Ứng viên T" + mMonth);
 
         mAdapter = new CustomViewPagerAdapter(getChildFragmentManager(),
                 fragmentList, tabTitles);

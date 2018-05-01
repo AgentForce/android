@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 
 import java.util.Calendar;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
@@ -20,6 +21,7 @@ import manulife.manulifesop.api.ObjectResponse.ActivityDetail;
 import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.EventsCreate;
 import manulife.manulifesop.base.BasePresenter;
+import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
 import manulife.manulifesop.util.CalendarEvents;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
@@ -61,20 +63,28 @@ public class CreateEventPresenter extends BasePresenter<CreateEventContract.View
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME, DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI,
                 checksum, data)
                 .map(eventsCreate -> {
-                    if(eventsCreate.statusCode == 1) {
+                    if (eventsCreate.statusCode == 1) {
                         long startDateAdd = Utils.convertStringToDate(data.startDate, "yyyy-MM-dd HH:mm").getTime();
                         long endDateAdd = Utils.convertStringToDate(data.endDate, "yyyy-MM-dd HH:mm").getTime();
-                        if(data.fullDate){
+                        if (data.fullDate) {
                             Calendar calendar = Calendar.getInstance();
-                            calendar.setTime(Utils.convertStringToDate(data.startDate,"yyyy-MM-dd"));
-                            calendar.add(Calendar.DAY_OF_YEAR,1);
+                            calendar.setTime(Utils.convertStringToDate(data.startDate, "yyyy-MM-dd"));
+                            calendar.add(Calendar.DAY_OF_YEAR, 1);
 
                             startDateAdd = calendar.getTimeInMillis();
                             endDateAdd = calendar.getTimeInMillis();
                         }
 
-                        CalendarEvents.pushEventToLocalCalendar(mContext, eventsCreate.data.id,data.name, data.description, data.location,
-                                1,startDateAdd,endDateAdd,data.fullDate,true, data.notification);
+                        try {
+                            CalendarEvents.pushEventToLocalCalendar(mContext, eventsCreate.data.id, data.name, data.description, data.location,
+                                    1, startDateAdd, endDateAdd, data.fullDate, true, data.notification);
+                        } catch (android.database.sqlite.SQLiteException ex) {
+                            eventsCreate.statusCode = 2;
+                            eventsCreate.msg = "Đăng nhập calendar bằng tài khoản google để tạo sự kiện trên điện thoại!";
+                        } catch (Exception e) {
+                            eventsCreate.statusCode = 2;
+                            eventsCreate.msg = e.getMessage();
+                        }
                     }
                     return eventsCreate;
                 })
@@ -92,13 +102,22 @@ public class CreateEventPresenter extends BasePresenter<CreateEventContract.View
         if (eventsCreate.statusCode == 1) {
             mPresenterView.finishCreate();
             mPresenterView.finishLoading();
+        } else if (eventsCreate.statusCode == 2) {
+            mPresenterView.finishLoading();
+            mPresenterView.showInform("Thông báo", eventsCreate.msg, "OK", SweetAlertDialog.WARNING_TYPE,
+                    new CallBackInformDialog() {
+                        @Override
+                        public void DiaglogPositive() {
+                            mPresenterView.finishCreate();
+                        }
+                    });
         } else {
             mPresenterView.finishLoading(eventsCreate.msg, false);
         }
     }
 
     @Override
-    public void updateEvent(int eventID, int type, String oldName,String newName, String location, String startDate, String endDate, String description, boolean fullDay, int notification, boolean support) {
+    public void updateEvent(int eventID, int type, String oldName, String newName, String location, String startDate, String endDate, String description, boolean fullDay, int notification, boolean support) {
         mPresenterView.showLoading("Cập nhật sự kiện");
         InputUpdateEvent data = new InputUpdateEvent();
         data.type = type;
@@ -119,18 +138,18 @@ public class CreateEventPresenter extends BasePresenter<CreateEventContract.View
                 .map(baseResponse -> {
                     long startDateAdd = Utils.convertStringToDate(data.startDate, "yyyy-MM-dd HH:mm").getTime();
                     long endDateAdd = Utils.convertStringToDate(data.endDate, "yyyy-MM-dd HH:mm").getTime();
-                    if(data.fullDate){
+                    if (data.fullDate) {
                         Calendar calendar = Calendar.getInstance();
-                        calendar.setTime(Utils.convertStringToDate(data.startDate,"yyyy-MM-dd"));
-                        calendar.add(Calendar.DAY_OF_YEAR,1);
+                        calendar.setTime(Utils.convertStringToDate(data.startDate, "yyyy-MM-dd"));
+                        calendar.add(Calendar.DAY_OF_YEAR, 1);
 
                         startDateAdd = calendar.getTimeInMillis();
                         endDateAdd = calendar.getTimeInMillis();
                     }
-                    if(baseResponse.statusCode == 1){
-                        CalendarEvents.updateEvent(mContext,eventID,oldName,data.name,data.description,
-                                data.location,1,startDateAdd,endDateAdd,data.fullDate,
-                                true,data.notification);
+                    if (baseResponse.statusCode == 1) {
+                        CalendarEvents.updateEvent(mContext, eventID, oldName, data.name, data.description,
+                                data.location, 1, startDateAdd, endDateAdd, data.fullDate,
+                                true, data.notification);
                     }
                     return baseResponse;
                 })

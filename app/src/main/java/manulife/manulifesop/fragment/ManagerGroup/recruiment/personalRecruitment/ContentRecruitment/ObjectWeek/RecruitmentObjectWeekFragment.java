@@ -223,7 +223,7 @@ public class RecruitmentObjectWeekFragment extends BaseFragment<MainFAActivity, 
 
     @Override
     public int contentViewLayout() {
-        return R.layout.fragment_fa_customer_content_week;
+        return R.layout.fragment_sm_customer_content_week;
     }
 
     @Override
