@@ -352,7 +352,7 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:paddingTop="3dp"
-                    android:text="30 ĐL + 5 ĐL/tháng"
+                    android:text="30 HĐ/tháng"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/welcome_activity_note"
                     android:textStyle="bold" />

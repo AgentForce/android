@@ -100,5 +100,8 @@ public class UserProfile implements Serializable{
         @SerializedName("onboard_date")
         @Expose
         public String onboardDate;
+        @SerializedName("manager_badge")
+        @Expose
+        public String managerBadge;
     }
 }

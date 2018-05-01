@@ -111,6 +111,10 @@ public class ProjectApplication extends MultiDexApplication {
     private UsersList mSign_Applied;
     private UsersList mSign_WaitApprove;
 
+    //variable for title info
+    private HashMap<Integer,String> mFaTitle;
+    private HashMap<Integer,String> mSMTitle;
+
     //variable for introduce contact
     private UsersList mIntroduce;
 
@@ -164,7 +168,32 @@ public class ProjectApplication extends MultiDexApplication {
         setHashmapEventType();
         setHashmapProcessStepSM();
 
+        setDateTitleInfo();
+    }
 
+    public void setDateTitleInfo(){
+        mFaTitle = new HashMap<>();
+        mFaTitle.put(1,"Đại lý thông thường");
+        mFaTitle.put(2,"MDRT");
+        mFaTitle.put(3,"COT");
+        mFaTitle.put(4,"TOT");
+        mFaTitle.put(5,"FC Bạc");
+        mFaTitle.put(6,"FC Vàng");
+        mFaTitle.put(7,"FC Kim Cương");
+
+        mSMTitle = new HashMap<>();
+        mSMTitle.put(1,"Quản lý thông thường");
+        mSMTitle.put(2,"MBA Bạc");
+        mSMTitle.put(3,"MBA Vàng");
+        mSMTitle.put(4,"MBA Kim Cương");
+    }
+
+    public String getTitleFA(int numTitle){
+        return mFaTitle.get(numTitle);
+    }
+
+    public String getTitleSM(int numTitle){
+        return mSMTitle.get(numTitle);
     }
 
     public void setHashmapEventType(){

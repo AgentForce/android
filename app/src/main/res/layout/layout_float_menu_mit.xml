@@ -36,11 +36,26 @@
             android:layout_marginBottom="5dp"
             android:textSize="14sp" />
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+        <RelativeLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_proccess_step_signed" />
+            android:layout_marginRight="5dp">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/color_dashboard_sm_granted"
+                android:scaleType="fitCenter"
+                app:riv_corner_radius="20dp"
+                app:riv_mutate_background="true" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_agent_code" />
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout

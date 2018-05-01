@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.createPlan.CreatePlanActivity;
 import manulife.manulifesop.activity.ManagerGroup.SMCreatePlan.SMCreatePlanActivity;
@@ -55,7 +56,21 @@ public class ConfirmCreatePlanActivity extends BaseActivity<ConfirmCreatePlanPre
         txtUserName.setText(data.data.fullName);
         txtAgentNumber.setText(String.valueOf(data.data.username));
         txtTitle.setText(data.data.codeLevel);
-        txtTitleInfo.setText(data.data.badge);
+
+        String titleInfo = "";
+        if(data.data.level < 16){
+            if(data.data.badge != null)
+                titleInfo = ProjectApplication.getInstance().getTitleFA(Integer.valueOf(data.data.badge));
+            if(data.data.managerBadge != null){
+                titleInfo += "\n" +
+                        ProjectApplication.getInstance().getTitleSM(Integer.valueOf(data.data.managerBadge));
+            }
+        }else{
+            if(data.data.badge != null)
+                titleInfo = ProjectApplication.getInstance().getTitleFA(Integer.valueOf(data.data.badge));
+        }
+
+        txtTitleInfo.setText(titleInfo);
         txtLocation.setText("Vùng " + data.data.zone);
     }
 

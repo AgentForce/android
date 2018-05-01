@@ -94,7 +94,7 @@ public class UMCreatePlanStep2Fragment extends BaseFragment<UMCreatePlanActivity
         txtQuitJob.setText(String.valueOf(data.data.quantityAgentTer));
         txtIncreaseAgent.setText(data.data.quantityAgentGrow.current + " ĐL + "
         + data.data.quantityAgentGrow.future + " ĐL/Tháng");
-        txtIncreaseContract.setText(data.data.quantityContractGrow + " ĐL/Tháng");
+        txtIncreaseContract.setText(data.data.quantityContractGrow + " HĐ/Tháng");
 
     }
 

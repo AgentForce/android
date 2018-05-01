@@ -258,7 +258,7 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
         initViewPager(dataWeekMonth, dataYear);
         showACtivities(activities);
         //check active campaign in this month
-        if (dataWeekMonth.data.isRequestActive == 1) {
+        /*if (dataWeekMonth.data.isRequestActive == 1) {
             showConfirm("Thông báo", "Đồng ý kích hoạt mục tiêu tháng " + mMonth, "Đồng ý",
                     "Hủy", SweetAlertDialog.WARNING_TYPE, new CallBackConfirmDialog() {
                         @Override
@@ -271,7 +271,7 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
 
                         }
                     });
-        }
+        }*/
     }
 
     private void initViewPager(DashboardSMResult dataWeekMonth, DashboardSMResult dataYear) {

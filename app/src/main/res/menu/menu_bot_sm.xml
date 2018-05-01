@@ -6,11 +6,11 @@
         android:title="Trang chủ" />
     <item
         android:id="@+id/menu_sm"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_recruitment_menu_dashboard"
         android:title="Tuyển dụng" />
     <item
         android:id="@+id/menu_customer"
-        android:icon="@drawable/ic_customer"
+        android:icon="@drawable/ic_sale_menu_dashboard"
         android:title="Bán hàng" />
     <item
         android:id="@+id/menu_calendar"
