@@ -1,6 +1,7 @@
 package manulife.manulifesop.api;
 
 import io.reactivex.Observable;
+import manulife.manulifesop.api.ObjectInput.InputChangePass;
 import manulife.manulifesop.api.ObjectInput.InputIncreaseAgent;
 import manulife.manulifesop.api.ObjectInput.InputAddContact;
 import manulife.manulifesop.api.ObjectInput.InputChangeCampaignWeek;
@@ -14,6 +15,7 @@ import manulife.manulifesop.api.ObjectInput.InputForcastIncomeUM;
 import manulife.manulifesop.api.ObjectInput.InputGetForcastTarget;
 import manulife.manulifesop.api.ObjectInput.InputIncreaseContact;
 import manulife.manulifesop.api.ObjectInput.InputIntroduceContact;
+import manulife.manulifesop.api.ObjectInput.InputLogCall;
 import manulife.manulifesop.api.ObjectInput.InputLoginData;
 import manulife.manulifesop.api.ObjectInput.InputRefreshToken;
 import manulife.manulifesop.api.ObjectInput.InputRequestOTP;
@@ -21,8 +23,10 @@ import manulife.manulifesop.api.ObjectInput.InputSubmitContract;
 import manulife.manulifesop.api.ObjectInput.InputTest;
 import manulife.manulifesop.api.ObjectInput.InputUpdateContact;
 import manulife.manulifesop.api.ObjectInput.InputUpdateEvent;
+import manulife.manulifesop.api.ObjectInput.InputUpdateNotiConfig;
 import manulife.manulifesop.api.ObjectInput.InputVerifyOTP;
 import manulife.manulifesop.api.ObjectResponse.ActivitiHist;
+import manulife.manulifesop.api.ObjectResponse.ActivitiHistSetting;
 import manulife.manulifesop.api.ObjectResponse.ActivityDetail;
 import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.CampaignForcastTarget;
@@ -41,6 +45,8 @@ import manulife.manulifesop.api.ObjectResponse.EventsMonth;
 import manulife.manulifesop.api.ObjectResponse.EventsOneDay;
 import manulife.manulifesop.api.ObjectResponse.ForcastIncomeUM;
 import manulife.manulifesop.api.ObjectResponse.LoginResult;
+import manulife.manulifesop.api.ObjectResponse.NotiConfig;
+import manulife.manulifesop.api.ObjectResponse.ProductsSign;
 import manulife.manulifesop.api.ObjectResponse.RecruitHistory;
 import manulife.manulifesop.api.ObjectResponse.RecruitmentDashboard;
 import manulife.manulifesop.api.ObjectResponse.RecruitmentDirectly;
@@ -266,6 +272,11 @@ public interface ApiInterface {
                                              @Query("page") int page, @Query("limit") int limit);
 
 
+    @POST("leads/logcall")
+    Observable<BaseResponse> logCallUser(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                            @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                            @Body InputLogCall data);
+
     //-----------------------SM Group-----------------------
     @GET("campaigns/dashboardrecruit/{type}")
     Observable<DashboardSMResult> dashBoardSM(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
@@ -386,4 +397,22 @@ public interface ApiInterface {
                                                 @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
                                                 @Path(value = "period", encoded = false) int period,
                                                 @Body InputChangeCampaignWeek data);
+    @GET("products")
+    Observable<ProductsSign> getProductsSign(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                             @Header("devicename") String devicename, @Header("imei") String imei);
+    @PUT("users/changepassword")
+    Observable<BaseResponse> changePass(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                           @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                        @Body InputChangePass data);
+    @GET("users/log")
+    Observable<ActivitiHistSetting> getActivitiHistSetting(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                     @Header("devicename") String devicename, @Header("imei") String imei,
+                                                           @Query("page") int page, @Query("limit") int limit);
+    @GET("users/notifyconfig")
+    Observable<NotiConfig> getNotiConfig(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                                  @Header("devicename") String devicename, @Header("imei") String imei);
+    @PUT("users/notifyconfig")
+    Observable<BaseResponse> updateNotiConfig(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                        @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                        @Body InputUpdateNotiConfig data);
 }

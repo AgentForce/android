@@ -203,6 +203,10 @@ public class FAContactMonthFragment extends BaseFragment<MainFAActivity, FAConta
                             break;
                         }
                         case 1: {
+                            ProjectApplication.getInstance().logCall(
+                                    mData.get(position).getId()
+                            );
+
                             String phone = "tel:" + mData.get(position).getPhone();
                             Intent callIntent = new Intent(Intent.ACTION_CALL);
                             callIntent.setData(Uri.parse(phone));

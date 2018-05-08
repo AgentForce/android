@@ -39,7 +39,7 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
     @Override
     public void addContactInfo(int position, String name, String phone,int age, int gender,
                                   int income, int marital, int relationship,
-                                  int source, String description) {
+                                  int source, String description, String birthday) {
         mPosition = position;
         mPhone = phone.trim().replace("-","").replace("+","")
                 .replace(" ","");
@@ -61,6 +61,10 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         data.leadType = 1;//khách hàng là 1 (FA mặc định)
         data.description = description;
 
+        String birthdaytmp = (birthday.equals(""))? null : Utils.convertStringDateToStringDate(
+                birthday,"dd/MM/yyyy","yyyy-MM-dd");
+        data.birthday = birthdaytmp;
+
         String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().addContact(
@@ -74,7 +78,9 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
     }
 
     @Override
-    public void addRecruitInfo(int position, String name, String phone, int age, int gender, int income, int marital, int relationship, int source, String description) {
+    public void addRecruitInfo(int position, String name, String phone, int age,
+                               int gender, int income, int marital, int relationship,
+                               int source, String description,String birthday) {
         mPosition = position;
         mPhone = phone.trim().replace("-","").replace("+","")
                 .replace(" ","");
@@ -94,6 +100,10 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         data.source = source;
         data.leadType = 2;//tuyển dụng là 2 // thực sự không bắt
         data.description = description;
+
+        String birthdaytmp = (birthday.equals(""))? null : Utils.convertStringDateToStringDate(
+                birthday,"dd/MM/yyyy","yyyy-MM-dd");
+        data.birthday = birthdaytmp;
 
         String checksum = Utils.getSignature(new Gson().toJson(data));
 
@@ -123,7 +133,9 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
     }
 
     @Override
-    public void changeReleadToContact(int releadID, int campaignID, int age, int gender, int income, int marital, int relationship, int source, String description) {
+    public void changeReleadToContact(int releadID, int campaignID, int age, int gender,
+                                      int income, int marital, int relationship, int source,
+                                      String description,String birthday) {
         mPresenterView.showLoading("Chuyển sang KH liên hệ");
 
         InputChangeRelead data = new InputChangeRelead();
@@ -138,6 +150,11 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         data.leadType = 1;//khách hàng là 1 (FA mặc định)
         data.description = description;
 
+        String birthdaytmp = (birthday.equals(""))? null : Utils.convertStringDateToStringDate(
+                birthday,"dd/MM/yyyy","yyyy-MM-dd");
+        data.birthday = birthdaytmp;
+
+
         String checksum = Utils.getSignature(new Gson().toJson(data));
 
         getCompositeDisposable().add(ApiService.getServer().changeIntroduceContact(
@@ -151,7 +168,9 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
     }
 
     @Override
-    public void changeReleadToRecruit(int releadID, int campaignID, int age, int gender, int income, int marital, int relationship, int source, String description) {
+    public void changeReleadToRecruit(int releadID, int campaignID, int age, int gender,
+                                      int income, int marital, int relationship,
+                                      int source, String description,String birthday) {
         mPresenterView.showLoading("Chuyển sang KH tuyển dụng");
 
         InputChangeRelead data = new InputChangeRelead();
@@ -165,6 +184,10 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         data.source = source;
         data.leadType = 2;//tuyển dụng là 2
         data.description = description;
+
+        String birthdaytmp = (birthday.equals(""))? null : Utils.convertStringDateToStringDate(
+                birthday,"dd/MM/yyyy","yyyy-MM-dd");
+        data.birthday = birthdaytmp;
 
         String checksum = Utils.getSignature(new Gson().toJson(data));
 
@@ -188,7 +211,9 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
     }
 
     @Override
-    public void updateContactInfo(int releadID, String name, int age, int gender, int income, int marital, int relationship, int source, String description) {
+    public void updateContactInfo(int releadID, String name, int age, int gender, int income, int marital,
+                                  int relationship, int source, String description,
+                                  String birthday) {
         mPresenterView.showLoading("Cập nhật thông tin");
         InputUpdateContact data = new InputUpdateContact();
         data.name = name;
@@ -199,6 +224,10 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         data.relationship = relationship;
         data.source = source;
         data.description = description;
+
+        String birthdaytmp = (birthday.equals(""))? null : Utils.convertStringDateToStringDate(
+                birthday,"dd/MM/yyyy","yyyy-MM-dd");
+        data.birthday = birthdaytmp;
 
         String checksum = Utils.getSignature(new Gson().toJson(data));
 
@@ -213,7 +242,9 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
     }
 
     @Override
-    public void updateRecruitInfo(int releadID, String name, int age, int gender, int income, int marital, int relationship, int source, String description) {
+    public void updateRecruitInfo(int releadID, String name, int age, int gender,
+                                  int income, int marital, int relationship, int source,
+                                  String description,String birthday) {
         mPresenterView.showLoading("Cập nhật thông tin");
 
         InputUpdateContact data = new InputUpdateContact();
@@ -225,6 +256,10 @@ public class UpdateContactInfoPresenter extends BasePresenter<UpdateContactInfoC
         data.relationship = relationship;
         data.source = source;
         data.description = description;
+
+        String birthdaytmp = (birthday.equals(""))? null : Utils.convertStringDateToStringDate(
+                birthday,"dd/MM/yyyy","yyyy-MM-dd");
+        data.birthday = birthdaytmp;
 
         String checksum = Utils.getSignature(new Gson().toJson(data));
 

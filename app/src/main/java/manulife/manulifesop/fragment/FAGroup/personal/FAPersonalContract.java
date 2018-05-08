@@ -12,6 +12,7 @@ public interface FAPersonalContract {
 
     interface View extends BaseMVPView {
         void showData(UserProfile data);
+        void showAppIntroduce();
     }
 
     interface Action {

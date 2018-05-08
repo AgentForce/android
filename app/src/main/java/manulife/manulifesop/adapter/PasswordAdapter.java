@@ -27,7 +27,6 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.ViewHo
     //Declares variables
     private Context context;
     private List<Boolean> listObject = null;
-    private FragmentManager fm;
 
     //Constructor
     public PasswordAdapter(Context context, List<Boolean> arr) {
@@ -45,7 +44,6 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View cardView = inflater.inflate(R.layout.item_password, null, false);
-        fm = ((AppCompatActivity) context).getSupportFragmentManager();
         ViewHolder viewHolder = new ViewHolder(cardView);
         return viewHolder;
     }

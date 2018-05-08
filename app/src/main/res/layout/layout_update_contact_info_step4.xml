@@ -12,15 +12,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <!--<ImageView
-            android:id="@+id/img_step4"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/color_dashboard_introduce" />-->
+
         <RelativeLayout
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -33,7 +25,7 @@
                 android:id="@+id/img_step4"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@color/color_dashboard_introduce"
+                android:background="@color/color_dashboard_introduce_old"
                 android:scaleType="fitCenter"
                 app:riv_corner_radius="45dp"
                 app:riv_mutate_background="true" />

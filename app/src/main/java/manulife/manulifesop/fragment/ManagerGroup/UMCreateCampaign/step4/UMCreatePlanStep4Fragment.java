@@ -56,7 +56,8 @@ public class UMCreatePlanStep4Fragment extends BaseFragment<UMCreatePlanActivity
     @OnClick({R.id.btn_next, R.id.layout_add_step4_row1, R.id.layout_sub_step4_row1,
             R.id.layout_add_step4_row2, R.id.layout_sub_step4_row2,
             R.id.layout_add_step4_row3, R.id.layout_sub_step4_row3,
-            R.id.layout_add_step4_row4, R.id.layout_sub_step4_row4})
+            R.id.layout_add_step4_row4, R.id.layout_sub_step4_row4,
+            R.id.layout_add_step7_row4,R.id.layout_sub_step7_row4})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -76,7 +77,7 @@ public class UMCreatePlanStep4Fragment extends BaseFragment<UMCreatePlanActivity
             }
             case R.id.layout_sub_step4_row1: {
                 int newValue = Integer.valueOf(txtAgentWorking.getText().toString()) - 1;
-                if (newValue < 0) newValue = 0;
+                if (newValue <= 3) newValue = 3;
                 txtAgentWorking.setText(String.valueOf(newValue));
                 break;
             }

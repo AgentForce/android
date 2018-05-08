@@ -20,11 +20,11 @@
         <item name="tab_5">#F63D2B</item>
     </array>
 
-    <!--<color name="color_dashboard_contact">#f44236</color>
-    <color name="color_dashboard_meeting">#ffb200</color>
-    <color name="color_dashboard_advisory">#1d89e5</color>
-    <color name="color_dashboard_sign">#4caf52</color>
-    <color name="color_dashboard_introduce">#fe7537</color>-->
+    <color name="color_percent_fail">#f44236</color>
+    <color name="color_percent_waring">#ffb200</color>
+    <color name="color_percent_success">#4caf52</color>
+
+    <color name="color_dashboard_introduce_old">#fe7537</color>
 
     <color name="color_dashboard_contact">#1d89e5</color>
     <color name="color_dashboard_meeting">#ffb200</color>
@@ -32,11 +32,11 @@
     <color name="color_dashboard_sign">#0d884b</color>
     <color name="color_dashboard_introduce">#93c90f</color>
 
-    <color name="color_dashboard_contact_previous">#fff6f5</color>
-    <color name="color_dashboard_meeting_previous">#fff4da</color>
-    <color name="color_dashboard_advisory_previous">#e0eefc</color>
-    <color name="color_dashboard_sign_previous">#e6f4e7</color>
-    <color name="color_dashboard_introduce_previous">#fcece1</color>
+    <color name="color_dashboard_contact_previous">#edf6fd</color>
+    <color name="color_dashboard_meeting_previous">#fff9eb</color>
+    <color name="color_dashboard_advisory_previous">#edf4fb</color>
+    <color name="color_dashboard_sign_previous">#ecf6f1</color>
+    <color name="color_dashboard_introduce_previous">#f7fbec</color>
 
     <color name="color_dashboard_sm_survey">#1d89e5</color>
     <color name="color_dashboard_sm_cop">#ffb200</color>

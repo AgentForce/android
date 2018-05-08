@@ -24,6 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
+import manulife.manulifesop.util.DeviceInfo;
 import manulife.manulifesop.util.SOPSharedPreferences;
 import manulife.manulifesop.util.Utils;
 
@@ -75,18 +76,20 @@ public class FirstPresenter extends BasePresenter<FirstContract.View> implements
     @Override
     public void clickAgreeButton() {
         SOPSharedPreferences.getInstance(mContext).saveFirstUsing();
-        mPresenterView.showLogin();
+        new DeviceInfo(mContext);
+        if (checkLogined()) {
+            mPresenterView.showFaMainBoard();
+        } else {
+            mPresenterView.showLogin();
+        }
     }
 
     public void checkFirstUserLoading() {
-        //mPresenterView.showWelcome();
         if (!SOPSharedPreferences.getInstance(mContext).isFirstUsing()) {
             mPresenterView.showWelcome();
         } else {
-            if (checkLogined()) {
-                mPresenterView.showFaMainBoard();
-            } else {
-                mPresenterView.showLogin();
+            if (isPermissionGranted()) {
+                clickAgreeButton();
             }
         }
     }

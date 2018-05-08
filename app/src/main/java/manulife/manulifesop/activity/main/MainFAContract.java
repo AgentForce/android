@@ -1,5 +1,8 @@
 package manulife.manulifesop.activity.main;
 
+import java.util.List;
+
+import manulife.manulifesop.adapter.ObjectData.NotifyData;
 import manulife.manulifesop.base.BaseMVPView;
 
 /**
@@ -9,6 +12,8 @@ import manulife.manulifesop.base.BaseMVPView;
 public interface MainFAContract {
     interface View extends BaseMVPView
     {
+        void showDataNotify(List<NotifyData> data);
+
         void showFragmentConfirmCreatePlan(String title);
         void showDashBoard();
         void showCustomer(String title);
@@ -28,6 +33,7 @@ public interface MainFAContract {
     interface Action{
         void chekCampaign();
         void refreshAccessToken();
+        void getNofity();
 
         void testChecksum();
     }

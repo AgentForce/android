@@ -44,7 +44,7 @@ public class UMCreatePlanStep8Screen1Fragment extends BaseFragment<UMCreatePlanA
 
     public static UMCreatePlanStep8Screen1Fragment newInstance(ForcastIncomeUM data) {
         Bundle args = new Bundle();
-        args.putSerializable("data",data);
+        args.putSerializable("data", data);
         UMCreatePlanStep8Screen1Fragment fragment = new UMCreatePlanStep8Screen1Fragment();
         fragment.setArguments(args);
         return fragment;
@@ -63,24 +63,25 @@ public class UMCreatePlanStep8Screen1Fragment extends BaseFragment<UMCreatePlanA
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mData = (ForcastIncomeUM)getArguments().getSerializable("data");
-        initViews();
+        mData = (ForcastIncomeUM) getArguments().getSerializable("data");
+        if (mData.statusCode == 1)
+            initViews();
     }
 
     @Override
     public void initViews() {
-        txtProfit.setText(Utils.longTypeTextFormat((long)(mData.data.personal.comm * 1000000)));
-        txtBonusNewAgent.setText(Utils.longTypeTextFormat((long)(mData.data.personal.newAgentBonus * 1000000)));
-        txtBonusMonth.setText(Utils.longTypeTextFormat((long)(mData.data.personal.monthlyBonus * 1000000)));
-        txtBonusQuater.setText(Utils.longTypeTextFormat((long)(mData.data.personal.quarterBonus * 1000000)));
-        txtBonusFC.setText(Utils.longTypeTextFormat((long)(mData.data.personal.fcTetBonus * 1000000)));
-        txtBonusMdrt.setText(Utils.longTypeTextFormat((long)(mData.data.personal.monthlyMDRTBonus * 1000000)));
-        txtBonusMdrtYear.setText(Utils.longTypeTextFormat((long)(mData.data.personal.yearlyMDRTBonus * 1000000)));
+        txtProfit.setText(Utils.longTypeTextFormat((long) (mData.data.personal.comm * 1000000)));
+        txtBonusNewAgent.setText(Utils.longTypeTextFormat((long) (mData.data.personal.newAgentBonus * 1000000)));
+        txtBonusMonth.setText(Utils.longTypeTextFormat((long) (mData.data.personal.monthlyBonus * 1000000)));
+        txtBonusQuater.setText(Utils.longTypeTextFormat((long) (mData.data.personal.quarterBonus * 1000000)));
+        txtBonusFC.setText(Utils.longTypeTextFormat((long) (mData.data.personal.fcTetBonus * 1000000)));
+        txtBonusMdrt.setText(Utils.longTypeTextFormat((long) (mData.data.personal.monthlyMDRTBonus * 1000000)));
+        txtBonusMdrtYear.setText(Utils.longTypeTextFormat((long) (mData.data.personal.yearlyMDRTBonus * 1000000)));
 
-        double total = mData.data.personal.comm + mData.data.personal.newAgentBonus+
+        double total = mData.data.personal.comm + mData.data.personal.newAgentBonus +
                 mData.data.personal.monthlyBonus + mData.data.personal.quarterBonus +
                 mData.data.personal.fcTetBonus + mData.data.personal.yearlyMDRTBonus +
                 mData.data.personal.monthlyMDRTBonus;
-        txtTotalIncome.setText(Utils.longTypeTextFormat((long)(total * 1000000)));
+        txtTotalIncome.setText(Utils.longTypeTextFormat((long) (total * 1000000)));
     }
 }

@@ -39,6 +39,7 @@ import manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step1
 import manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step2.ContactDetailStep2Fragment;
 import manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step3.ContactDetailStep3Fragment;
 import manulife.manulifesop.util.Contants;
+import manulife.manulifesop.util.Utils;
 
 
 public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> implements ContactDetailContract.View {
@@ -53,7 +54,6 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     View viewStatusBar;
     @BindView(R.id.img_top_background)
     ImageView imageTop;
-
 
     @BindView(R.id.img_start1)
     ImageView imageStart1;
@@ -72,6 +72,8 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
     TextView txtUserName;
     @BindView(R.id.txt_phone)
     TextView txtPhone;
+    @BindView(R.id.txt_birth_date)
+    TextView txtBirthDate;
 
     @BindView(R.id.tabs)
     TabLayout tabMenu;
@@ -525,6 +527,19 @@ public class ContactDetailActivity extends BaseActivity<ContactDetailPresenter> 
         txtUserName.setText(ProjectApplication.getInstance().getContactDetail().data.name);
         txtPhone.setText(ProjectApplication.getInstance().getContactDetail().data.phone);
         initScore(ProjectApplication.getInstance().getContactDetail().data.score);
+
+        String birthdate = "";
+        if(ProjectApplication.getInstance().getContactDetail().data.birthday != null){
+            birthdate = Utils.convertStringTimeZoneDateToStringDate(
+                    ProjectApplication.getInstance().getContactDetail().data.birthday,
+                    "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "dd/MM/yyyy");
+        }
+        if(birthdate.length() > 1){
+            txtBirthDate.setText(birthdate);
+            txtBirthDate.setVisibility(View.VISIBLE);
+        }else{
+            txtBirthDate.setVisibility(View.GONE);
+        }
 
 
         mListFragment = new ArrayList<>();

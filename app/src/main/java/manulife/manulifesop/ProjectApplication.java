@@ -4,10 +4,19 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.google.gson.Gson;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+import manulife.manulifesop.api.ApiService;
+import manulife.manulifesop.api.ObjectInput.InputChangeCampaignWeek;
+import manulife.manulifesop.api.ObjectInput.InputLogCall;
+import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.CampaignMonth;
 import manulife.manulifesop.api.ObjectResponse.CampaignRecruitMonth;
 import manulife.manulifesop.api.ObjectResponse.ContactActivity;
@@ -15,7 +24,9 @@ import manulife.manulifesop.api.ObjectResponse.ContactDetail;
 import manulife.manulifesop.api.ObjectResponse.ContactHistory;
 import manulife.manulifesop.api.ObjectResponse.ContactMonth;
 import manulife.manulifesop.api.ObjectResponse.UsersList;
+import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.DeviceInfo;
+import manulife.manulifesop.util.SOPSharedPreferences;
 import manulife.manulifesop.util.Utils;
 
 /*
@@ -121,6 +132,9 @@ public class ProjectApplication extends MultiDexApplication {
     //variable save start date in create campaign
     private String mOnboardDate;
 
+    //variable save full user name
+    private String mUserFullName;
+
     public void setInstance(ProjectApplication application) {
         synchronized (instanceLock) {
             instance = application;
@@ -141,6 +155,43 @@ public class ProjectApplication extends MultiDexApplication {
         MultiDex.install(this);
     }
 
+    //----------------log call------------------------
+    private CompositeDisposable mDisposables;
+    public void logCall(int leadID){
+        InputLogCall data = new InputLogCall();
+        data.leadId = leadID;
+        String checksum = Utils.getSignature(new Gson().toJson(data));
+        mDisposables = new CompositeDisposable();
+        mDisposables.add(ApiService.getServer().logCallUser(
+                SOPSharedPreferences.getInstance(getApplicationContext()).getAccessToken(),
+                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
+                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum,
+                data)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseLog, this::handleError)
+        );
+    }
+
+    private void handleError(Throwable throwable) {
+        if(mDisposables != null && !mDisposables.isDisposed()) {
+            mDisposables.clear();
+            mDisposables.dispose();
+        }
+    }
+
+
+    private void handleResponseLog(BaseResponse baseResponse) {
+        if(mDisposables != null && !mDisposables.isDisposed()) {
+            mDisposables.clear();
+            mDisposables.dispose();
+        }
+    }
+
+
+    //----------------log call------------------------
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -153,7 +204,6 @@ public class ProjectApplication extends MultiDexApplication {
         //PreferenceUtils.init(this);
         //initCustomFont();
 
-        new DeviceInfo(this);
         //new code
         setHashmapStringProcessStatus();
         setHashmapStringProcessStatusSM();
@@ -655,5 +705,13 @@ public class ProjectApplication extends MultiDexApplication {
     }
     public String getOnboardDate(){
         return mOnboardDate;
+    }
+
+    public String getUserFullName() {
+        return mUserFullName;
+    }
+
+    public void setUserFullName(String mUserFullName) {
+        this.mUserFullName = mUserFullName;
     }
 }

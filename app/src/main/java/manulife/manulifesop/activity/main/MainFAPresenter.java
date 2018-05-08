@@ -4,9 +4,14 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
+import manulife.manulifesop.adapter.ObjectData.ActiveHistSetting;
+import manulife.manulifesop.adapter.ObjectData.NotifyData;
 import manulife.manulifesop.api.ApiService;
 import manulife.manulifesop.api.ObjectInput.InputRefreshToken;
 import manulife.manulifesop.api.ObjectInput.InputTest;
@@ -98,6 +103,20 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
     }
 
     @Override
+    public void getNofity() {
+        List<NotifyData> mData = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            NotifyData temp = new NotifyData();
+            temp.setTitle("Title " + i);
+            temp.setTime("Time " + i);
+            temp.setContent("content " + i);
+            temp.setRead((i%2==0)?true:false);
+            mData.add(temp);
+        }
+        mPresenterView.showDataNotify(mData);
+    }
+
+    @Override
     public void testChecksum() {
         InputTest data = new InputTest();
         data.name = "name";
@@ -114,4 +133,6 @@ public class MainFAPresenter extends BasePresenter<MainFAContract.View> implemen
     private void handleResponseChecksum(Test test) {
         String temp = test.data.encode;
     }
+
+
 }

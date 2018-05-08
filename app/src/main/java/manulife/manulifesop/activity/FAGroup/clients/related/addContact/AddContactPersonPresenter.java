@@ -1,8 +1,13 @@
 package manulife.manulifesop.activity.FAGroup.clients.related.addContact;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.os.Build;
 import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +33,53 @@ public class AddContactPersonPresenter extends BasePresenter<AddContactPersonCon
         this.mContext = context;
     }
 
+    public boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            ArrayList<String> temp = new ArrayList<>();
+            //READ_PHONE_STATE
+            if (mContext.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                temp.add(Manifest.permission.READ_PHONE_STATE);
+            }
+            //READ_CONTACTS
+            if (mContext.checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                temp.add(Manifest.permission.READ_CONTACTS);
+            }
+            //CALL_PHONE
+            if (mContext.checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                temp.add(Manifest.permission.CALL_PHONE);
+            }
+            //READ_CALENDAR
+            if (mContext.checkSelfPermission(Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                temp.add(Manifest.permission.READ_CALENDAR);
+            }
+            //WRITE_CALENDAR
+            if (mContext.checkSelfPermission(Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                temp.add(Manifest.permission.WRITE_CALENDAR);
+            }
+
+            if (temp.size() > 0) {
+                String permissions[] = new String[temp.size()];
+                for (int i = 0; i < temp.size(); i++) {
+                    permissions[i] = temp.get(i);
+                }
+                ActivityCompat.requestPermissions((Activity) mContext, permissions, 2);
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public void readAllContacts() {
 
-        getContacts().observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(contactPeople -> {
-                    mPresenterView.loadDateList(contactPeople);
-                });
+        if(isPermissionGranted()) {
+            getContacts().observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .unsubscribeOn(Schedulers.io())
+                    .subscribe(contactPeople -> {
+                        mPresenterView.loadDateList(contactPeople);
+                    });
+        }
     }
 
     private boolean isContainInList(List<String> data, String input) {

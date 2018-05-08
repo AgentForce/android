@@ -3,9 +3,11 @@ package manulife.manulifesop.activity.FAGroup.clients.related.addContact;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -31,6 +33,7 @@ import manulife.manulifesop.adapter.ContactPersonAdapter;
 import manulife.manulifesop.adapter.ObjectData.ContactPerson;
 import manulife.manulifesop.api.ObjectResponse.ContactDetail;
 import manulife.manulifesop.base.BaseActivity;
+import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
 import manulife.manulifesop.util.Contants;
 import manulife.manulifesop.util.SOPSharedPreferences;
 
@@ -88,6 +91,32 @@ public class AddContactPersonActivity extends BaseActivity<AddContactPersonPrese
         txtActionbarTitle.setText("Thêm liên hệ (0/10)");
         mDataChoosed = new ArrayList<>();
         mActionListener.readAllContacts();
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+
+            case 2: {
+                boolean isAllAllowed = true;
+                for(int i=0;i<grantResults.length;i++){
+                    if(grantResults[i] == PackageManager.PERMISSION_DENIED){
+                        isAllAllowed = false;
+                        break;
+                    }
+                }
+                if(isAllAllowed){
+                    mActionListener.readAllContacts();
+                }else{
+                    showInform("Thông báo", "Không đủ quyền để chạy chương trình", "OK", SweetAlertDialog.ERROR_TYPE, new CallBackInformDialog() {
+                        @Override
+                        public void DiaglogPositive() {
+
+                        }
+                    });
+                }
+                return;
+            }
+        }
     }
 
     private void initViews() {

@@ -1,19 +1,33 @@
 package manulife.manulifesop.fragment.FAGroup.personal;
 
+import android.app.AlertDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import manulife.manulifesop.BuildConfig;
+import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
+import manulife.manulifesop.activity.FAGroup.personal.activityHistSetting.ActivityHistSettingActivity;
+import manulife.manulifesop.activity.FAGroup.personal.activityNewsSetting.ActivityNewsSettingActivity;
+import manulife.manulifesop.activity.FAGroup.personal.personalGoal.FA.PersonalGoalFAActivity;
+import manulife.manulifesop.activity.FAGroup.personal.personalGoal.SM.PersonalGoalSMActivity;
 import manulife.manulifesop.activity.FAGroup.personal.personalInfo.PersonalInfoActivity;
+import manulife.manulifesop.activity.FAGroup.personal.setting.SettingActivity;
+import manulife.manulifesop.activity.FAGroup.personal.support.SupportActivity;
 import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.api.ObjectResponse.UserProfile;
 import manulife.manulifesop.base.BaseFragment;
 import manulife.manulifesop.element.callbackInterface.CallBackConfirmDialog;
 import manulife.manulifesop.util.SOPSharedPreferences;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -61,8 +75,31 @@ public class FAPersonalFragment extends BaseFragment<MainFAActivity, FAPersonalP
         txtName.setText(data.data.fullName);
         txtID.setText("ID: " + data.data.username);
         String fullName = data.data.fullName;
+        //save user full name
+        ProjectApplication.getInstance().setUserFullName(fullName);
         txtAvatar.setText(fullName.substring(fullName.lastIndexOf(" ")+1)
                 .substring(0,1));
+    }
+
+    @Override
+    public void showAppIntroduce() {
+        String version = BuildConfig.VERSION_NAME;
+        String releaseDate = Utils.convertStringDateToStringDate(BuildConfig.RELEASE_DATE, "yyyy-MM-dd", "dd/MM/yyyy");
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mActivity);
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.activity_app_info, null);
+        ((TextView) dialogView.findViewById(R.id.txt_version)).setText(version);
+        ((TextView) dialogView.findViewById(R.id.txt_release_date)).setText(releaseDate);
+
+        dialogBuilder.setView(dialogView);
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        alertDialog.show();
     }
 
     @OnClick({R.id.layout_logout, R.id.layout_support, R.id.layout_introduce,
@@ -92,15 +129,15 @@ public class FAPersonalFragment extends BaseFragment<MainFAActivity, FAPersonalP
                 break;
             }
             case R.id.layout_support: {
-                showMessage("Inform", "Support", SweetAlertDialog.WARNING_TYPE);
+                mActivity.goNextScreen(SupportActivity.class);
                 break;
             }
             case R.id.layout_introduce: {
-                showMessage("Inform", "Introduce", SweetAlertDialog.WARNING_TYPE);
+                showAppIntroduce();
                 break;
             }
             case R.id.layout_setting: {
-                showMessage("Inform", "Setting", SweetAlertDialog.WARNING_TYPE);
+                mActivity.goNextScreen(SettingActivity.class);
                 break;
             }
             case R.id.layout_info: {
@@ -110,15 +147,18 @@ public class FAPersonalFragment extends BaseFragment<MainFAActivity, FAPersonalP
                 break;
             }
             case R.id.layout_activity_hist: {
-                showMessage("Inform", "Nhật ký hoạt động", SweetAlertDialog.WARNING_TYPE);
+                mActivity.goNextScreen(ActivityHistSettingActivity.class);
                 break;
             }
             case R.id.layout_activity: {
-                showMessage("Inform", "Tin tức hoạt động", SweetAlertDialog.WARNING_TYPE);
+                mActivity.goNextScreen(ActivityNewsSettingActivity.class);
                 break;
             }
             case R.id.layout_personal_object: {
-                showMessage("Inform", "Mục tiêu cá nhân", SweetAlertDialog.WARNING_TYPE);
+                if(SOPSharedPreferences.getInstance(getContext()).getIsFA())
+                    mActivity.goNextScreen(PersonalGoalFAActivity.class);
+                else
+                    mActivity.goNextScreen(PersonalGoalSMActivity.class);
                 break;
             }
             case R.id.layout_emulation_program: {

@@ -175,19 +175,19 @@ public class ContentDetailManageEmployFragment extends BaseFragment<MainFAActivi
         txtCodeProgress.setText(data.data.currentAgentCode + "/" + data.data.targetAgentCode);
         txtIntroduceProgress.setText(data.data.currentReLeadRecruit + "/" + data.data.targetReLeadRecruit);
 
-        int temp = (data.data.targetSurvey > 0) ? (data.data.currentSurvey / data.data.targetSurvey) * 100 : 0;
+        int temp = (data.data.targetSurvey > 0) ? (data.data.currentSurvey *100 / data.data.targetSurvey) : 0;
         progressSurvey.setProgress(temp);
 
-        temp = (data.data.targetCop > 0) ? (data.data.currentCop / data.data.targetCop) * 100 : 0;
+        temp = (data.data.targetCop > 0) ? (data.data.currentCop * 100 / data.data.targetCop) : 0;
         progressCop.setProgress(temp);
 
-        temp = (data.data.targetMit > 0) ? (data.data.currentMit / data.data.targetMit) * 100 : 0;
+        temp = (data.data.targetMit > 0) ? (data.data.currentMit  * 100 / data.data.targetMit) : 0;
         progressMit.setProgress(temp);
 
-        temp = (data.data.targetAgentCode > 0) ? (data.data.currentAgentCode / data.data.targetAgentCode) * 100 : 0;
+        temp = (data.data.targetAgentCode > 0) ? (data.data.currentAgentCode * 100 / data.data.targetAgentCode) : 0;
         progressCode.setProgress(temp);
 
-        temp = (data.data.targetReLeadRecruit > 0) ? (data.data.currentReLeadRecruit / data.data.targetReLeadRecruit) * 100 : 0;
+        temp = (data.data.targetReLeadRecruit > 0) ? (data.data.currentReLeadRecruit * 100 / data.data.targetReLeadRecruit) : 0;
         progressIntroduce.setProgress(temp);
     }
 
@@ -218,6 +218,13 @@ public class ContentDetailManageEmployFragment extends BaseFragment<MainFAActivi
                 currentPage
                 , lastPage
                 , new onLoadingMoreDataTask(), mLayoutManager));
+
+        //show top view
+        if (!expandableLayoutMid.isExpanded()) {
+            expandableLayoutMid.expand(true);
+            expandableLayoutList.collapse(true);
+            imgShowContacts.setBackgroundResource(R.drawable.ic_arrow_up);
+        }
     }
 
     @Override

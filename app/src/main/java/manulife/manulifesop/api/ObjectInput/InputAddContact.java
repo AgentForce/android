@@ -41,4 +41,7 @@ public class InputAddContact {
     @SerializedName("Description")
     @Expose
     public String description;
+    @SerializedName("BirthDay")
+    @Expose
+    public String birthday;
 }

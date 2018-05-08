@@ -6,6 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -20,13 +27,23 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.login.LoginActivity;
+import manulife.manulifesop.adapter.ActiveHistSettingAdapter;
+import manulife.manulifesop.adapter.NofifyAdapter;
+import manulife.manulifesop.adapter.ObjectData.ActiveHistSetting;
+import manulife.manulifesop.adapter.ObjectData.NotifyData;
 import manulife.manulifesop.base.BaseActivity;
+import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
 import manulife.manulifesop.fragment.FAGroup.clients.FACustomerFragment;
 import manulife.manulifesop.fragment.FAGroup.confirmCreatePlan.ConfirmCreatePlanFragment;
 import manulife.manulifesop.fragment.FAGroup.dashboardv2.FADashBoardFragment;
@@ -46,6 +63,13 @@ import manulife.manulifesop.util.Utils;
  */
 
 public class MainFAActivity extends BaseActivity<MainFAPresenter> implements MainFAContract.View {
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+    @BindView(R.id.view_status_bar)
+    LinearLayout viewStatusBarMenuRight;
+
+
 
     @BindView(R.id.layout_root)
     RelativeLayout layoutRoot;
@@ -80,18 +104,98 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
     private FragmentTransaction mFragmentTran;
     private Fragment mCurrentFragment;
 
+
+    //variable for notify
+    private NofifyAdapter mAdapter;
+    private List<NotifyData> mData;
+    private LinearLayoutManager mLayoutManager;
+
+    @BindView(R.id.lvNotify)
+    RecyclerView listData;
+    @BindView(R.id.txt_no_data)
+    TextView txtNoData;
+    @BindView(R.id.swipe_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_fa);
+        setContentView(R.layout.activity_main);
         hideKeyboardOutside(layoutRoot);
         mActionListener = new MainFAPresenter(this, this);
         mIsFA = SOPSharedPreferences.getInstance(this).getIsFA();
+        initDrawerRight();
         setupSupportForApp();
         if (mIsFA)
             setupMenuBotFA();
         else
             setupMenuBotSM();
+    }
+
+    private void initDrawerRight(){
+
+        mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        mData = new ArrayList<>();
+        listData.setLayoutManager(mLayoutManager);
+
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                // TODO Auto-generated method stub
+                try {
+                    mData.clear();
+                    mActionListener.getNofity();
+                } catch (Exception ex) {
+                }
+
+            }
+        });
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,R.string.app_name,R.string.app_name){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                if (drawerView.getId() == R.id.nav_view_right){
+                    mData.clear();
+                    mActionListener.getNofity();
+                }
+            }
+        };
+        drawer.removeDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    @Override
+    public void showDataNotify(List<NotifyData> data) {
+        swipeRefreshLayout.setRefreshing(false);
+        if(data.size() > 0) {
+            txtNoData.setVisibility(View.GONE);
+            mData.addAll(data);
+            if (mAdapter == null) {
+                mAdapter = new NofifyAdapter(getApplicationContext(), mData, new CallBackClickContact() {
+                    @Override
+                    public void onClickMenuRight(int position, int option) {
+
+                    }
+
+                    @Override
+                    public void onClickMainContent(int position) {
+                        Toast.makeText(MainFAActivity.this, mData.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                        if(!mData.get(position).isRead()) {
+                            mData.get(position).setRead(true);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+                listData.setAdapter(mAdapter);
+            } else {
+                mAdapter.notifyDataSetChanged();
+            }
+        }else{
+            txtNoData.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -117,6 +221,9 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) viewStatusBar.getLayoutParams();
         params.height = statusBarHeight;
         viewStatusBar.setLayoutParams(params);
+
+        //set height for status bar menu right
+        viewStatusBarMenuRight.setLayoutParams(params);
     }
 
     private void setupMenuBotFA() {
@@ -386,7 +493,9 @@ public class MainFAActivity extends BaseActivity<MainFAPresenter> implements Mai
         int id = view.getId();
         switch (id) {
             case R.id.layout_notification: {
-                Toast.makeText(this, "notification", Toast.LENGTH_SHORT).show();
+                if(!drawer.isDrawerOpen(GravityCompat.END)){
+                    drawer.openDrawer(GravityCompat.END);
+                }
                 break;
             }
             case R.id.layout_edit: {

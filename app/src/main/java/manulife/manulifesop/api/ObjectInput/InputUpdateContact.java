@@ -32,4 +32,7 @@ public class InputUpdateContact {
     @SerializedName("Description")
     @Expose
     public String description;
+    @SerializedName("BirthDay")
+    @Expose
+    public String birthday;
 }

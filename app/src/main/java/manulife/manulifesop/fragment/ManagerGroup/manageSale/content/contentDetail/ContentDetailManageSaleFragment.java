@@ -174,19 +174,19 @@ public class ContentDetailManageSaleFragment extends BaseFragment<MainFAActivity
         txtContractProgress.setText(data.data.currentContract + "/" + data.data.targetContract);
         txtIntroduceProgress.setText(data.data.currentReLead + "/" + data.data.targetReLead);
 
-        int temp = (data.data.targetCallSale!= null && data.data.targetCallSale > 0) ? (data.data.currentCallSale / data.data.targetCallSale) * 100 : 0;
+        int temp = (data.data.targetCallSale!= null && data.data.targetCallSale > 0) ? (data.data.currentCallSale * 100 / data.data.targetCallSale): 0;
         progressContact.setProgress(temp);
 
-        temp = (data.data.targetMetting!= null && data.data.targetMetting > 0) ? (data.data.currentMetting / data.data.targetMetting) * 100 : 0;
+        temp = (data.data.targetMetting!= null && data.data.targetMetting > 0) ? (data.data.currentMetting * 100 / data.data.targetMetting) : 0;
         progressAppointment.setProgress(temp);
 
-        temp = (data.data.targetPresentation!=null && data.data.targetPresentation > 0) ? (data.data.currentPresentation / data.data.targetPresentation) * 100 : 0;
+        temp = (data.data.targetPresentation!=null && data.data.targetPresentation > 0) ? (data.data.currentPresentation  * 100 / data.data.targetPresentation) : 0;
         progressConsultant.setProgress(temp);
 
-        temp = (data.data.targetContract!= null && data.data.targetContract > 0) ? (data.data.currentContract / data.data.targetContract) * 100 : 0;
+        temp = (data.data.targetContract!= null && data.data.targetContract > 0) ? (data.data.currentContract * 100 / data.data.targetContract) : 0;
         progressContract.setProgress(temp);
 
-        temp = (data.data.targetReLead!=null && data.data.targetReLead > 0) ? (data.data.currentReLead / data.data.targetReLead) * 100 : 0;
+        temp = (data.data.targetReLead!=null && data.data.targetReLead > 0) ? (data.data.currentReLead * 100 / data.data.targetReLead) : 0;
         progressIntroduce.setProgress(temp);
     }
 
@@ -217,6 +217,13 @@ public class ContentDetailManageSaleFragment extends BaseFragment<MainFAActivity
                 currentPage
                 , lastPage
                 , new onLoadingMoreDataTask(), mLayoutManager));
+
+        //show top view
+        if (!expandableLayoutMid.isExpanded()) {
+            expandableLayoutMid.expand(true);
+            expandableLayoutList.collapse(true);
+            imgShowContacts.setBackgroundResource(R.drawable.ic_arrow_up);
+        }
     }
 
     @Override
@@ -273,20 +280,24 @@ public class ContentDetailManageSaleFragment extends BaseFragment<MainFAActivity
         }
     }
 
+    private void showHideView(){
+        if (expandableLayoutMid.isExpanded()) {
+            expandableLayoutMid.collapse(true);
+            expandableLayoutList.expand(true);
+            imgShowContacts.setBackgroundResource(R.drawable.ic_arrow_down);
+        } else {
+            expandableLayoutMid.expand(true);
+            expandableLayoutList.collapse(true);
+            imgShowContacts.setBackgroundResource(R.drawable.ic_arrow_up);
+        }
+    }
+
     @OnClick({R.id.layout_title_bot})
     public void onClickView(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.layout_title_bot: {
-                if (expandableLayoutMid.isExpanded()) {
-                    expandableLayoutMid.collapse(true);
-                    expandableLayoutList.expand(true);
-                    imgShowContacts.setBackgroundResource(R.drawable.ic_arrow_down);
-                } else {
-                    expandableLayoutMid.expand(true);
-                    expandableLayoutList.collapse(true);
-                    imgShowContacts.setBackgroundResource(R.drawable.ic_arrow_up);
-                }
+                showHideView();
                 break;
             }
         }

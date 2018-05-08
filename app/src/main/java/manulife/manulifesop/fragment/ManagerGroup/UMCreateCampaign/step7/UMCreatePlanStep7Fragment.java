@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.warkiz.widget.IndicatorSeekBar;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import manulife.manulifesop.R;
@@ -23,10 +25,13 @@ public class UMCreatePlanStep7Fragment extends BaseFragment<UMCreatePlanActivity
     TextView txtFYCPerContact;
     @BindView(R.id.txt_FYC)
     TextView txtFYC;
-    @BindView(R.id.txt_RYP)
-    TextView txtRYP;
 
-
+    @BindView(R.id.sb_step7_row5)
+    IndicatorSeekBar sbStep7Row5;
+    @BindView(R.id.txt_min)
+    TextView txtRYPMin;
+    @BindView(R.id.txt_max)
+    TextView txtRYPMax;
 
 
     public static UMCreatePlanStep7Fragment newInstance() {
@@ -49,21 +54,66 @@ public class UMCreatePlanStep7Fragment extends BaseFragment<UMCreatePlanActivity
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        initEventsSeekBar();
     }
 
+    private void initEventsSeekBar() {
+        sbStep7Row5.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
 
-    @OnClick({R.id.btn_next,R.id.layout_add_step7_row1,R.id.layout_sub_step7_row1,
-            R.id.layout_add_step7_row2,R.id.layout_sub_step7_row2,
-            R.id.layout_add_step7_row4,R.id.layout_sub_step7_row4})
+            @Override
+            public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
+
+            }
+
+            @Override
+            public void onSectionChanged(IndicatorSeekBar seekBar, int thumbPosOnTick, String textBelowTick, boolean fromUserTouch) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(IndicatorSeekBar seekBar, int thumbPosOnTick) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+                float min = seekBar.getMin();
+                float max = seekBar.getMax();
+                if (seekBar.getProgress() == max) {
+                    int minNew = (min == 5000) ? 700 : (int) (min + 200);
+
+                    txtRYPMin.setText((int) (minNew) + "tr");
+                    txtRYPMax.setText((int) (max + 200) + "tr");
+
+                    sbStep7Row5.setMax(max + 200);
+                    sbStep7Row5.setMin(minNew);
+                    sbStep7Row5.setProgress(minNew);
+
+                } else if (seekBar.getProgress() == min && min > 500) {
+
+                    int minNew = ((min - 200) > 500) ? (int) (min - 200) : 500;
+                    txtRYPMin.setText(minNew + "tr");
+                    txtRYPMax.setText((int) (max - 100) + "tr");
+                    sbStep7Row5.setMax(max - 200);
+                    sbStep7Row5.setMin(minNew);
+                    sbStep7Row5.setProgress(max - 200);
+                }
+            }
+        });
+    }
+
+    @OnClick({R.id.btn_next, R.id.layout_add_step7_row1, R.id.layout_sub_step7_row1,
+            R.id.layout_add_step7_row2, R.id.layout_sub_step7_row2,
+            R.id.layout_add_step7_row4, R.id.layout_sub_step7_row4})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
             case R.id.btn_next: {
+                int RYPNum = Math.round((float) ((float)sbStep7Row5.getProgress()*1.5/100));
                 mActivity.setDataStep7(Integer.valueOf(txtContactPerMonth.getText().toString()),
                         Integer.valueOf(txtFYCPerContact.getText().toString()),
                         Integer.valueOf(txtFYC.getText().toString()),
-                        Integer.valueOf(txtRYP.getText().toString()));
+                        RYPNum);
                 mActivity.showNextFragment();
                 break;
             }
@@ -98,17 +148,6 @@ public class UMCreatePlanStep7Fragment extends BaseFragment<UMCreatePlanActivity
                 int newValue = Integer.valueOf(txtFYC.getText().toString()) - 1;
                 if (newValue < 0) newValue = 0;
                 txtFYC.setText(String.valueOf(newValue));
-                break;
-            }
-            case R.id.layout_add_step7_row5: {
-                int newValue = Integer.valueOf(txtRYP.getText().toString()) + 1;
-                txtRYP.setText(String.valueOf(newValue));
-                break;
-            }
-            case R.id.layout_sub_step7_row5: {
-                int newValue = Integer.valueOf(txtRYP.getText().toString()) - 1;
-                if (newValue < 0) newValue = 0;
-                txtRYP.setText(String.valueOf(newValue));
                 break;
             }
         }

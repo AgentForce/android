@@ -32,7 +32,7 @@
                 android:gravity="center_horizontal"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
-                android:text="Hợp đồng #48493 đã được ký thành công"
+                android:text="Hợp đồng đã được ký thành công"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/welcome_activity_title"
                 android:textStyle="bold" />
@@ -40,13 +40,53 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="5dp"
                 android:gravity="center_horizontal"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
                 android:text="@string/activity_signed_success_title"
                 android:textSize="@dimen/welcome_activity_note" />
+
+            <LinearLayout
+                android:id="@+id/layout_sign_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Ngày ký hợp đồng: "
+                    android:textSize="@dimen/welcome_activity_note" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txt_sign_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/image_right"
+                        android:text=""
+                        android:textSize="@dimen/welcome_activity_note"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/image_right"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_height="20dp"
+                        android:layout_width="20dp"
+                        android:src="@drawable/ic_calendar"/>
+                </RelativeLayout>
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -135,42 +175,64 @@
                 android:paddingTop="10dp"
                 android:textSize="@dimen/welcome_activity_note" />
 
-            <RadioGroup
-                android:id="@+id/rb_group"
+            <!--multicheck main product-->
+            <LinearLayout
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:weightSum="60">
+                android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/rb_main"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="30"
-                    android:background="@drawable/cus_radio_background_green_border"
-                    android:button="@null"
-                    android:checked="true"
-                    android:gravity="center_horizontal|center_vertical"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
                     android:text="Sản phẩm chính"
-                    android:textColor="@drawable/cus_radio_background_green_border"
-                    android:layout_marginRight="5dp"/>
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/welcome_activity_content" />
 
-                <RadioButton
-                    android:id="@+id/rb_sub"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="30"
-                    android:background="@drawable/cus_radio_background_green_border"
-                    android:button="@null"
-                    android:checked="false"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:text="Phụ"
-                    android:textColor="@drawable/cus_radio_background_green_border"
-                    android:layout_marginLeft="5dp"/>
-            </RadioGroup>
+                <manulife.manulifesop.element.customViews.MultiSelectionObjectSpinner
+                    android:id="@+id/spinner_main_produce"
+                    style="@style/spinner_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:prompt="@string/sign_success_main_product"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/welcome_activity_content" >
+                </manulife.manulifesop.element.customViews.MultiSelectionObjectSpinner>
+
+            </LinearLayout>
+
+            <!--multicheck main product-->
+            <LinearLayout
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:text="Sản phẩm phụ"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/welcome_activity_content" />
+
+                <manulife.manulifesop.element.customViews.MultiSelectionObjectSpinner
+                    android:id="@+id/spinner_sub_produce"
+                    style="@style/spinner_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:prompt="@string/sign_success_main_product"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/welcome_activity_content" >
+                </manulife.manulifesop.element.customViews.MultiSelectionObjectSpinner>
+
+            </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>

@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_first2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/layout_first2"
     android:visibility="gone">
-   <ImageView
-       android:layout_above="@+id/txt_mid"
-       android:layout_marginTop="20dp"
+
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/image_step2"/>
+        android:layout_above="@+id/txt_mid"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/image_step2" />
 
     <TextView
         android:id="@+id/txt_mid"
-        android:layout_above="@+id/txt_bot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/txt_bot"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:layout_centerHorizontal="true"
         android:text="@string/activity_welcome_title_step2"
         android:textColor="@android:color/white"
         android:textSize="@dimen/welcome_activity_title"
@@ -30,13 +34,13 @@
         android:id="@+id/txt_bot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="5dp"
         android:gravity="center_horizontal"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
         android:text="@string/activity_welcome_content_tep2"
         android:textColor="@android:color/white"
         android:textSize="@dimen/welcome_activity_content" />

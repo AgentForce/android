@@ -21,6 +21,7 @@ import butterknife.OnClick;
 import chick.indicator.CircleIndicatorPager;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.R;
+import manulife.manulifesop.activity.FAGroup.clients.related.signedSuccess.SignedSuccessActivity;
 import manulife.manulifesop.activity.main.MainFAActivity;
 import manulife.manulifesop.activity.login.LoginActivity;
 import manulife.manulifesop.adapter.CustomViewPagerAdapter;
@@ -31,6 +32,7 @@ import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step1.CreatePlanStep1Fragment;
 import manulife.manulifesop.fragment.FAGroup.createPlane.step2.CreatePlanStep2Fragment;
 import manulife.manulifesop.fragment.first.FirstFragment;
+import manulife.manulifesop.util.Contants;
 
 
 public class FirstActivity extends BaseActivity<FirstPresenter> implements FirstContract.View {
@@ -46,12 +48,15 @@ public class FirstActivity extends BaseActivity<FirstPresenter> implements First
     private List<BaseFragment> mListFragment;
     private CustomViewPagerAdapter mAdapter;
 
+    boolean mIsFromRequestPermission;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
         mActionListener = new FirstPresenter(this, this);
         //new code
+        mIsFromRequestPermission = false;
         initViewpagerWelcome();
     }
 
@@ -100,6 +105,7 @@ public class FirstActivity extends BaseActivity<FirstPresenter> implements First
                     }
                 }
                 if(isAllAllowed){
+                    mIsFromRequestPermission = true;
                     mActionListener.clickAgreeButton();
                 }else{
                     showInform("Thông báo", "Không đủ quyền để chạy chương trình", "OK", SweetAlertDialog.ERROR_TYPE, new CallBackInformDialog() {
@@ -126,6 +132,10 @@ public class FirstActivity extends BaseActivity<FirstPresenter> implements First
     @Override
     protected void onResume() {
         super.onResume();
-        mActionListener.checkInternetViaPingServer();
+        if(!mIsFromRequestPermission) {
+            mActionListener.checkInternetViaPingServer();
+        }else{
+            mIsFromRequestPermission = false;
+        }
     }
 }

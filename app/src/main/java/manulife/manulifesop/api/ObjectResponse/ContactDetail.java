@@ -68,6 +68,8 @@ public class ContactDetail {
         @SerializedName("Score")
         @Expose
         public Integer score;
-
+        @SerializedName("BirthDay")
+        @Expose
+        public String birthday;
     }
 }

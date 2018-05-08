@@ -33,7 +33,7 @@ import manulife.manulifesop.util.Utils;
  * Created by Chick on 10/27/2017.
  */
 
-public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACampaignPercentPresent> implements FACampaignPercentContract.View {
+public class FACampaignPercentFragment extends BaseFragment<MainFAActivity, FACampaignPercentPresent> implements FACampaignPercentContract.View {
 
     @BindView(R.id.circular_progress_step1)
     CircularProgressBar circularProgressBar1;
@@ -80,20 +80,20 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
             txtsignStep4, txtintroduceStep4;
     LinearLayout layoutRoot4;
 
-    private int mCurrentProcessStep1,mCurrentProcessStep2,mCurrentProcessStep3;
+    private int mCurrentProcessStep1, mCurrentProcessStep2, mCurrentProcessStep3;
 
     //variable for edit month
     IndicatorSeekBar sbMonthStep1, sbMonthStep2, sbMonthStep3, sbMonthStep4, sbMonthStep5;
     TextView txtMonthOK;
     List<Integer> mListMonthTarget;
 
-    public static FACampaignPercentFragment newInstance(List<Integer> percents, List<Integer> percentForcast,String type, int month,DashboardResult dataWeekMonth) {
+    public static FACampaignPercentFragment newInstance(List<Integer> percents, List<Integer> percentForcast, String type, int month, DashboardResult dataWeekMonth) {
         Bundle args = new Bundle();
         args.putSerializable("percent", (Serializable) percents);
         args.putSerializable("percentForcast", (Serializable) percentForcast);
-        args.putString("type",type);
+        args.putString("type", type);
         args.putSerializable("dataCampaign", dataWeekMonth);
-        args.putInt("month",month);
+        args.putInt("month", month);
         FACampaignPercentFragment fragment = new FACampaignPercentFragment();
         fragment.setArguments(args);
         return fragment;
@@ -106,7 +106,7 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new FACampaignPercentPresent(this,getContext());
+        mActionListener = new FACampaignPercentPresent(this, getContext());
     }
 
     @Override
@@ -115,34 +115,40 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
 
         mPercents = (List<Integer>) getArguments().getSerializable("percent");
         mPercentForcast = (List<Integer>) getArguments().getSerializable("percentForcast");
-        mType = getArguments().getString("type","week");
-        mMonth = getArguments().getInt("month",0);
+
+        mType = getArguments().getString("type", "week");
+        mMonth = getArguments().getInt("month", 0);
         mData = (DashboardResult) getArguments().getSerializable("dataCampaign");
         initViews();
     }
 
-    private void initViews(){
-        if(mType.equals("week")){
+    private void initViews() {
+        if (mType.equals("week")) {
             txtTitle.setText("Phân bổ kế hoạch làm việc");
-        }else if(mType.equals("month")){
+        } else if (mType.equals("month")) {
             txtTitle.setText("Thêm mục tiêu tháng");
-        }else{
+        } else {
 
             txtTitle.setVisibility(View.GONE);
             circularProgressBar1.setShowline2(true);
             circularProgressBar1.setProgressLine2(mPercentForcast.get(0));
+            circularProgressBar1.setProgressColorLine2(getCorlorProgress(mPercentForcast.get(0)));
 
             circularProgressBar2.setShowline2(true);
             circularProgressBar2.setProgressLine2(mPercentForcast.get(1));
+            circularProgressBar2.setProgressColorLine2(getCorlorProgress(mPercentForcast.get(1)));
 
             circularProgressBar3.setShowline2(true);
             circularProgressBar3.setProgressLine2(mPercentForcast.get(2));
+            circularProgressBar3.setProgressColorLine2(getCorlorProgress(mPercentForcast.get(2)));
 
             circularProgressBar4.setShowline2(true);
             circularProgressBar4.setProgressLine2(mPercentForcast.get(3));
+            circularProgressBar4.setProgressColorLine2(getCorlorProgress(mPercentForcast.get(3)));
 
             circularProgressBar5.setShowline2(true);
             circularProgressBar5.setProgressLine2(mPercentForcast.get(4));
+            circularProgressBar5.setProgressColorLine2(getCorlorProgress(mPercentForcast.get(4)));
         }
 
         circularProgressBar1.setTitle(mPercents.get(0) + "%");
@@ -171,32 +177,29 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
         circularProgressBar5.setProgressColor(getCorlorProgress(mPercents.get(4)));
     }
 
-    private int getCorlorProgress(int percent){
-        if(percent < 50){
-            return getResources().getColor(R.color.color_dashboard_contact);
-        }else if(percent < 90){
-            return getResources().getColor(R.color.color_dashboard_meeting);
-        }else{
-            return getResources().getColor(R.color.color_dashboard_sign);
+    private int getCorlorProgress(int percent) {
+        if (percent < 50) {
+            return getResources().getColor(R.color.color_percent_fail);
+        } else if (percent < 90) {
+            return getResources().getColor(R.color.color_percent_waring);
+        } else {
+            return getResources().getColor(R.color.color_percent_success);
         }
     }
 
     @Override
     public void updateData() {
-        ((FADashBoardFragment)this.getParentFragment()).updateData();
+        ((FADashBoardFragment) this.getParentFragment()).updateData();
     }
 
     @OnClick(R.id.txt_title)
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
         int id = view.getId();
-        switch (id)
-        {
-            case R.id.txt_title:
-            {
-                if(mType.equals("week")){
+        switch (id) {
+            case R.id.txt_title: {
+                if (mType.equals("week")) {
                     showDialogEditCampaign();
-                }else if(mType.equals("month")){
+                } else if (mType.equals("month")) {
                     showDialogEditObjectMonth();
                 }
                 break;
@@ -206,7 +209,7 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
 
     @Override
     public void showDialogEditCampaign() {
-        if(mMonth == Utils.getCurrentMonth(getContext())) {
+        if (mMonth == Utils.getCurrentMonth(getContext())) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
 
             LayoutInflater inflater = this.getLayoutInflater();
@@ -265,11 +268,12 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
             alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             alertDialog.show();
-        }else{
-            showMessage("Thông báo","Chỉ được thay đổi mục tiêu của tuàn hiện tại!",
+        } else {
+            showMessage("Thông báo", "Chỉ được thay đổi mục tiêu của tuàn hiện tại!",
                     SweetAlertDialog.WARNING_TYPE);
         }
     }
+
     private void initAllViewsDialog(View dialogView) {
         layoutRoot = dialogView.findViewById(R.id.layout_root_week1);
         sbStep1 = dialogView.findViewById(R.id.sb_step1);
@@ -304,9 +308,9 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
         txtintroduceStep4 = dialogView.findViewById(R.id.txt_step4_introduce);
     }
 
-    private void reloadViewsWeek1(){
+    private void reloadViewsWeek1() {
         int newContract = mListContractWeek.get(0);
-        int newPercent = Math.round((float)  newContract/ mTotalContract * 100);
+        int newPercent = Math.round((float) newContract / mTotalContract * 100);
         sbStep1.setProgress(newPercent);
 
         mCurrentProcessStep1 = newPercent;
@@ -318,9 +322,9 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
         txtintroduceStep1.setText(String.valueOf(newContract * 8));
     }
 
-    private void reloadViewsWeek2(){
+    private void reloadViewsWeek2() {
         int newContract = mListContractWeek.get(1);
-        int newPercent = Math.round((float)  newContract/ mTotalContract * 100);
+        int newPercent = Math.round((float) newContract / mTotalContract * 100);
         sbStep2.setProgress(newPercent);
         mCurrentProcessStep2 = newPercent;
 
@@ -330,9 +334,10 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
         txtsignStep2.setText(String.valueOf(newContract));
         txtintroduceStep2.setText(String.valueOf(newContract * 8));
     }
-    private void reloadViewsWeek3(){
+
+    private void reloadViewsWeek3() {
         int newContract = mListContractWeek.get(2);
-        int newPercent = Math.round((float)  newContract/ mTotalContract * 100);
+        int newPercent = Math.round((float) newContract / mTotalContract * 100);
         sbStep3.setProgress(newPercent);
         mCurrentProcessStep3 = newPercent;
 
@@ -342,9 +347,10 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
         txtsignStep3.setText(String.valueOf(newContract));
         txtintroduceStep3.setText(String.valueOf(newContract * 8));
     }
-    private void reloadViewsWeek4(){
+
+    private void reloadViewsWeek4() {
         int newContract = mListContractWeek.get(3);
-        int newPercent = Math.round((float)  newContract/ mTotalContract * 100);
+        int newPercent = Math.round((float) newContract / mTotalContract * 100);
         sbStep4.setProgress(newPercent);
 
         txtcontractStep4.setText(String.valueOf(newContract * 10));
@@ -379,7 +385,7 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
                     txtcontractStep1.setText(String.valueOf(intTemp));*/
                     newContract = Math.round((float) progress * mTotalContract / 100);
                     temp = mTotalContract - newContract;
-                    if (newContract != mListContractWeek.get(0) && temp >= 0){
+                    if (newContract != mListContractWeek.get(0) && temp >= 0) {
                         //10:5:3:1:8
                         txtcontractStep1.setText(String.valueOf(newContract * 10));
                         txtmeetingStep1.setText(String.valueOf(newContract * 5));
@@ -388,17 +394,16 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
                         txtintroduceStep1.setText(String.valueOf(newContract * 8));
 
                         //change percent week 2 - 3 - 4
-                        mListContractWeek.set(0,newContract);
-                        temp = temp/3;
-                        for(int i=1;i<mListContractWeek.size();i++)
-                        {
-                            mListContractWeek.set(i,temp);
+                        mListContractWeek.set(0, newContract);
+                        temp = temp / 3;
+                        for (int i = 1; i < mListContractWeek.size(); i++) {
+                            mListContractWeek.set(i, temp);
                         }
 
-                        temp = (mTotalContract - newContract)%3;
+                        temp = (mTotalContract - newContract) % 3;
                         if (temp == 1) {
                             mListContractWeek.set(3, mListContractWeek.get(3) + 1);
-                        } else if(temp == 2){
+                        } else if (temp == 2) {
                             mListContractWeek.set(2, mListContractWeek.get(2) + 1);
                             mListContractWeek.set(3, mListContractWeek.get(3) + 1);
                         }
@@ -443,6 +448,7 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
         sbStep2.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
             int newContract;
             int temp;
+
             @Override
             public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
                 if (fromUserTouch) {
@@ -459,13 +465,12 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
                         txtsignStep2.setText(String.valueOf(newContract));
                         txtintroduceStep2.setText(String.valueOf(newContract * 8));
                         //change percent week 3 - 4
-                        mListContractWeek.set(1,newContract);
-                        temp = (mTotalContract - newContract - mListContractWeek.get(0))/2;
-                        for(int i=2;i<mListContractWeek.size();i++)
-                        {
-                            mListContractWeek.set(i,temp);
+                        mListContractWeek.set(1, newContract);
+                        temp = (mTotalContract - newContract - mListContractWeek.get(0)) / 2;
+                        for (int i = 2; i < mListContractWeek.size(); i++) {
+                            mListContractWeek.set(i, temp);
                         }
-                        temp = (mTotalContract - newContract - mListContractWeek.get(0))%2;
+                        temp = (mTotalContract - newContract - mListContractWeek.get(0)) % 2;
                         if (temp == 1) {
                             mListContractWeek.set(3, mListContractWeek.get(3) + 1);
                         }
@@ -526,8 +531,8 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
                         txtsignStep3.setText(String.valueOf(newContract));
                         txtintroduceStep3.setText(String.valueOf(newContract * 8));
                         //change percent week 4
-                        mListContractWeek.set(2,newContract);
-                        mListContractWeek.set(3,temp);
+                        mListContractWeek.set(2, newContract);
+                        mListContractWeek.set(3, temp);
                         reloadViewsWeek4();
                         mCurrentProcessStep3 = progress;
                     }
@@ -562,6 +567,7 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
         });
         layoutRoot4.setAlpha(0.7f);
     }
+
     private void calculatePerCentContractPerWeek(DashboardResult data) {
         mCurrentWeek = data.data.currentWeek;
         int totalContract = 0;
@@ -595,8 +601,9 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
     }
+
     private void initAllViewsMonth(View view) {
-        ((TextView)view.findViewById(R.id.txt_title)).setText(
+        ((TextView) view.findViewById(R.id.txt_title)).setText(
                 "Chỉnh sửa mục tiêu KH tháng " + Utils.getCurrentMonth(getContext())
         );
 
@@ -615,8 +622,8 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
                             @Override
                             public void DiaglogPositive() {
                                 alertDialog.dismiss();
-                                int increaseNum =  sbMonthStep4.getProgress() - mListMonthTarget.get(3);
-                                mActionListener.increaseContactCampaign(mMonth,increaseNum);
+                                int increaseNum = sbMonthStep4.getProgress() - mListMonthTarget.get(3);
+                                mActionListener.increaseContactCampaign(mMonth, increaseNum);
                             }
 
                             @Override
@@ -680,7 +687,7 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
                         sbMonthStep1.setProgress(((currentProcess / 10) * 10));
                     }
                 }
-                reloadAllStepMonth(sbMonthStep1.getProgress() / 10,1);
+                reloadAllStepMonth(sbMonthStep1.getProgress() / 10, 1);
             }
         });
         sbMonthStep1.setMin(mListMonthTarget.get(0));
@@ -720,7 +727,7 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
                         sbMonthStep2.setProgress(((currentProcess / 5) * 5));
                     }
                 }
-                reloadAllStepMonth(sbMonthStep2.getProgress() / 5,2);
+                reloadAllStepMonth(sbMonthStep2.getProgress() / 5, 2);
             }
         });
     }
@@ -759,7 +766,7 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
                         sbMonthStep3.setProgress(((currentProcess / 3) * 3));
                     }
                 }
-                reloadAllStepMonth(sbMonthStep3.getProgress() / 3,3);
+                reloadAllStepMonth(sbMonthStep3.getProgress() / 3, 3);
             }
         });
     }
@@ -792,7 +799,7 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
 
-                reloadAllStepMonth(sbMonthStep4.getProgress(),4);
+                reloadAllStepMonth(sbMonthStep4.getProgress(), 4);
             }
         });
     }
@@ -831,7 +838,7 @@ public class FACampaignPercentFragment extends BaseFragment<MainFAActivity,FACam
                         sbMonthStep5.setProgress(((currentProcess / 8) * 8));
                     }
                 }
-                reloadAllStepMonth(sbMonthStep5.getProgress() / 8,5);
+                reloadAllStepMonth(sbMonthStep5.getProgress() / 8, 5);
             }
         });
     }

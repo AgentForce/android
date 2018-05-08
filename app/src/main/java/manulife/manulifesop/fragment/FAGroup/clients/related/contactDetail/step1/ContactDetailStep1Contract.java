@@ -15,6 +15,6 @@ public interface ContactDetailStep1Contract {
     }
 
     interface Action {
-
+        void callContact(String phone);
     }
 }

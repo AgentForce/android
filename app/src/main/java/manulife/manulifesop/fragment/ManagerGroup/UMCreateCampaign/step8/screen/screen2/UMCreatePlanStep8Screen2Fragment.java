@@ -42,7 +42,7 @@ public class UMCreatePlanStep8Screen2Fragment extends BaseFragment<UMCreatePlanA
 
     public static UMCreatePlanStep8Screen2Fragment newInstance(ForcastIncomeUM data) {
         Bundle args = new Bundle();
-        args.putSerializable("data",data);
+        args.putSerializable("data", data);
         UMCreatePlanStep8Screen2Fragment fragment = new UMCreatePlanStep8Screen2Fragment();
         fragment.setArguments(args);
         return fragment;
@@ -61,25 +61,26 @@ public class UMCreatePlanStep8Screen2Fragment extends BaseFragment<UMCreatePlanA
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mData = (ForcastIncomeUM)getArguments().getSerializable("data");
-        initViews();
+        mData = (ForcastIncomeUM) getArguments().getSerializable("data");
+        if (mData.statusCode == 1)
+            initViews();
     }
 
     @Override
     public void initViews() {
-        txtRecruitment.setText(Utils.longTypeTextFormat((long)(mData.data.manager.recruiterBonus * 1000000)));
-        txtBonusNewUM.setText(Utils.longTypeTextFormat((long)(mData.data.manager.newUMBonus * 1000000)));
-        txtBonusTrainUM.setText(Utils.longTypeTextFormat((long)(mData.data.manager.coachingUMBonus * 1000000)));
-        txtBonusTrainAgent.setText(Utils.longTypeTextFormat((long)(mData.data.manager.nABMangerBonus * 1000000)));
-        txtBonusManager.setText(Utils.longTypeTextFormat((long)(mData.data.manager.monthlyOverride * 1000000)));
-        txtBonusManagerCapacity.setText(Utils.longTypeTextFormat((long)(mData.data.manager.individualManagerBonus * 1000000)));
-        txtBonusQualityAgent.setText(Utils.longTypeTextFormat((long)(mData.data.manager.newAgentQualitityBonus * 1000000)));
+        txtRecruitment.setText(Utils.longTypeTextFormat((long) (mData.data.manager.recruiterBonus * 1000000)));
+        txtBonusNewUM.setText(Utils.longTypeTextFormat((long) (mData.data.manager.newUMBonus * 1000000)));
+        txtBonusTrainUM.setText(Utils.longTypeTextFormat((long) (mData.data.manager.coachingUMBonus * 1000000)));
+        txtBonusTrainAgent.setText(Utils.longTypeTextFormat((long) (mData.data.manager.nABMangerBonus * 1000000)));
+        txtBonusManager.setText(Utils.longTypeTextFormat((long) (mData.data.manager.monthlyOverride * 1000000)));
+        txtBonusManagerCapacity.setText(Utils.longTypeTextFormat((long) (mData.data.manager.individualManagerBonus * 1000000)));
+        txtBonusQualityAgent.setText(Utils.longTypeTextFormat((long) (mData.data.manager.newAgentQualitityBonus * 1000000)));
 
         double totol = mData.data.manager.newUMBonus + mData.data.manager.monthlyOverride +
-                mData.data.manager.recruiterBonus+ mData.data.manager.nABMangerBonus+
-                mData.data.manager.individualManagerBonus+ mData.data.manager.coachingUMBonus+
+                mData.data.manager.recruiterBonus + mData.data.manager.nABMangerBonus +
+                mData.data.manager.individualManagerBonus + mData.data.manager.coachingUMBonus +
                 mData.data.manager.newAgentQualitityBonus;
-        txtTotalIncome.setText(Utils.longTypeTextFormat((long)(totol * 1000000)));
+        txtTotalIncome.setText(Utils.longTypeTextFormat((long) (totol * 1000000)));
         txtNumCampaign.setText("(" + mActivity.getMonthNumber() + " tháng)");
     }
 }

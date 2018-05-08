@@ -2,8 +2,10 @@ package manulife.manulifesop.fragment.FAGroup.clients.related.contactDetail.step
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -16,11 +18,13 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.activity.FAGroup.clients.related.contactDetail.ContactDetailActivity;
 import manulife.manulifesop.api.ObjectResponse.ContactDetail;
 import manulife.manulifesop.base.BaseFragment;
+import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
 
 /**
  * Created by Chick on 10/27/2017.
@@ -67,7 +71,7 @@ public class ContactDetailStep1Fragment extends BaseFragment<ContactDetailActivi
 
     @Override
     public void initializeLayout(View view) {
-        mActionListener = new ContactDetailStep1Present(this);
+        mActionListener = new ContactDetailStep1Present(this,getContext());
     }
 
     @Override
@@ -99,18 +103,52 @@ public class ContactDetailStep1Fragment extends BaseFragment<ContactDetailActivi
         int id = view.getId();
         switch (id) {
             case R.id.layout_call: {
+                ProjectApplication.getInstance().logCall(
+                        ProjectApplication.getInstance().getContactDetail().data.id
+                );
 
-                String phone = "tel:" + ProjectApplication.getInstance().getContactDetail().data.phone;
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse(phone));
-                startActivity(callIntent);
+                mActionListener.callContact(ProjectApplication.getInstance().getContactDetail().data.phone);
                 isCalling = true;
-
                 break;
             }
             case R.id.layout_right: {
                 mActivity.showHideMenuAfterCall();
                 break;
+            }
+        }
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+
+            case 2: {
+                boolean isAllAllowed = true;
+                for(int i=0;i<grantResults.length;i++){
+                    if(grantResults[i] == PackageManager.PERMISSION_DENIED){
+                        isAllAllowed = false;
+                        break;
+                    }
+                }
+                if(isAllAllowed){
+                    ProjectApplication.getInstance().logCall(
+                            ProjectApplication.getInstance().getContactDetail().data.id
+                    );
+
+                    mActionListener.callContact(ProjectApplication.getInstance().getContactDetail().data.phone);
+                    isCalling = true;
+                }else{
+                    showInform("Thông báo", "Không đủ quyền để chạy chương trình", "OK", SweetAlertDialog.ERROR_TYPE, new CallBackInformDialog() {
+                        @Override
+                        public void DiaglogPositive() {
+                            Intent startMain = new Intent(Intent.ACTION_MAIN);
+                            startMain.addCategory(Intent.CATEGORY_HOME);
+                            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(startMain);
+                            System.exit(1);
+                        }
+                    });
+                }
+                return;
             }
         }
     }

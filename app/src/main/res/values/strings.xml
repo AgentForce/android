@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Manulife SOP</string>
 
+    <!--multi check dialog-->
+    <string name="sign_success_main_product" translatable="false">Sản phẩm chính</string>
+
     <!--activity_welcome-->
     <string name="activity_welcome_title">Chào mừng bạn</string>
     <string name="activity_welcome_content">Khi bấm vào đồng ý, bạn đã chấp nhận các điều khoản &amp; điều kiện của ứng dụng Manulife</string>
@@ -11,7 +14,7 @@
     <string name="activity_welcome_title_step2">Theo dõi trạng thái khách hàng</string>
     <string name="activity_welcome_content_tep2">Cập nhật, theo dõi khách hàng trong từng giai đoạn từ liên hệ cho đến khi ký kết hợp đồng</string>
     <string name="activity_welcome_title_step3">Biểu đồ cập nhật số lượng khách hàng trong tháng</string>
-    <string name="activity_welcome_content_tep3">Cập nhật số lượng thông tin khách hàng chín sác giúp bạn đạt kết quả kinh doanh hiệu quả nhất</string>
+    <string name="activity_welcome_content_tep3">Cập nhật số lượng thông tin khách hàng chính xác giúp bạn đạt kết quả kinh doanh hiệu quả nhất</string>
 
     <!--activity_login-->
     <string name="activity_login_title">Đăng nhập tài khoản</string>
@@ -76,5 +79,10 @@
     <!--activity_main_fa-->
     <string name="activity_main_fa_dashboard">Trang chủ</string>
     <string name="hint_name">Họ &amp; tên</string>
+
+    <!--activity_setting-->
+    <string name="activity_goal_title">Dự báo mục tiêu &amp; thu nhập cá nhân</string>
+
+
 
 </resources>

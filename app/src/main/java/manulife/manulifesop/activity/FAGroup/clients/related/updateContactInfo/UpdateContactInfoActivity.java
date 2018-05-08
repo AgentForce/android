@@ -1,11 +1,13 @@
 package manulife.manulifesop.activity.FAGroup.clients.related.updateContactInfo;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -23,6 +26,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.adapter.ObjectData.ContactPerson;
+import manulife.manulifesop.adapter.ObjectData.SpinnerObject;
 import manulife.manulifesop.api.ObjectResponse.ContactDetail;
 import manulife.manulifesop.base.BaseActivity;
 import manulife.manulifesop.element.callbackInterface.CallBackInformDialog;
@@ -44,6 +48,9 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
     TextView txtName;
     @BindView(R.id.txt_phone)
     TextView txtPhone;
+    @BindView(R.id.txt_birth_date)
+    TextView txtBirthDate;
+
 
     @BindView(R.id.txt_actionbar_title)
     TextView txtActionbarTitle;
@@ -205,12 +212,18 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
         imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
         layoutChooseStep4.setVisibility(View.VISIBLE);
 
-        txtStep5Choose.setText(ProjectApplication.getInstance().getRelationshipString(data.data.source));
+        txtStep5Choose.setText(ProjectApplication.getInstance().getSourceString(data.data.source));
         txtStep5Choose.setTag(data.data.source);
         imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_sign));
         layoutChooseStep5.setVisibility(View.VISIBLE);
 
         edtNote.setText(data.data.description);
+
+        txtBirthDate.setText(
+                Utils.convertStringTimeZoneDateToStringDate(
+                        data.data.birthday, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "dd/MM/yyyy"
+                )
+        );
 
     }
 
@@ -645,7 +658,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep1.startAnimation(out);
             layoutChooseStep1.setVisibility(View.GONE);
             expandableLayoutStep1.collapse();
-            imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+            imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce_old));
             imgStep1Add.setImageResource(R.drawable.ic_add);
 
             initListenerStep1Line1();
@@ -656,7 +669,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep2.startAnimation(out);
             layoutChooseStep2.setVisibility(View.GONE);
             expandableLayoutStep2.collapse();
-            imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+            imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce_old));
             imgStep2Add.setImageResource(R.drawable.ic_add);
 
             initListenerStep2Line1();
@@ -667,7 +680,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep3.startAnimation(out);
             layoutChooseStep3.setVisibility(View.GONE);
             expandableLayoutStep3.collapse();
-            imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+            imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce_old));
             imgStep3Add.setImageResource(R.drawable.ic_add);
 
             initListenerStep3Line1();
@@ -678,7 +691,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep4.startAnimation(out);
             layoutChooseStep4.setVisibility(View.GONE);
             expandableLayoutStep4.collapse();
-            imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+            imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce_old));
             imgStep4Add.setImageResource(R.drawable.ic_add);
 
             initListenerStep4Line1();
@@ -689,7 +702,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
             layoutChooseStep5.startAnimation(out);
             layoutChooseStep5.setVisibility(View.GONE);
             expandableLayoutStep5.collapse();
-            imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+            imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce_old));
             imgStep5Add.setImageResource(R.drawable.ic_add);
 
             initListenerStep5Line1();
@@ -708,9 +721,48 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
         finish();
     }
 
+    @Override
+    public void showDatePicker() {
+        final View dialogView = View.inflate(UpdateContactInfoActivity.this, R.layout.date_picker, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(UpdateContactInfoActivity.this).create();
+
+        //set max min date for date picker
+        Calendar currentCalendar = Calendar.getInstance();
+        currentCalendar.set(Calendar.YEAR,1950);
+        ((DatePicker) dialogView.findViewById(R.id.date_picker)).setMinDate(currentCalendar.getTimeInMillis());
+        currentCalendar = Calendar.getInstance();
+        currentCalendar.set(Calendar.MONTH,11);
+        ((DatePicker) dialogView.findViewById(R.id.date_picker)).setMaxDate(currentCalendar.getTimeInMillis());
+
+        dialogView.findViewById(R.id.btn_date_time_set).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        DatePicker datePicker = (DatePicker) dialogView
+                                .findViewById(R.id.date_picker);
+
+                        int day = datePicker.getDayOfMonth();
+                        int month = datePicker.getMonth();
+                        int year = datePicker.getYear();
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(year, month, day);
+
+                        String selectDate = Utils.convertDateToString(calendar.getTime(), "dd/MM/yyyy");
+
+                        txtBirthDate.setText(selectDate);
+
+                        alertDialog.dismiss();
+                    }
+                });
+        alertDialog.setView(dialogView);
+        alertDialog.show();
+    }
+
     @OnClick({R.id.layout_btn_back, R.id.layout_title_step1, R.id.layout_title_step2,
             R.id.layout_title_step3, R.id.layout_title_step4, R.id.layout_title_step5,
-            R.id.btn_ok})
+            R.id.btn_ok,R.id.layout_birth_date})
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
@@ -737,7 +789,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                         layoutChooseStep1.startAnimation(in);
                         layoutChooseStep1.setVisibility(View.VISIBLE);
                     } else {
-                        imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+                        imgStep1.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce_old));
                     }
                     imgStep1Add.setImageResource(R.drawable.ic_add);
                 }
@@ -761,7 +813,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                         layoutChooseStep2.startAnimation(in);
                         layoutChooseStep2.setVisibility(View.VISIBLE);
                     } else {
-                        imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+                        imgStep2.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce_old));
                     }
                     imgStep2Add.setImageResource(R.drawable.ic_add);
                 }
@@ -785,7 +837,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                         layoutChooseStep3.startAnimation(in);
                         layoutChooseStep3.setVisibility(View.VISIBLE);
                     } else {
-                        imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+                        imgStep3.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce_old));
                     }
                     imgStep3Add.setImageResource(R.drawable.ic_add);
                 }
@@ -809,7 +861,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                         layoutChooseStep4.startAnimation(in);
                         layoutChooseStep4.setVisibility(View.VISIBLE);
                     } else {
-                        imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+                        imgStep4.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce_old));
                     }
                     imgStep4Add.setImageResource(R.drawable.ic_add);
                 }
@@ -833,7 +885,7 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                         layoutChooseStep5.startAnimation(in);
                         layoutChooseStep5.setVisibility(View.VISIBLE);
                     } else {
-                        imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce));
+                        imgStep5.setBackgroundColor(getResources().getColor(R.color.color_dashboard_introduce_old));
                     }
                     imgStep5Add.setImageResource(R.drawable.ic_add);
                 }
@@ -850,36 +902,42 @@ public class UpdateContactInfoActivity extends BaseActivity<UpdateContactInfoPre
                                     Integer.valueOf(txtStep3Choose.getTag().toString()),
                                     Integer.valueOf(txtStep4Choose.getTag().toString()),
                                     Integer.valueOf(txtStep5Choose.getTag().toString()),
-                                    edtNote.getText().toString());
+                                    edtNote.getText().toString(),
+                                    txtBirthDate.getText().toString());
                         else
                             mActionListener.changeReleadToContact(mReleadID, ProjectApplication.getInstance().getCampaignWeekId(),
                                     Integer.valueOf(txtStep1Choose.getTag().toString()), 0, Integer.valueOf(txtStep2Choose.getTag().toString()),
                                     Integer.valueOf(txtStep3Choose.getTag().toString()),
                                     Integer.valueOf(txtStep4Choose.getTag().toString()),
                                     Integer.valueOf(txtStep5Choose.getTag().toString()),
-                                    edtNote.getText().toString());
+                                    edtNote.getText().toString(),
+                                    txtBirthDate.getText().toString());
                     } else if (mIsUpdateContact) {
                         //check is from contact or recruit
                         if (mIsRecruit)
                             mActionListener.updateRecruitInfo(mReleadID, txtName.getText().toString(), Integer.valueOf(txtStep1Choose.getTag().toString()),
                                     0, Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
-                                    Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
+                                    Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString(),txtBirthDate.getText().toString());
                         else
                             mActionListener.updateContactInfo(mReleadID, txtName.getText().toString(), Integer.valueOf(txtStep1Choose.getTag().toString()),
                                     0, Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
-                                    Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
+                                    Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString(),txtBirthDate.getText().toString());
                     } else {
                         //check is from contact or recruit
                         if (mIsRecruit)
                             mActionListener.addRecruitInfo(mPosition, txtName.getText().toString(), txtPhone.getText().toString(), Integer.valueOf(txtStep1Choose.getTag().toString()),
                                     0, Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
-                                    Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
+                                    Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString(),txtBirthDate.getText().toString());
                         else
                             mActionListener.addContactInfo(mPosition, txtName.getText().toString(), txtPhone.getText().toString(), Integer.valueOf(txtStep1Choose.getTag().toString()),
                                     0, Integer.valueOf(txtStep2Choose.getTag().toString()), Integer.valueOf(txtStep3Choose.getTag().toString()), Integer.valueOf(txtStep4Choose.getTag().toString()),
-                                    Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString());
+                                    Integer.valueOf(txtStep5Choose.getTag().toString()), edtNote.getText().toString(),txtBirthDate.getText().toString());
                     }
                 }
+                break;
+            }
+            case R.id.layout_birth_date:{
+                showDatePicker();
                 break;
             }
         }

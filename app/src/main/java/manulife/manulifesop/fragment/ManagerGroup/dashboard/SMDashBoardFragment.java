@@ -418,6 +418,10 @@ public class SMDashBoardFragment extends BaseFragment<MainFAActivity, SMDashBoar
                             break;
                         }
                         case 1: {
+                            ProjectApplication.getInstance().logCall(
+                                    mDataActiveHist.get(position).getId()
+                            );
+
                             String phone = "tel:" + mDataActiveHist.get(position).getPhone();
                             Intent callIntent = new Intent(Intent.ACTION_CALL);
                             callIntent.setData(Uri.parse(phone));

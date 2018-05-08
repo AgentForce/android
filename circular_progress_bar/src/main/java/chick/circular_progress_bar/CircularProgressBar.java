@@ -48,11 +48,12 @@ public class CircularProgressBar extends ProgressBar {
 
     private int mStrokeWidth = STROKE_WIDTH;
     //new code
-    private int mStrokeWidthLine2 = 5;
+    private int mStrokeWidthLine2 = 10;
 
     private final RectF mCircleBounds = new RectF();
     //new code
     private final RectF mCircleBoundsBackground = new RectF();
+    private final RectF mCircleBoundsBackground2Line = new RectF();
     private final RectF mCircleBounds2 = new RectF();
     private int mProgressLine2 = 0;
 
@@ -60,6 +61,7 @@ public class CircularProgressBar extends ProgressBar {
     private final Paint mProgressColorPaintLine1 = new Paint();
     private final Paint mProgressColorPaintLine2 = new Paint();
     private final Paint mBackgroundColorPaint = new Paint();
+
     private final Paint mTitlePaint = new Paint();
     private final Paint mSubtitlePaint = new Paint();
 
@@ -148,7 +150,7 @@ public class CircularProgressBar extends ProgressBar {
 
         mStrokeWidth = a.getInt(R.styleable.CircularProgressBar_cpb_strokeWidth, STROKE_WIDTH);
         //new code
-        mStrokeWidthLine2 = a.getInt(R.styleable.CircularProgressBar_cpb_strokeWidthLine2, STROKE_WIDTH/4);
+        mStrokeWidthLine2 = a.getInt(R.styleable.CircularProgressBar_cpb_strokeWidthLine2, STROKE_WIDTH/2);
         a.recycle();
 
 
@@ -168,13 +170,12 @@ public class CircularProgressBar extends ProgressBar {
         //mBackgroundColorPaint.setStyle(Style.STROKE);
         //mBackgroundColorPaint.setStrokeWidth(mStrokeWidth);
         //new code
-        mBackgroundColorPaint.setStrokeWidth(mStrokeWidth / 2);
+        mBackgroundColorPaint.setStrokeWidth(mStrokeWidth/2);
         //new code
         mBackgroundColorPaint.setStyle(Style.FILL_AND_STROKE);
 
 
         //new code
-        //mTitlePaint.setTextSize(60);
         mTitlePaint.setTextSize(40);
         mTitlePaint.setStyle(Style.FILL);
         mTitlePaint.setAntiAlias(true);
@@ -185,18 +186,21 @@ public class CircularProgressBar extends ProgressBar {
         mSubtitlePaint.setStyle(Style.FILL);
         mSubtitlePaint.setAntiAlias(true);
         mSubtitlePaint.setTypeface(Typeface.create("Roboto-Thin", Typeface.BOLD));
+
         //		mSubtitlePaint.setShadowLayer(0.1f, 0, 1, Color.GRAY);
     }
 
     @Override
     protected synchronized void onDraw(Canvas canvas) {
-        canvas.drawArc(mCircleBoundsBackground, 0, 360, false, mBackgroundColorPaint);
+        //canvas.drawArc(mCircleBoundsBackground, 0, 360, false, mBackgroundColorPaint);
         //canvas.drawArc(mCircleBounds2, 0, 360 , false, mBackgroundColorPaint);
 
         if (mHasShadow)
             mProgressColorPaint.setShadowLayer(3, 0, 1, mShadowColor);
         //new code
         if (mShowLine2) {
+            canvas.drawArc(mCircleBoundsBackground2Line, 0, 360, false, mBackgroundColorPaint);
+
             int prog = mProgressLine2;
             float scale = getMax() > 0 ? (float) prog / getMax() * 360 : 0;
             canvas.drawArc(mCircleBounds, 270, scale, false, mProgressColorPaintLine2);
@@ -206,6 +210,7 @@ public class CircularProgressBar extends ProgressBar {
             canvas.drawArc(mCircleBounds2, 270, scale, false, mProgressColorPaintLine1);
         }else
         {
+            canvas.drawArc(mCircleBoundsBackground, 0, 360, false, mBackgroundColorPaint);
             int prog = getProgress();
             float scale = getMax() > 0 ? (float) prog / getMax() * 360 : 0;
             canvas.drawArc(mCircleBounds, 270, scale, false, mProgressColorPaint);
@@ -239,13 +244,15 @@ public class CircularProgressBar extends ProgressBar {
         setMeasuredDimension(min + 2 * STROKE_WIDTH, min + 2 * STROKE_WIDTH);
 
         mCircleBounds.set(STROKE_WIDTH, STROKE_WIDTH, min + STROKE_WIDTH, min + STROKE_WIDTH);
-        mCircleBounds2.set(STROKE_WIDTH + STROKE_WIDTH / 2, STROKE_WIDTH + STROKE_WIDTH / 2, min + STROKE_WIDTH - STROKE_WIDTH / 2, min + STROKE_WIDTH - STROKE_WIDTH / 2);
+        mCircleBounds2.set(STROKE_WIDTH *2, STROKE_WIDTH *2, min , min);
         //new code
-        mCircleBoundsBackground.set(STROKE_WIDTH * 2, STROKE_WIDTH * 2, min, min);
+        mCircleBoundsBackground.set(STROKE_WIDTH * 2, STROKE_WIDTH * 2, min , min);
+        mCircleBoundsBackground2Line.set(STROKE_WIDTH * 3, STROKE_WIDTH * 3, min - STROKE_WIDTH , min - STROKE_WIDTH);
     }
 
     @Override
     public synchronized void setProgress(int progress) {
+
         super.setProgress(progress);
 
         // the setProgress super will not change the details of the progress bar
@@ -333,6 +340,7 @@ public class CircularProgressBar extends ProgressBar {
     //new code
     public synchronized void setProgressColor(int color) {
         mProgressColorPaint.setColor(color);
+        //hiển thị màu cho dòng thứ 1 (thứ 1 từ trong ra)
         mProgressColorPaintLine1.setColor(color);
         invalidate();
     }
@@ -348,6 +356,8 @@ public class CircularProgressBar extends ProgressBar {
 
     public synchronized void setProgressLine2(int progress) {
         mProgressLine2 = progress;
+        mSubtitlePaint.setTextSize(15);
+        mTitlePaint.setTextSize(30);
         invalidate();
     }
 

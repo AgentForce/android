@@ -414,6 +414,10 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
                             break;
                         }
                         case 1: {
+                            ProjectApplication.getInstance().logCall(
+                                    mDataActiveHist.get(position).getId()
+                            );
+
                             String phone = "tel:" + mDataActiveHist.get(position).getPhone();
                             Intent callIntent = new Intent(Intent.ACTION_CALL);
                             callIntent.setData(Uri.parse(phone));
@@ -442,20 +446,6 @@ public class FADashBoardFragment extends BaseFragment<MainFAActivity, FADashBoar
         } else {
             mAdapterActiveHist.notifyDataSetChanged();
         }
-
-        //set space between two items
-        /*int[] ATTRS = new int[]{android.R.attr.listDivider};
-        TypedArray a = getContext().obtainStyledAttributes(ATTRS);
-        Drawable divider = a.getDrawable(0);
-        int insetLeft = getResources().getDimensionPixelSize(R.dimen.margin_left_DividerItemDecoration);
-        int insetRight = getResources().getDimensionPixelSize(R.dimen.margin_right_DividerItemDecoration);
-        InsetDrawable insetDivider = new InsetDrawable(divider, insetLeft, 0, insetRight, 0);
-        a.recycle();
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(listActiHist.getContext(),
-                mLayoutManager.getOrientation());
-        dividerItemDecoration.setDrawable(insetDivider);
-        listActiHist.addItemDecoration(dividerItemDecoration);*/
 
         listActiHist.clearOnScrollListeners();
         listActiHist.addOnScrollListener(new EndlessScrollListenerRecyclerView(

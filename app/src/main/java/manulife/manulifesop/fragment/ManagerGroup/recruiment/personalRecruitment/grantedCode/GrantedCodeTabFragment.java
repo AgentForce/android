@@ -250,6 +250,10 @@ public class GrantedCodeTabFragment extends BaseFragment<GrantedCodeActivity, Gr
                             break;
                         }
                         case 1: {
+                            ProjectApplication.getInstance().logCall(
+                                    mData.get(position).getId()
+                            );
+
                             String phone = "tel:" + mData.get(position).getContent();
                             Intent callIntent = new Intent(Intent.ACTION_CALL);
                             callIntent.setData(Uri.parse(phone));
