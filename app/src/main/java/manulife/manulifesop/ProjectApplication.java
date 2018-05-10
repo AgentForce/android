@@ -205,6 +205,7 @@ public class ProjectApplication extends MultiDexApplication {
         //FacebookSdk.sdkInitialize(getApplicationContext());
         //PreferenceUtils.init(this);
         //initCustomFont();
+        
 
         //new code
         setHashmapStringProcessStatus();
