@@ -21,5 +21,6 @@ public interface FAContactMonthContract {
 
     interface Action {
         void getContactMonth(int month,String search, int page);
+        void moveContactToCurrent(int leadID);
     }
 }

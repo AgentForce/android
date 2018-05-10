@@ -3,16 +3,21 @@ package manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ContactMonth
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import manulife.manulifesop.BuildConfig;
 import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.adapter.ObjectData.ContactAllFA;
 import manulife.manulifesop.api.ApiService;
+import manulife.manulifesop.api.ObjectInput.InputLogCall;
+import manulife.manulifesop.api.ObjectResponse.BaseResponse;
 import manulife.manulifesop.api.ObjectResponse.ContactMonth;
 import manulife.manulifesop.base.BasePresenter;
 import manulife.manulifesop.fragment.FAGroup.clients.ContentClient.ObjectMonth.FAObjectMonthContract;
@@ -25,12 +30,12 @@ import manulife.manulifesop.util.Utils;
  * Created by Chick on 10/27/2017.
  */
 
-public class FAContactMonthPresent extends BasePresenter<FAContactMonthContract.View> implements FAContactMonthContract.Action{
+public class FAContactMonthPresent extends BasePresenter<FAContactMonthContract.View> implements FAContactMonthContract.Action {
 
     private Context mContext;
-    int currentPage,lastPage;
+    int currentPage, lastPage;
 
-    public FAContactMonthPresent(FAContactMonthContract.View presenterView,Context context) {
+    public FAContactMonthPresent(FAContactMonthContract.View presenterView, Context context) {
         super(presenterView);
         this.mContext = context;
     }
@@ -41,7 +46,7 @@ public class FAContactMonthPresent extends BasePresenter<FAContactMonthContract.
         getCompositeDisposable().add(ApiService.getServer().getContactMonth(
                 SOPSharedPreferences.getInstance(mContext).getAccessToken(),
                 Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
-                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, month,search,page,10)
+                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, month, search, page, 10)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -50,17 +55,17 @@ public class FAContactMonthPresent extends BasePresenter<FAContactMonthContract.
     }
 
     private void handleError(Throwable throwable) {
-        mPresenterView.finishLoading(throwable.getMessage(),false);
+        mPresenterView.finishLoading(throwable.getMessage(), false);
     }
 
     private void handleResponseContactMonth(ContactMonth contactMonth) {
-        if(contactMonth.statusCode == 1){
+        if (contactMonth.statusCode == 1) {
 
             Observable.just(contactMonth)
                     .map(data ->
                     {
                         currentPage = data.data.page;
-                        lastPage = Utils.genLastPage(data.data.count,Integer.valueOf(data.data.limit));
+                        lastPage = Utils.genLastPage(data.data.count, Integer.valueOf(data.data.limit));
                         List<ContactAllFA> datatmp = new ArrayList<>();
                         if (data.statusCode == 1 && data.data.count > 0) {
                             ContactAllFA tmp;
@@ -82,10 +87,36 @@ public class FAContactMonthPresent extends BasePresenter<FAContactMonthContract.
                     }).subscribeOn(Schedulers.computation())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(contactAllFAS -> {
-                        mPresenterView.loadContactMonth(contactAllFAS,currentPage,lastPage);
+                        mPresenterView.loadContactMonth(contactAllFAS, currentPage, lastPage);
                         mPresenterView.finishLoading();
                     });
-        }else
-            mPresenterView.finishLoading(contactMonth.msg,false);
+        } else
+            mPresenterView.finishLoading(contactMonth.msg, false);
+    }
+
+    @Override
+    public void moveContactToCurrent(int leadID) {
+        mPresenterView.showLoading("Xử lý dữ liệu!");
+        InputLogCall data = new InputLogCall();
+        data.leadId = leadID;
+        String checksum = Utils.getSignature(new Gson().toJson(data));
+
+        getCompositeDisposable().add(ApiService.getServer().moveContactToCurrent(
+                SOPSharedPreferences.getInstance(mContext).getAccessToken(),
+                Contants.clientID, DeviceInfo.ANDROID_OS_VERSION, BuildConfig.VERSION_NAME,
+                DeviceInfo.DEVICE_NAME, DeviceInfo.DEVICEIMEI, checksum,
+                data)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(this::handleResponseMove, this::handleError)
+        );
+    }
+
+    private void handleResponseMove(BaseResponse rs) {
+        if (rs.statusCode == 1)
+            mPresenterView.finishLoading("Cập nhật thành công", true);
+        else
+            mPresenterView.finishLoading("Liên hệ đã có trong tháng hiện tại", false);
     }
 }

@@ -25,6 +25,7 @@ import manulife.manulifesop.activity.FAGroup.clients.introduceContact.IntroduceC
 import manulife.manulifesop.adapter.ObjectData.ActiveHistFA;
 import manulife.manulifesop.adapter.ObjectData.ContactAllFA;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by PhamTruong on 01/06/2017.
@@ -37,10 +38,12 @@ public class ContactAllFAAdapter extends RecyclerView.Adapter<ContactAllFAAdapte
     private FragmentManager fm;
     private CallBackClickContact mCallback;
 
+    private int mMonth;
     //Constructor
-    public ContactAllFAAdapter(Context context, List<ContactAllFA> arr, CallBackClickContact callBackClickContact) {
+    public ContactAllFAAdapter(Context context, List<ContactAllFA> arr, int month,CallBackClickContact callBackClickContact) {
         this.mContext = context;
         this.mListObject = arr;
+        this.mMonth = month;
         this.mCallback = callBackClickContact;
     }
 
@@ -121,7 +124,10 @@ public class ContactAllFAAdapter extends RecyclerView.Adapter<ContactAllFAAdapte
             @Override
             public void onClick(View view) {
                 PopupMenu popup = new PopupMenu(mContext, holder.layoutMenuRightClick);
-                popup.inflate(R.menu.option_menu_active_hist);
+                if(mMonth < Utils.getCurrentMonth(mContext) && object.getProcessStep() < 4)
+                    popup.inflate(R.menu.option_menu_active_hist_past);
+                else
+                    popup.inflate(R.menu.option_menu_active_hist);
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
@@ -136,6 +142,9 @@ public class ContactAllFAAdapter extends RecyclerView.Adapter<ContactAllFAAdapte
                                 break;
                             case R.id.menu_create_event:
                                 mCallback.onClickMenuRight(position,2);
+                                break;
+                            case R.id.menu_move_to_current:
+                                mCallback.onClickMenuRight(position,3);
                                 break;
                         }
                         return false;

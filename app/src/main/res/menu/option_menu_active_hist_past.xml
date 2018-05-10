@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_detail"
+        android:title="Chi tiết" />
+    <item
+        android:id="@+id/menu_call"
+        android:title="Gọi điện thoại" />
+    <item
+        android:id="@+id/menu_create_event"
+        android:title="Tạo sự kiện" />
+    <item
+        android:id="@+id/menu_move_to_current"
+        android:title="Chuyển KH sang tháng hiện tại" />
+</menu>

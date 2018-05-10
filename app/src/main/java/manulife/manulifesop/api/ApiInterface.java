@@ -415,4 +415,8 @@ public interface ApiInterface {
     Observable<BaseResponse> updateNotiConfig(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
                                         @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
                                         @Body InputUpdateNotiConfig data);
+    @POST("leads/movetocurrentweek")
+    Observable<BaseResponse> moveContactToCurrent(@Header("Authorization") String accessToken, @Header("clientid") String clientid, @Header("versionos") String versionos, @Header("versionapp") String versionapp,
+                                              @Header("devicename") String devicename, @Header("imei") String imei, @Header("checksum") String checksum,
+                                              @Body InputLogCall data);
 }

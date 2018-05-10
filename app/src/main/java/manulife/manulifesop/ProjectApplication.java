@@ -4,12 +4,14 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import io.fabric.sdk.android.Fabric;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -196,7 +198,7 @@ public class ProjectApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         //ProjectApplication.context = getApplicationContext();
-        //Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics());
         //FirebaseAnalytics.getInstance(this);
         setInstance(this);
         //arabicaService = new ArabicaService();

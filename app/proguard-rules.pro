@@ -49,9 +49,10 @@
 -keep class chick.indicator.** { *; }
 -dontwarn chick.indicator.**
 
+#không cần nửa vì dã proguard ở thư viện rồi
 #chick.circular_progress_bar
--keep class chick.circular_progress_bar.** { *; }
--dontwarn chick.circular_progress_bar.**
+#-keep class chick.circular_progress_bar.** { *; }
+#-dontwarn chick.circular_progress_bar.**
 
 #cn.refactor.library
 -keep class cn.refactor.library.** { *; }

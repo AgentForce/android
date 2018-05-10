@@ -20,6 +20,7 @@ import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,7 +173,7 @@ public class RecruitmentContactMonthFragment extends BaseFragment<MainFAActivity
         mData.addAll(data);
 
         if(mAdapter == null) {
-            mAdapter = new ContactAllSMAdapter(getContext(), mData, new CallBackClickContact() {
+            mAdapter = new ContactAllSMAdapter(getContext(), mData, mMonth,new CallBackClickContact() {
                 @Override
                 public void onClickMenuRight(int position, int option) {
                     switch (option) {
@@ -200,6 +201,9 @@ public class RecruitmentContactMonthFragment extends BaseFragment<MainFAActivity
                             data.putBoolean("isRecruit",true);
                             mActivity.goNextScreen(CreateEventActivity.class, data);
                             break;
+                        }
+                        case 3:{
+                            Toast.makeText(mActivity, "move contact", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

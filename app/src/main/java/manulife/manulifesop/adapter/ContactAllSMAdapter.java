@@ -23,6 +23,7 @@ import manulife.manulifesop.ProjectApplication;
 import manulife.manulifesop.R;
 import manulife.manulifesop.adapter.ObjectData.ContactAllFA;
 import manulife.manulifesop.element.callbackInterface.CallBackClickContact;
+import manulife.manulifesop.util.Utils;
 
 /**
  * Created by PhamTruong on 01/06/2017.
@@ -35,11 +36,14 @@ public class ContactAllSMAdapter extends RecyclerView.Adapter<ContactAllSMAdapte
     private FragmentManager fm;
     private CallBackClickContact mCallback;
 
+    private int mMonth;
+
     //Constructor
-    public ContactAllSMAdapter(Context context, List<ContactAllFA> arr, CallBackClickContact callBackClickContact) {
+    public ContactAllSMAdapter(Context context, List<ContactAllFA> arr, int month,CallBackClickContact callBackClickContact) {
         this.mContext = context;
         this.mListObject = arr;
         this.mCallback = callBackClickContact;
+        this.mMonth = month;
     }
 
     /**
@@ -119,7 +123,10 @@ public class ContactAllSMAdapter extends RecyclerView.Adapter<ContactAllSMAdapte
             @Override
             public void onClick(View view) {
                 PopupMenu popup = new PopupMenu(mContext, holder.layoutMenuRightClick);
-                popup.inflate(R.menu.option_menu_active_hist);
+                if(mMonth < Utils.getCurrentMonth(mContext) && object.getProcessStep() < 4)
+                    popup.inflate(R.menu.option_menu_active_hist_past);
+                else
+                    popup.inflate(R.menu.option_menu_active_hist);
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
@@ -134,6 +141,9 @@ public class ContactAllSMAdapter extends RecyclerView.Adapter<ContactAllSMAdapte
                                 break;
                             case R.id.menu_create_event:
                                 mCallback.onClickMenuRight(position,2);
+                                break;
+                            case R.id.menu_move_to_current:
+                                mCallback.onClickMenuRight(position,3);
                                 break;
                         }
                         return false;

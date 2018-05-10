@@ -193,7 +193,7 @@ public class FAContactMonthFragment extends BaseFragment<MainFAActivity, FAConta
         mData.addAll(data);
 
         if(mAdapter ==  null) {
-            mAdapter = new ContactAllFAAdapter(getContext(), mData, new CallBackClickContact() {
+            mAdapter = new ContactAllFAAdapter(getContext(), mData, mMonth,new CallBackClickContact() {
                 @Override
                 public void onClickMenuRight(int position, int option) {
                     switch (option) {
@@ -220,6 +220,9 @@ public class FAContactMonthFragment extends BaseFragment<MainFAActivity, FAConta
                             data.putString("name", mData.get(position).getTitle());
                             mActivity.goNextScreen(CreateEventActivity.class, data);
                             break;
+                        }
+                        case 3:{
+                            mActionListener.moveContactToCurrent(mData.get(position).getId());
                         }
                     }
                 }

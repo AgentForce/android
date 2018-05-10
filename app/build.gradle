@@ -1,4 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
 
 android {
     signingConfigs {
@@ -22,7 +27,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -66,4 +71,9 @@ dependencies {
     implementation 'ca.barrenechea.header-decor:header-decor:0.2.8'
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
     implementation project(':calendar_events')
+
+    //crash report
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.2@aar') {
+        transitive = true;
+    }
 }
